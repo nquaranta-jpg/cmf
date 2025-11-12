@@ -4,35 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0c0d10" />
-    <title>Crown Merchant Financial — Insurance & Sales Academy</title>
+    <title>Crown Merchant Financial</title>
     <meta
       name="description"
-      content="Get licensed, trained, and placed. Crown Merchant Financial is a private insurance and sales academy with a first-try pass guarantee and mentorship."
+      content="Get licensed, trained, and placed. Crown Merchant Financial — a private insurance & sales academy."
     />
     <style>
-      /* =====================
-       Mobile‑first Design Tokens
-       ===================== */
       :root {
-        --bg: #0c0d10; /* deep charcoal */
-        --panel: #111319; /* dark panel */
-        --ink: #f8f9fd; /* primary text (near white) */
-        --muted: #e9ecf5; /* secondary text (high contrast) */
-        --gold: #d4af37; /* brand gold */
-        --gold-2: #b89023; /* deeper gold */
-        --line: rgba(255, 255, 255, 0.1);
-        --shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
-        --radius: 16px;
-        --radius-lg: 22px;
-        --pad: clamp(16px, 4vw, 28px); /* responsive spacing */
+        --bg: #0c0d10;
+        --ink: #fafbff;
+        --muted: #e9ecf5;
+        --gold: #d4af37;
+        --gold-2: #b89023;
+        --line: rgba(255, 255, 255, 0.12);
       }
-
-      /* =====================
-       Base / Reset (mobile first)
-       ===================== */
-      *,
-      *::before,
-      *::after {
+      * {
         box-sizing: border-box;
       }
       html,
@@ -42,69 +28,48 @@
       body {
         margin: 0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          "Helvetica Neue", Arial, "Noto Sans";
+          Helvetica, Arial;
         color: var(--ink);
-        background: radial-gradient(
-            900px 600px at 70% -10%,
-            rgba(212, 175, 55, 0.12),
-            rgba(0, 0, 0, 0)
-          ),
-          var(--bg);
-        line-height: 1.6;
-        -webkit-text-size-adjust: 100%;
+        background: var(--bg);
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        scroll-behavior: smooth;
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
       }
       a {
         color: inherit;
         text-decoration: none;
       }
-      img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-      }
 
-      /* Layout */
-      .container {
-        width: min(1120px, 92%);
-        margin-inline: auto;
+      /* Ultra‑minimal layout */
+      .wrap {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
       }
-      section {
-        padding: clamp(56px, 8vw, 80px) 0;
-      }
-
-      /* =====================
-       Header (safe-area aware, mobile)
-       ===================== */
       header {
         position: sticky;
         top: 0;
-        z-index: 50;
-        backdrop-filter: saturate(160%) blur(8px);
-        background: linear-gradient(
-          180deg,
-          rgba(12, 13, 16, 0.8),
-          rgba(12, 13, 16, 0.55)
-        );
+        background: rgba(12, 13, 16, 0.65);
+        backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--line);
+      }
+      .container {
+        width: min(980px, 92%);
+        margin-inline: auto;
       }
       .nav {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        padding: calc(10px + env(safe-area-inset-top)) 0 10px;
+        align-items: center;
+        padding: 12px 0;
       }
       .brand {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.6rem;
+        font-weight: 900;
       }
       .logo {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         display: grid;
         place-items: center;
@@ -115,18 +80,62 @@
           var(--gold),
           var(--gold-2)
         );
-        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25),
-          inset 0 -2px 6px rgba(0, 0, 0, 0.35);
       }
-      .brand span {
+
+      main {
+        flex: 1;
+        display: grid;
+        place-items: center;
+        padding: clamp(40px, 6vw, 72px) 0;
+      }
+      .hero {
+        width: 100%;
+        text-align: center;
+      }
+      .kicker {
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.78rem;
         font-weight: 900;
-        letter-spacing: 0.3px;
-        font-size: 1rem;
       }
-      .actions {
+      h1 {
+        font-size: clamp(2rem, 6.5vw, 3rem);
+        line-height: 1.12;
+        margin: 0.5rem 0 0.6rem;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: clamp(1rem, 3.8vw, 1.1rem);
+        max-width: 42ch;
+        margin-inline: auto;
+      }
+
+      .video {
+        position: relative;
+        aspect-ratio: 16/9;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        margin: clamp(16px, 3.5vw, 24px) auto 0;
+        max-width: 880px;
+      }
+      .video iframe,
+      .video video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .cta {
         display: flex;
-        gap: 10px;
-        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: clamp(14px, 3vw, 18px);
       }
       .btn {
         display: inline-block;
@@ -139,518 +148,89 @@
       .btn.gold {
         background: linear-gradient(180deg, var(--gold), var(--gold-2));
         color: #111;
-        box-shadow: var(--shadow);
       }
       .btn.ghost {
         border: 1px solid rgba(212, 175, 55, 0.35);
       }
 
-      /* =====================
-       Hero (single column on mobile)
-       ===================== */
-      .hero {
-        padding-top: clamp(56px, 10vw, 88px);
-      }
-      .kicker {
-        color: var(--gold);
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        font-weight: 900;
-        font-size: 0.78rem;
-      }
-      .headline {
-        font-size: clamp(1.9rem, 8vw, 3rem);
-        line-height: 1.12;
-        margin: 0.5rem 0 0.9rem;
-        font-weight: 900;
-      }
-      .sub {
-        color: var(--muted);
-        font-size: clamp(1rem, 3.8vw, 1.1rem);
-        max-width: 42ch;
-      }
-      .hero-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 16px;
-      }
-      .hero-card {
-        margin-top: 18px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.02)
-        );
-        border: 1px solid var(--line);
-        border-radius: var(--radius-lg);
-        padding: var(--pad);
-        box-shadow: var(--shadow);
-      }
-      .bullet {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: var(--gold);
-        margin-top: 0.6rem;
-        flex: 0 0 auto;
-      }
-
-      /* =====================
-       Panels / Cards
-       ===================== */
-      .panel {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: var(--pad);
-      }
-      .title {
-        font-weight: 900;
-        font-size: clamp(1.3rem, 6vw, 1.8rem);
-        margin: 0 0 10px;
-      }
-      .muted {
-        color: var(--muted);
-      }
-      .cards {
-        display: grid;
-        gap: 14px;
-        grid-template-columns: 1fr;
-      }
-      .card {
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.03),
-          rgba(255, 255, 255, 0)
-        );
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: var(--pad);
-        box-shadow: var(--shadow);
-      }
-      .eyebrow {
-        font-size: 0.72rem;
-        color: var(--gold);
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        font-weight: 900;
-      }
-
-      /* Two-column upgrades ONLY on larger screens */
-      @media (min-width: 920px) {
-        .grid-two {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 28px;
-        }
-        .cards {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-      }
-
-      /* =====================
-       FAQ (native)
-       ===================== */
-      details {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: var(--pad);
-      }
-      details + details {
-        margin-top: 10px;
-      }
-      summary {
-        cursor: pointer;
-        font-weight: 800;
-      }
-      summary::-webkit-details-marker {
-        display: none;
-      }
-
-      /* =====================
-       Footer
-       ===================== */
       footer {
-        padding: 32px 0;
         border-top: 1px solid var(--line);
-        color: var(--muted);
+        padding: 18px 0;
+        color: #cfd5e6;
+        text-align: center;
       }
 
-      /* =====================
-       Scroll Reveal (lightweight)
-       ===================== */
-      .reveal {
-        opacity: 0;
-        transform: translateY(18px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-      }
-      .in {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          scroll-behavior: auto;
-        }
-        .reveal {
-          opacity: 1 !important;
-          transform: none !important;
-          transition: none !important;
-        }
-      }
+      /* Reduce motion users see no animation (we're not animating anyway) */
     </style>
   </head>
   <body>
-    <!-- Header -->
-    <header aria-label="Primary">
-      <div class="container nav">
-        <div class="brand">
-          <div class="logo" aria-hidden="true">CM</div>
-          <span>Crown Merchant Financial</span>
+    <div class="wrap">
+      <header>
+        <div class="container nav">
+          <div class="brand">
+            <div class="logo" aria-hidden="true">CM</div>
+            <span>Crown Merchant Financial</span>
+          </div>
+          <nav><a class="btn gold" href="#apply">Apply</a></nav>
         </div>
-        <nav class="actions" aria-label="Site">
-          <a class="btn ghost" href="#academy">Academy</a>
-          <a class="btn ghost" href="#about">About</a>
-          <a class="btn gold" href="#apply">Apply</a>
-        </nav>
-      </div>
-    </header>
+      </header>
 
-    <main id="main">
-      <!-- Hero (mobile-first single column) -->
-      <section class="hero">
-        <div class="container">
-          <div class="reveal">
-            <div class="kicker">Private Insurance & Sales Academy</div>
-            <h1 class="headline">
-              Get licensed, trained, and placed — guaranteed.
-            </h1>
+      <main>
+        <section class="hero">
+          <div class="container">
+            <div class="kicker">Insurance & Sales Academy</div>
+            <h1>Get licensed, trained, and placed — guaranteed.</h1>
             <p class="sub">
-              A focused path from zero to producing. First‑try pass guarantee,
-              elite sales curriculum, and mentorship from real operators.
+              One page. One mission. Watch the short video below, then apply.
+              Cohorts review within 24 hours.
             </p>
-            <div class="hero-actions">
-              <a href="#apply" class="btn gold">Apply Now</a>
-              <a href="#academy" class="btn ghost">How it works</a>
-            </div>
-          </div>
-          <aside class="hero-card reveal" aria-label="Highlights">
-            <div class="bullet">
-              <span class="dot"></span>
-              <div>
-                <strong>Licensing + Sales</strong><br /><span class="muted"
-                  >20‑hour state prep plus elite sales drills.</span
-                >
-              </div>
-            </div>
-            <div class="bullet" style="margin-top: 12px">
-              <span class="dot"></span>
-              <div>
-                <strong>Mentorship</strong><br /><span class="muted"
-                  >Live call reviews, pipeline accountability, private
-                  Discord.</span
-                >
-              </div>
-            </div>
-            <div class="bullet" style="margin-top: 12px">
-              <span class="dot"></span>
-              <div>
-                <strong>Placement</strong><br /><span class="muted"
-                  >Graduate into producing seats with guidance.</span
-                >
-              </div>
-            </div>
-          </aside>
-        </div>
-      </section>
 
-      <!-- Academy -->
-      <section id="academy">
-        <div class="container panel reveal">
-          <h2 class="title">The Academy</h2>
-          <p class="muted">
-            We combine licensing prep with a practical sales playbook so you can
-            pass fast and perform on day one. Built for outcomes, not
-            certificates.
-          </p>
-          <div class="cards" style="margin-top: 10px">
-            <div class="card">
-              <div class="eyebrow">Licensing</div>
-              <h3>Guided First‑Try Pass</h3>
-              <p class="muted">
-                Structured modules, mock exams, and checkpoints engineered for
-                first‑attempt success.
-              </p>
+            <!-- VSL embed (swap the src with your Vimeo/YouTube embed URL) -->
+            <div class="video" aria-label="Video Sales Letter">
+              <iframe
+                src="https://player.vimeo.com/video/000000000?badge=0&autopause=0&player_id=0&app_id=58479"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                title="Crown Merchant Financial VSL"
+              ></iframe>
             </div>
-            <div class="card">
-              <div class="eyebrow">Sales</div>
-              <h3>Elite Curriculum</h3>
-              <p class="muted">
-                Discovery → objections → underwriting handoffs → retention.
-                Scripts and daily drills included.
-              </p>
-            </div>
-            <div class="card">
-              <div class="eyebrow">Placement</div>
-              <h3>Real Seats</h3>
-              <p class="muted">
-                Graduate into producing environments with mentorship, metrics,
-                and standards.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Outcomes -->
-      <section id="outcomes">
-        <div class="container reveal">
-          <div class="panel">
-            <h2 class="title">What you can expect</h2>
-            <div class="cards" style="margin-top: 10px">
-              <div class="card">
-                <h3>Speed</h3>
-                <p class="muted">
-                  A clear calendar and milestones so you move from study →
-                  license → pipeline fast.
-                </p>
-              </div>
-              <div class="card">
-                <h3>Competence</h3>
-                <p class="muted">
-                  Drills that translate into real calls, real deals, and
-                  repeatable performance.
-                </p>
-              </div>
-              <div class="card">
-                <h3>Accountability</h3>
-                <p class="muted">
-                  Live reviews and metrics that keep you on track and improving.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- About + FAQ (stacked on mobile, two-column on desktop) -->
-      <section id="about">
-        <div class="container grid-two">
-          <div class="panel reveal">
-            <h2 class="title">Built by operators</h2>
-            <p class="muted">
-              Founded by Nicholas Quaranta and Conrad, Crown Merchant Financial
-              trains disciplined producers with standards‑first culture,
-              mentorship, and live deal support.
-            </p>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: auto 1fr;
-                gap: 10px;
-                align-items: center;
-                margin-top: 12px;
-              "
-            >
-              <div
-                style="
-                  width: 64px;
-                  height: 64px;
-                  border-radius: 50%;
-                  display: grid;
-                  place-items: center;
-                  color: #111;
-                  font-weight: 900;
-                  background: linear-gradient(
-                    180deg,
-                    var(--gold),
-                    var(--gold-2)
-                  );
-                "
+            <div class="cta" id="apply">
+              <a class="btn gold" id="applyLink" href="#">Apply Now</a>
+              <a
+                class="btn ghost"
+                href="mailto:nicholas@crownmerchantfinancial.com"
+                >Email Us</a
               >
-                NQ
-              </div>
-              <div>
-                <strong>Nicholas Quaranta</strong>
-                <div class="muted">Founder & Lead Instructor</div>
-              </div>
-            </div>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: auto 1fr;
-                gap: 10px;
-                align-items: center;
-                margin-top: 10px;
-              "
-            >
-              <div
-                style="
-                  width: 64px;
-                  height: 64px;
-                  border-radius: 50%;
-                  display: grid;
-                  place-items: center;
-                  color: #111;
-                  font-weight: 900;
-                  background: linear-gradient(
-                    180deg,
-                    var(--gold),
-                    var(--gold-2)
-                  );
-                "
-              >
-                C
-              </div>
-              <div>
-                <strong>Conrad</strong>
-                <div class="muted">Co‑Founder & Operations</div>
-              </div>
             </div>
           </div>
-          <div class="panel reveal">
-            <h2 class="title">FAQ</h2>
-            <details open>
-              <summary>What is the time commitment?</summary>
-              <p class="muted">
-                Plan for 20 hours of licensing prep plus daily sales drills.
-                Most candidates are pipeline‑ready in weeks, not months.
-              </p>
-            </details>
-            <details>
-              <summary>Do you really offer placement?</summary>
-              <p class="muted">
-                Yes. Graduates interview into producing seats with mentorship.
-                Your performance determines your track.
-              </p>
-            </details>
-            <details>
-              <summary>How do I apply?</summary>
-              <p class="muted">
-                Click “Apply” below and complete the short form. We review
-                cohorts quickly and follow up by email.
-              </p>
-            </details>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <!-- Apply CTA -->
-      <section id="apply">
-        <div class="container reveal">
-          <div class="panel" style="text-align: center">
-            <h2 class="title">Ready to apply?</h2>
-            <p class="muted">
-              Seats are limited per cohort. Submitting an application takes
-              under 2 minutes.
-            </p>
-            <div
-              style="
-                display: flex;
-                gap: 12px;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-top: 6px;
-              "
-            >
-              <a class="btn gold" id="applyLink" href="#">Open Application</a>
-              <a class="btn ghost" href="#contact">Email Us</a>
-            </div>
-          </div>
+      <footer>
+        <div class="container">
+          © <span id="year"></span> Crown Merchant Financial • All rights
+          reserved.
         </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact">
-        <div class="container panel reveal">
-          <h2 class="title">Contact</h2>
-          <p class="muted">For partnerships, recruiting, or press:</p>
-          <div
-            style="
-              display: grid;
-              grid-template-columns: auto 1fr;
-              gap: 12px;
-              align-items: center;
-              margin-top: 8px;
-            "
-          >
-            <div
-              style="
-                width: 54px;
-                height: 54px;
-                border-radius: 50%;
-                display: grid;
-                place-items: center;
-                color: #111;
-                font-weight: 900;
-                background: linear-gradient(180deg, var(--gold), var(--gold-2));
-              "
-            >
-              @
-            </div>
-            <div>
-              <div><strong>Email</strong></div>
-              <div class="muted">nicholas@crownmerchantfinancial.com</div>
-              <div class="muted">conrad@crownmerchantfinancial.com</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div
-        class="container"
-        style="
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-          flex-wrap: wrap;
-        "
-      >
-        <div>© <span id="year"></span> Crown Merchant Financial</div>
-        <div class="muted">All rights reserved.</div>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script>
-      // Lightweight IntersectionObserver reveal
-      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!reduce && "IntersectionObserver" in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("in");
-                io.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: "-8% 0px -8% 0px", threshold: 0.12 }
-        );
-        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-      } else {
-        document
-          .querySelectorAll(".reveal")
-          .forEach((el) => el.classList.add("in"));
-      }
-
-      // Year + Apply link placeholder
+      // Dynamic year
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Replace with your actual application link (Typeform/Google Form/Stripe Checkout)
       document.getElementById("applyLink").addEventListener("click", (e) => {
-        const url = "https://example.com/apply"; // <- replace with Typeform/Google Form/Stripe
+        const url = "https://example.com/apply"; // TODO: set real link
         if (url.includes("example.com")) {
           e.preventDefault();
           alert(
-            "Set your application link in the code (search for applyLink)."
+            "Set your application link in index.html (search for applyLink)."
           );
+        } else {
+          e.currentTarget.setAttribute("href", url);
         }
       });
     </script>
