@@ -7,7 +7,7 @@
     <title>CMF AI Power Risk Desk</title>
     <meta
       name="description"
-      content="Crown Merchant structures insurance and risk solutions for AI data centers, mining conversions, and new power assets."
+      content="The CMF AI Power Risk Desk is a specialist insurance agency desk focused on AI data centers, mining conversions, and power-heavy infrastructure."
     />
     <style>
       :root {
@@ -54,76 +54,15 @@
         color: var(--orange-bright);
       }
 
-      /* Header */
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 107, 53, 0.1);
-        z-index: 99;
+      /* Shell */
+      .page {
+        min-height: 100vh;
       }
 
-      .nav {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 18px 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 32px;
-      }
-
-      .brand {
-        font-weight: 400;
-        font-size: 1rem;
-        letter-spacing: 1px;
-        white-space: nowrap;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        font-size: 0.85rem;
-      }
-
-      .nav-link {
-        font-size: 0.9rem;
-        color: var(--gray);
-        font-weight: 300;
-        letter-spacing: 0.5px;
-      }
-
-      .nav-link:hover {
-        color: var(--white);
-      }
-
-      .nav-cta {
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 107, 53, 0.4);
-        color: var(--orange);
-        font-size: 0.85rem;
-      }
-
-      .nav-cta:hover {
-        background: var(--orange);
-        color: #000;
-      }
-
-      /* Container */
       .container {
-        max-width: 1600px;
+        max-width: 1440px;
         margin: 0 auto;
         padding: 0 60px;
-      }
-
-      .section {
-        padding: 160px 0 120px;
-        border-top: none;
       }
 
       .section-inner {
@@ -131,10 +70,15 @@
         margin: 0 auto;
       }
 
+      section {
+        padding: 120px 0;
+        border-top: 1px solid rgba(255, 107, 53, 0.08);
+      }
+
       .section-card {
         background: var(--card-bg);
         backdrop-filter: blur(20px);
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid var(--card-border);
         padding: 48px;
       }
@@ -148,14 +92,13 @@
         justify-content: space-between;
         align-items: baseline;
         gap: 40px;
-        margin-bottom: 40px;
+        margin-bottom: 32px;
       }
 
       .section-title {
-        font-size: clamp(2.2rem, 4vw, 3rem);
+        font-size: clamp(1.9rem, 3vw, 2.5rem);
         font-weight: 300;
-        letter-spacing: -1px;
-        line-height: 1.2;
+        letter-spacing: -0.5px;
       }
 
       .section-label {
@@ -164,205 +107,142 @@
         letter-spacing: 3px;
         color: var(--gray-light);
         font-weight: 400;
+        white-space: nowrap;
       }
 
-      .hero-subtext {
-        font-size: 1.1rem;
-        color: var(--gray);
-        max-width: 840px;
-        margin-bottom: 24px;
-      }
-
-      .hero-note {
-        font-size: 0.9rem;
-        color: var(--gray-light);
-      }
-
-      .tag-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 18px;
-        margin-bottom: 8px;
-      }
-
-      .tag {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 107, 53, 0.4);
-        color: var(--gray-light);
-      }
-
-      .pill-primary {
-        border-color: rgba(255, 107, 53, 0.8);
-        color: var(--orange);
-      }
-
-      .pill-muted {
-        opacity: 0.8;
-      }
-
-      /* AI Grid */
-      .ai-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 24px;
-      }
-
-      .ai-item {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 28px;
-        transition: all 0.3s ease;
-      }
-
-      .ai-item:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-2px);
-      }
-
-      .ai-item h3 {
-        font-size: 1.3rem;
-        font-weight: 400;
-        margin-bottom: 10px;
-        letter-spacing: 0.3px;
-        color: var(--white);
-      }
-
-      .ai-item p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      /* Stack / comparison */
-      .stack-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-        gap: 40px;
-        align-items: flex-start;
-      }
-
-      .stack-text {
+      .section-body {
         font-size: 0.98rem;
         color: var(--gray);
       }
 
-      .stack-text p {
-        margin-bottom: 18px;
-      }
-
-      .stack-card {
-        background: var(--card-bg);
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
-        padding: 24px 24px 22px;
-        font-size: 0.95rem;
-        color: var(--gray);
-      }
-
-      .stack-heading {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        margin-bottom: 10px;
-      }
-
-      .stack-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 107, 53, 0.05);
-      }
-
-      .stack-row:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-      }
-
-      .stack-label {
-        font-size: 0.85rem;
-        color: var(--gray-light);
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-      }
-
-      .stack-value {
-        font-size: 0.95rem;
-        color: var(--white);
-      }
-
-      /* Insights */
-      .insights-list {
-        margin-top: 16px;
-        display: grid;
-        gap: 18px;
-      }
-
-      .insight {
-        background: var(--card-bg);
+      /* Header (microsite) */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.96);
         backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 24px;
-        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(255, 107, 53, 0.08);
+        z-index: 99;
       }
 
-      .insight:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-2px);
-      }
-
-      .insight-meta {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--gray-light);
-        margin-bottom: 8px;
-        font-weight: 400;
-      }
-
-      .insight-title {
-        font-size: 1.2rem;
-        font-weight: 400;
-        letter-spacing: -0.3px;
-        margin-bottom: 8px;
-        line-height: 1.3;
-        color: var(--white);
-      }
-
-      .insight-body {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      /* CTA row */
-      .cta-row {
+      .nav {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 18px 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 24px;
-        flex-wrap: wrap;
       }
 
-      .cta-text {
-        font-size: 1.05rem;
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .brand {
+        font-size: 0.95rem;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+
+      .brand-sub {
+        font-size: 0.8rem;
+        color: var(--gray-light);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        font-size: 0.85rem;
+      }
+
+      .nav-link {
+        font-size: 0.85rem;
         color: var(--gray);
-        max-width: 600px;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-link:hover {
+        color: var(--white);
+      }
+
+      .nav-pill {
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        color: var(--orange);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .nav-pill:hover {
+        background: var(--orange);
+        color: #000;
+      }
+
+      /* Hero */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 160px 0 120px;
+        border-top: none;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        gap: 80px;
+        align-items: flex-start;
+      }
+
+      .hero-kicker {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--gray-light);
+        margin-bottom: 24px;
+        font-weight: 400;
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 6.5vw, 4.8rem);
+        line-height: 1.05;
+        font-weight: 300;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+      }
+
+      .hero-title span {
+        display: block;
+      }
+
+      .hero-sub {
+        font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+        line-height: 1.7;
+        color: var(--gray);
+        max-width: 640px;
+        margin-bottom: 24px;
+      }
+
+      .hero-meta {
+        font-size: 0.9rem;
+        color: var(--gray-light);
+        margin-bottom: 32px;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
       }
 
       .btn-primary {
@@ -372,7 +252,7 @@
         border-radius: 999px;
         font-size: 0.95rem;
         font-weight: 400;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -380,11 +260,227 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        text-transform: uppercase;
       }
 
       .btn-primary:hover {
         background: var(--orange-bright);
         transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        color: var(--gray);
+        font-size: 0.9rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary:hover {
+        color: var(--white);
+        border-color: var(--white);
+      }
+
+      .hero-side-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        padding: 28px 24px;
+      }
+
+      .hero-side-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--gray-light);
+        margin-bottom: 12px;
+      }
+
+      .hero-side-title {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 10px;
+      }
+
+      .hero-side-body {
+        font-size: 0.9rem;
+        color: var(--gray);
+        margin-bottom: 16px;
+      }
+
+      .hero-side-list {
+        list-style: none;
+        font-size: 0.9rem;
+        color: var(--gray);
+      }
+
+      .hero-side-list li {
+        position: relative;
+        padding-left: 18px;
+        margin-bottom: 4px;
+      }
+
+      .hero-side-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--orange);
+        font-size: 0.8rem;
+      }
+
+      /* Grids */
+      .three-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .two-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: 10px;
+        border: 1px solid var(--card-border);
+        padding: 28px 24px;
+        transition: all 0.3s ease;
+      }
+
+      .card:hover {
+        border-color: var(--card-border-strong);
+        background: rgba(255, 107, 53, 0.05);
+        transform: translateY(-3px);
+      }
+
+      .card-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--gray-light);
+        margin-bottom: 8px;
+      }
+
+      .card-title {
+        font-size: 1.15rem;
+        font-weight: 400;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .card-body {
+        font-size: 0.92rem;
+        color: var(--gray);
+      }
+
+      .card-body ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 8px;
+      }
+
+      .card-body li {
+        position: relative;
+        padding-left: 16px;
+        margin-bottom: 4px;
+      }
+
+      .card-body li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--orange);
+        font-size: 0.75rem;
+      }
+
+      /* Process / Steps */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .step-badge {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .step-title {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 10px;
+      }
+
+      .step-body {
+        font-size: 0.92rem;
+        color: var(--gray);
+      }
+
+      /* Emphasis / info box */
+      .info-box {
+        background: rgba(255, 107, 53, 0.06);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        padding: 24px 24px 22px;
+        margin-top: 12px;
+      }
+
+      .info-title {
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 8px;
+      }
+
+      .info-body {
+        font-size: 0.88rem;
+        color: var(--gray);
+      }
+
+      /* CTA */
+      .cta-section {
+        text-align: center;
+      }
+
+      .cta-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        padding: 52px 32px;
+      }
+
+      .cta-title {
+        font-size: clamp(2.2rem, 4vw, 3rem);
+        font-weight: 300;
+        letter-spacing: -1px;
+        margin-bottom: 18px;
+        line-height: 1.2;
+      }
+
+      .cta-sub {
+        font-size: 1.05rem;
+        color: var(--gray);
+        margin-bottom: 28px;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 18px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+
+      .cta-meta {
+        font-size: 0.85rem;
+        color: var(--gray-light);
       }
 
       /* Footer */
@@ -394,26 +490,35 @@
         text-align: center;
       }
 
-      .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.85rem;
+      .footer-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .footer-meta {
+        font-size: 0.82rem;
         color: var(--gray-light);
-        font-weight: 300;
-        gap: 16px;
-        flex-wrap: wrap;
+        margin-bottom: 14px;
       }
 
       .footer-links {
         display: flex;
-        gap: 24px;
+        justify-content: center;
+        gap: 18px;
         flex-wrap: wrap;
+        margin-bottom: 18px;
       }
 
       .footer-links a {
+        font-size: 0.82rem;
         color: var(--gray-light);
-        font-size: 0.85rem;
+      }
+
+      .footer-disclaimer {
+        font-size: 0.78rem;
+        color: var(--gray-light);
+        margin-top: 10px;
       }
 
       /* Animations */
@@ -430,297 +535,511 @@
 
       /* Responsive */
       @media (max-width: 1024px) {
-        .nav,
         .container {
-          padding-left: 24px;
-          padding-right: 24px;
+          padding: 0 24px;
         }
 
         .nav {
+          padding: 16px 24px;
           flex-wrap: wrap;
+          gap: 12px;
         }
 
         .nav-links {
-          flex-wrap: wrap;
           justify-content: flex-end;
+          flex-wrap: wrap;
+        }
+
+        .hero {
+          padding-top: 140px;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+
+        .three-grid,
+        .two-grid,
+        .steps {
+          grid-template-columns: 1fr;
         }
 
         .section-card {
           padding: 32px 24px;
         }
 
-        .ai-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .stack-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .section {
-          padding-top: 140px;
+        .cta-card {
+          padding: 40px 24px;
         }
 
         .section-header-row {
           flex-direction: column;
           align-items: flex-start;
-          gap: 16px;
+          gap: 12px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero-title {
+          margin-bottom: 16px;
+        }
+
+        section {
+          padding: 100px 0;
         }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="nav">
-        <a href="index.html" class="brand">Crown Merchant Financial</a>
-        <div class="nav-links">
-          <a href="index.html#program" class="nav-link">Academy</a>
-          <a href="#desk" class="nav-link">AI Desk</a>
-          <a href="#insights" class="nav-link">Insights</a>
-          <a href="mailto:nicholas@crownmerchantfinancial.com" class="nav-cta"
-            >Contact</a
-          >
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- Hero / Desk intro -->
-      <section class="section" id="desk">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">CMF AI Power Risk Desk</div>
-              <div class="section-label">
-                Data centers · Mining conversions · New power assets
-              </div>
-            </div>
-            <p class="hero-subtext">
-              We sit where AI demand, power constraints, and capital meet. Crown
-              Merchant structures insurance and risk solutions for the next
-              decade of data centers and energy assets.
-            </p>
-            <p class="hero-note">
-              We work with operators, investors, and lenders to turn powered
-              sites into bankable assets — with coverage that underwrites both
-              the physical risk and the capital stack.
-            </p>
-
-            <div class="tag-row">
-              <span class="tag pill-primary">AI infrastructure</span>
-              <span class="tag pill-muted">GPU campuses</span>
-              <span class="tag pill-muted">Mining conversions</span>
-              <span class="tag pill-muted">SMR &amp; new power</span>
+    <div class="page">
+      <header>
+        <div class="nav">
+          <div class="nav-left">
+            <div>
+              <div class="brand">Crown Merchant Financial</div>
+              <div class="brand-sub">AI Power Risk Desk</div>
             </div>
           </div>
+          <div class="nav-links">
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#clients" class="nav-link">Who we serve</a>
+            <a href="#products" class="nav-link">What we place</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#contact" class="nav-pill">Talk to the desk</a>
+          </div>
         </div>
-      </section>
+      </header>
 
-      <!-- Product boxes -->
-      <section class="section">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Where we focus</div>
-              <div class="section-label">Coverage lanes</div>
-            </div>
-            <div class="ai-grid">
-              <div class="ai-item">
-                <h3>Data center liability</h3>
-                <p>
-                  Builder's risk, equipment breakdown, downtime, and colocation
-                  liability for GPU-dense facilities. We map physical layouts,
-                  vendor stacks, and uptime requirements into coverage that
-                  lenders can underwrite against.
-                </p>
-              </div>
-
-              <div class="ai-item">
-                <h3>Mining → AI conversions</h3>
-                <p>
-                  Risk frameworks for converting powered mining sites into AI
-                  compute hubs and neocloud infrastructure. We address legacy
-                  equipment, power contracts, and counterparties as you
-                  reposition the site.
-                </p>
-              </div>
-
-              <div class="ai-item">
-                <h3>New power assets</h3>
-                <p>
-                  Support for SMR concepts, gas turbines, fuel cells, and
-                  micro-grids where insurance unlocks financing. We help align
-                  engineering narratives, regulators, and carriers so capital
-                  can move.
-                </p>
+      <main>
+        <!-- Hero -->
+        <section class="hero" id="overview">
+          <div class="container">
+            <div class="section-inner fade-in">
+              <div class="hero-grid">
+                <div>
+                  <div class="hero-kicker">AI · Power · Capital</div>
+                  <h1 class="hero-title">
+                    <span>Insurance for the</span>
+                    <span>next decade</span>
+                    <span>of compute.</span>
+                  </h1>
+                  <p class="hero-sub">
+                    The CMF AI Power Risk Desk is a specialist insurance agency
+                    focused on AI data centers, mining conversions, and
+                    power-heavy infrastructure. We help operators and capital
+                    make projects insurable, financeable, and scalable.
+                  </p>
+                  <p class="hero-meta">
+                    We are an insurance agency, not an MGA. We do not underwrite
+                    our own paper. We structure and place coverage with markets
+                    that understand power and infrastructure risk.
+                  </p>
+                  <div class="hero-cta">
+                    <a href="#contact" class="btn-primary">Discuss a project</a>
+                    <a
+                      href="mailto:nicholas@crownmerchantfinancial.com"
+                      class="btn-secondary"
+                      >Email the desk</a
+                    >
+                  </div>
+                </div>
+                <aside class="hero-side-card">
+                  <div class="hero-side-label">Thesis</div>
+                  <div class="hero-side-title">
+                    Where AI demand meets power constraints
+                  </div>
+                  <div class="hero-side-body">
+                    AI workloads are colliding with grid limits, permitting
+                    timelines, and capital discipline. Projects fail when
+                    lenders and carriers cannot get comfortable with the risk.
+                  </div>
+                  <ul class="hero-side-list">
+                    <li>GPU-dense data centers and AI campuses</li>
+                    <li>Bitcoin mining sites converting into compute hubs</li>
+                    <li>Power assets feeding AI demand and new infra builds</li>
+                  </ul>
+                </aside>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Insurance in the capital stack -->
-      <section class="section">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">
-                Insurance as part of the capital stack
+        <!-- Who we serve -->
+        <section id="clients">
+          <div class="container">
+            <div class="section-inner section-card fade-in">
+              <div class="section-header-row">
+                <div class="section-title">Who we work with</div>
+                <div class="section-label">Clients</div>
               </div>
-              <div class="section-label">Structuring</div>
-            </div>
-            <div class="stack-grid">
-              <div class="stack-text">
-                <p>
-                  For AI power projects, insurance is no longer a box to check
-                  at closing — it's a gating input for the entire underwriting
-                  memo.
-                </p>
-                <p>
-                  Carriers want to know how the asset behaves across load,
-                  redundancy, and time. Lenders want confidence that loss
-                  scenarios won't vaporize cash flow or covenants.
-                </p>
-                <p>
-                  We bridge those requirements and help teams articulate a risk
-                  story that makes sense from both a technical and financial
-                  perspective.
-                </p>
-              </div>
-              <div class="stack-card">
-                <div class="stack-heading">Desk view · Typical stack</div>
-                <div class="stack-row">
-                  <div class="stack-label">Layer 1</div>
-                  <div class="stack-value">
-                    Core property &amp; casualty, including builder’s risk and
-                    equipment breakdown.
+              <div class="three-grid">
+                <div class="card">
+                  <div class="card-label">Developers &amp; operators</div>
+                  <div class="card-title">Data centers &amp; campuses</div>
+                  <div class="card-body">
+                    <p>
+                      Builders of AI data centers, colocation campuses, and
+                      high-density compute sites who need credible coverage to
+                      move from deck to shovel-ready and from shovel-ready to
+                      revenue.
+                    </p>
+                    <ul>
+                      <li>Ground-up AI campuses and expansions</li>
+                      <li>Colocation and neocloud operators</li>
+                      <li>Existing facilities adding GPU capacity</li>
+                    </ul>
                   </div>
                 </div>
-                <div class="stack-row">
-                  <div class="stack-label">Layer 2</div>
-                  <div class="stack-value">
-                    Business interruption &amp; downtime coverage aligned with
-                    contract SLAs.
+
+                <div class="card">
+                  <div class="card-label">Power-side owners</div>
+                  <div class="card-title">Power for AI workloads</div>
+                  <div class="card-body">
+                    <p>
+                      Owners of power assets who see AI demand but need
+                      insurance aligned with technical and regulatory reality,
+                      not generic templates.
+                    </p>
+                    <ul>
+                      <li>Gas turbines, engines, and microgrids</li>
+                      <li>Behind-the-meter projects serving compute</li>
+                      <li>Emerging SMR and advanced concepts</li>
+                    </ul>
                   </div>
                 </div>
-                <div class="stack-row">
-                  <div class="stack-label">Layer 3</div>
-                  <div class="stack-value">
-                    Professional &amp; cyber where software, orchestration, and
-                    controls are central.
-                  </div>
-                </div>
-                <div class="stack-row">
-                  <div class="stack-label">Layer 4</div>
-                  <div class="stack-value">
-                    Lender-focused endorsements and covenants that make the
-                    capital stack work.
+
+                <div class="card">
+                  <div class="card-label">Capital stack</div>
+                  <div class="card-title">Sponsors &amp; lenders</div>
+                  <div class="card-body">
+                    <p>
+                      Equity sponsors, infra funds, and lenders who need
+                      construction, operational, and downtime risk framed in a
+                      way credit committees can accept.
+                    </p>
+                    <ul>
+                      <li>Project finance lenders</li>
+                      <li>Private credit and infra funds</li>
+                      <li>Strategic buyers and asset aggregators</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Insights / research -->
-      <section class="section" id="insights">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Signals we track</div>
-              <div class="section-label">Research notes</div>
-            </div>
-
-            <div class="insights-list">
-              <div class="insight">
-                <div class="insight-meta">Brief · Power demand</div>
-                <h3 class="insight-title">
-                  AI power demand &amp; the 2028 crunch
-                </h3>
-                <p class="insight-body">
-                  Analysts project a double-digit power shortfall for U.S. data
-                  centers by 2028. The bottleneck isn't chips — it's permitted,
-                  insured, financed power. Coverage terms are starting to
-                  influence where capital will actually build.
-                </p>
+        <!-- Problems we solve -->
+        <section id="problems">
+          <div class="container">
+            <div class="section-inner section-card fade-in">
+              <div class="section-header-row">
+                <div class="section-title">Problems we get called for</div>
+                <div class="section-label">Friction points</div>
               </div>
-
-              <div class="insight">
-                <div class="insight-meta">Note · Infrastructure reuse</div>
-                <h3 class="insight-title">
-                  The mining site as a neocloud asset
-                </h3>
-                <p class="insight-body">
-                  Sites built for mining already solved land, power, and
-                  cooling. With the right risk and credit structure, they become
-                  fast-track AI compute campuses — or stranded assets, if no one
-                  can underwrite the transition.
-                </p>
-              </div>
-
-              <div class="insight">
-                <div class="insight-meta">
-                  Perspective · Energy &amp; capital
+              <div class="three-grid">
+                <div class="card">
+                  <div class="card-title">“The lender will not close.”</div>
+                  <div class="card-body">
+                    <p>
+                      A project is ready on slides, but the lender or IC will
+                      not sign off on construction or downtime risk. We design
+                      coverage structures that answer specific lender concerns,
+                      not vague boilerplate.
+                    </p>
+                  </div>
                 </div>
-                <h3 class="insight-title">
-                  Insurance as a gating item for SMRs
-                </h3>
-                <p class="insight-body">
-                  Small modular reactors won't scale on engineering alone.
-                  Long-dated, credible coverage is critical before serious
-                  capital commits. We monitor how carriers are talking about
-                  nuclear, cyber, and grid interaction around SMR pilots.
+
+                <div class="card">
+                  <div class="card-title">
+                    “Existing quotes do not match the project.”
+                  </div>
+                  <div class="card-body">
+                    <p>
+                      Standard property or tech policies are being stretched to
+                      fit GPU campuses and mining conversions. We rebuild the
+                      submission so markets can see and price the real risk.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-title">
+                    “We have stranded power and no strategy.”
+                  </div>
+                  <div class="card-body">
+                    <p>
+                      Mining sites, power-heavy facilities, or partial builds
+                      exist with no clear path to AI. We help frame whether
+                      those assets can credibly become compute infrastructure
+                      that insurance and capital will support.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- What we place -->
+        <section id="products">
+          <div class="container">
+            <div class="section-inner section-card fade-in">
+              <div class="section-header-row">
+                <div class="section-title">What we actually place</div>
+                <div class="section-label">Agency products</div>
+              </div>
+              <div class="two-grid">
+                <div class="card">
+                  <div class="card-label">Compute infrastructure</div>
+                  <div class="card-title">AI data centers &amp; sites</div>
+                  <div class="card-body">
+                    <p>
+                      We operate as a retail agency. Coverage is placed through
+                      wholesalers, MGAs, and carriers that understand
+                      infrastructure and power risk.
+                    </p>
+                    <ul>
+                      <li>
+                        Builder’s risk and delay in start-up (DSU) for AI
+                        campuses
+                      </li>
+                      <li>
+                        Property and equipment breakdown for GPU-dense
+                        environments
+                      </li>
+                      <li>
+                        Business interruption and downtime coverage tied to SLAs
+                        and tenant agreements
+                      </li>
+                      <li>
+                        Liability for tenants, colocation, and premises exposure
+                      </li>
+                      <li>
+                        Tech / cyber components where contracts or regulation
+                        require it
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-label">Power &amp; conversions</div>
+                  <div class="card-title">Power for AI demand</div>
+                  <div class="card-body">
+                    <p>
+                      For power assets and mining sites repositioning into AI,
+                      we align coverage with how capital and regulators actually
+                      see the risk.
+                    </p>
+                    <ul>
+                      <li>
+                        Property, construction, and operational liability for
+                        generation assets
+                      </li>
+                      <li>
+                        Microgrids and behind-the-meter projects serving compute
+                      </li>
+                      <li>Transitional coverage for mining → AI conversions</li>
+                      <li>
+                        Program reviews and restructuring for existing sites
+                      </li>
+                      <li>
+                        Advisory on coverage language to support financing terms
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="info-box">
+                <div class="info-title">Scope and availability</div>
+                <div class="info-body">
+                  Coverage availability depends on jurisdiction, counterparties,
+                  project size, and market conditions. We do not guarantee
+                  placement of any specific structure until markets have
+                  reviewed the submission and issued terms.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Process -->
+        <section id="process">
+          <div class="container">
+            <div class="section-inner section-card fade-in">
+              <div class="section-header-row">
+                <div class="section-title">How the desk runs a deal</div>
+                <div class="section-label">Process</div>
+              </div>
+              <div class="steps">
+                <div class="card">
+                  <div class="step-badge">Step 1 · Triage</div>
+                  <div class="step-title">Is this real and in-scope?</div>
+                  <div class="step-body">
+                    <p>
+                      We start with a short conversation and a basic project
+                      overview: assets, power profile, counterparties, size, and
+                      timing. The goal is to decide quickly whether the project
+                      is in-scope and worth taking to market.
+                    </p>
+                    <ul>
+                      <li>Screen for seriousness and scale</li>
+                      <li>Clarify capital plan and counterparties</li>
+                      <li>Align on timelines and constraints</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="step-badge">Step 2 · Structure</div>
+                  <div class="step-title">Map the risk and build the file</div>
+                  <div class="step-body">
+                    <p>
+                      We map construction, operational, and downtime risk,
+                      identify what matters most to lenders and sponsors, and
+                      build a submission markets can actually underwrite.
+                    </p>
+                    <ul>
+                      <li>Risk mapping across site, tech, and contracts</li>
+                      <li>
+                        Draft coverage stack with lines, limits, and conditions
+                      </li>
+                      <li>
+                        Prepare narrative, schedules, and supporting documents
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="step-badge">Step 3 · Market &amp; iterate</div>
+                  <div class="step-title">
+                    Take it to markets that know infra
+                  </div>
+                  <div class="step-body">
+                    <p>
+                      We place coverage through wholesaler and carrier partners,
+                      translate their feedback back into the deal, and iterate
+                      until the risk, coverage, and capital stack line up.
+                    </p>
+                    <ul>
+                      <li>Approach targeted markets, not everyone at once</li>
+                      <li>
+                        Log declines, indications, and conditions transparently
+                      </li>
+                      <li>
+                        Adjust structures so coverage supports the financing
+                        path
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box" style="margin-top: 24px">
+                <div class="info-title">Agency, not MGA</div>
+                <div class="info-body">
+                  Crown Merchant Financial operates as an insurance agency. We
+                  do not hold underwriting authority and do not bind coverage on
+                  our own paper. Our role is to see the project clearly, prepare
+                  the submission well, and guide it through markets that
+                  understand power and infrastructure risk. The carrier takes
+                  the risk; we manage the relationship, structure, and
+                  execution.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Academy link -->
+        <section id="talent">
+          <div class="container">
+            <div class="section-inner section-card fade-in">
+              <div class="section-header-row">
+                <div class="section-title">A desk fed by its own academy</div>
+                <div class="section-label">Talent</div>
+              </div>
+              <div class="section-body">
+                <p style="margin-bottom: 16px">
+                  The AI Power Risk Desk is built on the same standards we use
+                  in our Insurance &amp; Sales Academy. We do not hire cold. Our
+                  best producers are trained from scratch and earn the right to
+                  work on complex AI and power accounts.
+                </p>
+                <p style="margin-bottom: 16px">
+                  Before they touch this desk, candidates move through licensing
+                  prep, sales craft, and live call reviews in producing
+                  environments. The AI Power Risk Desk is the top of that
+                  ladder, not the first step.
+                </p>
+                <p>
+                  For clients, this means a team that understands both the
+                  mechanics of selling insurance and the realities of power,
+                  compute, and capital — not generalists guessing their way
+                  through infra deals.
                 </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- CTA / contact -->
-      <section class="section">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Talk to the desk</div>
-              <div class="section-label">Operators · Investors · Lenders</div>
-            </div>
-            <div class="cta-row">
-              <p class="cta-text">
-                If you're converting a mining site, planning a GPU campus, or
-                exploring new power assets, we can help map the risk picture and
-                what coverage needs to look like for your capital stack.
-              </p>
-              <a
-                href="mailto:nicholas@crownmerchantfinancial.com"
-                class="btn-primary"
-                >Email the desk</a
-              >
+        <!-- CTA -->
+        <section class="cta-section" id="contact">
+          <div class="container">
+            <div class="section-inner fade-in">
+              <div class="cta-card">
+                <h2 class="cta-title">Discuss a project with the desk</h2>
+                <p class="cta-sub">
+                  If you are planning, refinancing, or repositioning an AI or
+                  power-heavy project, we can usually tell within one
+                  conversation whether insurance is a blocker, a lever, or both.
+                </p>
+                <div class="cta-buttons">
+                  <a
+                    href="mailto:nicholas@crownmerchantfinancial.com?subject=AI%20Power%20Risk%20Desk%20Intro"
+                    class="btn-primary"
+                    >Email the desk</a
+                  >
+                  <a href="#overview" class="btn-secondary">Back to top</a>
+                </div>
+                <p class="cta-meta">
+                  Please include a brief description of the project, location,
+                  size, and current status. We will follow up with next steps if
+                  it is in-scope.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
 
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>© <span id="year"></span> Crown Merchant Financial</div>
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-meta">
+            © <span id="year"></span> Crown Merchant Financial · AI Power Risk
+            Desk
+          </div>
           <div class="footer-links">
-            <a href="index.html">Academy</a>
-            <a href="#desk">AI Desk</a>
-            <a href="mailto:nicholas@crownmerchantfinancial.com">Contact</a>
+            <a href="mailto:nicholas@crownmerchantfinancial.com">Email</a>
+            <a href="/">Back to main site</a>
+          </div>
+          <div class="footer-disclaimer">
+            CMF operates as an insurance agency and does not guarantee
+            successful placement or financing of any project. All coverage is
+            subject to underwriting, carrier approval, and applicable law.
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script>
+      // Set current year
       document.getElementById("year").textContent = new Date().getFullYear();
 
+      // Scroll reveal animation
       const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -100px 0px",
@@ -738,15 +1057,19 @@
         observer.observe(el);
       });
 
+      // Smooth scroll for in-page links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
+          const href = this.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
           }
         });
       });
