@@ -420,9 +420,240 @@
         mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>')
           center / contain no-repeat;
       }
+      /* Founders */
+      .founders-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: start;
+      }
+      .profile {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+      }
+      .avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #000;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2));
+        box-shadow: var(--glow);
+      }
+      .profile h3 {
+        color: var(--ink);
+        margin: 0 0 6px;
+        font-size: 1.15rem;
+      }
+      .bullets {
+        margin-top: 10px;
+        list-style: none;
+        padding-left: 0;
+        color: #cfcfcf;
+      }
+      .bullets li {
+        position: relative;
+        padding-left: 18px;
+        margin: 6px 0;
+      }
+      .bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.6em;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gold);
+      }
+      .cred-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .stat {
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        border-radius: 12px;
+        background: #0a0a0a;
+        padding: 14px;
+        text-align: center;
+      }
+      .stat-num {
+        display: block;
+        color: var(--gold);
+        font-weight: 900;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+      }
+      .stat-label {
+        display: block;
+        color: #cfcfcf;
+        font-size: 0.9rem;
+      }
+
+      /* Testimonials */
+      .t-wrap {
+        margin-top: 10px;
+      }
+      .t-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+      .t-card {
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 16px;
+        padding: calc(var(--pad) * 1.1);
+        background: linear-gradient(
+          135deg,
+          rgba(5, 5, 5, 0.95) 0%,
+          rgba(0, 0, 0, 0.95) 100%
+        );
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+          inset 0 0 0 1px rgba(212, 175, 55, 0.12);
+      }
+      .t-quote {
+        color: #ddd;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      .t-footer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .t-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2));
+        color: #000;
+        font-weight: 900;
+      }
+      .t-name {
+        font-weight: 800;
+        color: var(--ink);
+      }
+      .t-role {
+        color: #bfbfbf;
+        font-size: 0.92rem;
+      }
+      .stars {
+        display: inline-flex;
+        gap: 4px;
+        margin-bottom: 10px;
+      }
+      .star {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        background: conic-gradient(
+          from 0deg,
+          var(--gold) 0 75%,
+          rgba(212, 175, 55, 0.4) 75% 100%
+        );
+        -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>')
+          center / contain no-repeat;
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>')
+          center / contain no-repeat;
+      }
+
+      /* Announcement / scarcity */
+      .announce {
+        position: sticky;
+        top: 0;
+        z-index: 11;
+        background: linear-gradient(
+          90deg,
+          rgba(212, 175, 55, 0.15),
+          rgba(184, 144, 35, 0.15)
+        );
+        color: #fff;
+        border-bottom: 1px solid var(--line);
+        text-align: center;
+      }
+      .announce .inner {
+        width: min(980px, 92%);
+        margin: auto;
+        padding: 10px 0;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .pill {
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        color: var(--gold);
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .countdown {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .cd-box {
+        border: 1px solid rgba(212, 175, 55, 0.35);
+        border-radius: 10px;
+        padding: 0.25rem 0.5rem;
+        background: #050505;
+        color: #fff;
+        min-width: 42px;
+        text-align: center;
+        font-weight: 800;
+      }
+
+      /* Stepper under hero CTA */
+      .stepper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .step {
+        border: 1px dashed rgba(212, 175, 55, 0.35);
+        border-radius: 10px;
+        padding: 0.5rem 0.6rem;
+        color: #cfcfcf;
+        font-size: 0.95rem;
+      }
+      .step strong {
+        color: var(--gold);
+      }
+
+      /* Legal disclaimer */
+      .legal {
+        color: #9a9a9a;
+        font-size: 0.9rem;
+      }
+      .legal a {
+        color: #c8b26a;
+      }
     </style>
   </head>
   <body>
+    <div class="announce">
+      <div class="inner">
+        <span class="pill"
+          >Cohort opens <span id="cohortDate">Mar 3</span></span
+        >
+        <div class="countdown" aria-label="Countdown to next cohort">
+          <span class="cd-box"><span id="dd">00</span>d</span>
+          <span class="cd-box"><span id="hh">00</span>h</span>
+          <span class="cd-box"><span id="mm">00</span>m</span>
+          <span class="cd-box"><span id="ss">00</span>s</span>
+        </div>
+        <span class="pill"><span id="seatsLeft">10</span> seats left</span>
+      </div>
+    </div>
     <header>
       <div class="container nav">
         <div class="brand">
@@ -437,9 +668,11 @@
       <section class="hero">
         <div class="container">
           <div class="kicker">Insurance & Sales Academy</div>
-          <h1>Get licensed, trained, and placed — guaranteed.</h1>
+          <h1>Fast‑track your license and a producing seat in 90 days.</h1>
           <p class="sub">
-            Watch the short video, then apply. Cohorts review within 24 hours.
+            For motivated closers and career‑starters who want real skills,
+            mentorship, and placement pathways. Watch the VSL, then apply to
+            join this month’s cohort.
           </p>
           <div class="video">
             <iframe
@@ -450,12 +683,19 @@
             ></iframe>
           </div>
           <div class="cta" id="apply">
-            <a class="btn gold" id="applyLink" href="#">Apply Now</a>
+            <a class="btn gold" id="applyLink" href="#"
+              >Apply to Join This Cohort</a
+            >
             <a
               class="btn outline"
               href="mailto:nicholas@crownmerchantfinancial.com"
               >Email Us</a
             >
+          </div>
+          <div class="stepper" aria-label="Application steps">
+            <div class="step"><strong>1.</strong> Submit application</div>
+            <div class="step"><strong>2.</strong> Auto‑book call</div>
+            <div class="step"><strong>3.</strong> Get decisions within 24h</div>
           </div>
         </div>
       </section>
@@ -639,6 +879,19 @@
           </p>
         </div>
       </section>
+      <!-- LEGAL / DISCLAIMER -->
+      <section id="legal" class="legal">
+        <div class="container">
+          <h2 style="color: var(--gold); margin-bottom: 8px">Transparency</h2>
+          <p>
+            Training quality and outcomes matter. We share frameworks, drills,
+            and mentorship that have helped graduates pass licensing exams and
+            enter producing roles. However, results vary by individual effort,
+            state requirements, and market conditions. CMF does not guarantee
+            earnings or job placement.
+          </p>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -662,6 +915,32 @@
         { rootMargin: "-8% 0px -8% 0px", threshold: 0.12 }
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      // Countdown timer (set your cohort start date here)
+      const start = new Date(new Date().getFullYear(), 2, 3, 12, 0, 0); // Mar 3, 12:00 local
+      const dd = document.getElementById("dd");
+      const hh = document.getElementById("hh");
+      const mm = document.getElementById("mm");
+      const ss = document.getElementById("ss");
+      const seatsEl = document.getElementById("seatsLeft");
+      const cohortDateEl = document.getElementById("cohortDate");
+      cohortDateEl.textContent = start.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+      });
+      function tick() {
+        const now = new Date();
+        const diff = Math.max(0, start - now);
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        dd.textContent = String(d).padStart(2, "0");
+        hh.textContent = String(h).padStart(2, "0");
+        mm.textContent = String(m).padStart(2, "0");
+        ss.textContent = String(s).padStart(2, "0");
+      }
+      tick();
+      setInterval(tick, 1000);
     </script>
   </body>
 </html>
