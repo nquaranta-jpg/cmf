@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>CMF Art Risk Desk</title>
+
+    <style>
+      :root {
+        --bg: #000000;
+        --orange: #ff6b35;
+        --orange-bright: #ff8c5a;
+        --white: #ffffff;
+        --gray: #a0a0a0;
+        --gray-light: #6a6a6a;
+        --card-bg: rgba(255, 107, 53, 0.03);
+        --card-border: rgba(255, 107, 53, 0.15);
+        --card-border-strong: rgba(255, 107, 53, 0.3);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Helvetica Neue", sans-serif;
+        background: var(--bg);
+        color: var(--white);
+        line-height: 1.7;
+        font-weight: 300;
+        letter-spacing: 0.2px;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--orange);
+        text-decoration: none;
+        transition: 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--orange-bright);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+
+      /* Sections */
+      section {
+        padding: 140px 0;
+        border-top: 1px solid rgba(255, 107, 53, 0.1);
+      }
+
+      .section-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(20px);
+        border-radius: 8px;
+        padding: 48px;
+        transition: 0.3s ease;
+      }
+
+      .section-card:hover {
+        border-color: var(--card-border-strong);
+      }
+
+      .section-title {
+        font-size: clamp(2.2rem, 5vw, 3.4rem);
+        font-weight: 300;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+      }
+
+      .section-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--gray-light);
+        margin-bottom: 40px;
+        font-weight: 400;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 200px 0 160px;
+        text-align: center;
+        border-top: none;
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 8vw, 6.4rem);
+        line-height: 1.1;
+        font-weight: 300;
+        letter-spacing: -2px;
+        margin-bottom: 32px;
+      }
+
+      .hero-sub {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        color: var(--gray);
+        max-width: 850px;
+        margin: 0 auto 40px;
+      }
+
+      .hero-meta {
+        font-size: 0.9rem;
+        color: var(--gray-light);
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      /* Grids */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .item {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 32px;
+        transition: 0.3s ease;
+      }
+
+      .item:hover {
+        border-color: var(--card-border-strong);
+        transform: translateY(-3px);
+      }
+
+      .item h3 {
+        color: var(--white);
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+        font-weight: 400;
+      }
+
+      .item p {
+        font-size: 0.95rem;
+        color: var(--gray);
+      }
+
+      .pill-label {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        border-radius: 999px;
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        padding: 4px 10px;
+        margin-bottom: 10px;
+      }
+
+      /* CTA */
+      .cta-card {
+        text-align: center;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 64px;
+      }
+
+      .cta-card h2 {
+        font-size: clamp(2.4rem, 5vw, 3.4rem);
+        margin-bottom: 16px;
+        font-weight: 300;
+        letter-spacing: -1px;
+      }
+
+      .cta-sub {
+        color: var(--gray);
+        font-size: 1.05rem;
+        margin-bottom: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+
+      .cta-meta {
+        font-size: 0.85rem;
+        color: var(--gray-light);
+      }
+
+      .btn-primary {
+        background: var(--orange);
+        color: #000;
+        padding: 14px 32px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 400;
+      }
+
+      .btn-primary:hover {
+        background: var(--orange-bright);
+      }
+
+      /* Fade-in */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1024px) {
+        .container {
+          padding: 0 24px;
+        }
+
+        .grid-3,
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+
+        .section-card {
+          padding: 32px;
+        }
+
+        .cta-card {
+          padding: 40px 24px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HERO -->
+    <section class="hero fade-in">
+      <div class="container">
+        <h1 class="hero-title">CMF Art Risk Desk</h1>
+        <p class="hero-sub">
+          Insurance and risk advisory for fine art, collections, and cultural
+          assets — built for galleries, museums, private collectors, and storage
+          operators.
+        </p>
+        <p class="hero-meta">
+          We sit between curators, insurers, and capital: structuring coverage
+          for works on the wall, in transit, in storage, and on loan.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section>
+      <div class="container">
+        <div class="section-card fade-in">
+          <div class="section-label">Context</div>
+          <div class="section-title">Why art needs its own risk language</div>
+          <p
+            style="
+              color: var(--gray);
+              font-size: 1.05rem;
+              line-height: 1.8;
+              margin-bottom: 18px;
+            "
+          >
+            Art does not behave like ordinary property. Values move with taste,
+            provenance, condition, and markets. Works travel, hang in
+            unpredictable environments, and pass through multiple hands and
+            venues every year.
+          </p>
+          <p style="color: var(--gray); font-size: 1.05rem; line-height: 1.8">
+            The Art Risk Desk exists to translate that complexity into clean
+            coverage structures, so curators, lenders, and owners can focus on
+            the work itself instead of worrying about every truck ride,
+            exhibition, and storage unit.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section>
+      <div class="container">
+        <div class="section-card fade-in">
+          <div class="section-label">Services</div>
+          <div class="section-title">What we handle</div>
+
+          <div class="grid-3">
+            <div class="item">
+              <div class="pill-label">Core coverage</div>
+              <h3>Fine art and collections</h3>
+              <p>
+                Scheduled and blanket policies for private collections,
+                galleries, and institutions. Terms built around agreed values,
+                condition reports, and real movement of works.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="pill-label">Transit and logistics</div>
+              <h3>Art in motion</h3>
+              <p>
+                Coverage for domestic and international transit, packing,
+                crating, and handlers. Exhibition loans, art fairs, and
+                multi-stop itineraries included.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="pill-label">Spaces</div>
+              <h3>Galleries, museums, and storage</h3>
+              <p>
+                Property, liability, and art coverage for spaces where works
+                live: viewing rooms, museum halls, climate controlled storage,
+                and hybrid spaces.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="pill-label">Capital</div>
+              <h3>Art-backed lending</h3>
+              <p>
+                Risk frameworks and coverage for lenders using art as
+                collateral. Lender loss payable structures that satisfy bank and
+                private credit requirements.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="pill-label">Programs</div>
+              <h3>Exhibitions and fairs</h3>
+              <p>
+                Show-specific policies for exhibitions, fairs, and traveling
+                shows, including buildout, installation, and de-installation
+                phases.
+              </p>
+            </div>
+
+            <div class="item">
+              <div class="pill-label">Digital edge</div>
+              <h3>Digital and new media</h3>
+              <p>
+                Coverage concepts for digital works, installations, and
+                tech-linked art where value depends on both hardware and
+                intellectual property.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO WE SERVE -->
+    <section>
+      <div class="container">
+        <div class="section-card fade-in">
+          <div class="section-label">Clients</div>
+          <div class="section-title">Who we sit next to</div>
+
+          <div class="grid-3">
+            <div class="item">
+              <h3>Galleries</h3>
+              <p>
+                From first openings to blue-chip programs. Inventory coverage,
+                consignment structures, fairs, and international shipping.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Museums and institutions</h3>
+              <p>
+                Collection and loan coverage, exhibition programs, and
+                collaboration with registrars on condition and movement.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Private collectors</h3>
+              <p>
+                Single owners, families, and foundations. Homes, storage, loans
+                to institutions, and estate planning considerations.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Storage and logistics firms</h3>
+              <p>
+                Climate-controlled storage providers and art-handling companies
+                that need tailored liability and property terms.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Lenders and advisors</h3>
+              <p>
+                Private banks, funds, and art advisors that need clear risk
+                language around pledged works and collateral.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>Artists and estates</h3>
+              <p>
+                Studio and inventory coverage, archives, and estates managing
+                large bodies of work over long time horizons.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section>
+      <div class="container">
+        <div class="section-card fade-in">
+          <div class="section-label">Approach</div>
+          <div class="section-title">How we work a collection</div>
+
+          <div class="grid-2">
+            <div class="item">
+              <h3>1. Map the works</h3>
+              <p>
+                We build a simple picture of the collection: what exists, where
+                it lives, how it moves, and how it is valued. High-level first,
+                detailed scheduling as needed.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>2. Match coverage to reality</h3>
+              <p>
+                We compare current policies to how the art actually behaves.
+                That includes transit patterns, loan activity, storage
+                conditions, and any planned exhibitions.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>3. Restructure and place</h3>
+              <p>
+                Once gaps and overlaps are clear, we restructure limits, terms,
+                and conditions, then place coverage with markets that understand
+                art risk.
+              </p>
+            </div>
+
+            <div class="item">
+              <h3>4. Stay with the movement</h3>
+              <p>
+                Collections and programs change. We stay in the loop on major
+                acquisitions, sales, and shows, so coverage keeps up with the
+                work rather than lagging behind it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+      <div class="container">
+        <div class="cta-card fade-in">
+          <h2>Connect with the Art Risk Desk</h2>
+          <p class="cta-sub">
+            If you are planning a show, moving a collection, or rethinking how
+            your works are insured, we can audit your current coverage and map a
+            cleaner structure.
+          </p>
+          <div class="cta-buttons">
+            <a
+              class="btn-primary"
+              href="mailto:nicholas@crownmerchantfinancial.com"
+              >Contact CMF</a
+            >
+            <a class="btn-primary" href="index.html">Back to CMF main site</a>
+          </div>
+          <p class="cta-meta">
+            Simple starting point: share your current policies and a high-level
+            list of works and locations. We handle the rest.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
