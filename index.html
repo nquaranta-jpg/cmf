@@ -28,81 +28,6 @@
         padding: 0;
       }
 
-      /* Ramp Map */
-      .ramp-steps {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .ramp-step {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 28px 24px;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .ramp-step:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .ramp-step-badge {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
-
-      .ramp-step-title {
-        font-size: 1.1rem;
-        font-weight: 400;
-        letter-spacing: -0.2px;
-        margin-bottom: 10px;
-        color: var(--white);
-      }
-
-      .ramp-step-body {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      .ramp-step-body ul {
-        list-style: none;
-        padding-left: 0;
-        margin-top: 8px;
-      }
-
-      .ramp-step-body li {
-        position: relative;
-        padding-left: 16px;
-        margin-bottom: 4px;
-      }
-
-      .ramp-step-body li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: var(--orange);
-        font-size: 0.8rem;
-      }
-
-      /* Mobile */
-      @media (max-width: 1024px) {
-        .ramp-steps {
-          grid-template-columns: 1fr;
-        }
-      }
-
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
           "Helvetica Neue", sans-serif;
@@ -129,7 +54,7 @@
         color: var(--orange-bright);
       }
 
-      /* Header */
+      /* Header / Nav */
       header {
         position: fixed;
         top: 0;
@@ -170,6 +95,7 @@
         color: var(--gray);
         font-weight: 300;
         letter-spacing: 0.5px;
+        cursor: pointer;
       }
 
       .nav-link:hover {
@@ -187,6 +113,74 @@
       .nav-cta:hover {
         background: var(--orange);
         color: #000;
+      }
+
+      /* Dropdown (desktop + base) */
+      .nav-item.dropdown {
+        position: relative;
+      }
+
+      .dropdown-toggle {
+        display: none;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        display: none;
+        flex-direction: column;
+        min-width: 210px;
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        padding: 12px 0;
+        border-radius: 8px;
+        z-index: 999;
+      }
+
+      .dropdown-link {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        color: var(--gray);
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .dropdown-link:hover {
+        color: var(--white);
+        background: rgba(255, 107, 53, 0.08);
+      }
+
+      @media (min-width: 769px) {
+        .nav-item.dropdown:hover .dropdown-menu {
+          display: flex;
+        }
+      }
+
+      /* Hamburger toggle */
+      .nav-toggle {
+        display: none;
+      }
+
+      .nav-toggle-label {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        cursor: pointer;
+      }
+
+      .nav-toggle-label span {
+        display: block;
+        width: 16px;
+        height: 2px;
+        background: var(--white);
       }
 
       /* Container */
@@ -415,6 +409,74 @@
         font-weight: 300;
       }
 
+      /* Ramp Map */
+      .ramp-steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .ramp-step {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 28px 24px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .ramp-step:hover {
+        background: rgba(255, 107, 53, 0.05);
+        border-color: var(--card-border-strong);
+        transform: translateY(-3px);
+      }
+
+      .ramp-step-badge {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .ramp-step-title {
+        font-size: 1.1rem;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .ramp-step-body {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--gray);
+        font-weight: 300;
+      }
+
+      .ramp-step-body ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 8px;
+      }
+
+      .ramp-step-body li {
+        position: relative;
+        padding-left: 16px;
+        margin-bottom: 4px;
+      }
+
+      .ramp-step-body li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--orange);
+        font-size: 0.8rem;
+      }
+
       /* Video Section */
       .video-container {
         position: relative;
@@ -632,6 +694,52 @@
         font-weight: 500;
       }
 
+      /* Risk Desks teaser */
+      .risk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .risk-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 24px 24px 26px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+      }
+
+      .risk-card:hover {
+        border-color: var(--card-border-strong);
+        background: rgba(255, 107, 53, 0.05);
+        transform: translateY(-3px);
+      }
+
+      .risk-tag {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 10px;
+      }
+
+      .risk-title {
+        font-size: 1.2rem;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        margin-bottom: 8px;
+        color: var(--white);
+      }
+
+      .risk-body {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--gray);
+      }
+
       /* Insights */
       .insights-list {
         margin-top: 16px;
@@ -801,7 +909,9 @@
         .program-items,
         .testimonial-grid,
         .founder-grid,
-        .stats-bar {
+        .stats-bar,
+        .ramp-steps,
+        .risk-grid {
           grid-template-columns: 1fr;
         }
 
@@ -838,17 +948,95 @@
           gap: 12px;
         }
       }
+
+      /* Mobile nav */
+      @media (max-width: 768px) {
+        .nav {
+          padding: 12px 24px;
+        }
+
+        .nav-toggle-label {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 60px;
+          right: 24px;
+          left: 24px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          background: rgba(0, 0, 0, 0.98);
+          border-radius: 8px;
+          border: 1px solid rgba(255, 107, 53, 0.2);
+          padding: 16px 16px 20px;
+          display: none;
+        }
+
+        .nav-toggle:checked ~ .nav-links {
+          display: flex;
+        }
+
+        .nav-link,
+        .dropdown-label {
+          width: 100%;
+        }
+
+        .nav-cta {
+          align-self: stretch;
+          text-align: center;
+        }
+
+        .dropdown-menu {
+          position: static;
+          margin-top: 4px;
+          border-radius: 6px;
+          border-color: rgba(255, 107, 53, 0.25);
+          background: rgba(0, 0, 0, 0.9);
+        }
+
+        .dropdown-toggle:checked + .dropdown-label + .dropdown-menu {
+          display: flex;
+        }
+      }
     </style>
   </head>
   <body>
     <header>
       <div class="nav">
         <div class="brand">Crown Merchant Financial</div>
+
+        <!-- Mobile nav toggle -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <label for="nav-toggle" class="nav-toggle-label">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
         <div class="nav-links">
           <a href="#program" class="nav-link">Program</a>
           <a href="#founders" class="nav-link">Founders</a>
           <a href="#insights" class="nav-link">Insights</a>
-          <a href="ai-desk.html" class="nav-link">AI Power Risk Desk</a>
+
+          <!-- Risk Desks dropdown -->
+          <div class="nav-item dropdown">
+            <input type="checkbox" id="risk-toggle" class="dropdown-toggle" />
+            <label for="risk-toggle" class="nav-link dropdown-label">
+              Risk Desks
+            </label>
+            <div class="dropdown-menu">
+              <a href="ai-desk.html" class="dropdown-link"
+                >AI Power Risk Desk</a
+              >
+              <a href="solar-desk.html" class="dropdown-link"
+                >Solar Risk Desk</a
+              >
+              <a href="art-desk.html" class="dropdown-link">Art Risk Desk</a>
+            </div>
+          </div>
+
           <a href="#apply" class="nav-cta">Apply</a>
         </div>
       </div>
@@ -1235,6 +1423,47 @@
         </div>
       </section>
 
+      <!-- Risk Desks teaser -->
+      <section id="risk-desks">
+        <div class="container">
+          <div class="section-inner section-card fade-in">
+            <div class="section-header-row">
+              <div class="section-title">Specialized risk desks</div>
+              <div class="section-label">Where CMF deploys you</div>
+            </div>
+
+            <div class="risk-grid">
+              <a href="ai-desk.html" class="risk-card">
+                <div class="risk-tag">AI &amp; Power</div>
+                <div class="risk-title">AI Power Risk Desk</div>
+                <p class="risk-body">
+                  Data centers, mining-to-AI conversions, and power-constrained
+                  infrastructure where insurance unlocks capital.
+                </p>
+              </a>
+
+              <a href="solar-desk.html" class="risk-card">
+                <div class="risk-tag">Energy</div>
+                <div class="risk-title">Solar Risk Desk</div>
+                <p class="risk-body">
+                  Utility-scale and distributed solar, storage, and rooftop
+                  portfolios built on predictable risk frameworks.
+                </p>
+              </a>
+
+              <a href="art-desk.html" class="risk-card">
+                <div class="risk-tag">Art &amp; Culture</div>
+                <div class="risk-title">Art Risk Desk</div>
+                <p class="risk-body">
+                  Galleries, collectors, and institutions needing clean coverage
+                  for works on the wall, in storage, and in transit.
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Insights -->
       <section id="insights">
         <div class="container">
@@ -1323,7 +1552,9 @@
           <div class="footer-links">
             <a href="mailto:nicholas@crownmerchantfinancial.com">Contact</a>
             <a href="#apply">Apply</a>
-            <a href="ai-desk.html">AI Power Risk Desk</a>
+            <a href="ai-desk.html">AI Risk Desk</a>
+            <a href="solar-desk.html">Solar Risk Desk</a>
+            <a href="art-desk.html">Art Risk Desk</a>
           </div>
         </div>
         <p class="footer-disclaimer">
