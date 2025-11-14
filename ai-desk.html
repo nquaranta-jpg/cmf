@@ -334,6 +334,18 @@
         flex-wrap: wrap;
       }
 
+      /* scroll reveal */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       @media (max-width: 900px) {
         .two-col {
           grid-template-columns: 1fr;
@@ -384,7 +396,7 @@
 
     <main class="page">
       <!-- Hero / overview -->
-      <section>
+      <section class="fade-in">
         <div class="section-card">
           <div class="desk-hero-tag">AI POWER RISK DESK</div>
           <h1 class="desk-hero-title">
@@ -405,7 +417,7 @@
       </section>
 
       <!-- Desk focus / ideal accounts -->
-      <section>
+      <section class="fade-in">
         <div class="section-card">
           <div class="section-header-row">
             <div class="section-title">What this desk actually writes</div>
@@ -465,7 +477,7 @@
       </section>
 
       <!-- How the CMF ramp feeds the desk -->
-      <section>
+      <section class="fade-in">
         <div class="section-card">
           <div class="section-header-row">
             <div class="section-title">
@@ -511,7 +523,7 @@
       </section>
 
       <!-- Example deal motion -->
-      <section>
+      <section class="fade-in">
         <div class="section-card">
           <div class="section-header-row">
             <div class="section-title">What a real account flow looks like</div>
@@ -567,7 +579,7 @@
       </section>
 
       <!-- Producer fit -->
-      <section>
+      <section class="fade-in">
         <div class="section-card">
           <div class="section-header-row">
             <div class="section-title">Who actually belongs on this desk</div>
@@ -602,7 +614,7 @@
       </section>
 
       <!-- CTA -->
-      <section>
+      <section class="fade-in">
         <div class="cta-card">
           <h2 class="cta-title">Want a shot at the AI Power desk?</h2>
           <p class="cta-sub">
@@ -630,6 +642,25 @@
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // scroll reveal
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -80px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
