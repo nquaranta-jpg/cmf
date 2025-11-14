@@ -54,7 +54,75 @@
         color: var(--orange-bright);
       }
 
-      /* Header / Nav */
+      /* Ramp Map */
+      .ramp-steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .ramp-step {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 28px 24px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .ramp-step:hover {
+        background: rgba(255, 107, 53, 0.05);
+        border-color: var(--card-border-strong);
+        transform: translateY(-3px);
+      }
+
+      .ramp-step-badge {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .ramp-step-title {
+        font-size: 1.1rem;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .ramp-step-body {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--gray);
+        font-weight: 300;
+      }
+
+      .ramp-step-body ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 8px;
+      }
+
+      .ramp-step-body li {
+        position: relative;
+        padding-left: 16px;
+        margin-bottom: 4px;
+      }
+
+      .ramp-step-body li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--orange);
+        font-size: 0.8rem;
+      }
+
+      /* Header */
       header {
         position: fixed;
         top: 0;
@@ -83,6 +151,10 @@
         white-space: nowrap;
       }
 
+      .brand a {
+        color: var(--white);
+      }
+
       .nav-links {
         display: flex;
         gap: 24px;
@@ -95,7 +167,6 @@
         color: var(--gray);
         font-weight: 300;
         letter-spacing: 0.5px;
-        cursor: pointer;
       }
 
       .nav-link:hover {
@@ -115,72 +186,46 @@
         color: #000;
       }
 
-      /* Dropdown (desktop + base) */
-      .nav-item.dropdown {
-        position: relative;
-      }
-
-      .dropdown-toggle {
-        display: none;
-      }
-
-      .dropdown-menu {
-        position: absolute;
-        top: 32px;
-        left: 0;
-        display: none;
-        flex-direction: column;
-        min-width: 210px;
-        background: rgba(0, 0, 0, 0.92);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 107, 53, 0.2);
-        padding: 12px 0;
-        border-radius: 8px;
-        z-index: 999;
-      }
-
-      .dropdown-link {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-        color: var(--gray);
-        transition: all 0.2s ease;
-        white-space: nowrap;
-      }
-
-      .dropdown-link:hover {
-        color: var(--white);
-        background: rgba(255, 107, 53, 0.08);
-      }
-
-      @media (min-width: 769px) {
-        .nav-item.dropdown:hover .dropdown-menu {
-          display: flex;
-        }
-      }
-
-      /* Hamburger toggle */
+      /* Mobile nav */
       .nav-toggle {
         display: none;
-      }
-
-      .nav-toggle-label {
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
-        width: 32px;
-        height: 32px;
-        border-radius: 999px;
+        background: none;
         border: 1px solid rgba(255, 107, 53, 0.4);
+        border-radius: 999px;
+        padding: 6px 10px;
         cursor: pointer;
       }
 
-      .nav-toggle-label span {
+      .nav-toggle span {
         display: block;
-        width: 16px;
+        width: 18px;
         height: 2px;
         background: var(--white);
+        margin: 3px 0;
+        transition: all 0.3s ease;
+      }
+
+      .nav-links.mobile {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        top: 60px;
+        right: 24px;
+        background: rgba(0, 0, 0, 0.97);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        padding: 16px;
+        min-width: 200px;
+      }
+
+      .nav-links.mobile.open {
+        display: flex;
+      }
+
+      .nav-links.mobile .nav-cta {
+        width: 100%;
+        text-align: center;
       }
 
       /* Container */
@@ -409,74 +454,6 @@
         font-weight: 300;
       }
 
-      /* Ramp Map */
-      .ramp-steps {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .ramp-step {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 28px 24px;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .ramp-step:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .ramp-step-badge {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
-
-      .ramp-step-title {
-        font-size: 1.1rem;
-        font-weight: 400;
-        letter-spacing: -0.2px;
-        margin-bottom: 10px;
-        color: var(--white);
-      }
-
-      .ramp-step-body {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      .ramp-step-body ul {
-        list-style: none;
-        padding-left: 0;
-        margin-top: 8px;
-      }
-
-      .ramp-step-body li {
-        position: relative;
-        padding-left: 16px;
-        margin-bottom: 4px;
-      }
-
-      .ramp-step-body li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: var(--orange);
-        font-size: 0.8rem;
-      }
-
       /* Video Section */
       .video-container {
         position: relative;
@@ -694,52 +671,6 @@
         font-weight: 500;
       }
 
-      /* Risk Desks teaser */
-      .risk-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .risk-card {
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 24px 24px 26px;
-        text-decoration: none;
-        display: block;
-        transition: all 0.3s ease;
-      }
-
-      .risk-card:hover {
-        border-color: var(--card-border-strong);
-        background: rgba(255, 107, 53, 0.05);
-        transform: translateY(-3px);
-      }
-
-      .risk-tag {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        margin-bottom: 10px;
-      }
-
-      .risk-title {
-        font-size: 1.2rem;
-        font-weight: 400;
-        letter-spacing: -0.2px;
-        margin-bottom: 8px;
-        color: var(--white);
-      }
-
-      .risk-body {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--gray);
-      }
-
       /* Insights */
       .insights-list {
         margin-top: 16px;
@@ -785,6 +716,51 @@
         line-height: 1.7;
         color: var(--gray);
         font-weight: 300;
+      }
+
+      /* Risk Desks teaser */
+      .desks-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .desk-card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+        padding: 20px 18px;
+        font-size: 0.9rem;
+        color: var(--gray);
+        transition: all 0.3s ease;
+      }
+
+      .desk-card:hover {
+        border-color: var(--card-border-strong);
+        background: rgba(255, 107, 53, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .desk-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 6px;
+      }
+
+      .desk-title {
+        font-size: 1rem;
+        color: var(--white);
+        margin-bottom: 6px;
+      }
+
+      .desk-link {
+        font-size: 0.8rem;
+        color: var(--orange);
+        margin-top: 8px;
+        display: inline-block;
       }
 
       /* CTA Section */
@@ -888,13 +864,12 @@
           padding-right: 24px;
         }
 
-        .nav {
-          flex-wrap: wrap;
+        .nav-links.desktop {
+          display: none;
         }
 
-        .nav-links {
-          flex-wrap: wrap;
-          justify-content: flex-end;
+        .nav-toggle {
+          display: block;
         }
 
         .hero {
@@ -909,15 +884,17 @@
         .program-items,
         .testimonial-grid,
         .founder-grid,
-        .stats-bar,
-        .ramp-steps,
-        .risk-grid {
+        .stats-bar {
           grid-template-columns: 1fr;
         }
 
         .comparison-row {
           grid-template-columns: 1fr;
           gap: 16px;
+        }
+
+        .desks-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .section-card {
@@ -947,57 +924,9 @@
         .stats-bar {
           gap: 12px;
         }
-      }
 
-      /* Mobile nav */
-      @media (max-width: 768px) {
-        .nav {
-          padding: 12px 24px;
-        }
-
-        .nav-toggle-label {
-          display: flex;
-        }
-
-        .nav-links {
-          position: absolute;
-          top: 60px;
-          right: 24px;
-          left: 24px;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          background: rgba(0, 0, 0, 0.98);
-          border-radius: 8px;
-          border: 1px solid rgba(255, 107, 53, 0.2);
-          padding: 16px 16px 20px;
-          display: none;
-        }
-
-        .nav-toggle:checked ~ .nav-links {
-          display: flex;
-        }
-
-        .nav-link,
-        .dropdown-label {
-          width: 100%;
-        }
-
-        .nav-cta {
-          align-self: stretch;
-          text-align: center;
-        }
-
-        .dropdown-menu {
-          position: static;
-          margin-top: 4px;
-          border-radius: 6px;
-          border-color: rgba(255, 107, 53, 0.25);
-          background: rgba(0, 0, 0, 0.9);
-        }
-
-        .dropdown-toggle:checked + .dropdown-label + .dropdown-menu {
-          display: flex;
+        .desks-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -1005,38 +934,40 @@
   <body>
     <header>
       <div class="nav">
-        <div class="brand">Crown Merchant Financial</div>
+        <div class="brand">
+          <a href="index.html">Crown Merchant Financial</a>
+        </div>
 
-        <!-- Mobile nav toggle -->
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-        <label for="nav-toggle" class="nav-toggle-label">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-
-        <div class="nav-links">
+        <!-- Desktop nav -->
+        <div class="nav-links desktop">
           <a href="#program" class="nav-link">Program</a>
           <a href="#founders" class="nav-link">Founders</a>
           <a href="#insights" class="nav-link">Insights</a>
+          <a href="#desks" class="nav-link">Risk Desks</a>
+          <a href="ai-desk.html" class="nav-link">AI Power Desk</a>
+          <a href="solar-desk.html" class="nav-link">Solar Desk</a>
+          <a href="art-desk.html" class="nav-link">Art Insurance</a>
+          <a href="life-health-desk.html" class="nav-link">Life &amp; Health</a>
+          <a href="#apply" class="nav-cta">Apply</a>
+        </div>
 
-          <!-- Risk Desks dropdown -->
-          <div class="nav-item dropdown">
-            <input type="checkbox" id="risk-toggle" class="dropdown-toggle" />
-            <label for="risk-toggle" class="nav-link dropdown-label">
-              Risk Desks
-            </label>
-            <div class="dropdown-menu">
-              <a href="ai-desk.html" class="dropdown-link"
-                >AI Power Risk Desk</a
-              >
-              <a href="solar-desk.html" class="dropdown-link"
-                >Solar Risk Desk</a
-              >
-              <a href="art-desk.html" class="dropdown-link">Art Risk Desk</a>
-            </div>
-          </div>
+        <!-- Mobile toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
+        <!-- Mobile nav -->
+        <div class="nav-links mobile">
+          <a href="#program" class="nav-link">Program</a>
+          <a href="#founders" class="nav-link">Founders</a>
+          <a href="#insights" class="nav-link">Insights</a>
+          <a href="#desks" class="nav-link">Risk Desks</a>
+          <a href="ai-desk.html" class="nav-link">AI Power Desk</a>
+          <a href="solar-desk.html" class="nav-link">Solar Desk</a>
+          <a href="art-desk.html" class="nav-link">Art Insurance</a>
+          <a href="life-health-desk.html" class="nav-link">Life &amp; Health</a>
           <a href="#apply" class="nav-cta">Apply</a>
         </div>
       </div>
@@ -1423,47 +1354,6 @@
         </div>
       </section>
 
-      <!-- Risk Desks teaser -->
-      <section id="risk-desks">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Specialized risk desks</div>
-              <div class="section-label">Where CMF deploys you</div>
-            </div>
-
-            <div class="risk-grid">
-              <a href="ai-desk.html" class="risk-card">
-                <div class="risk-tag">AI &amp; Power</div>
-                <div class="risk-title">AI Power Risk Desk</div>
-                <p class="risk-body">
-                  Data centers, mining-to-AI conversions, and power-constrained
-                  infrastructure where insurance unlocks capital.
-                </p>
-              </a>
-
-              <a href="solar-desk.html" class="risk-card">
-                <div class="risk-tag">Energy</div>
-                <div class="risk-title">Solar Risk Desk</div>
-                <p class="risk-body">
-                  Utility-scale and distributed solar, storage, and rooftop
-                  portfolios built on predictable risk frameworks.
-                </p>
-              </a>
-
-              <a href="art-desk.html" class="risk-card">
-                <div class="risk-tag">Art &amp; Culture</div>
-                <div class="risk-title">Art Risk Desk</div>
-                <p class="risk-body">
-                  Galleries, collectors, and institutions needing clean coverage
-                  for works on the wall, in storage, and in transit.
-                </p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Insights -->
       <section id="insights">
         <div class="container">
@@ -1518,6 +1408,81 @@
         </div>
       </section>
 
+      <!-- Risk Desks teaser -->
+      <section id="desks">
+        <div class="container">
+          <div class="section-inner section-card fade-in">
+            <div class="section-header-row">
+              <div class="section-title">Where the desks sit</div>
+              <div class="section-label">Risk desks</div>
+            </div>
+
+            <p
+              style="
+                font-size: 0.95rem;
+                color: var(--gray);
+                margin-bottom: 16px;
+              "
+            >
+              The CMF ramp is how we find and train producers for the desks we
+              actually intend to build on: AI power and data centers, solar and
+              infrastructure, art and specialty assets, and core life &amp;
+              health.
+            </p>
+
+            <div class="desks-grid">
+              <div class="desk-card">
+                <div class="desk-label">Frontier · Power &amp; compute</div>
+                <div class="desk-title">AI Power Risk Desk</div>
+                <p>
+                  Data centers, mining conversions, and new power assets where
+                  insurance unlocks financing.
+                </p>
+                <a href="ai-desk.html" class="desk-link"
+                  >View AI Power Desk →</a
+                >
+              </div>
+
+              <div class="desk-card">
+                <div class="desk-label">Energy · Transition</div>
+                <div class="desk-title">Solar Risk Desk</div>
+                <p>
+                  Rooftop, community, and utility-scale solar where coverage
+                  makes the project bankable.
+                </p>
+                <a href="solar-desk.html" class="desk-link"
+                  >View Solar Desk →</a
+                >
+              </div>
+
+              <div class="desk-card">
+                <div class="desk-label">Assets · Collections</div>
+                <div class="desk-title">Art Insurance Desk</div>
+                <p>
+                  Art, collections, and cultural assets that need real risk
+                  frameworks, not just storage.
+                </p>
+                <a href="art-desk.html" class="desk-link"
+                  >View Art Insurance Desk →</a
+                >
+              </div>
+
+              <div class="desk-card">
+                <div class="desk-label">Human · Core</div>
+                <div class="desk-title">Life &amp; Health Desk</div>
+                <p>
+                  Founder, operator, and household protection — the human layer
+                  every other desk sits on.
+                </p>
+                <a href="life-health-desk.html" class="desk-link"
+                  >View Life &amp; Health Desk →</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- CTA Section -->
       <section class="cta-section" id="apply">
         <div class="container">
@@ -1552,9 +1517,10 @@
           <div class="footer-links">
             <a href="mailto:nicholas@crownmerchantfinancial.com">Contact</a>
             <a href="#apply">Apply</a>
-            <a href="ai-desk.html">AI Risk Desk</a>
-            <a href="solar-desk.html">Solar Risk Desk</a>
-            <a href="art-desk.html">Art Risk Desk</a>
+            <a href="ai-desk.html">AI Power Desk</a>
+            <a href="solar-desk.html">Solar Desk</a>
+            <a href="art-desk.html">Art Insurance</a>
+            <a href="life-health-desk.html">Life &amp; Health Desk</a>
           </div>
         </div>
         <p class="footer-disclaimer">
@@ -1593,15 +1559,26 @@
       // Smooth scroll for anchor links (only in-page)
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
+          const href = this.getAttribute("href");
+          const target = document.querySelector(href);
           if (target) {
+            e.preventDefault();
             target.scrollIntoView({
               behavior: "smooth",
               block: "start",
             });
+            // close mobile nav on click
+            mobileNav.classList.remove("open");
           }
         });
+      });
+
+      // Mobile nav toggle
+      const navToggle = document.querySelector(".nav-toggle");
+      const mobileNav = document.querySelector(".nav-links.mobile");
+
+      navToggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("open");
       });
     </script>
   </body>
