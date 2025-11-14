@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <title>CMF Solar Risk Desk</title>
-
+    <title>Solar Risk Desk – Crown Merchant Financial</title>
+    <meta
+      name="description"
+      content="Utility-scale solar, distributed portfolios, and storage-linked projects — the Solar Risk Desk at Crown Merchant Financial."
+    />
     <style>
       :root {
         --bg: #000000;
@@ -33,345 +35,591 @@
         line-height: 1.7;
         font-weight: 300;
         letter-spacing: 0.2px;
-        overflow-x: hidden;
       }
 
       a {
         color: var(--orange);
         text-decoration: none;
+        transition: all 0.25s ease;
       }
+
       a:hover {
         color: var(--orange-bright);
       }
 
-      /* Container */
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 48px;
+      /* header / nav */
+      header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+        backdrop-filter: blur(20px);
+        z-index: 50;
       }
 
-      /* Sections */
+      .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        font-size: 0.9rem;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 0.85rem;
+      }
+
+      .nav-link {
+        color: var(--gray);
+      }
+
+      .nav-link:hover {
+        color: var(--white);
+      }
+
+      .breadcrumb {
+        font-size: 0.78rem;
+        color: var(--gray-light);
+      }
+
+      .breadcrumb span {
+        color: var(--gray-light);
+      }
+
+      .breadcrumb a {
+        color: var(--gray);
+      }
+
+      .breadcrumb a:hover {
+        color: var(--white);
+      }
+
+      .nav-cta {
+        padding: 6px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        color: var(--orange);
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+
+      .nav-cta:hover {
+        background: var(--orange);
+        color: #000;
+      }
+
+      /* layout */
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 24px 64px;
+      }
+
       section {
-        padding: 140px 0;
-        border-top: 1px solid rgba(255, 107, 53, 0.1);
+        margin-bottom: 72px;
       }
 
       .section-card {
         background: var(--card-bg);
+        border-radius: 10px;
         border: 1px solid var(--card-border);
-        backdrop-filter: blur(20px);
-        border-radius: 8px;
-        padding: 48px;
-        transition: 0.3s ease;
+        padding: 40px 32px;
       }
 
       .section-card:hover {
         border-color: var(--card-border-strong);
       }
 
+      .section-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 32px;
+        margin-bottom: 32px;
+      }
+
       .section-title {
-        font-size: clamp(2.2rem, 5vw, 3.4rem);
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
         font-weight: 300;
-        letter-spacing: -1px;
-        margin-bottom: 20px;
+        letter-spacing: -0.4px;
       }
 
       .section-label {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 3px;
         color: var(--gray-light);
-        margin-bottom: 40px;
-        font-weight: 400;
+        white-space: nowrap;
       }
 
-      /* Hero */
-      .hero {
-        padding: 200px 0 160px;
-        text-align: center;
-        border-top: none;
+      /* hero */
+      .desk-hero-tag {
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gray-light);
+        margin-bottom: 16px;
       }
 
-      .hero-title {
-        font-size: clamp(3rem, 8vw, 6.8rem);
-        line-height: 1.1;
+      .desk-hero-title {
+        font-size: clamp(2.4rem, 5vw, 3.3rem);
+        letter-spacing: -1.2px;
         font-weight: 300;
-        letter-spacing: -2px;
-        margin-bottom: 40px;
+        margin-bottom: 16px;
       }
 
-      .hero-sub {
-        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      .desk-hero-sub {
+        font-size: 1.05rem;
         color: var(--gray);
-        max-width: 850px;
-        margin: 0 auto 40px;
+        max-width: 680px;
+        margin-bottom: 20px;
       }
 
-      /* Grid */
-      .grid-3 {
+      .desk-hero-meta {
+        font-size: 0.85rem;
+        color: var(--gray-light);
+      }
+
+      /* grids */
+      .two-col {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        margin-top: 32px;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: flex-start;
       }
 
-      .item {
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 32px;
-        transition: 0.3s ease;
+      .three-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
       }
 
-      .item:hover {
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .item h3 {
-        color: var(--white);
-        font-size: 1.4rem;
+      .pill-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
         margin-bottom: 12px;
-        font-weight: 400;
       }
 
-      .item p {
-        font-size: 0.95rem;
+      .copy-muted {
         color: var(--gray);
+        font-size: 0.95rem;
+      }
+
+      .bullet-list {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+
+      .bullet-list li {
+        position: relative;
+        padding-left: 18px;
+        margin-bottom: 6px;
+        color: var(--gray);
+        font-size: 0.93rem;
+      }
+
+      .bullet-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        color: var(--orange);
+        font-size: 0.85rem;
+      }
+
+      .card-muted {
+        background: var(--card-bg);
+        border-radius: 10px;
+        border: 1px dashed var(--card-border);
+        padding: 20px 18px;
+        font-size: 0.9rem;
+        color: var(--gray);
+      }
+
+      .card-strong {
+        background: rgba(255, 107, 53, 0.06);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        padding: 20px 18px;
+        font-size: 0.9rem;
+        color: var(--white);
+      }
+
+      .kicker-small {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--gray-light);
+        margin-bottom: 4px;
+      }
+
+      .subheading {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        font-weight: 400;
       }
 
       /* CTA */
       .cta-card {
         text-align: center;
         background: var(--card-bg);
-        border: 1px solid var(--card-border);
         border-radius: 12px;
-        padding: 64px;
+        border: 1px solid var(--card-border);
+        padding: 44px 28px;
       }
 
-      .cta-card h2 {
-        font-size: clamp(2.4rem, 5vw, 3.4rem);
-        margin-bottom: 16px;
+      .cta-title {
+        font-size: clamp(2rem, 4vw, 2.6rem);
         font-weight: 300;
+        letter-spacing: -0.8px;
+        margin-bottom: 10px;
       }
 
       .cta-sub {
+        font-size: 0.98rem;
         color: var(--gray);
-        font-size: 1.1rem;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
       }
 
-      .cta-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
+      .cta-meta {
+        font-size: 0.82rem;
+        color: var(--gray-light);
+        margin-top: 10px;
       }
 
       .btn-primary {
         background: var(--orange);
         color: #000;
-        padding: 16px 40px;
+        padding: 14px 32px;
         border-radius: 999px;
         border: none;
         cursor: pointer;
-        font-size: 1rem;
-        font-weight: 400;
+        font-size: 0.95rem;
+        letter-spacing: 0.4px;
       }
 
       .btn-primary:hover {
         background: var(--orange-bright);
+        transform: translateY(-1px);
       }
 
-      /* Fade-in */
-      .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-      }
-      .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
+      /* footer */
+      footer {
+        border-top: 1px solid rgba(255, 107, 53, 0.12);
+        padding: 28px 24px 40px;
+        font-size: 0.78rem;
+        color: var(--gray-light);
       }
 
-      @media (max-width: 1024px) {
-        .grid-3 {
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 900px) {
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .three-col {
           grid-template-columns: 1fr;
         }
-        .container {
-          padding: 0 24px;
-        }
+
         .section-card {
-          padding: 32px;
+          padding: 30px 22px;
+        }
+
+        .page {
+          padding-top: 110px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .nav {
+          padding-inline: 16px;
+        }
+        .page {
+          padding-inline: 16px;
         }
       }
     </style>
   </head>
-
   <body>
-    <!-- HERO -->
-    <section class="hero fade-in">
-      <div class="container">
-        <h1 class="hero-title">CMF Solar Risk Desk</h1>
-        <p class="hero-sub">
-          Insurance and risk structuring for solar, microgrids, battery storage,
-          and behind-the-meter power systems — built for developers, lenders,
-          and AI compute buyers.
-        </p>
+    <header>
+      <div class="nav">
+        <div>
+          <div class="brand">Crown Merchant Financial</div>
+          <div class="breadcrumb">
+            <a href="index.html">Academy</a> <span>›</span>
+            <span>Solar Risk Desk</span>
+          </div>
+        </div>
+        <div class="nav-right">
+          <a href="ai-desk.html" class="nav-link">AI Power</a>
+          <a href="life-health-desk.html" class="nav-link">Life &amp; Health</a>
+          <a href="art-desk.html" class="nav-link">Art</a>
+          <a href="index.html#apply" class="nav-cta">Apply to Ramp</a>
+        </div>
       </div>
-    </section>
+    </header>
 
-    <!-- WHY SOLAR MATTERS -->
-    <section>
-      <div class="container">
-        <div class="section-card fade-in">
-          <div class="section-label">Context</div>
-          <div class="section-title">Why Solar Now</div>
-          <p style="color: var(--gray); font-size: 1.1rem; line-height: 1.8">
-            AI compute demand is outpacing grid capacity. Solar + storage +
-            microgrid systems are now the fastest, most flexible way to bring
-            new megawatts online. But every project must navigate complex
-            insurance, lender requirements, construction risk, and revenue
-            guarantees.
+    <main class="page">
+      <!-- Hero / overview -->
+      <section>
+        <div class="section-card">
+          <div class="desk-hero-tag">SOLAR RISK DESK</div>
+          <h1 class="desk-hero-title">
+            Coverage for solar as a real asset, not a science project.
+          </h1>
+          <p class="desk-hero-sub">
+            The Solar Risk Desk focuses on utility-scale solar, storage-linked
+            projects, and structured portfolios where coverage is woven into
+            lender and investor requirements — not treated as an afterthought.
+          </p>
+          <p class="desk-hero-meta">
+            Producers from the CMF ramp learn how to talk in the language of
+            project finance, PPAs, and long-term asset performance so they can
+            sit across from sponsors, not just small-ticket buyers.
           </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SERVICES -->
-    <section>
-      <div class="container">
-        <div class="section-card fade-in">
-          <div class="section-label">Services</div>
-          <div class="section-title">What We Bridge</div>
+      <!-- Desk focus / ideal accounts -->
+      <section>
+        <div class="section-card">
+          <div class="section-header-row">
+            <div class="section-title">What this desk actually writes</div>
+            <div class="section-label">Desk focus · Account types</div>
+          </div>
 
-          <div class="grid-3">
-            <div class="item">
-              <h3>Builder’s Risk</h3>
-              <p>
-                Coverage for EPC, construction, trackers, inverters,
-                transformers, and mounting systems. Structured to meet lender
-                requirements.
+          <div class="three-col">
+            <div>
+              <div class="pill-label">Core focus</div>
+              <p class="copy-muted">
+                We concentrate on solar projects with real capital behind them
+                and a clear operating story:
               </p>
+              <ul class="bullet-list">
+                <li>Utility-scale solar farms (with or without storage)</li>
+                <li>Commercial and industrial rooftop portfolios</li>
+                <li>Community solar and distributed project roll-ups</li>
+                <li>Solar + storage hybrids tied to PPAs or tariff programs</li>
+              </ul>
             </div>
 
-            <div class="item">
-              <h3>Operational Coverage</h3>
-              <p>
-                Property, equipment breakdown, revenue loss, and liability for
-                the completed solar or hybrid power asset.
+            <div>
+              <div class="pill-label">Lines &amp; structure</div>
+              <p class="copy-muted">
+                The desk helps align coverage with project documents and lender
+                requirements:
               </p>
+              <ul class="bullet-list">
+                <li>Construction and operational all-risk property</li>
+                <li>Delay in start-up and business interruption</li>
+                <li>General liability and products/completed operations</li>
+                <li>Optional coverages tied to performance and degradation</li>
+              </ul>
             </div>
 
-            <div class="item">
-              <h3>Solar → AI Power Structuring</h3>
-              <p>
-                Risk frameworks and coverage models for pairing solar developers
-                with AI compute tenants or mining operators.
+            <div>
+              <div class="pill-label">Ideal accounts</div>
+              <p class="copy-muted">
+                The best fits are sponsors and developers who are already
+                thinking in portfolios and vintages:
               </p>
-            </div>
-
-            <div class="item">
-              <h3>Microgrids & BESS</h3>
-              <p>
-                Risk mapping and placement for battery systems, backup power
-                layers, and grid-independent designs.
-              </p>
-            </div>
-
-            <div class="item">
-              <h3>PPA & Revenue Risk</h3>
-              <p>
-                Insurance aligned with long-term power purchase agreements and
-                lender underwriting expectations.
-              </p>
-            </div>
-
-            <div class="item">
-              <h3>Developer Advisory</h3>
-              <p>
-                Site reviews, risk memos, lender-ready coverage structures, and
-                AI/compute compatibility assessments.
-              </p>
+              <ul class="bullet-list">
+                <li>Developers with repeat pipelines, not one-offs</li>
+                <li>Funds rolling up operating projects into vehicles</li>
+                <li>Operators building multi-site commercial portfolios</li>
+                <li>
+                  Teams who understand that clean coverage helps raise capital
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- WHO WE SERVE -->
-    <section>
-      <div class="container">
-        <div class="section-card fade-in">
-          <div class="section-label">Clients</div>
-          <div class="section-title">Who We Serve</div>
+      <!-- How CMF ramp feeds the desk -->
+      <section>
+        <div class="section-card">
+          <div class="section-header-row">
+            <div class="section-title">
+              How producers get here from the ramp
+            </div>
+            <div class="section-label">CMF pipeline</div>
+          </div>
 
-          <div class="grid-3">
-            <div class="item">
-              <h3>Solar Developers</h3>
-              <p>
-                Insurance for construction and operation + risk support during
-                capital raises and PPA negotiations.
+          <div class="two-col">
+            <div>
+              <div class="pill-label">From license → desk</div>
+              <p class="copy-muted">
+                Like the AI Power desk, Solar is a second-step destination. We
+                don’t put new licenses on complex project work without tape.
               </p>
+              <ul class="bullet-list">
+                <li>Complete CMF licensing and ramp with strong performance</li>
+                <li>Demonstrate comfort with structured, multi-party deals</li>
+                <li>Show the ability to summarize dense information clearly</li>
+                <li>Handle timelines measured in quarters, not days</li>
+              </ul>
             </div>
 
-            <div class="item">
-              <h3>AI Compute Operators</h3>
-              <p>
-                Coverage and advisory for pairing compute loads with solar,
-                storage, and hybrid microgrids.
-              </p>
-            </div>
-
-            <div class="item">
-              <h3>Mining Sites Converting to AI</h3>
-              <p>
-                Risk frameworks for integrating or acquiring solar to stabilize
-                long-term power supply.
-              </p>
+            <div>
+              <div class="card-strong">
+                <div class="kicker-small">Desk standard</div>
+                <div class="subheading">
+                  You are part producer, part translator.
+                </div>
+                <p>
+                  The Solar Risk Desk needs people who can translate between
+                  engineering, legal documents, and carrier appetites. That
+                  means you must be disciplined with your notes, precise in your
+                  language, and honest about what a policy can and cannot do.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- CTA -->
-    <section>
-      <div class="container">
-        <div class="cta-card fade-in">
-          <h2>Work with the Solar Risk Desk</h2>
+      <!-- Example deal motion -->
+      <section>
+        <div class="section-card">
+          <div class="section-header-row">
+            <div class="section-title">What a real account flow looks like</div>
+            <div class="section-label">Example motion</div>
+          </div>
+
+          <div class="three-col">
+            <div>
+              <div class="pill-label">1. Project intake</div>
+              <p class="copy-muted">
+                Producer gathers details from the developer or sponsor and, when
+                possible, the lender:
+              </p>
+              <ul class="bullet-list">
+                <li>Project size, location, and construction timeline</li>
+                <li>PPA terms or revenue framework</li>
+                <li>EPC and O&amp;M contracts, key counterparties</li>
+                <li>Lender covenants and insurance requirements</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="pill-label">2. Structuring coverage</div>
+              <p class="copy-muted">
+                The desk coordinates coverage to match the real risk, not just a
+                template checklist:
+              </p>
+              <ul class="bullet-list">
+                <li>Align limits and deductibles with lender expectations</li>
+                <li>Clarify construction vs. operational phases</li>
+                <li>Address key exposures like hail, wind, and fire</li>
+                <li>Account for storage where batteries are involved</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="pill-label">3. Portfolio relationship</div>
+              <p class="copy-muted">
+                The goal is to grow with the developer or fund across multiple
+                deals:
+              </p>
+              <ul class="bullet-list">
+                <li>Help standardize coverage across a portfolio</li>
+                <li>Support future acquisitions and refinancings</li>
+                <li>Stay close to changes in regulation and incentives</li>
+                <li>Protect relationships with both carriers and sponsors</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Producer fit -->
+      <section>
+        <div class="section-card">
+          <div class="section-header-row">
+            <div class="section-title">Who actually belongs on this desk</div>
+            <div class="section-label">Producer fit</div>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <div class="pill-label">Signal we look for</div>
+              <ul class="bullet-list">
+                <li>Interest in energy markets, renewables, and policy</li>
+                <li>Patience for long sales cycles with multiple parties</li>
+                <li>Ability to manage detail across documents and timelines</li>
+                <li>
+                  Respect for the fact that real assets have real consequences
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div class="card-muted">
+                <div class="kicker-small">Not required, but helpful</div>
+                <p>
+                  Any prior exposure to solar development, construction, or
+                  project finance is helpful — but the real filter is whether
+                  you can stay organized, think clearly, and communicate in a
+                  way that lenders and underwriters actually trust.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section>
+        <div class="cta-card">
+          <h2 class="cta-title">Want a shot at the Solar desk?</h2>
           <p class="cta-sub">
-            Coverage, structuring, and risk mapping for solar, microgrid, and
-            AI-aligned power projects.
+            Entry to this desk, like the others, runs through the CMF ramp.
+            Execute there first — the Solar Risk Desk pulls from the top of that
+            list.
           </p>
-          <div class="cta-buttons">
-            <a
-              class="btn-primary"
-              href="mailto:nicholas@crownmerchantfinancial.com"
-              >Contact</a
-            >
-            <a class="btn-primary" href="index.html">Back to CMF</a>
-          </div>
+          <a href="index.html#apply" class="btn-primary"
+            >Apply to the CMF ramp</a
+          >
+          <p class="cta-meta">
+            No promises, no shortcuts. Just a transparent path to being
+            considered.
+          </p>
         </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Crown Merchant Financial</div>
+        <div>Solar Risk Desk</div>
       </div>
-    </section>
+    </footer>
 
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      document
-        .querySelectorAll(".fade-in")
-        .forEach((el) => observer.observe(el));
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
