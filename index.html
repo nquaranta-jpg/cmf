@@ -3,23 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <title>Crown Merchant Financial – The 90 Day Ramp</title>
-    <meta
-      name="description"
-      content="The 90-Day Path to a Commercial Risk Seat. Secure your spot on the AI Power Desk."
-    />
+    <title>Crown Merchant Financial | Risk & Capital</title>
     <style>
       :root {
-        --bg: #000000;
-        --orange: #ff6b35;
-        --orange-bright: #ff8c5a;
-        --white: #ffffff;
-        --gray: #a0a0a0;
-        --gray-light: #6a6a6a;
-        --card-bg: rgba(255, 107, 53, 0.03);
-        --card-border: rgba(255, 107, 53, 0.15);
-        --card-border-strong: rgba(255, 107, 53, 0.3);
+        --bg-color: #050505;
+        --card-bg: rgba(20, 20, 20, 0.6);
+        --border-color: rgba(255, 255, 255, 0.1);
+        --text-primary: #ffffff;
+        --text-secondary: #888888;
+        --accent: #ff6b35;
+        --font-main: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
 
       * {
@@ -29,159 +22,146 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-          "Helvetica Neue", sans-serif;
-        background: var(--bg);
-        color: var(--white);
-        line-height: 1.7;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family: var(--font-main);
+        line-height: 1.5;
         overflow-x: hidden;
-        font-weight: 300;
-        letter-spacing: 0.2px;
+        -webkit-font-smoothing: antialiased;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* 1. THE CANVAS (ATOMS) */
+      #atomCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2; /* Behind everything */
+        pointer-events: none;
+      }
+
+      /* 2. THE NOISE TEXTURE (OVERLAY) */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999; /* On top of everything to give texture */
+        opacity: 0.4;
       }
 
       /* UTILITIES */
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+        position: relative;
+        z-index: 1;
+      }
       .hidden {
         display: none !important;
       }
 
-      .blur-content {
-        filter: blur(10px);
-        pointer-events: none;
-        user-select: none;
+      /* TYPOGRAPHY */
+      h1 {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 24px;
       }
 
-      a {
-        color: var(--orange);
-        text-decoration: none;
-        transition: all 0.3s ease;
+      .overline {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: block;
+        font-weight: 600;
       }
 
-      a:hover {
-        color: var(--orange-bright);
+      p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
       }
 
-      /* HEADER (Simpler version) */
+      /* HEADER */
       header {
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 107, 53, 0.1);
-        z-index: 99;
-        padding: 20px 0;
+        width: 100%;
+        padding: 32px 0;
+        z-index: 100;
+        mix-blend-mode: difference;
+      }
+      .brand {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: white;
         text-align: center;
       }
 
-      .brand {
-        font-weight: 400;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        color: var(--white);
-      }
-
-      /* LAYOUT */
-      .container {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 0 60px;
-      }
-
-      section {
-        padding: 100px 0;
-        border-top: 1px solid rgba(255, 107, 53, 0.08);
-      }
-
-      .section-card {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
-        padding: 48px;
-      }
-
-      /* HERO (THE SQUEEZE) */
+      /* HERO SECTION */
       .hero {
-        min-height: 90vh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-top: 140px;
-        border-top: none;
+        align-items: center;
         text-align: center;
-        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
       }
 
-      .hero-kicker {
-        font-size: 0.8rem;
+      /* THE "CRUCIBLE" BUTTON */
+      .btn-glass {
+        margin-top: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-color);
+        color: white;
+        padding: 18px 42px;
+        border-radius: 4px;
+        font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 3px;
-        color: var(--orange);
-        margin-bottom: 24px;
+        letter-spacing: 0.15em;
         font-weight: 600;
-      }
-
-      .hero-title {
-        font-size: clamp(2.5rem, 6vw, 5rem);
-        line-height: 1.1;
-        font-weight: 300;
-        letter-spacing: -2px;
-        margin-bottom: 24px;
-        max-width: 1100px;
-      }
-
-      .hero-sub {
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-        line-height: 1.6;
-        color: var(--gray);
-        max-width: 750px;
-        font-weight: 300;
-        margin-bottom: 40px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .btn-primary {
-        background: var(--orange);
-        color: #000;
-        padding: 20px 50px;
-        border-radius: 999px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        border: none;
         cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
-        box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(4px);
       }
 
-      .btn-primary:hover {
-        background: var(--orange-bright);
+      .btn-glass:hover {
+        background: white;
+        color: black;
         transform: translateY(-2px);
-        box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
       }
 
-      /* MODAL (THE TRAP) */
+      /* MODAL */
       .modal-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
-        z-index: 999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(20px);
+        z-index: 200;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s ease;
+        transition: 0.5s ease;
       }
 
       .modal-overlay.active {
@@ -189,333 +169,359 @@
         pointer-events: auto;
       }
 
-      .modal-content {
-        background: #111;
-        border: 1px solid var(--orange);
-        padding: 40px;
-        border-radius: 12px;
-        max-width: 500px;
-        width: 90%;
-        text-align: center;
-        position: relative;
-      }
-
-      .modal-close {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: none;
-        border: none;
-        color: var(--gray);
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-
-      .modal-title {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-        color: var(--white);
-      }
-
-      .modal-sub {
-        color: var(--gray);
-        margin-bottom: 30px;
-        font-size: 0.9rem;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-        text-align: left;
-      }
-
-      .form-input {
+      .modal-card {
         width: 100%;
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 6px;
+        max-width: 420px;
+        background: #0a0a0a;
+        border: 1px solid var(--border-color);
+        padding: 48px;
+        text-align: center;
+        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+      }
+
+      .input-clean {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #333;
+        padding: 16px 0;
         color: white;
         font-size: 1rem;
-      }
-
-      .form-input:focus {
+        margin-bottom: 24px;
+        border-radius: 0;
         outline: none;
-        border-color: var(--orange);
+        text-align: center;
+        transition: 0.3s;
       }
 
-      .btn-submit {
-        width: 100%;
-        background: var(--orange);
-        color: black;
-        padding: 16px;
+      .input-clean:focus {
+        border-bottom-color: var(--accent);
+      }
+      .input-clean::placeholder {
+        color: #444;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: none;
         border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 1.1rem;
+        color: #444;
         cursor: pointer;
+        font-size: 1.2rem;
       }
 
-      /* GENERAL STYLES FROM ORIGINAL (Preserved for "Behind the Wall") */
-      .video-container {
-        position: relative;
+      /* CONTENT */
+      .content-section {
+        padding: 140px 0;
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(5, 5, 5, 0.8); /* Slight dim behind content */
+        backdrop-filter: blur(10px);
+        min-height: 100vh;
+      }
+
+      .video-wrapper {
+        width: 100%;
         aspect-ratio: 16/9;
         background: #000;
-        border: 1px solid var(--orange);
-        border-radius: 8px;
-        overflow: hidden;
-        margin-top: 24px;
-        margin-bottom: 40px;
+        border: 1px solid var(--border-color);
+        margin-bottom: 60px;
       }
 
-      .video-container iframe {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        inset: 0;
+      /* GRID */
+      .grid-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 0;
+        border-top: 1px solid var(--border-color);
+        border-left: 1px solid var(--border-color);
       }
 
-      /* RESPONSIVE */
-      @media (max-width: 768px) {
-        .container {
-          padding: 0 24px;
+      .grid-item {
+        padding: 40px;
+        border-right: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        transition: 0.3s;
+        background: transparent;
+      }
+
+      .grid-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .grid-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: block;
+        font-family: monospace;
+      }
+
+      .grid-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        font-weight: 400;
+      }
+      .grid-item p {
+        font-size: 0.95rem;
+        margin: 0;
+        max-width: 100%;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(40px);
+          opacity: 0;
         }
-        .hero-title {
-          font-size: 2.5rem;
-        }
-        .section-card {
-          padding: 24px;
+        to {
+          transform: translateY(0);
+          opacity: 1;
         }
       }
     </style>
   </head>
   <body>
+    <canvas id="atomCanvas"></canvas>
+
     <header>
       <div class="brand">Crown Merchant Financial</div>
     </header>
 
-    <div class="modal-overlay" id="emailModal">
-      <div class="modal-content">
-        <button class="modal-close" id="closeModal">×</button>
-        <h3 class="modal-title">Where should we send the case study?</h3>
-        <p class="modal-sub">
-          Enter your details below to unlock the 15-minute AI Risk briefing.
+    <section id="hero" class="hero">
+      <div class="container">
+        <span class="overline">March Cohort · Open</span>
+        <h1>
+          ENERGY. COMPUTE.<br />
+          RISK TRANSFER.
+        </h1>
+        <p>
+          The 30-Day Sprint to a producing seat on the AI Power Desk. Insuring
+          the infrastructure of the next century.
         </p>
+        <button id="openModal" class="btn-glass">Access Briefing</button>
+      </div>
+    </section>
 
-        <form id="leadForm">
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-input"
-              placeholder="Your First Name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-input"
-              placeholder="Your Email Address"
-              required
-            />
-          </div>
-          <button type="submit" class="btn-submit">UNLOCK TRAINING NOW</button>
+    <div id="modal" class="modal-overlay">
+      <div class="modal-card">
+        <button id="closeModal" class="close-btn">✕</button>
+        <span class="overline" style="color: #444">Identify</span>
+        <h3 style="margin-bottom: 32px">Unlock Access</h3>
+
+        <form id="emailForm">
+          <input type="text" class="input-clean" placeholder="Name" required />
+          <input
+            type="email"
+            class="input-clean"
+            placeholder="Email Address"
+            required
+          />
+          <button
+            type="submit"
+            class="btn-glass"
+            style="width: 100%; margin-top: 16px"
+          >
+            Enter
+          </button>
         </form>
       </div>
     </div>
 
-    <main>
-      <section class="hero">
+    <div id="content" class="hidden">
+      <section class="content-section">
         <div class="container">
-          <div class="hero-kicker">
-            Warning: Traditional Insurance Sales is Dead
+          <div class="video-wrapper">
+            <div
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #333;
+              "
+            >
+              [ VIDEO PLAYER ]
+            </div>
           </div>
-          <h1 class="hero-title">
-            The 90-Day Ramp: How to Secure a Seat on an AI Risk Desk
-          </h1>
-          <p class="hero-sub">
-            Stop selling whole life to your friends. Learn the "New Aristocracy"
-            method of insuring the infrastructure powering the AI revolution.
-          </p>
 
-          <button class="btn-primary" id="triggerModal">
-            WATCH THE CASE STUDY
-          </button>
+          <div style="text-align: center; margin-bottom: 80px">
+            <a
+              href="https://form.typeform.com/to/T9GWzPLI"
+              class="btn-glass"
+              style="background: white; color: black"
+            >
+              Apply for Deployment
+            </a>
+            <p
+              style="
+                margin-top: 24px;
+                font-size: 0.8rem;
+                font-family: monospace;
+                color: #555;
+              "
+            >
+              CAPACITY: 10 SEATS // STATUS: OPEN
+            </p>
+          </div>
 
-          <p
-            style="
-              margin-top: 20px;
-              font-size: 0.8rem;
-              color: var(--gray-light);
-            "
-          >
-            Free 15-Min Briefing. No Credit Card Required.
-          </p>
+          <div class="grid-row">
+            <div class="grid-item">
+              <span class="grid-label">Phase 01 // Days 1-10</span>
+              <h3>Licensing Blitz</h3>
+              <p>
+                Accelerated state exam preparation. Daily accountability. Zero
+                failure rate allowed.
+              </p>
+            </div>
+            <div class="grid-item">
+              <span class="grid-label">Phase 02 // Days 11-20</span>
+              <h3>Infrastructure Risk</h3>
+              <p>
+                Underwriting AI data centers, crypto mines, and SMRs. The
+                physics of value.
+              </p>
+            </div>
+            <div class="grid-item">
+              <span class="grid-label">Phase 03 // Days 21-30</span>
+              <h3>Live Fire</h3>
+              <p>
+                Real combat drills. Objection handling. Earning the seat on the
+                desk.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <div id="gatedContent" class="hidden">
-        <section id="training-video">
-          <div class="container">
-            <div class="section-card" style="text-align: center">
-              <h2 style="font-size: 2rem; margin-bottom: 10px">
-                The AI Power Risk Briefing
-              </h2>
-              <p style="color: var(--gray)">
-                Watch this before applying to the March Cohort.
-              </p>
-
-              <div class="video-container">
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100%;
-                    color: var(--gray);
-                  "
-                >
-                  [ VIDEO PLAYER GOES HERE ]
-                </div>
-              </div>
-
-              <a
-                href="https://form.typeform.com/to/T9GWzPLI"
-                class="btn-primary"
-                style="background: #fff; color: #000"
-              >
-                APPLY FOR THE MARCH COHORT
-              </a>
-              <p
-                style="
-                  margin-top: 10px;
-                  font-size: 0.8rem;
-                  color: var(--orange);
-                "
-              >
-                Only 10 Seats Available. $500 Deposit required to lock
-                interview.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div class="container">
-            <h3
-              style="
-                text-align: center;
-                font-size: 1.5rem;
-                margin-bottom: 40px;
-                color: var(--gray);
-              "
-            >
-              Why the Industry is shifting
-            </h3>
-
-            <div class="section-card">
-              <div class="insights-list" style="display: grid; gap: 20px">
-                <div
-                  style="
-                    padding: 20px;
-                    border: 1px solid var(--card-border);
-                    border-radius: 8px;
-                  "
-                >
-                  <h4 style="color: var(--white); font-size: 1.2rem">
-                    The AI Power Crunch
-                  </h4>
-                  <p style="color: var(--gray); font-size: 0.9rem">
-                    Analysts project a double-digit power shortfall for U.S.
-                    data centers by 2028. The bottleneck isn't chips — it's
-                    permitted, insured, financed power.
-                  </p>
-                </div>
-                <div
-                  style="
-                    padding: 20px;
-                    border: 1px solid var(--card-border);
-                    border-radius: 8px;
-                  "
-                >
-                  <h4 style="color: var(--white); font-size: 1.2rem">
-                    The Neocloud Asset
-                  </h4>
-                  <p style="color: var(--gray); font-size: 0.9rem">
-                    Sites built for mining already solved land, power, and
-                    cooling. With the right risk structure, they become
-                    fast-track AI campuses.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <footer>
-      <div
-        class="container"
+      <footer
         style="
           text-align: center;
-          padding: 40px 0;
-          color: var(--gray-light);
-          font-size: 0.8rem;
+          padding-bottom: 40px;
+          color: #333;
+          font-size: 0.7rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
         "
       >
-        <div>© 2025 Crown Merchant Financial</div>
-        <p style="max-width: 600px; margin: 20px auto">
-          Training quality and outcomes matter. Acceptance into the program does
-          not guarantee a role.
-        </p>
-      </div>
-    </footer>
+        Crown Merchant Financial © 2025
+      </footer>
+    </div>
 
     <script>
-      // DOM ELEMENTS
-      const modal = document.getElementById("emailModal");
-      const triggerBtn = document.getElementById("triggerModal");
-      const closeBtn = document.getElementById("closeModal");
-      const leadForm = document.getElementById("leadForm");
-      const gatedContent = document.getElementById("gatedContent");
-      const heroSection = document.querySelector(".hero");
+      // 1. FUNNEL LOGIC
+      const hero = document.getElementById("hero");
+      const modal = document.getElementById("modal");
+      const content = document.getElementById("content");
+      const form = document.getElementById("emailForm");
 
-      // OPEN MODAL
-      triggerBtn.addEventListener("click", () => {
-        modal.classList.add("active");
-      });
+      document
+        .getElementById("openModal")
+        .addEventListener("click", () => modal.classList.add("active"));
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", () => modal.classList.remove("active"));
 
-      // CLOSE MODAL
-      closeBtn.addEventListener("click", () => {
-        modal.classList.remove("active");
-      });
-
-      // CLOSE ON OUTSIDE CLICK
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.classList.remove("active");
-        }
-      });
-
-      // HANDLE FORM SUBMIT (THE UNLOCK)
-      leadForm.addEventListener("submit", (e) => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-
-        // 1. Here you would usually send data to Mailchimp/Zapier
-        console.log("Lead Captured!");
-
-        // 2. Hide Modal
         modal.classList.remove("active");
-
-        // 3. Hide the "Squeeze" Hero and Show the Content
-        heroSection.style.display = "none";
-        gatedContent.classList.remove("hidden");
-
-        // 4. Scroll to Video
-        document
-          .getElementById("training-video")
-          .scrollIntoView({ behavior: "smooth" });
+        hero.style.display = "none";
+        content.classList.remove("hidden");
+        window.scrollTo(0, 0);
       });
+
+      // 2. ATOM PHYSICS ENGINE (The Background)
+      const canvas = document.getElementById("atomCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let width, height;
+      let particles = [];
+
+      // Configuration
+      const particleCount = 60; // Number of atoms
+      const connectionDistance = 150; // How close to connect
+      const moveSpeed = 0.3; // How fast they drift
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * moveSpeed;
+          this.vy = (Math.random() - 0.5) * moveSpeed;
+          this.size = Math.random() * 1.5 + 0.5; // Size of dot
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          // Bounce off edges
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.3)"; // Subtle dot color
+          ctx.fill();
+        }
+      }
+
+      function initParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw connections first
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < connectionDistance) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(255, 255, 255, ${
+                0.1 - (distance / connectionDistance) * 0.1
+              })`; // Fade line based on distance
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Update and draw particles
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+      initParticles();
+      animate();
     </script>
   </body>
 </html>
