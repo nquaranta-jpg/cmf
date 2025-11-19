@@ -47,10 +47,10 @@
         width: 100%;
         height: 100%;
         z-index: -1;
-        opacity: 0.6; /* Dimmed slightly so text pops */
+        opacity: 0.6;
       }
 
-      /* Animated gradient orbs - ADJUSTED TO WARMER ENERGY TONES */
+      /* Animated gradient orbs */
       .orb {
         position: fixed;
         border-radius: 50%;
@@ -63,7 +63,6 @@
       .orb1 {
         width: 400px;
         height: 400px;
-        /* Deep Industrial Blue */
         background: radial-gradient(
           circle,
           rgba(20, 50, 100, 0.4) 0%,
@@ -77,7 +76,6 @@
       .orb2 {
         width: 300px;
         height: 300px;
-        /* CMF Orange Glow */
         background: radial-gradient(
           circle,
           rgba(255, 107, 53, 0.25) 0%,
@@ -92,7 +90,6 @@
       .orb3 {
         width: 350px;
         height: 350px;
-        /* Heat/White */
         background: radial-gradient(
           circle,
           rgba(255, 255, 255, 0.1) 0%,
@@ -197,7 +194,7 @@
         color: var(--accent);
       }
 
-      /* Hero Section */
+      /* Hero Section - ANIMATES ON LOAD */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -236,7 +233,6 @@
       .hero-title strong {
         font-weight: 600;
         color: #fff;
-        /* Text Gradient */
         background: linear-gradient(90deg, #fff, #a0a0a0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -259,8 +255,20 @@
         }
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(30px);
         }
+      }
+
+      /* SCROLL REVEAL ANIMATION CLASS */
+      .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       /* Manifesto Section */
@@ -584,7 +592,7 @@
 
     <section class="manifesto" id="manifesto">
       <div class="manifesto-content">
-        <div class="manifesto-grid">
+        <div class="manifesto-grid reveal">
           <div class="manifesto-label">The Context</div>
           <div class="manifesto-text">
             <strong>Traditional insurance sales is dead.</strong><br />
@@ -594,7 +602,7 @@
           </div>
         </div>
 
-        <div class="manifesto-grid">
+        <div class="manifesto-grid reveal">
           <div class="manifesto-label">The Shift</div>
           <div class="manifesto-text">
             We don't chase people. We insure <strong>Infrastructure</strong>.
@@ -604,7 +612,7 @@
           </div>
         </div>
 
-        <div class="manifesto-grid">
+        <div class="manifesto-grid reveal">
           <div class="manifesto-label">The Offer</div>
           <div class="manifesto-text">
             We are training the <strong>New Aristocracy</strong> of brokers.
@@ -616,7 +624,7 @@
       </div>
     </section>
 
-    <section class="partners">
+    <section class="partners reveal">
       <div class="partners-grid">
         <div class="partner-name">Constellation Energy</div>
         <div class="partner-name">Munich Re</div>
@@ -626,14 +634,14 @@
     </section>
 
     <section class="programs" id="programs">
-      <div class="section-header">
+      <div class="section-header reveal">
         <div class="section-label">Choose Your Path</div>
         <h2 class="section-title">Two Roads. One Outcome.</h2>
       </div>
 
       <div class="programs-grid">
         <div
-          class="program-card"
+          class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
           <div class="program-type">The Whale Hunter</div>
@@ -652,7 +660,7 @@
         </div>
 
         <div
-          class="program-card"
+          class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
           <div class="program-type">The Cash Flow King</div>
@@ -675,7 +683,7 @@
     </section>
 
     <footer>
-      <div class="footer-content">
+      <div class="footer-content reveal">
         <div class="footer-left">© 2025 Crown Merchant Financial</div>
         <div class="footer-left" style="margin-left: auto; opacity: 0.5">
           Applications Close March 3rd
@@ -827,21 +835,25 @@
         window.scrollTo(0, 0);
       });
 
-      // Reveal animations
+      // Reveal animations (SCROLL TRIGGER)
       const revealElements = () => {
         const reveals = document.querySelectorAll(".reveal");
         reveals.forEach((element) => {
           const elementTop = element.getBoundingClientRect().top;
           const windowHeight = window.innerHeight;
+          // Trigger when element is 100px from bottom of screen
           if (elementTop < windowHeight - 100) {
             element.classList.add("active");
           }
         });
       };
-      window.addEventListener("scroll", revealElements);
-      revealElements();
 
-      // Dynamic Grid Background Animation (Retained from your code)
+      // Listen for scroll
+      window.addEventListener("scroll", revealElements);
+      // Trigger once on load to catch elements already visible
+      window.addEventListener("load", revealElements);
+
+      // Dynamic Grid Background Animation
       const canvas = document.getElementById("gridBackground");
       const ctx = canvas.getContext("2d");
       let width, height;
