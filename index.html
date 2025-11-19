@@ -136,7 +136,7 @@
         );
       }
 
-      /* Navigation */
+      /* Navigation - STRIPPED DOWN */
       nav {
         position: fixed;
         top: 0;
@@ -150,6 +150,8 @@
           transparent 100%
         );
         transition: all 0.3s ease;
+        display: flex;
+        justify-content: center; /* Centers the logo */
       }
 
       nav.scrolled {
@@ -161,9 +163,9 @@
 
       .nav-container {
         max-width: var(--max-width);
-        margin: 0 auto;
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: center; /* Center Logo */
         align-items: center;
       }
 
@@ -175,26 +177,7 @@
         color: #fff;
       }
 
-      .nav-links {
-        display: flex;
-        gap: 3rem;
-        list-style: none;
-      }
-
-      .nav-link {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        transition: color 0.3s ease;
-      }
-
-      .nav-link:hover {
-        color: var(--accent);
-      }
-
-      /* Hero Section - ANIMATES ON LOAD */
+      /* Hero Section */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -207,6 +190,7 @@
         max-width: var(--max-width);
         margin: 0 auto;
         width: 100%;
+        text-align: left; /* Kept left aligned for industrial look */
       }
 
       .hero-overline {
@@ -567,11 +551,6 @@
     <nav id="nav">
       <div class="nav-container">
         <div class="logo">Crown Merchant Financial</div>
-        <ul class="nav-links">
-          <li><a href="#manifesto" class="nav-link">The Sprint</a></li>
-          <li><a href="#programs" class="nav-link">Tracks</a></li>
-          <li><a href="#" class="nav-link" id="navApply">Apply</a></li>
-        </ul>
       </div>
     </nav>
 
@@ -798,7 +777,6 @@
       // Modal functionality
       const modal = document.getElementById("modal");
       const openModal = document.getElementById("openModal");
-      const navApply = document.getElementById("navApply");
       const closeModal = document.getElementById("closeModal");
       const accessForm = document.getElementById("accessForm");
 
@@ -809,10 +787,6 @@
 
       // Open functions
       openModal.addEventListener("click", (e) => {
-        e.preventDefault();
-        modal.classList.add("active");
-      });
-      navApply.addEventListener("click", (e) => {
         e.preventDefault();
         modal.classList.add("active");
       });
