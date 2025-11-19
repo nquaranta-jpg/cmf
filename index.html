@@ -3,516 +3,1324 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Crown Merchant Financial | Risk & Capital</title>
+    <title>Crown Merchant Financial</title>
     <style>
-      :root {
-        --bg-color: #050505;
-        --card-bg: rgba(20, 20, 20, 0.6);
-        --border-color: rgba(255, 255, 255, 0.1);
-        --text-primary: #ffffff;
-        --text-secondary: #888888;
-        --accent: #ff6b35;
-        --font-main: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 
       * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0a;
+        --text-primary: #e5e5e5;
+        --text-secondary: #888;
+        --text-muted: #555;
+        --accent: #fff;
+        --border: rgba(255, 255, 255, 0.08);
+        --max-width: 1200px;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
-        background-color: var(--bg-color);
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
         color: var(--text-primary);
-        font-family: var(--font-main);
-        line-height: 1.5;
+        line-height: 1.6;
+        font-weight: 300;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
-        height: 100vh;
-        width: 100vw;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      /* 1. THE CANVAS (ATOMS) */
-      #atomCanvas {
+      /* Dynamic Grid Background */
+      #gridBackground {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -2; /* Behind everything */
-        pointer-events: none;
+        z-index: -1;
+        opacity: 1;
       }
 
-      /* 2. THE NOISE TEXTURE (OVERLAY) */
-      body::after {
-        content: "";
+      /* Animated gradient orbs */
+      .orb {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9999; /* On top of everything to give texture */
+        border-radius: 50%;
+        filter: blur(80px);
         opacity: 0.4;
+        animation: float 20s infinite ease-in-out;
+        z-index: -2;
       }
 
-      /* UTILITIES */
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 24px;
-        position: relative;
-        z-index: 1;
-      }
-      .hidden {
-        display: none !important;
-      }
-
-      /* TYPOGRAPHY */
-      h1 {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
-        font-weight: 500;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-        margin-bottom: 24px;
+      .orb1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 100, 200, 0.3) 0%,
+          transparent 70%
+        );
+        top: -200px;
+        left: -200px;
+        animation-duration: 25s;
       }
 
-      .overline {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--accent);
-        margin-bottom: 16px;
-        display: block;
-        font-weight: 600;
+      .orb2 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(100, 0, 200, 0.2) 0%,
+          transparent 70%
+        );
+        bottom: -150px;
+        right: -150px;
+        animation-duration: 30s;
+        animation-delay: -10s;
       }
 
-      p {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        font-weight: 300;
-        max-width: 600px;
-        margin: 0 auto;
+      .orb3 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 200, 100, 0.15) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        animation-duration: 35s;
+        animation-delay: -5s;
       }
 
-      /* HEADER */
-      header {
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(100px, -100px) scale(1.1);
+        }
+        50% {
+          transform: translate(-100px, 50px) scale(0.9);
+        }
+        75% {
+          transform: translate(50px, 100px) scale(1.05);
+        }
+      }
+
+      /* Noise texture overlay */
+      .noise {
         position: fixed;
         top: 0;
+        left: 0;
         width: 100%;
-        padding: 32px 0;
-        z-index: 100;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0.03;
+        z-index: -1;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 4px
+        );
+      }
+
+      /* Cursor effect */
+      .cursor {
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        transition: all 0.1s ease;
+        z-index: 9999;
         mix-blend-mode: difference;
       }
-      .brand {
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: white;
-        text-align: center;
+
+      .cursor-follower {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 9998;
+        mix-blend-mode: difference;
       }
 
-      /* HERO SECTION */
-      .hero {
-        height: 100vh;
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 2rem 3rem;
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 10, 10, 0.8) 0%,
+          transparent 100%
+        );
+        transition: all 0.3s ease;
+      }
+
+      nav.scrolled {
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 3rem;
+      }
+
+      .nav-container {
+        max-width: var(--max-width);
+        margin: 0 auto;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        text-align: center;
-        border-bottom: 1px solid var(--border-color);
+      }
+
+      .logo {
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        color: var(--accent);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 3rem;
+        list-style: none;
+      }
+
+      .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
         position: relative;
       }
 
-      /* THE "CRUCIBLE" BUTTON */
-      .btn-glass {
-        margin-top: 40px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border-color);
-        color: white;
-        padding: 18px 42px;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        backdrop-filter: blur(4px);
+      .nav-link:hover {
+        color: var(--text-primary);
       }
 
-      .btn-glass:hover {
-        background: white;
-        color: black;
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--text-primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 0 3rem;
+        position: relative;
+      }
+
+      .hero-content {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards;
+      }
+
+      .hero-title strong {
+        font-weight: 500;
+        color: var(--accent);
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+      }
+
+      /* Manifesto Section */
+      .manifesto {
+        padding: 8rem 3rem;
+        background: var(--bg);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .manifesto-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .manifesto-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        margin-bottom: 6rem;
+      }
+
+      .manifesto-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        padding-top: 0.5rem;
+      }
+
+      .manifesto-text {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        font-weight: 300;
+      }
+
+      .manifesto-text strong {
+        color: var(--text-primary);
+        font-weight: 400;
+      }
+
+      .highlight-block {
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.02) 50%,
+          transparent 100%
+        );
+        border-left: 1px solid var(--border);
+        padding: 2rem 0 2rem 3rem;
+        margin: 4rem 0;
+        font-size: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        font-weight: 300;
+      }
+
+      /* Programs Section */
+      .programs {
+        padding: 6rem 3rem;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+      }
+
+      .section-header {
+        max-width: var(--max-width);
+        margin: 0 auto 4rem;
+      }
+
+      .section-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+      }
+
+      .programs-grid {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+      }
+
+      .program-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        padding: 3rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .program-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .program-card:hover::before {
+        transform: translateX(100%);
+      }
+
+      .program-card:hover {
+        background: rgba(255, 255, 255, 0.04);
         transform: translateY(-2px);
       }
 
-      /* MODAL */
-      .modal-overlay {
+      .program-type {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .program-title {
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .program-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        font-weight: 300;
+      }
+
+      .program-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+      }
+
+      .program-features {
+        list-style: none;
+        margin-bottom: 2.5rem;
+      }
+
+      .program-features li {
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--border);
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .program-features li:first-child {
+        border-top: none;
+      }
+
+      .program-cta {
+        display: inline-block;
+        padding: 1rem 2rem;
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .program-cta:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+      }
+
+      /* Stats Section */
+      .stats {
+        padding: 4rem 3rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stats-grid {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+
+      /* Partners Section */
+      .partners {
+        padding: 5rem 3rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.01);
+      }
+
+      .partners-container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .partners-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .partners-subtitle {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
+        font-weight: 300;
+      }
+
+      .partners-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem 4rem;
+      }
+
+      .partner-item {
+        position: relative;
+        padding: 1.5rem 0;
+        border-left: 1px solid var(--border);
+        padding-left: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .partner-item:hover {
+        border-left-color: var(--text-secondary);
+      }
+
+      .partner-item:hover .partner-name {
+        color: var(--text-primary);
+      }
+
+      .partner-name {
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+        transition: color 0.3s ease;
+      }
+
+      .partner-type {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* Modal */
+      .modal {
         position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(20px);
-        z-index: 200;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         pointer-events: none;
-        transition: 0.5s ease;
+        transition: opacity 0.3s ease;
       }
 
-      .modal-overlay.active {
+      .modal.active {
         opacity: 1;
         pointer-events: auto;
       }
 
-      .modal-card {
-        width: 100%;
-        max-width: 420px;
-        background: #0a0a0a;
-        border: 1px solid var(--border-color);
-        padding: 48px;
-        text-align: center;
-        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+      .modal-content {
+        width: 90%;
+        max-width: 500px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 3rem;
+        position: relative;
       }
 
-      .input-clean {
-        width: 100%;
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid #333;
-        padding: 16px 0;
-        color: white;
-        font-size: 1rem;
-        margin-bottom: 24px;
-        border-radius: 0;
-        outline: none;
-        text-align: center;
-        transition: 0.3s;
-      }
-
-      .input-clean:focus {
-        border-bottom-color: var(--accent);
-      }
-      .input-clean::placeholder {
-        color: #444;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-      }
-
-      .close-btn {
+      .modal-close {
         position: absolute;
-        top: 24px;
-        right: 24px;
+        top: 1.5rem;
+        right: 1.5rem;
         background: none;
         border: none;
-        color: #444;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
         cursor: pointer;
-        font-size: 1.2rem;
+        transition: color 0.3s ease;
       }
 
-      /* CONTENT */
-      .content-section {
-        padding: 140px 0;
-        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        background: rgba(5, 5, 5, 0.8); /* Slight dim behind content */
-        backdrop-filter: blur(10px);
-        min-height: 100vh;
+      .modal-close:hover {
+        color: var(--text-primary);
       }
 
-      .video-wrapper {
+      .modal-title {
+        font-size: 1.8rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+      }
+
+      .modal-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-input {
         width: 100%;
-        aspect-ratio: 16/9;
-        background: #000;
-        border: 1px solid var(--border-color);
-        margin-bottom: 60px;
-      }
-
-      /* GRID */
-      .grid-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 0;
-        border-top: 1px solid var(--border-color);
-        border-left: 1px solid var(--border-color);
-      }
-
-      .grid-item {
-        padding: 60px 40px;
-        border-right: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
-        transition: 0.3s;
+        padding: 1rem;
         background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
       }
 
-      .grid-item:hover {
-        background: rgba(255, 255, 255, 0.02);
+      .form-input:focus {
+        outline: none;
+        border-color: var(--text-secondary);
       }
 
-      .grid-label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--accent);
-        margin-bottom: 16px;
-        display: block;
-        font-family: monospace;
+      .form-submit {
+        width: 100%;
+        padding: 1rem;
+        background: var(--accent);
+        border: none;
+        color: var(--bg);
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
       }
 
-      .grid-item h3 {
-        font-size: 1.4rem;
-        margin-bottom: 16px;
-        font-weight: 400;
-      }
-      .grid-item p {
-        font-size: 1rem;
-        margin: 0;
-        max-width: 100%;
-        line-height: 1.7;
+      .form-submit:hover {
+        opacity: 0.9;
       }
 
-      @keyframes slideUp {
-        from {
-          transform: translateY(40px);
-          opacity: 0;
+      /* CTA Button */
+      .cta-button {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: var(--accent);
+        color: var(--bg);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 1s ease 0.3s forwards;
+        opacity: 0;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Footer */
+      footer {
+        padding: 3rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-content {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-left {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .footer-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: var(--text-primary);
+      }
+
+      /* Hidden class */
+      .hidden {
+        display: none !important;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
         }
-        to {
-          transform: translateY(0);
-          opacity: 1;
+
+        .hero-title {
+          font-size: 2rem;
         }
+
+        .manifesto-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .programs-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .partners-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem 3rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+      }
+
+      /* Smooth reveal animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
   <body>
-    <canvas id="atomCanvas"></canvas>
+    <canvas id="gridBackground"></canvas>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="noise"></div>
 
-    <header>
-      <div class="brand">Crown Merchant Financial</div>
-    </header>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-    <section id="hero" class="hero">
-      <div class="container">
-        <span class="overline">March Cohort · Open</span>
-        <h1>
-          ENERGY. COMPUTE.<br />
-          RISK TRANSFER.
+    <nav id="nav">
+      <div class="nav-container">
+        <div class="logo">Crown Merchant</div>
+        <ul class="nav-links">
+          <li><a href="#manifesto" class="nav-link">Philosophy</a></li>
+          <li><a href="#programs" class="nav-link">Programs</a></li>
+          <li><a href="#" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          The future of infrastructure requires
+          <strong>new models of risk</strong>.
         </h1>
-        <p>
-          The 30-Day Sprint to a producing seat on a CMF Risk Desk. Insuring the
-          infrastructure of the next century.
-        </p>
-        <button id="openModal" class="btn-glass">Access Briefing</button>
+        <a href="#" class="cta-button" id="openModal">Begin Your Journey</a>
       </div>
     </section>
 
-    <div id="modal" class="modal-overlay">
-      <div class="modal-card">
-        <button id="closeModal" class="close-btn">✕</button>
-        <span class="overline" style="color: #444">Identify</span>
-        <h3 style="margin-bottom: 32px">Unlock Access</h3>
+    <section class="manifesto" id="manifesto">
+      <div class="manifesto-content">
+        <div class="manifesto-grid reveal">
+          <div class="manifesto-label">How we see the world</div>
+          <div class="manifesto-text">
+            <strong
+              >The energy transition has always been defined by our ability to
+              understand and price risk.</strong
+            >
+            From the first oil derricks to today's solar farms, progress depends
+            on those willing to underwrite the future.
+          </div>
+        </div>
 
-        <form id="emailForm">
-          <input type="text" class="input-clean" placeholder="Name" required />
-          <input
-            type="email"
-            class="input-clean"
-            placeholder="Email Address"
-            required
-          />
-          <button
-            type="submit"
-            class="btn-glass"
-            style="width: 100%; margin-top: 16px"
+        <div class="manifesto-grid reveal">
+          <div class="manifesto-label"></div>
+          <div class="manifesto-text">
+            We believe that the role of insurance professionals is to find,
+            fund, and facilitate the most efficient deployment of capital into
+            tomorrow's critical infrastructure at civilization scale.
+          </div>
+        </div>
+
+        <div class="highlight-block reveal">
+          Traditional insurance models are crumbling. Legacy institutions are
+          more concerned with protecting yesterday's assets than underwriting
+          tomorrow's opportunities.
+        </div>
+
+        <div class="manifesto-grid reveal">
+          <div class="manifesto-label"></div>
+          <div class="manifesto-text">
+            But a new generation of risk specialists isn't waiting around.
+            They're creating frameworks for humanity's most pressing needs:
+            <strong
+              >sustainable energy, AI compute infrastructure, and climate
+              resilience</strong
+            >.
+          </div>
+        </div>
+
+        <div class="manifesto-grid reveal">
+          <div class="manifesto-label"></div>
+          <div class="manifesto-text">
+            We are entering a golden age for professionals who can model, price,
+            and manage the risks of digital infrastructure and create efficient
+            markets for the protection of assets that will define the next
+            century.
+          </div>
+        </div>
+
+        <div class="manifesto-grid reveal">
+          <div class="manifesto-label"></div>
+          <div class="manifesto-text">
+            <strong>The foundations of this transition are being built.</strong
+            ><br />
+            We are committed to training the specialists who will shape its
+            trajectory.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners reveal">
+      <div class="partners-container">
+        <div class="partners-header">
+          <div class="section-label">Strategic Partners</div>
+          <p class="partners-subtitle">
+            Training the next generation alongside industry leaders
+          </p>
+        </div>
+        <div class="partners-grid">
+          <div class="partner-item">
+            <div class="partner-name">Constellation Energy</div>
+            <div class="partner-type">Nuclear & Renewables</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Munich Re</div>
+            <div class="partner-type">Global Reinsurance</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Brookfield Infrastructure</div>
+            <div class="partner-type">Asset Management</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Aon</div>
+            <div class="partner-type">Risk Solutions</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">NextEra Energy</div>
+            <div class="partner-type">Clean Energy</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Swiss Re</div>
+            <div class="partner-type">Reinsurance</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Sempra Infrastructure</div>
+            <div class="partner-type">Energy Networks</div>
+          </div>
+          <div class="partner-item">
+            <div class="partner-name">Willis Towers Watson</div>
+            <div class="partner-type">Risk Advisory</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="programs" id="programs">
+      <div class="section-header reveal">
+        <div class="section-label">What we teach</div>
+        <h2 class="section-title">Two paths to mastery</h2>
+      </div>
+
+      <div class="programs-grid">
+        <div class="program-card reveal">
+          <div class="program-type">Infrastructure + Technology</div>
+          <h3 class="program-title">Energy & AI Risk</h3>
+          <p class="program-subtitle">Property & Casualty Track</p>
+          <p class="program-description">
+            Master the intersection of sustainable energy and artificial
+            intelligence. Learn to underwrite the infrastructure powering
+            tomorrow's economy.
+          </p>
+          <ul class="program-features">
+            <li>AI-powered risk modeling & predictive analytics</li>
+            <li>Renewable energy & grid infrastructure</li>
+            <li>Climate risk assessment frameworks</li>
+            <li>Smart contract insurance protocols</li>
+            <li>Direct placement with infrastructure partners</li>
+          </ul>
+          <a href="#" class="program-cta apply-btn" data-track="infrastructure"
+            >Apply →</a
           >
-            Enter
-          </button>
+        </div>
+
+        <div class="program-card reveal">
+          <div class="program-type">Capital + Protection</div>
+          <h3 class="program-title">Executive Wealth</h3>
+          <p class="program-subtitle">Life & Health Track</p>
+          <p class="program-description">
+            Focus on high-net-worth individuals and executive protection
+            strategies for energy sector leaders and infrastructure pioneers.
+          </p>
+          <ul class="program-features">
+            <li>Advanced life insurance structures</li>
+            <li>Executive benefits & key person coverage</li>
+            <li>International & offshore structures</li>
+            <li>Estate planning for tech founders</li>
+            <li>C-suite relationship management</li>
+          </ul>
+          <a href="#" class="program-cta apply-btn" data-track="wealth"
+            >Apply →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-left">© 2025 Crown Merchant Financial</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Privacy</a></li>
+          <li><a href="#" class="footer-link">Terms</a></li>
+          <li><a href="#" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal">&times;</button>
+        <h3 class="modal-title">Access Elite Training</h3>
+        <p class="modal-subtitle">
+          March 2025 Cohort - Limited Seats Available
+        </p>
+        <form id="accessForm">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-input"
+              placeholder="Email Address"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="tel"
+              class="form-input"
+              placeholder="Phone Number"
+              required
+            />
+          </div>
+          <button type="submit" class="form-submit">Continue</button>
         </form>
       </div>
     </div>
 
-    <div id="content" class="hidden">
-      <section class="content-section">
-        <div class="container">
-          <div class="video-wrapper">
-            <div
-              style="
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #333;
-              "
-            >
-              [ VIDEO PLAYER ]
-            </div>
-          </div>
+    <!-- Hidden content section -->
+    <section class="programs hidden" id="detailed-content">
+      <div class="section-header">
+        <div class="section-label">Program Details</div>
+        <h2 class="section-title">Your journey begins here</h2>
+      </div>
 
-          <div style="text-align: center; margin-bottom: 80px">
-            <a
-              href="https://form.typeform.com/to/T9GWzPLI"
-              class="btn-glass"
-              style="background: white; color: black"
-            >
-              Apply for Deployment
-            </a>
-            <p
-              style="
-                margin-top: 24px;
-                font-size: 0.8rem;
-                font-family: monospace;
-                color: #555;
-              "
-            >
-              CAPACITY: 10 SEATS // STATUS: OPEN
-            </p>
-          </div>
-
-          <div class="grid-row">
-            <div class="grid-item">
-              <span class="grid-label">Phase 01 // Weeks 1-2</span>
-              <h3>Licensing Bunker</h3>
-              <p>
-                14-day total immersion. State exam preparation with daily
-                accountability checkpoints.
-              </p>
-            </div>
-            <div class="grid-item">
-              <span class="grid-label">Phase 02 // Weeks 3-4</span>
-              <h3>Specialized Licensure Tracks</h3>
-              <p>
-                Cohorts diverge into three specific paths: Life, Health, or
-                Property & Casualty. Curriculum is adapted to your chosen track,
-                focusing on the specific underwriting frameworks and sales
-                mechanics for that desk.
-              </p>
-            </div>
-          </div>
+      <div style="max-width: 900px; margin: 3rem auto; padding: 0 3rem">
+        <div
+          style="
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border: 1px solid var(--border);
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+          "
+        >
+          [ORIENTATION VIDEO]
         </div>
-      </section>
 
-      <footer
-        style="
-          text-align: center;
-          padding-bottom: 40px;
-          color: #333;
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-        "
-      >
-        Crown Merchant Financial © 2025
-      </footer>
-    </div>
+        <div class="manifesto-text" style="margin-bottom: 4rem">
+          <strong>12-week intensive program</strong> designed to transform
+          ambitious professionals into infrastructure risk specialists. Direct
+          mentorship from industry leaders, hands-on experience with real
+          projects, and guaranteed interviews with our partner network.
+        </div>
+
+        <div style="text-align: center; margin-top: 4rem">
+          <p style="color: var(--text-secondary); margin-bottom: 2rem">
+            Choose your specialization:
+          </p>
+          <a
+            href="https://form.typeform.com/to/T9GWzPLI"
+            class="program-cta"
+            style="margin-right: 1rem"
+            >Energy & AI Risk ($3,000)</a
+          >
+          <a href="https://form.typeform.com/to/T9GWzPLI" class="program-cta"
+            >Executive Wealth ($3,000)</a
+          >
+        </div>
+      </div>
+    </section>
 
     <script>
-      // 1. FUNNEL LOGIC
-      const hero = document.getElementById("hero");
+      // Custom cursor
+      const cursor = document.querySelector(".cursor");
+      const follower = document.querySelector(".cursor-follower");
+
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+
+        setTimeout(() => {
+          follower.style.left = e.clientX - 10 + "px";
+          follower.style.top = e.clientY - 10 + "px";
+        }, 100);
+      });
+
+      // Nav scroll effect
+      window.addEventListener("scroll", () => {
+        const nav = document.getElementById("nav");
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+
+      // Modal functionality
       const modal = document.getElementById("modal");
-      const content = document.getElementById("content");
-      const form = document.getElementById("emailForm");
+      const openModal = document.getElementById("openModal");
+      const closeModal = document.getElementById("closeModal");
+      const accessForm = document.getElementById("accessForm");
+      const heroSection = document.getElementById("hero");
+      const manifestoSection = document.getElementById("manifesto");
+      const detailedContent = document.getElementById("detailed-content");
+      const programsSection = document.getElementById("programs");
+      const applyBtns = document.querySelectorAll(".apply-btn");
 
-      document
-        .getElementById("openModal")
-        .addEventListener("click", () => modal.classList.add("active"));
-      document
-        .getElementById("closeModal")
-        .addEventListener("click", () => modal.classList.remove("active"));
+      openModal.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.classList.add("active");
+      });
 
-      form.addEventListener("submit", (e) => {
+      closeModal.addEventListener("click", () => {
+        modal.classList.remove("active");
+      });
+
+      applyBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          modal.classList.add("active");
+        });
+      });
+
+      accessForm.addEventListener("submit", (e) => {
         e.preventDefault();
         modal.classList.remove("active");
-        hero.style.display = "none";
-        content.classList.remove("hidden");
+
+        // Hide hero and manifesto, show detailed content
+        heroSection.style.display = "none";
+        manifestoSection.style.display = "none";
+        programsSection.style.display = "none";
+        document.querySelector(".partners").style.display = "none";
+        detailedContent.classList.remove("hidden");
+
         window.scrollTo(0, 0);
       });
 
-      // 2. ATOM PHYSICS ENGINE
-      const canvas = document.getElementById("atomCanvas");
-      const ctx = canvas.getContext("2d");
+      // Reveal animations
+      const revealElements = () => {
+        const reveals = document.querySelectorAll(".reveal");
 
+        reveals.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (elementTop < windowHeight - 100) {
+            element.classList.add("active");
+          }
+        });
+      };
+
+      window.addEventListener("scroll", revealElements);
+      revealElements(); // Initial check
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (href !== "#") {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            }
+          }
+        });
+      });
+
+      // Dynamic Grid Background Animation
+      const canvas = document.getElementById("gridBackground");
+      const ctx = canvas.getContext("2d");
       let width, height;
       let particles = [];
+      let connections = [];
+      let mouseX = 0;
+      let mouseY = 0;
+      let frame = 0;
 
-      // Configuration
-      const particleCount = 60;
-      const connectionDistance = 150;
-      const moveSpeed = 0.3;
-
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * moveSpeed;
-          this.vy = (Math.random() - 0.5) * moveSpeed;
-          this.size = Math.random() * 1.5 + 0.5;
+      class GridNode {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.baseX = x;
+          this.baseY = y;
+          this.vx = 0;
+          this.vy = 0;
+          this.radius = Math.random() * 1.5 + 0.5;
+          this.opacity = Math.random() * 0.5 + 0.1;
+          this.pulseSpeed = Math.random() * 0.02 + 0.01;
+          this.pulsePhase = Math.random() * Math.PI * 2;
         }
 
         update() {
+          // Mouse influence
+          const dx = mouseX - this.x;
+          const dy = mouseY - this.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            const force = (150 - distance) / 150;
+            this.vx += (dx / distance) * force * 0.5;
+            this.vy += (dy / distance) * force * 0.5;
+          }
+
+          // Return to base position
+          this.vx += (this.baseX - this.x) * 0.02;
+          this.vy += (this.baseY - this.y) * 0.02;
+
+          // Apply velocity with damping
           this.x += this.vx;
           this.y += this.vy;
+          this.vx *= 0.95;
+          this.vy *= 0.95;
 
-          if (this.x < 0 || this.x > width) this.vx *= -1;
-          if (this.y < 0 || this.y > height) this.vy *= -1;
+          // Pulsing effect
+          this.opacity =
+            0.15 + Math.sin(frame * this.pulseSpeed + this.pulsePhase) * 0.1;
         }
 
         draw() {
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(100, 150, 255, ${this.opacity})`;
           ctx.fill();
         }
       }
 
-      function initParticles() {
+      function createGrid() {
         particles = [];
-        for (let i = 0; i < particleCount; i++) {
-          particles.push(new Particle());
+        connections = [];
+        const spacing = 100;
+        const cols = Math.ceil(width / spacing) + 2;
+        const rows = Math.ceil(height / spacing) + 2;
+
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            const x = i * spacing - spacing;
+            const y = j * spacing - spacing;
+            particles.push(new GridNode(x, y));
+          }
         }
+
+        // Create connections between nearby nodes
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].baseX - particles[j].baseX;
+            const dy = particles[i].baseY - particles[j].baseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < spacing * 1.5) {
+              connections.push({
+                from: particles[i],
+                to: particles[j],
+                baseDistance: distance,
+              });
+            }
+          }
+        }
+      }
+
+      function drawConnections() {
+        ctx.strokeStyle = "rgba(100, 150, 255, 0.03)";
+        ctx.lineWidth = 1;
+
+        connections.forEach((conn) => {
+          const dx = conn.to.x - conn.from.x;
+          const dy = conn.to.y - conn.from.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < conn.baseDistance * 2) {
+            ctx.beginPath();
+            ctx.moveTo(conn.from.x, conn.from.y);
+            ctx.lineTo(conn.to.x, conn.to.y);
+
+            const opacity = Math.max(
+              0,
+              0.06 * (1 - distance / (conn.baseDistance * 2))
+            );
+            ctx.strokeStyle = `rgba(100, 150, 255, ${opacity})`;
+            ctx.stroke();
+          }
+        });
+      }
+
+      function drawFlowLines() {
+        // Animated flow lines
+        const flowCount = 3;
+        for (let i = 0; i < flowCount; i++) {
+          const progress = (frame * 0.005 + i / flowCount) % 1;
+          const startX = -100;
+          const endX = width + 100;
+          const x = startX + (endX - startX) * progress;
+          const y = height * (0.3 + i * 0.2) + Math.sin(x * 0.01 + i) * 50;
+
+          ctx.beginPath();
+          ctx.moveTo(x - 100, y);
+
+          for (let j = 0; j < 100; j++) {
+            const px = x - 100 + j * 2;
+            const py = y + Math.sin((px + frame) * 0.02) * 20;
+            ctx.lineTo(px, py);
+          }
+
+          const gradient = ctx.createLinearGradient(x - 100, y, x + 100, y);
+          gradient.addColorStop(0, "rgba(100, 150, 255, 0)");
+          gradient.addColorStop(
+            0.5,
+            `rgba(100, 150, 255, ${0.1 * (1 - progress)})`
+          );
+          gradient.addColorStop(1, "rgba(100, 150, 255, 0)");
+
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        createGrid();
       }
 
       function animate() {
         ctx.clearRect(0, 0, width, height);
 
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+        // Draw connections first
+        drawConnections();
 
-            if (distance < connectionDistance) {
-              ctx.beginPath();
-              ctx.strokeStyle = `rgba(255, 255, 255, ${
-                0.1 - (distance / connectionDistance) * 0.1
-              })`;
-              ctx.lineWidth = 0.5;
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
-            }
-          }
-        }
+        // Draw flow lines
+        drawFlowLines();
 
-        particles.forEach((p) => {
-          p.update();
-          p.draw();
+        // Update and draw particles
+        particles.forEach((particle) => {
+          particle.update();
+          particle.draw();
         });
 
+        frame++;
         requestAnimationFrame(animate);
       }
 
+      // Track mouse position
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
       window.addEventListener("resize", resize);
       resize();
-      initParticles();
       animate();
     </script>
   </body>
