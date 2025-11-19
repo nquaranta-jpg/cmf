@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <title>Crown Merchant Financial – Insurance & Sales Academy</title>
+    <title>Crown Merchant Financial – The 90 Day Ramp</title>
     <meta
       name="description"
-      content="Get licensed, trained, and earn a shot at a producing seat with Crown Merchant Financial — a private insurance & sales academy."
+      content="The 90-Day Path to a Commercial Risk Seat. Secure your spot on the AI Power Desk."
     />
     <style>
       :root {
@@ -39,9 +39,15 @@
         letter-spacing: 0.2px;
       }
 
-      ::selection {
-        background: var(--orange);
-        color: #000;
+      /* UTILITIES */
+      .hidden {
+        display: none !important;
+      }
+
+      .blur-content {
+        filter: blur(10px);
+        pointer-events: none;
+        user-select: none;
       }
 
       a {
@@ -54,7 +60,7 @@
         color: var(--orange-bright);
       }
 
-      /* HEADER / NAV */
+      /* HEADER (Simpler version) */
       header {
         position: fixed;
         top: 0;
@@ -64,209 +70,15 @@
         backdrop-filter: blur(20px);
         border-bottom: 1px solid rgba(255, 107, 53, 0.1);
         z-index: 99;
-      }
-
-      .nav {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 18px 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 32px;
-        position: relative;
+        padding: 20px 0;
+        text-align: center;
       }
 
       .brand {
         font-weight: 400;
-        font-size: 1rem;
+        font-size: 1.1rem;
         letter-spacing: 1px;
-        white-space: nowrap;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        font-size: 0.85rem;
-      }
-
-      .nav-link {
-        font-size: 0.9rem;
-        color: var(--gray);
-        font-weight: 300;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
-      }
-
-      .nav-link:hover {
         color: var(--white);
-      }
-
-      .nav-cta {
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 107, 53, 0.4);
-        color: var(--orange);
-        font-size: 0.85rem;
-        white-space: nowrap;
-      }
-
-      .nav-cta:hover {
-        background: var(--orange);
-        color: #000;
-      }
-
-      /* Burger (mobile) */
-      .nav-toggle {
-        display: none;
-        width: 36px;
-        height: 32px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 107, 53, 0.5);
-        background: transparent;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        cursor: pointer;
-      }
-
-      .nav-toggle-bar-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      .nav-toggle-bar {
-        width: 16px;
-        height: 2px;
-        background: var(--white);
-        transition: transform 0.2s ease, opacity 0.2s ease;
-      }
-
-      .nav-toggle.open .nav-toggle-bar:nth-child(1) {
-        transform: translateY(3.5px) rotate(45deg);
-      }
-
-      .nav-toggle.open .nav-toggle-bar:nth-child(2) {
-        transform: translateY(-3.5px) rotate(-45deg);
-      }
-
-      /* Desks dropdown */
-      .nav-desks {
-        position: relative;
-      }
-
-      .nav-desks-toggle {
-        background: none;
-        border: none;
-        padding: 0;
-        font: inherit;
-        color: var(--gray);
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        letter-spacing: 0.5px;
-        font-size: 0.9rem;
-        white-space: nowrap;
-      }
-
-      .nav-desks-toggle:hover {
-        color: var(--white);
-      }
-
-      .nav-desks-toggle-icon {
-        font-size: 0.8rem;
-        line-height: 1;
-      }
-
-      .nav-desks-menu {
-        position: absolute;
-        top: calc(100% + 6px);
-        right: 0;
-        min-width: 230px;
-        background: rgba(0, 0, 0, 0.98);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 107, 53, 0.25);
-        padding: 8px;
-        display: none;
-        flex-direction: column;
-        gap: 4px;
-        z-index: 200;
-      }
-
-      .nav-desks-menu.open {
-        display: flex;
-      }
-
-      .nav-desk-link {
-        padding: 6px 8px;
-        font-size: 0.85rem;
-        color: var(--gray);
-        border-radius: 6px;
-        display: block;
-        white-space: nowrap;
-      }
-
-      .nav-desk-link:hover {
-        color: var(--white);
-        background: rgba(255, 107, 53, 0.08);
-      }
-
-      @media (max-width: 1024px) {
-        .nav {
-          padding: 14px 24px;
-        }
-
-        .nav-toggle {
-          display: flex;
-        }
-
-        .nav-links {
-          position: absolute;
-          top: 100%;
-          right: 24px;
-          left: 24px;
-          margin-top: 10px;
-          padding: 12px 16px 14px;
-          background: rgba(0, 0, 0, 0.98);
-          border-radius: 10px;
-          border: 1px solid rgba(255, 107, 53, 0.25);
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(6px);
-          transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .nav-links.open {
-          opacity: 1;
-          pointer-events: auto;
-          transform: translateY(0);
-        }
-
-        .nav-link,
-        .nav-cta {
-          width: 100%;
-        }
-
-        .nav-cta {
-          text-align: center;
-        }
-
-        .nav-desks {
-          width: 100%;
-        }
-
-        .nav-desks-menu {
-          position: static;
-          margin-top: 6px;
-          border-radius: 8px;
-          padding: 8px;
-        }
       }
 
       /* LAYOUT */
@@ -276,18 +88,9 @@
         padding: 0 60px;
       }
 
-      .narrow {
-        max-width: 1200px;
-      }
-
       section {
-        padding: 140px 0;
+        padding: 100px 0;
         border-top: 1px solid rgba(255, 107, 53, 0.08);
-      }
-
-      .section-inner {
-        max-width: 1200px;
-        margin: 0 auto;
       }
 
       .section-card {
@@ -298,94 +101,54 @@
         padding: 48px;
       }
 
-      .section-card:hover {
-        border-color: var(--card-border-strong);
-      }
-
-      .section-header-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 40px;
-        margin-bottom: 40px;
-      }
-
-      .section-title {
-        font-size: clamp(1.8rem, 3vw, 2.4rem);
-        font-weight: 300;
-        letter-spacing: -0.5px;
-      }
-
-      .section-label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        color: var(--gray-light);
-        font-weight: 400;
-        white-space: nowrap;
-      }
-
-      /* HERO */
+      /* HERO (THE SQUEEZE) */
       .hero {
-        min-height: 100vh;
+        min-height: 90vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 180px 0 120px;
+        padding-top: 140px;
         border-top: none;
+        text-align: center;
+        align-items: center;
       }
 
       .hero-kicker {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 3px;
-        color: var(--gray-light);
-        margin-bottom: 32px;
-        font-weight: 400;
+        color: var(--orange);
+        margin-bottom: 24px;
+        font-weight: 600;
       }
 
       .hero-title {
-        font-size: clamp(3rem, 8vw, 7rem);
+        font-size: clamp(2.5rem, 6vw, 5rem);
         line-height: 1.1;
         font-weight: 300;
         letter-spacing: -2px;
-        margin-bottom: 32px;
-        max-width: 1400px;
-      }
-
-      .hero-title span {
-        display: block;
+        margin-bottom: 24px;
+        max-width: 1100px;
       }
 
       .hero-sub {
-        font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
         line-height: 1.6;
         color: var(--gray);
-        max-width: 850px;
+        max-width: 750px;
         font-weight: 300;
         margin-bottom: 40px;
-      }
-
-      .hero-meta {
-        font-size: 0.9rem;
-        color: var(--gray-light);
-        margin-bottom: 36px;
-      }
-
-      .hero-cta {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .btn-primary {
         background: var(--orange);
         color: #000;
-        padding: 16px 40px;
+        padding: 20px 50px;
         border-radius: 999px;
-        font-size: 0.95rem;
-        font-weight: 400;
+        font-size: 1.1rem;
+        font-weight: 600;
         letter-spacing: 0.5px;
         border: none;
         cursor: pointer;
@@ -393,1180 +156,366 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
+        text-transform: uppercase;
+        box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
       }
 
       .btn-primary:hover {
         background: var(--orange-bright);
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
       }
 
-      .btn-secondary {
-        color: var(--gray);
-        font-size: 0.95rem;
-        font-weight: 300;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid transparent;
-        padding-bottom: 2px;
-        transition: all 0.3s ease;
-      }
-
-      .btn-secondary:hover {
-        color: var(--white);
-        border-color: var(--white);
-      }
-
-      /* MANIFESTO */
-      .manifesto-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
-        gap: 60px;
-        align-items: flex-start;
-      }
-
-      .manifesto-body {
-        font-size: clamp(1rem, 1.5vw, 1.1rem);
-        line-height: 1.9;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      .manifesto-body p {
-        margin-bottom: 20px;
-      }
-
-      .manifesto-highlight-box {
-        margin: 28px 0;
-        padding: 20px 24px;
-        border-radius: 8px;
-        background: rgba(255, 107, 53, 0.06);
-        border: 1px solid rgba(255, 107, 53, 0.25);
-        color: var(--white);
-        font-size: clamp(1.2rem, 2vw, 1.4rem);
-        line-height: 1.5;
-      }
-
-      /* PROGRAM */
-      .program-items {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .program-item {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 32px;
-        transition: all 0.3s ease;
-      }
-
-      .program-item:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .program-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        font-weight: 400;
-        margin-bottom: 16px;
-        display: block;
-      }
-
-      .program-content h3 {
-        font-size: 1.4rem;
-        font-weight: 400;
-        letter-spacing: -0.3px;
-        margin-bottom: 12px;
-        line-height: 1.3;
-        color: var(--white);
-      }
-
-      .program-content p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      /* RAMP MAP */
-      .ramp-steps {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .ramp-step {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 28px 24px;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .ramp-step:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .ramp-step-badge {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--orange);
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
-
-      .ramp-step-title {
-        font-size: 1.1rem;
-        font-weight: 400;
-        letter-spacing: -0.2px;
-        margin-bottom: 10px;
-        color: var(--white);
-      }
-
-      .ramp-step-body {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      .ramp-step-body ul {
-        list-style: none;
-        padding-left: 0;
-        margin-top: 8px;
-      }
-
-      .ramp-step-body li {
-        position: relative;
-        padding-left: 16px;
-        margin-bottom: 4px;
-      }
-
-      .ramp-step-body li::before {
-        content: "•";
-        position: absolute;
+      /* MODAL (THE TRAP) */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
         left: 0;
-        color: var(--orange);
-        font-size: 0.8rem;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
       }
 
-      /* VIDEO */
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-content {
+        background: #111;
+        border: 1px solid var(--orange);
+        padding: 40px;
+        border-radius: 12px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: var(--gray);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .modal-title {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .modal-sub {
+        color: var(--gray);
+        margin-bottom: 30px;
+        font-size: 0.9rem;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--orange);
+      }
+
+      .btn-submit {
+        width: 100%;
+        background: var(--orange);
+        color: black;
+        padding: 16px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
+      /* GENERAL STYLES FROM ORIGINAL (Preserved for "Behind the Wall") */
       .video-container {
         position: relative;
         aspect-ratio: 16/9;
-        background: rgba(255, 107, 53, 0.02);
-        border: 1px solid rgba(255, 107, 53, 0.1);
+        background: #000;
+        border: 1px solid var(--orange);
         border-radius: 8px;
         overflow: hidden;
         margin-top: 24px;
+        margin-bottom: 40px;
       }
 
       .video-container iframe {
         position: absolute;
-        inset: 0;
         width: 100%;
         height: 100%;
+        inset: 0;
       }
 
-      /* TESTIMONIALS */
-      .testimonial-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 20px;
-      }
-
-      .testimonial {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 32px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        transition: all 0.3s ease;
-      }
-
-      .testimonial:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .testimonial-quote {
-        font-size: 0.98rem;
-        line-height: 1.7;
-        color: var(--white);
-        font-weight: 300;
-        flex: 1;
-      }
-
-      .testimonial-author {
-        font-size: 0.85rem;
-        color: var(--gray);
-        padding-top: 18px;
-        border-top: 1px solid rgba(255, 107, 53, 0.1);
-      }
-
-      .testimonial-name {
-        color: var(--white);
-        font-weight: 400;
-        margin-bottom: 4px;
-      }
-
-      /* FOUNDERS */
-      .founder-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 24px;
-        margin-bottom: 32px;
-      }
-
-      .founder {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 32px;
-        transition: all 0.3s ease;
-      }
-
-      .founder:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-3px);
-      }
-
-      .founder-info h3 {
-        font-size: 1.5rem;
-        font-weight: 400;
-        margin-bottom: 8px;
-        letter-spacing: 0.3px;
-        color: var(--white);
-      }
-
-      .founder-title {
-        font-size: 0.75rem;
-        color: var(--orange);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 18px;
-        font-weight: 400;
-      }
-
-      .founder-bio {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-        margin-bottom: 18px;
-      }
-
-      .founder-bullets {
-        list-style: none;
-        font-size: 0.9rem;
-        line-height: 1.7;
-        color: var(--gray);
-      }
-
-      .founder-bullets li {
-        position: relative;
-        padding-left: 18px;
-        margin-bottom: 8px;
-      }
-
-      .founder-bullets li::before {
-        content: "—";
-        position: absolute;
-        left: 0;
-        color: var(--orange);
-      }
-
-      .stats-bar {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        margin-top: 8px;
-      }
-
-      .stat {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 999px;
-        padding: 18px 24px;
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-
-      .stat:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-2px);
-      }
-
-      .stat-num {
-        font-size: 1.6rem;
-        font-weight: 300;
-        letter-spacing: -0.5px;
-        color: var(--orange);
-        margin-bottom: 6px;
-        display: block;
-      }
-
-      .stat-label {
-        font-size: 0.78rem;
-        color: var(--gray);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 400;
-      }
-
-      /* INSIGHTS + RISK TEASER */
-      .insights-list {
-        margin-top: 16px;
-        display: grid;
-        gap: 18px;
-      }
-
-      .insight {
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 28px;
-        transition: all 0.3s ease;
-      }
-
-      .insight:hover {
-        background: rgba(255, 107, 53, 0.05);
-        border-color: var(--card-border-strong);
-        transform: translateY(-2px);
-      }
-
-      .insight-meta {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--gray-light);
-        margin-bottom: 10px;
-        font-weight: 400;
-      }
-
-      .insight-title {
-        font-size: 1.3rem;
-        font-weight: 400;
-        letter-spacing: -0.3px;
-        margin-bottom: 10px;
-        line-height: 1.3;
-        color: var(--white);
-      }
-
-      .insight-body {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: var(--gray);
-        font-weight: 300;
-      }
-
-      .risk-teaser {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        margin-top: 16px;
-      }
-
-      .risk-teaser-item {
-        background: var(--card-bg);
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
-        padding: 20px 18px;
-        font-size: 0.9rem;
-        color: var(--gray);
-      }
-
-      .risk-teaser-title {
-        font-size: 0.95rem;
-        color: var(--white);
-        margin-bottom: 6px;
-      }
-
-      .risk-teaser-link {
-        font-size: 0.85rem;
-        display: inline-block;
-        margin-top: 6px;
-      }
-
-      /* CTA */
-      .cta-section {
-        text-align: center;
-      }
-
-      .cta-card {
-        background: var(--card-bg);
-        border-radius: 12px;
-        border: 1px solid var(--card-border);
-        padding: 56px 32px;
-      }
-
-      .cta-title {
-        font-size: clamp(2.3rem, 4.5vw, 3.2rem);
-        font-weight: 300;
-        letter-spacing: -1px;
-        margin-bottom: 16px;
-        line-height: 1.2;
-      }
-
-      .cta-sub {
-        font-size: 1.1rem;
-        color: var(--gray);
-        margin-bottom: 30px;
-        font-weight: 300;
-      }
-
-      .cta-buttons {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 24px;
-      }
-
-      .cta-meta {
-        font-size: 0.85rem;
-        color: var(--gray-light);
-        margin-top: 8px;
-        font-weight: 300;
-      }
-
-      /* FOOTER */
-      footer {
-        padding: 60px 0 80px;
-        border-top: 1px solid rgba(255, 107, 53, 0.1);
-        text-align: center;
-      }
-
-      .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.85rem;
-        color: var(--gray-light);
-        font-weight: 300;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-      }
-
-      .footer-links a {
-        color: var(--gray-light);
-        font-size: 0.85rem;
-      }
-
-      .footer-disclaimer {
-        margin-top: 28px;
-        font-size: 0.8rem;
-        color: var(--gray-light);
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-      }
-
-      /* ANIMATIONS */
-      .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-      }
-
-      .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* RESPONSIVE LAYOUT */
-      @media (max-width: 1024px) {
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
         .container {
-          padding-left: 24px;
-          padding-right: 24px;
+          padding: 0 24px;
         }
-
-        .hero {
-          padding-top: 150px;
-        }
-
-        .manifesto-grid {
-          grid-template-columns: 1fr;
-          gap: 32px;
-        }
-
-        .program-items,
-        .testimonial-grid,
-        .founder-grid,
-        .stats-bar,
-        .risk-teaser {
-          grid-template-columns: 1fr;
-        }
-
-        .ramp-steps {
-          grid-template-columns: 1fr;
-        }
-
-        .comparison-row {
-          grid-template-columns: 1fr;
-          gap: 16px;
-        }
-
-        .section-card {
-          padding: 32px 24px;
-        }
-
-        .cta-card {
-          padding: 40px 24px;
-        }
-      }
-
-      @media (max-width: 640px) {
         .hero-title {
-          margin-bottom: 24px;
+          font-size: 2.5rem;
         }
-
-        .hero-sub {
-          margin-bottom: 28px;
-        }
-
-        .section-header-row {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-        }
-
-        .ramp-step {
-          padding: 22px 18px;
-        }
-
-        .ramp-step-title {
-          font-size: 1rem;
-        }
-
-        .ramp-step-body {
-          font-size: 0.9rem;
-        }
-
-        .risk-teaser-item {
-          padding: 18px 16px;
+        .section-card {
+          padding: 24px;
         }
       }
     </style>
   </head>
   <body>
     <header>
-      <div class="nav">
-        <div class="brand">Crown Merchant Financial</div>
-
-        <button class="nav-toggle" aria-label="Toggle navigation">
-          <div class="nav-toggle-bar-wrap">
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-          </div>
-        </button>
-
-        <div class="nav-links">
-          <a href="#program" class="nav-link">Program</a>
-          <a href="#ramp-map" class="nav-link">Ramp</a>
-          <a href="#founders" class="nav-link">Founders</a>
-
-          <div class="nav-desks">
-            <button class="nav-desks-toggle" type="button">
-              <span>Desks</span>
-              <span class="nav-desks-toggle-icon">▾</span>
-            </button>
-            <div class="nav-desks-menu">
-              <a href="ai-desk.html" class="nav-desk-link"
-                >AI Power Risk Desk</a
-              >
-              <a href="life-health-desk.html" class="nav-desk-link"
-                >Life &amp; Health Desk</a
-              >
-              <a href="solar-desk.html" class="nav-desk-link"
-                >Solar Risk Desk</a
-              >
-              <a href="art-desk.html" class="nav-desk-link"
-                >Art Insurance Desk</a
-              >
-            </div>
-          </div>
-
-          <a href="#apply" class="nav-cta">Apply</a>
-        </div>
-      </div>
+      <div class="brand">Crown Merchant Financial</div>
     </header>
 
+    <div class="modal-overlay" id="emailModal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal">×</button>
+        <h3 class="modal-title">Where should we send the case study?</h3>
+        <p class="modal-sub">
+          Enter your details below to unlock the 15-minute AI Risk briefing.
+        </p>
+
+        <form id="leadForm">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Your First Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-input"
+              placeholder="Your Email Address"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-submit">UNLOCK TRAINING NOW</button>
+        </form>
+      </div>
+    </div>
+
     <main>
-      <!-- Hero -->
       <section class="hero">
         <div class="container">
-          <div class="section-inner fade-in">
-            <div class="hero-kicker">Insurance &amp; Sales Academy</div>
-            <h1 class="hero-title">
-              <span>Fast-track your license</span>
-              <span>and your shot at</span>
-              <span>a CMF producing seat.</span>
-            </h1>
-            <p class="hero-sub">
-              For motivated closers and career-starters who want real skills,
-              mentorship, and a clear shot at a producing seat with Crown
-              Merchant Financial.
-            </p>
-            <p class="hero-meta">
-              Life &amp; Health and P&amp;C focused. Structured curriculum, live
-              call reviews, and a defined path from study → license → CMF
-              evaluation.
-            </p>
-            <div class="hero-cta">
-              <a href="#apply" class="btn-primary">Apply to Join</a>
+          <div class="hero-kicker">
+            Warning: Traditional Insurance Sales is Dead
+          </div>
+          <h1 class="hero-title">
+            The 90-Day Ramp: How to Secure a Seat on an AI Risk Desk
+          </h1>
+          <p class="hero-sub">
+            Stop selling whole life to your friends. Learn the "New Aristocracy"
+            method of insuring the infrastructure powering the AI revolution.
+          </p>
+
+          <button class="btn-primary" id="triggerModal">
+            WATCH THE CASE STUDY
+          </button>
+
+          <p
+            style="
+              margin-top: 20px;
+              font-size: 0.8rem;
+              color: var(--gray-light);
+            "
+          >
+            Free 15-Min Briefing. No Credit Card Required.
+          </p>
+        </div>
+      </section>
+
+      <div id="gatedContent" class="hidden">
+        <section id="training-video">
+          <div class="container">
+            <div class="section-card" style="text-align: center">
+              <h2 style="font-size: 2rem; margin-bottom: 10px">
+                The AI Power Risk Briefing
+              </h2>
+              <p style="color: var(--gray)">
+                Watch this before applying to the March Cohort.
+              </p>
+
+              <div class="video-container">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    color: var(--gray);
+                  "
+                >
+                  [ VIDEO PLAYER GOES HERE ]
+                </div>
+              </div>
+
               <a
-                href="mailto:nicholas@crownmerchantfinancial.com"
-                class="btn-secondary"
-                >Get in Touch</a
+                href="https://Typeform_Link_Goes_Here"
+                class="btn-primary"
+                style="background: #fff; color: #000"
               >
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Manifesto -->
-      <section id="manifesto">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">How we see the industry</div>
-              <div class="section-label">Context</div>
-            </div>
-            <div class="manifesto-grid">
-              <div>
-                <p class="manifesto-body">
-                  The insurance industry is caught between legacy gatekeeping
-                  and an urgent need for capable professionals who can navigate
-                  complexity.
-                </p>
-                <p class="manifesto-body">
-                  Traditional pathways are slow. Licensing programs don't teach
-                  sales. Sales training doesn't address underwriting. Nobody
-                  shows you how to actually earn a real seat.
-                </p>
-              </div>
-              <div class="manifesto-body">
-                <div class="manifesto-highlight-box">
-                  We believe the best producers are built through integrated
-                  training: licensing, sales craft, and a real path into a
-                  producing seat — not scattered across disconnected programs.
-                </div>
-                <p>
-                  This is especially critical now. Insurance is the gating
-                  mechanism for the next wave of infrastructure — AI data
-                  centers, energy conversions, and capital-intensive builds that
-                  can't move forward without proper risk frameworks.
-                </p>
-                <p>
-                  We're training the professionals who will structure coverage
-                  for this transition — and recruiting the ones who prove they
-                  belong on the CMF desk.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Program -->
-      <section id="program">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">What you get in 90 days</div>
-              <div class="section-label">Licensing · Sales · CMF Track</div>
-            </div>
-
-            <div class="program-items">
-              <div class="program-item">
-                <span class="program-label">Licensing</span>
-                <div class="program-content">
-                  <h3>State licensing preparation</h3>
-                  <p>
-                    Structured modules, mock exams, and checkpoints. We don't
-                    just give you materials — we hold you accountable through
-                    the entire process so you can pass on a defined timeline.
-                  </p>
-                </div>
-              </div>
-
-              <div class="program-item">
-                <span class="program-label">Sales</span>
-                <div class="program-content">
-                  <h3>Elite sales curriculum</h3>
-                  <p>
-                    Scripts, objection frameworks, and daily drills. Live call
-                    reviews with real feedback on your technique and pipeline
-                    behavior — the same standards we expect on the CMF desk.
-                  </p>
-                </div>
-              </div>
-
-              <div class="program-item">
-                <span class="program-label">CMF Track</span>
-                <div class="program-content">
-                  <h3>Our recruiting pipeline</h3>
-                  <p>
-                    We use this program as our primary hiring path. Top
-                    performers are evaluated for producing seats at Crown
-                    Merchant Financial. Graduates we can't place internally
-                    still leave with a license, live reps, and a stronger story
-                    for any future employer.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Ramp Map -->
-      <section id="ramp-map">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">How the CMF ramp works</div>
-              <div class="section-label">90-day map</div>
-            </div>
-
-            <div class="ramp-steps">
-              <div class="ramp-step">
-                <div class="ramp-step-badge">Step 1 · Acceptance</div>
-                <div class="ramp-step-title">Apply for a CMF ramp seat</div>
-                <div class="ramp-step-body">
-                  <p>
-                    You submit an application and book a short call. We only
-                    accept candidates we could realistically see on the CMF desk
-                    if they execute.
-                  </p>
-                  <ul>
-                    <li>Application + interview</li>
-                    <li>Expectation setting on time and effort</li>
-                    <li>Clear start date and workload</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="ramp-step">
-                <div class="ramp-step-badge">Step 2 · 90 days</div>
-                <div class="ramp-step-title">Study → license → live reps</div>
-                <div class="ramp-step-body">
-                  <p>
-                    The program is your audition. We track how you study, how
-                    you handle feedback, and how you show up on calls.
-                  </p>
-                  <ul>
-                    <li>State exam prep and mock exams</li>
-                    <li>Scripts, drills, and live call reviews</li>
-                    <li>Behavior tracked across attendance and output</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="ramp-step">
-                <div class="ramp-step-badge">Step 3 · Evaluation</div>
-                <div class="ramp-step-title">Shot at a CMF producing seat</div>
-                <div class="ramp-step-body">
-                  <p>
-                    At the end of the ramp, we sort outcomes based on real
-                    performance, not vibes.
-                  </p>
-                  <ul>
-                    <li>Top performers considered for CMF producer roles</li>
-                    <li>High-potential candidates kept on our radar</li>
-                    <li>
-                      All graduates leave with a license and live experience
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Video -->
-      <section id="overview">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Watch the overview</div>
-              <div class="section-label">5 minutes</div>
-            </div>
-            <div class="video-container">
-              <iframe
-                src="https://player.vimeo.com/video/000000000"
-                frameborder="0"
-                allow="autoplay; fullscreen"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials -->
-      <section id="testimonials">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">What graduates say</div>
-              <div class="section-label">Proof of work</div>
-            </div>
-
-            <div class="testimonial-grid">
-              <div class="testimonial">
-                <p class="testimonial-quote">
-                  "The licensing plan and daily drills cut through the noise. I
-                  passed on the first try and knew exactly what was expected if
-                  I wanted a real seat."
-                </p>
-                <div class="testimonial-author">
-                  <div class="testimonial-name">Alex R.</div>
-                  <div>Life &amp; Health Producer</div>
-                </div>
-              </div>
-
-              <div class="testimonial">
-                <p class="testimonial-quote">
-                  "Live call reviews were the difference. Objection handling
-                  went from guessing to a system I can rely on every day — and
-                  it made the CMF expectations very clear."
-                </p>
-                <div class="testimonial-author">
-                  <div class="testimonial-name">Maya T.</div>
-                  <div>P&amp;C Agent</div>
-                </div>
-              </div>
-
-              <div class="testimonial">
-                <p class="testimonial-quote">
-                  "CMF held me accountable. Clear milestones, real mentorship,
-                  and a defined path into a producing seat instead of vague
-                  promises."
-                </p>
-                <div class="testimonial-author">
-                  <div class="testimonial-name">Jordan C.</div>
-                  <div>Commercial Lines</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Founders -->
-      <section id="founders">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Who runs the room</div>
-              <div class="section-label">Founders</div>
-            </div>
-
-            <div class="founder-grid">
-              <div class="founder">
-                <div class="founder-info">
-                  <h3>Nicholas Quaranta</h3>
-                  <div class="founder-title">Founder &amp; Lead Instructor</div>
-                  <p class="founder-bio">
-                    Sales operator focused on licensing outcomes and producer
-                    performance. Builds standards-first culture with live call
-                    reviews and pipeline accountability.
-                  </p>
-                  <ul class="founder-bullets">
-                    <li>Insurance licensing + elite sales drills</li>
-                    <li>Recruiting and evaluation pipeline into CMF seats</li>
-                    <li>Mentorship and weekly performance reviews</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="founder">
-                <div class="founder-info">
-                  <h3>Conrad</h3>
-                  <div class="founder-title">Co-Founder &amp; Operations</div>
-                  <p class="founder-bio">
-                    Orchestrates cohort cadence, curriculum QA, and systems so
-                    that serious candidates move from study → license → CMF
-                    evaluation fast.
-                  </p>
-                  <ul class="founder-bullets">
-                    <li>Cohort scheduling and LMS operations</li>
-                    <li>Desk and carrier relationships</li>
-                    <li>Analytics, metrics, and program QA</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="stats-bar">
-              <div class="stat">
-                <span class="stat-num">20hr</span>
-                <span class="stat-label">State prep integrated</span>
-              </div>
-              <div class="stat">
-                <span class="stat-num">1:1</span>
-                <span class="stat-label">Mentorship access</span>
-              </div>
-              <div class="stat">
-                <span class="stat-num">Feeder</span>
-                <span class="stat-label">CMF hiring pipeline</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Insights + tiny risk desks teaser -->
-      <section id="insights">
-        <div class="container">
-          <div class="section-inner section-card fade-in">
-            <div class="section-header-row">
-              <div class="section-title">Signals we train against</div>
-              <div class="section-label">Insights</div>
-            </div>
-
-            <div class="insights-list">
-              <div class="insight">
-                <div class="insight-meta">
-                  Brief · Based on recent street research
-                </div>
-                <h3 class="insight-title">
-                  AI power demand &amp; the 2028 crunch
-                </h3>
-                <p class="insight-body">
-                  Analysts project a double-digit power shortfall for U.S. data
-                  centers by 2028. The bottleneck isn't chips — it's permitted,
-                  insured, financed power.
-                </p>
-              </div>
-
-              <div class="insight">
-                <div class="insight-meta">Note · Infrastructure reuse</div>
-                <h3 class="insight-title">
-                  The mining site as a neocloud asset
-                </h3>
-                <p class="insight-body">
-                  Sites built for mining already solved land, power, and
-                  cooling. With the right risk and credit structure, they become
-                  fast-track AI compute campuses.
-                </p>
-              </div>
-
-              <div class="insight">
-                <div class="insight-meta">
-                  Perspective · Energy &amp; capital
-                </div>
-                <h3 class="insight-title">
-                  Insurance as a gating item for SMRs
-                </h3>
-                <p class="insight-body">
-                  Small modular reactors won't scale on engineering alone.
-                  Long-dated, credible coverage is critical before serious
-                  capital commits.
-                </p>
-              </div>
-            </div>
-
-            <div class="section-header-row" style="margin-top: 40px">
-              <div class="section-title" style="font-size: 1.2rem">
-                Where the CMF desks point
-              </div>
-              <div class="section-label">Risk desks</div>
-            </div>
-
-            <div class="risk-teaser">
-              <div class="risk-teaser-item">
-                <div class="risk-teaser-title">AI Power Risk Desk</div>
-                <p>
-                  Data centers, mining-to-AI conversions, and new power assets
-                  where insurance is tied directly to the capital stack.
-                </p>
-                <a href="ai-desk.html" class="risk-teaser-link"
-                  >View AI Power Desk →</a
-                >
-              </div>
-              <div class="risk-teaser-item">
-                <div class="risk-teaser-title">Life &amp; Health Desk</div>
-                <p>
-                  Protection-first planning for producers who want to write
-                  modern life &amp; health with real sales standards.
-                </p>
-                <a href="life-health-desk.html" class="risk-teaser-link"
-                  >View Life &amp; Health Desk →</a
-                >
-              </div>
-              <div class="risk-teaser-item">
-                <div class="risk-teaser-title">Solar &amp; Art (coming)</div>
-                <p>
-                  Emerging desks focused on energy projects and high-value art
-                  as balance sheet assets.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA Section -->
-      <section class="cta-section" id="apply">
-        <div class="container">
-          <div class="section-inner fade-in">
-            <div class="cta-card">
-              <h2 class="cta-title">Apply to the next cohort</h2>
-              <p class="cta-sub">
-                Cohort opens March 3. Limited seats available.
-              </p>
-              <div class="cta-buttons">
-                <a href="#" class="btn-primary">Submit Application</a>
-                <a
-                  href="mailto:nicholas@crownmerchantfinancial.com"
-                  class="btn-secondary"
-                  >Email Us</a
-                >
-              </div>
-              <p class="cta-meta">
-                Submit application → Auto-book call → Get a decision on your CMF
-                ramp spot within 24h.
+                APPLY FOR THE MARCH COHORT
+              </a>
+              <p
+                style="
+                  margin-top: 10px;
+                  font-size: 0.8rem;
+                  color: var(--orange);
+                "
+              >
+                Only 10 Seats Available. $500 Deposit required to lock
+                interview.
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section>
+          <div class="container">
+            <h3
+              style="
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 40px;
+                color: var(--gray);
+              "
+            >
+              Why the Industry is shifting
+            </h3>
+
+            <div class="section-card">
+              <div class="insights-list" style="display: grid; gap: 20px">
+                <div
+                  style="
+                    padding: 20px;
+                    border: 1px solid var(--card-border);
+                    border-radius: 8px;
+                  "
+                >
+                  <h4 style="color: var(--white); font-size: 1.2rem">
+                    The AI Power Crunch
+                  </h4>
+                  <p style="color: var(--gray); font-size: 0.9rem">
+                    Analysts project a double-digit power shortfall for U.S.
+                    data centers by 2028. The bottleneck isn't chips — it's
+                    permitted, insured, financed power.
+                  </p>
+                </div>
+                <div
+                  style="
+                    padding: 20px;
+                    border: 1px solid var(--card-border);
+                    border-radius: 8px;
+                  "
+                >
+                  <h4 style="color: var(--white); font-size: 1.2rem">
+                    The Neocloud Asset
+                  </h4>
+                  <p style="color: var(--gray); font-size: 0.9rem">
+                    Sites built for mining already solved land, power, and
+                    cooling. With the right risk structure, they become
+                    fast-track AI campuses.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>© <span id="year"></span> Crown Merchant Financial</div>
-          <div class="footer-links">
-            <a href="mailto:nicholas@crownmerchantfinancial.com">Contact</a>
-            <a href="#apply">Apply</a>
-            <a href="ai-desk.html">AI Power Risk Desk</a>
-          </div>
-        </div>
-        <p class="footer-disclaimer">
-          Training quality and outcomes matter. We share frameworks, drills, and
-          mentorship that have helped graduates pass licensing exams and enter
-          producing roles. However, results vary by individual effort, state
-          requirements, and market conditions. Acceptance into the program does
-          not guarantee a role at Crown Merchant Financial, earnings, or job
-          placement.
+      <div
+        class="container"
+        style="
+          text-align: center;
+          padding: 40px 0;
+          color: var(--gray-light);
+          font-size: 0.8rem;
+        "
+      >
+        <div>© 2025 Crown Merchant Financial</div>
+        <p style="max-width: 600px; margin: 20px auto">
+          Training quality and outcomes matter. Acceptance into the program does
+          not guarantee a role.
         </p>
       </div>
     </footer>
 
     <script>
-      // Set current year
-      document.getElementById("year").textContent = new Date().getFullYear();
+      // DOM ELEMENTS
+      const modal = document.getElementById("emailModal");
+      const triggerBtn = document.getElementById("triggerModal");
+      const closeBtn = document.getElementById("closeModal");
+      const leadForm = document.getElementById("leadForm");
+      const gatedContent = document.getElementById("gatedContent");
+      const heroSection = document.querySelector(".hero");
 
-      // Scroll reveal animation
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll(".fade-in").forEach((el) => {
-        observer.observe(el);
+      // OPEN MODAL
+      triggerBtn.addEventListener("click", () => {
+        modal.classList.add("active");
       });
 
-      // Smooth scroll for in-page anchors only
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          const href = this.getAttribute("href");
-          const target = document.querySelector(href);
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
+      // CLOSE MODAL
+      closeBtn.addEventListener("click", () => {
+        modal.classList.remove("active");
       });
 
-      // Mobile nav toggle
-      const navToggle = document.querySelector(".nav-toggle");
-      const navLinks = document.querySelector(".nav-links");
+      // CLOSE ON OUTSIDE CLICK
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+        }
+      });
 
-      if (navToggle && navLinks) {
-        navToggle.addEventListener("click", () => {
-          navToggle.classList.toggle("open");
-          navLinks.classList.toggle("open");
-        });
-      }
+      // HANDLE FORM SUBMIT (THE UNLOCK)
+      leadForm.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-      // Desks dropdown (desktop + mobile)
-      const navDesksToggle = document.querySelector(".nav-desks-toggle");
-      const navDesksMenu = document.querySelector(".nav-desks-menu");
+        // 1. Here you would usually send data to Mailchimp/Zapier
+        console.log("Lead Captured!");
 
-      if (navDesksToggle && navDesksMenu) {
-        navDesksToggle.addEventListener("click", (e) => {
-          e.stopPropagation();
-          navDesksMenu.classList.toggle("open");
-        });
+        // 2. Hide Modal
+        modal.classList.remove("active");
 
-        // Close dropdown on outside click
-        document.addEventListener("click", (e) => {
-          if (
-            navDesksMenu.classList.contains("open") &&
-            !navDesksMenu.contains(e.target) &&
-            !navDesksToggle.contains(e.target)
-          ) {
-            navDesksMenu.classList.remove("open");
-          }
-        });
+        // 3. Hide the "Squeeze" Hero and Show the Content
+        heroSection.style.display = "none";
+        gatedContent.classList.remove("hidden");
 
-        // Close menus when clicking a desk link (navigation still happens)
-        document.querySelectorAll(".nav-desk-link").forEach((link) => {
-          link.addEventListener("click", () => {
-            navDesksMenu.classList.remove("open");
-            if (navLinks) navLinks.classList.remove("open");
-            if (navToggle) navToggle.classList.remove("open");
-          });
-        });
-      }
+        // 4. Scroll to Video
+        document
+          .getElementById("training-video")
+          .scrollIntoView({ behavior: "smooth" });
+      });
     </script>
   </body>
 </html>
