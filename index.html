@@ -54,7 +54,7 @@
         opacity: 0.8;
       }
 
-      /* NOISE OVERLAY (Keep this for texture) */
+      /* NOISE OVERLAY */
       .noise {
         position: fixed;
         top: 0;
@@ -63,7 +63,7 @@
         height: 100%;
         pointer-events: none;
         opacity: 0.06;
-        z-index: 0; /* On top of 3D */
+        z-index: 0;
         background: repeating-linear-gradient(
           45deg,
           transparent,
@@ -141,7 +141,7 @@
         margin-bottom: 2rem;
         opacity: 0;
         animation: fadeInUp 1s ease forwards;
-        text-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); /* Shadow to pop off 3D */
+        text-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       }
 
       .hero-title strong {
@@ -156,11 +156,39 @@
         font-size: 1.2rem;
         color: var(--text-secondary);
         max-width: 600px;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
         font-weight: 300;
         opacity: 0;
         animation: fadeInUp 1s ease 0.4s forwards;
         text-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+      }
+
+      /* COUNTDOWN STYLES */
+      .countdown-container {
+        margin-bottom: 2.5rem;
+        display: inline-block;
+        text-align: left;
+        border-left: 2px solid var(--accent);
+        padding-left: 1rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.5s forwards;
+      }
+
+      .countdown-label {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        letter-spacing: 0.2em;
+        margin-bottom: 0.2rem;
+        font-family: monospace;
+      }
+
+      .countdown-timer {
+        font-family: "Courier New", monospace;
+        font-size: 1.5rem;
+        color: #fff;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
       }
 
       /* MANIFESTO */
@@ -168,7 +196,6 @@
         padding: 8rem 3rem;
         position: relative;
         z-index: 2;
-        /* Glass effect behind text so it's readable over 3D */
         background: linear-gradient(
           to bottom,
           rgba(5, 5, 5, 0) 0%,
@@ -427,7 +454,7 @@
       .cta-button {
         display: inline-block;
         padding: 1.2rem 3rem;
-        background: rgba(0, 0, 0, 0.5); /* darkened for legibility over 3D */
+        background: rgba(0, 0, 0, 0.5);
         border: 1px solid var(--accent);
         color: var(--accent);
         text-decoration: none;
@@ -500,15 +527,21 @@
 
     <section class="hero" id="hero">
       <div class="hero-content">
-        <span class="hero-overline">January Cohort · 10 Seats Only</span>
+        <span class="hero-overline">December Cohort · 10 Seats Only</span>
         <h1 class="hero-title">
           SECURE YOUR SEAT <br />
           ON THE <strong>AI POWER DESK.</strong>
         </h1>
         <p class="hero-sub">
-          From unlicensed to a producing seat in Infrastructure Risk or Private
-          Wealth in 30 days or less.
+          The 30-Day Sprint. From unlicensed to a producing seat in
+          Infrastructure Risk or Private Wealth.
         </p>
+
+        <div class="countdown-container">
+          <div class="countdown-label">COHORT LOCKS IN:</div>
+          <div id="countdown" class="countdown-timer">00:00:00:00</div>
+        </div>
+
         <a href="#" class="cta-button" id="openModal">Start The Process</a>
       </div>
     </section>
@@ -567,9 +600,9 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type"></div>
+          <div class="program-type">The Whale Hunter</div>
           <h3 class="program-title">Infrastructure Risk</h3>
-          <p class="program-subtitle">Property & Casualty Track</p>
+          <p class="program-subtitle">Property & Casualty Track ($3,000)</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> B2B / Recurring Revenue</li>
             <li>
@@ -585,9 +618,9 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type"></div>
+          <div class="program-type">The Cash Flow King</div>
           <h3 class="program-title">Private Wealth</h3>
-          <p class="program-subtitle">Life & Health Track</p>
+          <p class="program-subtitle">Life & Health Track ($3,000)</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> High Velocity / Upfront Cash</li>
             <li>
@@ -606,7 +639,9 @@
     <footer>
       <div class="footer-content reveal">
         <div class="footer-left">© 2025 Crown Merchant Financial</div>
-        <div class="footer-left" style="margin-left: auto; opacity: 0.5"></div>
+        <div class="footer-left" style="margin-left: auto; opacity: 0.5">
+          Applications Close March 3rd
+        </div>
       </div>
     </footer>
 
@@ -658,18 +693,30 @@
         <div
           style="
             width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
             border: 1px solid var(--border);
             margin-bottom: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
           "
         >
-          [ VIDEO PLAYER ]
+          <iframe
+            src="https://player.vimeo.com/video/1139750248?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            "
+            title="CMF Briefing"
+          >
+          </iframe>
         </div>
+        <script src="https://player.vimeo.com/api/player.js"></script>
 
         <div style="text-align: center; margin-bottom: 6rem">
           <p style="color: #fff; font-size: 1.2rem; margin-bottom: 2rem">
@@ -762,13 +809,57 @@
       window.addEventListener("scroll", revealElements);
       window.addEventListener("load", revealElements);
 
-      // --- 2. THREE.JS 3D GLOBE ---
+      // --- 2. COUNTDOWN LOGIC ---
+      const countdownEl = document.getElementById("countdown");
+      const targetDate = new Date("March 3, 2025 00:00:00").getTime();
+
+      const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          countdownEl.innerHTML = "DEPLOYMENT ACTIVE";
+          countdownEl.style.color = "var(--accent)";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownEl.innerHTML = `${days.toString().padStart(2, "0")}D ${hours
+          .toString()
+          .padStart(2, "0")}H ${minutes.toString().padStart(2, "0")}M ${seconds
+          .toString()
+          .padStart(2, "0")}S`;
+      };
+
+      setInterval(updateTimer, 1000);
+      updateTimer();
+
+      // --- 3. EXIT INTENT TRIGGER ---
+      let exitIntentTriggered = false;
+      document.addEventListener("mouseleave", (e) => {
+        if (e.clientY < 0 && !exitIntentTriggered) {
+          if (
+            !modal.classList.contains("active") &&
+            detailedContent.classList.contains("hidden")
+          ) {
+            modal.classList.add("active");
+            exitIntentTriggered = true;
+          }
+        }
+      });
+
+      // --- 4. THREE.JS 3D GLOBE ---
 
       const initThreeJS = () => {
         const container = document.getElementById("canvas-container");
         const scene = new THREE.Scene();
 
-        // Camera Setup
         const camera = new THREE.PerspectiveCamera(
           75,
           window.innerWidth / window.innerHeight,
@@ -785,10 +876,9 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // 1. WIREFRAME GLOBE (ICOSAHEDRON)
-        const geometry = new THREE.IcosahedronGeometry(14, 2); // Size, Detail
+        const geometry = new THREE.IcosahedronGeometry(14, 2);
         const material = new THREE.MeshBasicMaterial({
-          color: 0x333333, // Dark Grey lines
+          color: 0x333333,
           wireframe: true,
           transparent: true,
           opacity: 0.1,
@@ -796,13 +886,11 @@
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
 
-        // 2. GLOWING NODES (PARTICLES)
         const particlesGeometry = new THREE.BufferGeometry();
         const particleCount = 300;
         const posArray = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i++) {
-          // Random spread around the sphere
           posArray[i] = (Math.random() - 0.5) * 40;
         }
 
@@ -813,7 +901,7 @@
 
         const particlesMaterial = new THREE.PointsMaterial({
           size: 0.15,
-          color: 0xff6b35, // CMF Orange
+          color: 0xff6b35,
           transparent: true,
           opacity: 0.8,
         });
@@ -824,11 +912,9 @@
         );
         scene.add(particlesMesh);
 
-        // 3. CONNECTING LINES (THE NETWORK)
-        // We create a secondary, larger wireframe to represent the "Data Layer"
         const outerGeo = new THREE.IcosahedronGeometry(14.2, 1);
         const outerMat = new THREE.MeshBasicMaterial({
-          color: 0xff6b35, // Orange Lines
+          color: 0xff6b35,
           wireframe: true,
           transparent: true,
           opacity: 0.05,
@@ -836,7 +922,6 @@
         const network = new THREE.Mesh(outerGeo, outerMat);
         scene.add(network);
 
-        // MOUSE INTERACTION
         let mouseX = 0;
         let mouseY = 0;
         let targetX = 0;
@@ -850,22 +935,20 @@
           mouseY = event.clientY - windowHalfY;
         });
 
-        // ANIMATION LOOP
         const animate = () => {
           requestAnimationFrame(animate);
 
           targetX = mouseX * 0.001;
           targetY = mouseY * 0.001;
 
-          // Smooth Rotation logic
           globe.rotation.y += 0.002;
           globe.rotation.y += 0.05 * (targetX - globe.rotation.y);
           globe.rotation.x += 0.05 * (targetY - globe.rotation.x);
 
-          particlesMesh.rotation.y = globe.rotation.y * 0.8; // Parallax effect
+          particlesMesh.rotation.y = globe.rotation.y * 0.8;
           particlesMesh.rotation.x = globe.rotation.x * 0.8;
 
-          network.rotation.y = globe.rotation.y * 1.1; // Faster layer
+          network.rotation.y = globe.rotation.y * 1.1;
           network.rotation.x = globe.rotation.x * 1.1;
 
           renderer.render(scene, camera);
@@ -873,7 +956,6 @@
 
         animate();
 
-        // RESIZE HANDLER
         window.addEventListener("resize", () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
@@ -881,25 +963,7 @@
         });
       };
 
-      // Init 3D when DOM loads
       document.addEventListener("DOMContentLoaded", initThreeJS);
-
-      // --- EXIT INTENT TRIGGER ---
-      let exitIntentTriggered = false;
-
-      document.addEventListener("mouseleave", (e) => {
-        // If mouse leaves the top of the window (towards tabs)
-        if (e.clientY < 0 && !exitIntentTriggered) {
-          // Only trigger if the modal isn't already open
-          if (
-            !modal.classList.contains("active") &&
-            !detailedContent.style.display !== "none"
-          ) {
-            modal.classList.add("active");
-            exitIntentTriggered = true; // Only do this once per session
-          }
-        }
-      });
     </script>
   </body>
 </html>
