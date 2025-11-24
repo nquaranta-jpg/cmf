@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Crown Merchant Financial | The 30-Day Sprint</title>
+    <title>Crown Merchant Financial | The Chicago Residency</title>
 
     <link
       rel="icon"
@@ -12,7 +12,7 @@
     />
 
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
       * {
         margin: 0;
@@ -183,7 +183,7 @@
       }
 
       .countdown-timer {
-        font-family: "Courier New", monospace;
+        font-family: "JetBrains Mono", monospace;
         font-size: 1.5rem;
         color: #fff;
         letter-spacing: 0.1em;
@@ -235,6 +235,78 @@
         font-weight: 500;
       }
 
+      /* TIMELINE (THE PROTOCOL) */
+      .timeline {
+        padding: 6rem 3rem;
+        background: var(--bg);
+        position: relative;
+        z-index: 2;
+        border-top: 1px solid var(--border);
+      }
+
+      .timeline-container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 2rem;
+        padding: 3rem 0;
+        border-bottom: 1px solid var(--border);
+        transition: all 0.3s ease;
+      }
+
+      .timeline-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .timeline-item:last-child {
+        border-bottom: none;
+      }
+
+      .time-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 0.5rem 1rem;
+        display: inline-block;
+        height: fit-content;
+        text-transform: uppercase;
+      }
+
+      .time-content h3 {
+        font-size: 1.8rem;
+        color: #fff;
+        margin-bottom: 1rem;
+        font-weight: 400;
+      }
+
+      .time-content p {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .time-details {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        list-style: none;
+      }
+
+      .time-details li {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+      }
+      .time-details li::before {
+        content: "//";
+        color: var(--accent);
+        margin-right: 10px;
+      }
+
       /* PROGRAMS */
       .programs {
         padding: 6rem 3rem;
@@ -266,10 +338,7 @@
         max-width: var(--max-width);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(300px, 1fr)
-        ); /* UPDATED FOR 3 COLUMNS */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
       }
 
@@ -517,6 +586,10 @@
           grid-template-columns: repeat(2, 1fr);
           gap: 2rem;
         }
+        .timeline-item {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
       }
     </style>
   </head>
@@ -536,8 +609,8 @@
           ON THE <strong>AI POWER DESK.</strong>
         </h1>
         <p class="hero-sub">
-          The 30-Day Sprint. From unlicensed to a producing seat in
-          Infrastructure Risk, Private Wealth, or Strategic Liquidity.
+          The 30-Day Protocol. Virtual Licensing Prep + Live Sales Residency in
+          Chicago.
         </p>
 
         <div class="countdown-container">
@@ -577,7 +650,65 @@
             We are training the <strong>New Aristocracy</strong> of brokers.
             <br />
             We don't care about your resume. We care if you can survive the
-            <strong>30-Day Sprint</strong>.
+            <strong>30-Day Protocol</strong>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <div class="section-header reveal">
+        <div class="section-label">The Protocol</div>
+        <h2 class="section-title">Operational Roadmap.</h2>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-item reveal">
+          <div class="time-tag">WEEKS 01-02</div>
+          <div class="time-content">
+            <h3>The Bunker (Remote)</h3>
+            <p>
+              Total immersion. You cannot trade without a license. We compress 2
+              months of state exam preparation into 10 days of accountability.
+            </p>
+            <ul class="time-details">
+              <li>0700 Morning Roll Call</li>
+              <li>Daily Exam Metrics</li>
+              <li>State Licensing Completion</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="time-tag">WEEK 03</div>
+          <div class="time-content">
+            <h3>Tradecraft (Remote)</h3>
+            <p>
+              Cohort splits into specialized tracks (Infrastructure, Wealth, or
+              Capital). You learn the specific underwriting mechanics and sales
+              scripts for your desk.
+            </p>
+            <ul class="time-details">
+              <li>Product Knowledge Download</li>
+              <li>Prospecting Frameworks</li>
+              <li>The "Hard Market" Pitch</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="time-tag">WEEK 04</div>
+          <div class="time-content">
+            <h3>The Chicago Summit (Live)</h3>
+            <p>
+              You fly to Chicago. 3 Days of 12-hour live combat drills. Real
+              negotiation simulations. System setup. Graduation.
+            </p>
+            <ul class="time-details">
+              <li>Live Fire Roleplay</li>
+              <li>CRM & Deal Flow Setup</li>
+              <li>The "Aristocracy" Dinner</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -605,13 +736,13 @@
         >
           <div class="program-type">The Whale Hunter</div>
           <h3 class="program-title">Infrastructure Risk</h3>
-          <p class="program-subtitle">Property & Casualty Track</p>
+          <p class="program-subtitle">Property & Casualty Track (Hybrid)</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> B2B / Recurring Revenue</li>
             <li>
               <strong>Target:</strong> AI Data Centers, Energy, Construction
             </li>
-            <li><strong>License:</strong> P&C Exam Prep Included</li>
+            <li><strong>Training:</strong> Online Prep + Chicago Summit</li>
             <li><strong>Outcome:</strong> Build a 20-year asset book</li>
           </ul>
           <span class="program-cta">Select Track →</span>
@@ -623,13 +754,13 @@
         >
           <div class="program-type">The Cash Flow King</div>
           <h3 class="program-title">Private Wealth</h3>
-          <p class="program-subtitle">Life & Health Track</p>
+          <p class="program-subtitle">Life & Health Track (Hybrid)</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> High Velocity / Upfront Cash</li>
             <li>
               <strong>Target:</strong> High Net Worth Executives & Founders
             </li>
-            <li><strong>License:</strong> L&H Exam Prep Included</li>
+            <li><strong>Training:</strong> Online Prep + Chicago Summit</li>
             <li>
               <strong>Outcome:</strong> $10k+ Monthly Commission Potential
             </li>
@@ -643,14 +774,14 @@
         >
           <div class="program-type">The Deal Maker</div>
           <h3 class="program-title">Strategic Capital</h3>
-          <p class="program-subtitle">Liquidity Desk Track</p>
+          <p class="program-subtitle">Liquidity Desk Track (Hybrid)</p>
 
           <ul class="program-features">
             <li><strong>Focus:</strong> Speed / High Volume</li>
             <li>
               <strong>Target:</strong> Bridge Capital for Construction & Tech
             </li>
-            <li><strong>Product:</strong> Private Credit</li>
+            <li><strong>Training:</strong> Online Prep + Chicago Summit</li>
             <li><strong>Outcome:</strong> 24h Funding Cycles & Fast Commish</li>
           </ul>
           <span class="program-cta">Select Track →</span>
@@ -809,6 +940,7 @@
       const heroSection = document.getElementById("hero");
       const manifestoSection = document.getElementById("manifesto");
       const programsSection = document.getElementById("programs");
+      const timelineSection = document.querySelector(".timeline"); // NEW
       const detailedContent = document.getElementById("detailed-content");
 
       openModal.addEventListener("click", (e) => {
@@ -823,7 +955,6 @@
       accessForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // Capture Data
         const nameVal = document.querySelector(
           'input[placeholder="Full Name"]'
         ).value;
@@ -831,7 +962,6 @@
           'input[placeholder="Email Address"]'
         ).value;
 
-        // Send to Formspree (Background)
         fetch("https://formspree.io/f/xkgeddzy", {
           method: "POST",
           body: JSON.stringify({ name: nameVal, email: emailVal }),
@@ -847,11 +977,11 @@
             console.log("Form Error");
           });
 
-        // Unlock Content Immediately (Better UX)
         modal.classList.remove("active");
         heroSection.style.display = "none";
         manifestoSection.style.display = "none";
         programsSection.style.display = "none";
+        timelineSection.style.display = "none"; // HIDE TIMELINE TOO
         document.querySelector(".partners").style.display = "none";
         detailedContent.classList.remove("hidden");
         window.scrollTo(0, 0);
@@ -1016,4 +1146,3 @@
     </script>
   </body>
 </html>
-```
