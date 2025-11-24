@@ -600,9 +600,9 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type">The Whale Hunter</div>
+          <div class="program-type"></div>
           <h3 class="program-title">Infrastructure Risk</h3>
-          <p class="program-subtitle">Property & Casualty Track ($3,000)</p>
+          <p class="program-subtitle">Property & Casualty Track</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> B2B / Recurring Revenue</li>
             <li>
@@ -618,9 +618,9 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type">The Cash Flow King</div>
+          <div class="program-type"></div>
           <h3 class="program-title">Private Wealth</h3>
-          <p class="program-subtitle">Life & Health Track ($3,000)</p>
+          <p class="program-subtitle">Life & Health Track</p>
           <ul class="program-features">
             <li><strong>Focus:</strong> High Velocity / Upfront Cash</li>
             <li>
@@ -661,6 +661,7 @@
           Enter your details to access the 15-minute Case Study video and the
           application portal.
         </p>
+
         <form id="accessForm">
           <input
             type="text"
@@ -756,7 +757,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-      // --- 1. UI LOGIC (SCROLL, MODAL, REVEAL) ---
+      // --- 1. UI LOGIC ---
 
       window.addEventListener("scroll", () => {
         const nav = document.getElementById("nav");
@@ -785,8 +786,35 @@
         modal.classList.remove("active");
       });
 
+      // --- 2. FORMSPREE INTEGRATION ---
       accessForm.addEventListener("submit", (e) => {
         e.preventDefault();
+
+        // Capture Data
+        const nameVal = document.querySelector(
+          'input[placeholder="Full Name"]'
+        ).value;
+        const emailVal = document.querySelector(
+          'input[placeholder="Email Address"]'
+        ).value;
+
+        // Send to Formspree (Background)
+        fetch("https://formspree.io/f/xkgeddzy", {
+          method: "POST",
+          body: JSON.stringify({ name: nameVal, email: emailVal }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            console.log("Lead Sent");
+          })
+          .catch((error) => {
+            console.log("Form Error");
+          });
+
+        // Unlock Content Immediately (Better UX)
         modal.classList.remove("active");
         heroSection.style.display = "none";
         manifestoSection.style.display = "none";
@@ -809,7 +837,7 @@
       window.addEventListener("scroll", revealElements);
       window.addEventListener("load", revealElements);
 
-      // --- 2. COUNTDOWN LOGIC ---
+      // --- 3. COUNTDOWN LOGIC ---
       const countdownEl = document.getElementById("countdown");
       const targetDate = new Date("March 3, 2025 00:00:00").getTime();
 
@@ -840,7 +868,7 @@
       setInterval(updateTimer, 1000);
       updateTimer();
 
-      // --- 3. EXIT INTENT TRIGGER ---
+      // --- 4. EXIT INTENT TRIGGER ---
       let exitIntentTriggered = false;
       document.addEventListener("mouseleave", (e) => {
         if (e.clientY < 0 && !exitIntentTriggered) {
@@ -854,12 +882,10 @@
         }
       });
 
-      // --- 4. THREE.JS 3D GLOBE ---
-
+      // --- 5. THREE.JS 3D GLOBE ---
       const initThreeJS = () => {
         const container = document.getElementById("canvas-container");
         const scene = new THREE.Scene();
-
         const camera = new THREE.PerspectiveCamera(
           75,
           window.innerWidth / window.innerHeight,
@@ -889,11 +915,9 @@
         const particlesGeometry = new THREE.BufferGeometry();
         const particleCount = 300;
         const posArray = new Float32Array(particleCount * 3);
-
         for (let i = 0; i < particleCount * 3; i++) {
           posArray[i] = (Math.random() - 0.5) * 40;
         }
-
         particlesGeometry.setAttribute(
           "position",
           new THREE.BufferAttribute(posArray, 3)
@@ -905,7 +929,6 @@
           transparent: true,
           opacity: 0.8,
         });
-
         const particlesMesh = new THREE.Points(
           particlesGeometry,
           particlesMaterial
@@ -926,7 +949,6 @@
         let mouseY = 0;
         let targetX = 0;
         let targetY = 0;
-
         const windowHalfX = window.innerWidth / 2;
         const windowHalfY = window.innerHeight / 2;
 
@@ -937,23 +959,17 @@
 
         const animate = () => {
           requestAnimationFrame(animate);
-
           targetX = mouseX * 0.001;
           targetY = mouseY * 0.001;
-
           globe.rotation.y += 0.002;
           globe.rotation.y += 0.05 * (targetX - globe.rotation.y);
           globe.rotation.x += 0.05 * (targetY - globe.rotation.x);
-
           particlesMesh.rotation.y = globe.rotation.y * 0.8;
           particlesMesh.rotation.x = globe.rotation.x * 0.8;
-
           network.rotation.y = globe.rotation.y * 1.1;
           network.rotation.x = globe.rotation.x * 1.1;
-
           renderer.render(scene, camera);
         };
-
         animate();
 
         window.addEventListener("resize", () => {
