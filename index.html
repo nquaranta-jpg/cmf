@@ -266,7 +266,10 @@
         max-width: var(--max-width);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        ); /* UPDATED FOR 3 COLUMNS */
         gap: 2rem;
       }
 
@@ -534,7 +537,7 @@
         </h1>
         <p class="hero-sub">
           The 30-Day Sprint. From unlicensed to a producing seat in
-          Infrastructure Risk or Private Wealth.
+          Infrastructure Risk, Private Wealth, or Strategic Liquidity.
         </p>
 
         <div class="countdown-container">
@@ -592,7 +595,7 @@
     <section class="programs" id="programs">
       <div class="section-header reveal">
         <div class="section-label">Choose Your Path</div>
-        <h2 class="section-title">Two Roads. One Outcome.</h2>
+        <h2 class="section-title">Choose Your Asset Class.</h2>
       </div>
 
       <div class="programs-grid">
@@ -600,7 +603,7 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type"></div>
+          <div class="program-type">The Whale Hunter</div>
           <h3 class="program-title">Infrastructure Risk</h3>
           <p class="program-subtitle">Property & Casualty Track</p>
           <ul class="program-features">
@@ -618,7 +621,7 @@
           class="program-card reveal"
           onclick="document.getElementById('modal').classList.add('active')"
         >
-          <div class="program-type"></div>
+          <div class="program-type">The Cash Flow King</div>
           <h3 class="program-title">Private Wealth</h3>
           <p class="program-subtitle">Life & Health Track</p>
           <ul class="program-features">
@@ -630,6 +633,25 @@
             <li>
               <strong>Outcome:</strong> $10k+ Monthly Commission Potential
             </li>
+          </ul>
+          <span class="program-cta">Select Track →</span>
+        </div>
+
+        <div
+          class="program-card reveal"
+          onclick="document.getElementById('modal').classList.add('active')"
+        >
+          <div class="program-type">The Deal Maker</div>
+          <h3 class="program-title">Strategic Capital</h3>
+          <p class="program-subtitle">Liquidity Desk Track</p>
+
+          <ul class="program-features">
+            <li><strong>Focus:</strong> Speed / High Volume</li>
+            <li>
+              <strong>Target:</strong> Bridge Capital for Construction & Tech
+            </li>
+            <li><strong>Product:</strong> Private Credit</li>
+            <li><strong>Outcome:</strong> 24h Funding Cycles & Fast Commish</li>
           </ul>
           <span class="program-cta">Select Track →</span>
         </div>
@@ -748,6 +770,17 @@
               "
             >
               Apply: Wealth (L&H)
+            </a>
+            <a
+              href="https://form.typeform.com/to/T9GWzPLI"
+              class="program-cta"
+              style="
+                background: transparent;
+                color: #fff;
+                border: 1px solid #fff;
+              "
+            >
+              Apply: Liquidity (MCA)
             </a>
           </div>
         </div>
@@ -983,3 +1016,4 @@
     </script>
   </body>
 </html>
+```
