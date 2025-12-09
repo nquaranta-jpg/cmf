@@ -584,8 +584,10 @@
 
       .founders-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
         gap: 3rem;
+        max-width: 500px;
+        margin: 0 auto;
       }
 
       .founder-card {
@@ -1025,40 +1027,46 @@
       </div>
     </section>
 
-    <!-- FOUNDER SECTION (New) -->
+    <!-- FOUNDER SECTION -->
     <section class="founders">
       <div class="founders-container">
-        <div class="founders-header reveal">
+        <div class="founders-header reveal" style="text-align: center">
           <div class="section-label">Leadership</div>
           <h2 class="section-title">Who's Behind This.</h2>
         </div>
 
-        <div class="founders-grid">
-          <div class="founder-card reveal">
-            <div class="founder-image">👤</div>
-            <h3 class="founder-name">[Founder Name]</h3>
-            <div class="founder-title">Managing Partner</div>
+        <div
+          class="founders-grid"
+          style="display: flex; justify-content: center"
+        >
+          <div
+            class="founder-card reveal"
+            style="text-align: center; max-width: 500px"
+          >
+            <img
+              src="nick.jpg"
+              alt="Nicholas Quaranta"
+              class="founder-image"
+              style="
+                object-fit: cover;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                margin: 0 auto 1.5rem;
+                display: block;
+              "
+            />
+            <h3 class="founder-name">Nicholas Quaranta</h3>
+            <div class="founder-title">Founder</div>
             <p class="founder-bio">
-              [X] years in commercial insurance and specialty lines. Previously
-              led [role] at [company]. Built and exited [relevant experience].
+              UChicago Economics. Former Sales & Trading at Guggenheim Partners.
+              Founded Capital Closers NJ (dealership sales training) and VinQlum
+              (Web3 trading).
             </p>
             <div class="founder-credentials">
-              <div class="credential">// CPCU, ARM Certified</div>
-              <div class="credential">// $XXM+ Career Premium</div>
-            </div>
-          </div>
-
-          <div class="founder-card reveal">
-            <div class="founder-image">👤</div>
-            <h3 class="founder-name">[Co-Founder Name]</h3>
-            <div class="founder-title">Director of Training</div>
-            <p class="founder-bio">
-              Former [role] at [company]. Specializes in [area]. Has trained
-              [X]+ brokers across [X] cohorts.
-            </p>
-            <div class="founder-credentials">
-              <div class="credential">// Licensed in XX States</div>
-              <div class="credential">// [Relevant Credential]</div>
+              <div class="credential">// IL Life & Health License</div>
+              <div class="credential">// IL Property & Casualty License</div>
+              <div class="credential">// U.S. Navy Veteran (2014–2020)</div>
             </div>
           </div>
         </div>
