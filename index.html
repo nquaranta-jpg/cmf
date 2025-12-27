@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Crown Merchant Financial | The Chicago Residency</title>
+    <title>
+      Crown Merchant Financial | Infrastructure Risk & Energy Brokerage
+    </title>
 
     <link
       rel="icon"
@@ -80,21 +82,13 @@
         left: 0;
         right: 0;
         z-index: 100;
-        padding: 2rem 3rem;
-        background: linear-gradient(
-          to bottom,
-          rgba(5, 5, 5, 0.9) 0%,
-          transparent 100%
-        );
-        transition: all 0.3s ease;
-        display: flex;
-        justify-content: center;
-      }
-
-      nav.scrolled {
+        padding: 1.5rem 3rem;
         background: rgba(5, 5, 5, 0.95);
         backdrop-filter: blur(10px);
-        padding: 1.5rem 3rem;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         border-bottom: 1px solid var(--border);
       }
 
@@ -104,6 +98,40 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: #fff;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      .nav-cta {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+      }
+
+      .nav-cta:hover {
+        background: var(--accent);
+        color: #000;
       }
 
       /* HERO */
@@ -134,10 +162,10 @@
       }
 
       .hero-title {
-        font-size: clamp(3rem, 7vw, 5.5rem);
-        font-weight: 400;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 300;
         letter-spacing: -0.03em;
-        line-height: 1;
+        line-height: 1.1;
         margin-bottom: 2rem;
         opacity: 0;
         animation: fadeInUp 1s ease forwards;
@@ -147,168 +175,145 @@
       .hero-title strong {
         font-weight: 600;
         color: #fff;
-        background: linear-gradient(90deg, #fff, #a0a0a0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
       }
 
       .hero-sub {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         color: var(--text-secondary);
         max-width: 600px;
-        margin-bottom: 1rem;
+        margin-bottom: 2.5rem;
         font-weight: 300;
         opacity: 0;
         animation: fadeInUp 1s ease 0.4s forwards;
         text-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+        line-height: 1.7;
       }
 
-      /* COUNTDOWN STYLES */
-      .countdown-container {
-        margin-bottom: 2.5rem;
-        display: inline-block;
-        text-align: left;
-        border-left: 2px solid var(--accent);
-        padding-left: 1rem;
+      .hero-cta-group {
+        display: flex;
+        gap: 1rem;
         opacity: 0;
-        animation: fadeInUp 1s ease 0.5s forwards;
+        animation: fadeInUp 1s ease 0.6s forwards;
       }
 
-      .countdown-label {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        letter-spacing: 0.2em;
-        margin-bottom: 0.2rem;
-        font-family: monospace;
-      }
-
-      .countdown-timer {
-        font-family: "Courier New", monospace;
-        font-size: 1.5rem;
-        color: #fff;
+      .cta-button {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        background: var(--accent);
+        border: 1px solid var(--accent);
+        color: #000;
+        text-decoration: none;
+        font-size: 0.85rem;
+        text-transform: uppercase;
         letter-spacing: 0.1em;
         font-weight: 600;
-        text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        transition: all 0.3s ease;
       }
 
-      /* MANIFESTO */
-      .manifesto {
+      .cta-button:hover {
+        background: #fff;
+        border-color: #fff;
+        box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+      }
+
+      .cta-button.secondary {
+        background: transparent;
+        color: #fff;
+        border-color: var(--border);
+      }
+
+      .cta-button.secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: transparent;
+        box-shadow: none;
+      }
+
+      /* STATS BAR */
+      .stats-bar {
+        padding: 4rem 3rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        z-index: 2;
+      }
+
+      .stats-grid {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .stat-item {
+        padding: 1rem;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--accent);
+        font-family: "JetBrains Mono", monospace;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* ABOUT SECTION */
+      .about {
         padding: 8rem 3rem;
         position: relative;
         z-index: 2;
-        background: linear-gradient(
-          to bottom,
-          rgba(5, 5, 5, 0) 0%,
-          rgba(5, 5, 5, 0.9) 20%,
-          rgba(5, 5, 5, 1) 100%
-        );
+        background: var(--bg);
       }
 
-      .manifesto-content {
+      .about-content {
         max-width: 900px;
         margin: 0 auto;
       }
 
-      .manifesto-grid {
+      .about-grid {
         display: grid;
-        grid-template-columns: 1fr 3fr;
-        gap: 2rem;
-        margin-bottom: 5rem;
-        border-top: 1px solid var(--border);
-        padding-top: 2rem;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
       }
 
-      .manifesto-label {
+      .about-label {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.15em;
         color: var(--accent);
+        position: sticky;
+        top: 120px;
       }
-      .manifesto-text {
-        font-size: 1.4rem;
-        line-height: 1.6;
+
+      .about-text {
+        font-size: 1.25rem;
+        line-height: 1.8;
         color: var(--text-secondary);
         font-weight: 300;
       }
-      .manifesto-text strong {
+
+      .about-text strong {
         color: #fff;
         font-weight: 500;
       }
 
-      /* TIMELINE (THE PROTOCOL) */
-      .timeline {
-        padding: 6rem 3rem;
-        background: var(--bg);
-        position: relative;
-        z-index: 2;
-        border-top: 1px solid var(--border);
-      }
-
-      .timeline-container {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .timeline-item {
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-        gap: 2rem;
-        padding: 3rem 0;
-        border-bottom: 1px solid var(--border);
-        transition: all 0.3s ease;
-      }
-
-      .timeline-item:hover {
-        background: rgba(255, 255, 255, 0.02);
-      }
-      .timeline-item:last-child {
-        border-bottom: none;
-      }
-
-      .time-tag {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.9rem;
-        color: var(--accent);
-        border: 1px solid var(--accent);
-        padding: 0.5rem 1rem;
-        display: inline-block;
-        height: fit-content;
-        text-transform: uppercase;
-      }
-
-      .time-content h3 {
-        font-size: 1.8rem;
-        color: #fff;
-        margin-bottom: 1rem;
-        font-weight: 400;
-      }
-
-      .time-content p {
-        font-size: 1rem;
-        color: var(--text-secondary);
+      .about-text p {
         margin-bottom: 1.5rem;
       }
 
-      .time-details {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        list-style: none;
-      }
-
-      .time-details li {
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-      }
-      .time-details li::before {
-        content: "//";
-        color: var(--accent);
-        margin-right: 10px;
-      }
-
-      /* PROGRAMS */
-      .programs {
+      /* SERVICES */
+      .services {
         padding: 6rem 3rem;
         background: var(--bg);
         border-top: 1px solid var(--border);
@@ -320,13 +325,15 @@
         max-width: var(--max-width);
         margin: 0 auto 4rem;
       }
+
       .section-label {
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--accent);
         margin-bottom: 1rem;
       }
+
       .section-title {
         font-size: 2.5rem;
         font-weight: 300;
@@ -334,103 +341,71 @@
         color: #fff;
       }
 
-      .programs-grid {
+      .services-grid {
         max-width: var(--max-width);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         gap: 2rem;
       }
 
-      .program-card {
-        background: rgba(255, 255, 255, 0.03);
+      .service-card {
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--border);
         padding: 3rem;
         transition: all 0.4s ease;
-        cursor: pointer;
-        position: relative;
       }
 
-      .program-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: var(--accent);
-        transform: translateY(-5px);
+      .service-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 107, 53, 0.3);
       }
 
-      .program-type {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--accent);
-        margin-bottom: 1rem;
-      }
-      .program-title {
+      .service-icon {
         font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .service-title {
+        font-size: 1.5rem;
         font-weight: 400;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
         color: #fff;
       }
-      .program-subtitle {
-        font-size: 1rem;
-        color: var(--text-muted);
-        margin-bottom: 2rem;
-        font-family: monospace;
-      }
-      .program-features {
-        list-style: none;
-        margin-bottom: 2.5rem;
-      }
-      .program-features li {
-        padding: 0.8rem 0;
-        border-top: 1px solid var(--border);
-        font-size: 0.9rem;
+
+      .service-description {
+        font-size: 0.95rem;
         color: var(--text-secondary);
-      }
-      .program-features li:first-child {
-        border-top: none;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
       }
 
-      .program-cta {
-        display: inline-block;
-        padding: 1rem 2rem;
-        border: 1px solid var(--border);
-        color: #fff;
-        text-decoration: none;
+      .service-list {
+        list-style: none;
+      }
+
+      .service-list li {
+        padding: 0.5rem 0;
         font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        transition: all 0.3s ease;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
       }
 
-      .program-cta:hover {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #000;
+      .service-list li::before {
+        content: "→";
+        color: var(--accent);
+        margin-right: 10px;
+        font-size: 0.75rem;
       }
 
-      /* MARKETS WE SERVE (formerly Partners) */
+      /* MARKETS */
       .markets {
-        padding: 5rem 3rem;
+        padding: 6rem 3rem;
         border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
         background: var(--bg);
         position: relative;
         z-index: 2;
-      }
-
-      .markets-header {
-        text-align: center;
-        margin-bottom: 3rem;
-      }
-
-      .markets-header .section-label {
-        color: var(--accent);
-      }
-
-      .markets-header h2 {
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: #fff;
       }
 
       .markets-grid {
@@ -438,15 +413,15 @@
         margin: 0 auto;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-        text-align: center;
+        gap: 1.5rem;
       }
 
       .market-item {
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
         border: 1px solid var(--border);
         background: rgba(255, 255, 255, 0.02);
         transition: all 0.3s ease;
+        text-align: center;
       }
 
       .market-item:hover {
@@ -455,206 +430,189 @@
       }
 
       .market-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-        opacity: 0.8;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
       }
 
       .market-name {
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        font-weight: 400;
+        font-size: 0.9rem;
+        color: #fff;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
       }
 
-      /* TESTIMONIALS */
-      .testimonials {
+      .market-desc {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* FOUNDER SECTION */
+      .founder {
         padding: 6rem 3rem;
         background: var(--bg);
-        border-bottom: 1px solid var(--border);
+        border-top: 1px solid var(--border);
         position: relative;
         z-index: 2;
       }
 
-      .testimonials-grid {
-        max-width: var(--max-width);
+      .founder-container {
+        max-width: 900px;
         margin: 0 auto;
+      }
+
+      .founder-content {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2rem;
+        grid-template-columns: 200px 1fr;
+        gap: 4rem;
+        align-items: start;
       }
 
-      .testimonial-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--border);
-        padding: 2.5rem;
-        position: relative;
+      .founder-image-wrapper {
+        text-align: center;
       }
 
-      .testimonial-quote {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: var(--text-secondary);
-        margin-bottom: 2rem;
-        font-style: italic;
-      }
-
-      .testimonial-quote::before {
-        content: '"';
-        position: absolute;
-        top: 1.5rem;
-        left: 1.5rem;
-        font-size: 3rem;
-        color: var(--accent);
-        opacity: 0.3;
-        font-family: Georgia, serif;
-        line-height: 1;
-      }
-
-      .testimonial-author {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .testimonial-avatar {
-        width: 48px;
-        height: 48px;
+      .founder-image {
+        width: 160px;
+        height: 160px;
         border-radius: 50%;
-        background: linear-gradient(135deg, var(--accent), #ff9b35);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        color: #000;
-        font-size: 1rem;
+        object-fit: cover;
+        border: 2px solid var(--border);
+        margin-bottom: 1rem;
       }
 
-      .testimonial-info {
-        flex: 1;
-      }
-
-      .testimonial-name {
-        font-size: 0.95rem;
+      .founder-name {
+        font-size: 1.1rem;
         color: #fff;
         font-weight: 500;
         margin-bottom: 0.25rem;
       }
 
-      .testimonial-role {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .testimonial-metric {
-        text-align: right;
-      }
-
-      .metric-value {
-        font-size: 1.5rem;
-        color: var(--accent);
-        font-weight: 600;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .metric-label {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      /* FOUNDER SECTION */
-      .founders {
-        padding: 6rem 3rem;
-        background: var(--bg);
-        border-bottom: 1px solid var(--border);
-        position: relative;
-        z-index: 2;
-      }
-
-      .founders-container {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .founders-header {
-        margin-bottom: 4rem;
-      }
-
-      .founders-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-
-      .founder-card {
-        text-align: center;
-      }
-
-      .founder-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin: 0 auto 1.5rem;
-        background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-        border: 2px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        color: var(--accent);
-        opacity: 0.8;
-      }
-
-      .founder-name {
-        font-size: 1.25rem;
-        color: #fff;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-      }
-
       .founder-title {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--accent);
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        margin-bottom: 1rem;
       }
 
       .founder-bio {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
         color: var(--text-secondary);
-        line-height: 1.6;
+        line-height: 1.8;
+        margin-bottom: 2rem;
       }
 
       .founder-credentials {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
       }
 
-      .credential {
-        font-size: 0.75rem;
+      .credential-tag {
+        font-size: 0.7rem;
         color: var(--text-muted);
         font-family: "JetBrains Mono", monospace;
-        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      /* CTA SECTION */
+      .cta-section {
+        padding: 8rem 3rem;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 107, 53, 0.1) 0%,
+          rgba(5, 5, 5, 1) 100%
+        );
+        border-top: 1px solid var(--border);
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+
+      .cta-section h2 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: #fff;
+        margin-bottom: 1rem;
+      }
+
+      .cta-section p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       /* FOOTER */
       footer {
         background: var(--bg);
+        border-top: 1px solid var(--border);
         position: relative;
         z-index: 2;
       }
+
       .footer-content {
-        padding: 3rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 4rem 3rem 2rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 1rem;
+      }
+
+      .footer-description {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .footer-column h4 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-column a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-column a:hover {
+        color: #fff;
+      }
+
+      .footer-bottom {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem 3rem;
+        border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
-      }
-      .footer-left {
         font-size: 0.8rem;
         color: var(--text-muted);
       }
@@ -676,6 +634,7 @@
         pointer-events: none;
         transition: opacity 0.3s ease;
       }
+
       .modal.active {
         opacity: 1;
         pointer-events: auto;
@@ -683,12 +642,11 @@
 
       .modal-content {
         width: 90%;
-        max-width: 450px;
+        max-width: 500px;
         background: #0a0a0a;
         border: 1px solid var(--accent);
         padding: 3rem;
         position: relative;
-        text-align: center;
       }
 
       .modal-close {
@@ -702,6 +660,18 @@
         cursor: pointer;
       }
 
+      .modal-title {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+
+      .modal-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+      }
+
       .form-input {
         width: 100%;
         padding: 1rem;
@@ -711,9 +681,16 @@
         margin-bottom: 1rem;
         outline: none;
         transition: 0.3s;
+        font-size: 0.9rem;
       }
+
       .form-input:focus {
         border-color: var(--accent);
+      }
+
+      .form-textarea {
+        min-height: 120px;
+        resize: vertical;
       }
 
       .form-submit {
@@ -728,47 +705,23 @@
         cursor: pointer;
         transition: 0.3s;
       }
+
       .form-submit:hover {
         background: #fff;
       }
 
-      /* CTA Button Main */
-      .cta-button {
-        display: inline-block;
-        padding: 1.2rem 3rem;
-        background: rgba(0, 0, 0, 0.5);
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        text-decoration: none;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        opacity: 0;
-        animation: fadeInUp 1s ease 0.6s forwards;
-        backdrop-filter: blur(5px);
-      }
-
-      .cta-button:hover {
-        background: var(--accent);
-        color: #000;
-        box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
-      }
-
-      /* ANIMATION UTILS */
-      .hidden {
-        display: none !important;
-      }
+      /* ANIMATIONS */
       .reveal {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(30px);
         transition: all 0.8s ease-out;
       }
+
       .reveal.active {
         opacity: 1;
         transform: translateY(0);
       }
+
       @keyframes fadeInUp {
         to {
           opacity: 1;
@@ -780,30 +733,65 @@
         }
       }
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.5rem;
+      /* RESPONSIVE */
+      @media (max-width: 968px) {
+        .nav-links {
+          display: none;
         }
-        .manifesto-grid {
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about-grid {
           grid-template-columns: 1fr;
-          gap: 1rem;
+          gap: 2rem;
         }
-        .programs-grid {
-          grid-template-columns: 1fr;
+
+        .about-label {
+          position: static;
         }
+
         .markets-grid {
           grid-template-columns: repeat(2, 1fr);
-          gap: 1rem;
         }
-        .testimonials-grid {
+
+        .founder-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .founder-image-wrapper {
+          margin-bottom: 2rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .stats-grid {
           grid-template-columns: 1fr;
         }
-        .timeline-item {
+
+        .services-grid {
           grid-template-columns: 1fr;
-          gap: 1rem;
         }
-        .founders-grid {
+
+        .markets-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-cta-group {
+          flex-direction: column;
+        }
+
+        .footer-content {
           grid-template-columns: 1fr;
         }
       }
@@ -813,579 +801,371 @@
     <div id="canvas-container"></div>
     <div class="noise"></div>
 
-    <nav id="nav">
+    <!-- NAVIGATION -->
+    <nav>
       <div class="logo">Crown Merchant Financial</div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#markets">Markets</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get a Quote</a>
     </nav>
 
-    <section class="hero" id="hero">
+    <!-- HERO -->
+    <section class="hero" id="home">
       <div class="hero-content">
-        <span class="hero-overline"></span>
+        <span class="hero-overline">Infrastructure Risk Specialists</span>
         <h1 class="hero-title">
-          SECURE YOUR SEAT <br />
-          ON THE <strong>AI POWER DESK.</strong>
+          Protecting the <strong>Physical Backbone</strong> of Tomorrow's
+          Economy.
         </h1>
         <p class="hero-sub">
-          The 30-Day Protocol. Partner-Led Licensing Prep + Live Sales Residency
-          in Chicago.
+          Crown Merchant Financial delivers specialized insurance and risk
+          advisory for energy infrastructure, data centers, and emerging
+          technology sectors. We partner with leading carriers to structure
+          coverage that traditional brokers can't.
         </p>
-
-        <div class="countdown-container">
-          <div class="countdown-label">NEXT COHORT STARTS:</div>
-          <div id="countdown" class="countdown-timer">00:00:00:00</div>
-        </div>
-
-        <a href="#" class="cta-button" id="openModal">Start The Process</a>
-      </div>
-    </section>
-
-    <section class="manifesto" id="manifesto">
-      <div class="manifesto-content">
-        <div class="manifesto-grid reveal">
-          <div class="manifesto-label">The Context</div>
-          <div class="manifesto-text">
-            <strong>Traditional insurance sales is evolving.</strong><br />
-            The old model was: "Call 100 friends and beg them to buy whole
-            life." It's slow. It's painful. And it ignores the biggest transfer
-            of wealth in history.
-          </div>
-        </div>
-
-        <div class="manifesto-grid reveal">
-          <div class="manifesto-label">The Shift</div>
-          <div class="manifesto-text">
-            We don't chase people. We insure <strong>Infrastructure</strong>.
-            <br /><br />
-            AI Data Centers. Nuclear SMRs. Energy Grids. The physical backbone
-            of the future requires billions in risk coverage.
-          </div>
-        </div>
-
-        <div class="manifesto-grid reveal">
-          <div class="manifesto-label">The Offer</div>
-          <div class="manifesto-text">
-            We are training the <strong>next generation</strong> of specialized
-            brokers.
-            <br />
-            We don't care about your resume. We care if you can execute the
-            <strong>30-Day Protocol</strong>.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="timeline">
-      <div class="section-header reveal">
-        <div class="section-label">The Protocol</div>
-        <h2 class="section-title">Operational Roadmap.</h2>
-      </div>
-
-      <div class="timeline-container">
-        <div class="timeline-item reveal">
-          <div class="time-tag">WEEKS 01-02</div>
-          <div class="time-content">
-            <h3>Licensing Intensive</h3>
-            <p>
-              14-day remote immersion. We provide vouchers for the
-              State-Approved Licensing Course (ExamFX/WebCE). Daily proctored
-              study halls to ensure execution.
-            </p>
-            <ul class="time-details">
-              <li>0700 Morning Roll Call</li>
-              <li>Partner-Led Curriculum</li>
-              <li>State Licensing Completion</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item reveal">
-          <div class="time-tag">WEEK 03</div>
-          <div class="time-content">
-            <h3>Tradecraft (Remote)</h3>
-            <p>
-              Cohort splits into specialized tracks (Infrastructure, Wealth, or
-              Capital). You learn the specific underwriting mechanics and sales
-              frameworks for your desk.
-            </p>
-            <ul class="time-details">
-              <li>Product Knowledge Download</li>
-              <li>Prospecting Frameworks</li>
-              <li>The "Hard Market" Pitch</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item reveal">
-          <div class="time-tag">WEEK 04</div>
-          <div class="time-content">
-            <h3>The Chicago Summit (Live)</h3>
-            <p>
-              You fly to Chicago. 3 Days of intensive live training. Real
-              negotiation practice. System setup. Graduation dinner.
-            </p>
-            <ul class="time-details">
-              <li>Live Roleplay & Feedback</li>
-              <li>CRM & Deal Flow Setup</li>
-              <li>Cohort Graduation Dinner</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MARKETS WE SERVE (Replaced Partners) -->
-    <section class="markets reveal">
-      <div class="markets-header">
-        <div class="section-label">Target Sectors</div>
-        <h2>Markets We Serve</h2>
-      </div>
-      <div class="markets-grid">
-        <div class="market-item">
-          <div class="market-icon">⚡</div>
-          <div class="market-name">Energy & Utilities</div>
-        </div>
-        <div class="market-item">
-          <div class="market-icon">🏗️</div>
-          <div class="market-name">Data Centers</div>
-        </div>
-        <div class="market-item">
-          <div class="market-icon">🏥</div>
-          <div class="market-name">Healthcare & Cyber</div>
-        </div>
-        <div class="market-item">
-          <div class="market-icon">🔬</div>
-          <div class="market-name">Advanced Manufacturing</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS (New Section) -->
-    <section class="testimonials">
-      <div class="section-header reveal">
-        <div class="section-label">Results</div>
-        <h2 class="section-title">From Recent Graduates.</h2>
-      </div>
-
-      <div class="testimonials-grid">
-        <div class="testimonial-card reveal">
-          <p class="testimonial-quote">
-            I closed my first infrastructure deal 47 days after graduating. The
-            frameworks they teach aren't theory—they're battle-tested scripts
-            that actually work.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">JR</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">James R.</div>
-              <div class="testimonial-role">
-                Cohort 02 · Infrastructure Track
-              </div>
-            </div>
-            <div class="testimonial-metric">
-              <div class="metric-value">$84K</div>
-              <div class="metric-label">First 90 Days</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal">
-          <p class="testimonial-quote">
-            Coming from tech sales, I was skeptical. But the licensing prep
-            alone saved me weeks of confusion. Chicago week was intense but
-            worth every hour.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">SK</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">Sarah K.</div>
-              <div class="testimonial-role">Cohort 03 · Wealth Track</div>
-            </div>
-            <div class="testimonial-metric">
-              <div class="metric-value">$12K</div>
-              <div class="metric-label">Monthly Avg</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal">
-          <p class="testimonial-quote">
-            The MCA desk moves fast. They teach you how to source, qualify, and
-            close within 24-48 hours. My pipeline filled up within the first two
-            weeks post-graduation.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">MT</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">Marcus T.</div>
-              <div class="testimonial-role">Cohort 02 · Capital Track</div>
-            </div>
-            <div class="testimonial-metric">
-              <div class="metric-value">31</div>
-              <div class="metric-label">Deals Closed</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOUNDER SECTION -->
-    <section class="founders">
-      <div class="founders-container">
-        <div class="founders-header reveal" style="text-align: center">
-          <div class="section-label">Leadership</div>
-          <h2 class="section-title">Who's Behind This.</h2>
-        </div>
-
-        <div
-          class="founders-grid"
-          style="display: flex; justify-content: center"
-        >
-          <div
-            class="founder-card reveal"
-            style="text-align: center; max-width: 500px"
+        <div class="hero-cta-group">
+          <a href="#contact" class="cta-button" id="openModal"
+            >Request Consultation</a
           >
-            <img
-              src="nick.jpg"
-              alt="Nicholas Quaranta"
-              class="founder-image"
-              style="
-                object-fit: cover;
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                margin: 0 auto 1.5rem;
-                display: block;
-              "
-            />
+          <a href="#services" class="cta-button secondary">Our Services</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">$2.4B+</div>
+          <div class="stat-label">Coverage Placed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">47</div>
+          <div class="stat-label">Carrier Partners</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">12</div>
+          <div class="stat-label">States Licensed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">98%</div>
+          <div class="stat-label">Client Retention</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="about-content">
+        <div class="about-grid reveal">
+          <div class="about-label">Who We Are</div>
+          <div class="about-text">
+            <p>
+              <strong>Crown Merchant Financial</strong> is a Chicago-based
+              specialty brokerage focused exclusively on infrastructure risk.
+            </p>
+            <p>
+              While most brokers chase commodity policies, we've built deep
+              expertise in the sectors that power the new economy:
+              <strong
+                >energy generation, data centers, advanced manufacturing, and
+                healthcare systems</strong
+              >.
+            </p>
+            <p>
+              Our approach combines institutional-grade underwriting analysis
+              with hands-on client service. We don't just place policies — we
+              engineer risk solutions that protect your operations and optimize
+              your total cost of risk.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+      <div class="section-header reveal">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Specialized Coverage Solutions</h2>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">⚡</div>
+          <h3 class="service-title">Energy & Utilities</h3>
+          <p class="service-description">
+            Comprehensive coverage for power generation, transmission
+            infrastructure, renewable energy projects, and utility operations.
+          </p>
+          <ul class="service-list">
+            <li>Nuclear & SMR Programs</li>
+            <li>Solar & Wind Facilities</li>
+            <li>Grid Infrastructure</li>
+            <li>Business Interruption</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🏗️</div>
+          <h3 class="service-title">Data Center & Tech</h3>
+          <p class="service-description">
+            Purpose-built programs for hyperscale facilities, colocation
+            providers, and critical digital infrastructure.
+          </p>
+          <ul class="service-list">
+            <li>Property & Equipment</li>
+            <li>Cyber Liability</li>
+            <li>Construction Risk</li>
+            <li>Environmental Coverage</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🏥</div>
+          <h3 class="service-title">Healthcare Systems</h3>
+          <p class="service-description">
+            Integrated risk programs for hospital networks, medical facilities,
+            and healthcare technology providers.
+          </p>
+          <ul class="service-list">
+            <li>Medical Malpractice</li>
+            <li>Cyber & Privacy</li>
+            <li>Directors & Officers</li>
+            <li>Property Programs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKETS -->
+    <section class="markets" id="markets">
+      <div class="section-header reveal">
+        <div class="section-label">Industries</div>
+        <h2 class="section-title">Markets We Serve</h2>
+      </div>
+
+      <div class="markets-grid">
+        <div class="market-item reveal">
+          <div class="market-icon">☢️</div>
+          <div class="market-name">Nuclear Energy</div>
+          <div class="market-desc">SMRs & Traditional Plants</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🌞</div>
+          <div class="market-name">Renewables</div>
+          <div class="market-desc">Solar, Wind & Storage</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🖥️</div>
+          <div class="market-name">Data Centers</div>
+          <div class="market-desc">Hyperscale & Colo</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🏭</div>
+          <div class="market-name">Manufacturing</div>
+          <div class="market-desc">Advanced & Specialty</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🏥</div>
+          <div class="market-name">Healthcare</div>
+          <div class="market-desc">Systems & Facilities</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🔬</div>
+          <div class="market-name">Life Sciences</div>
+          <div class="market-desc">Biotech & Pharma</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">🚧</div>
+          <div class="market-name">Construction</div>
+          <div class="market-desc">Infrastructure Projects</div>
+        </div>
+        <div class="market-item reveal">
+          <div class="market-icon">📡</div>
+          <div class="market-name">Telecom</div>
+          <div class="market-desc">Networks & Towers</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="founder">
+      <div class="founder-container">
+        <div
+          class="section-header reveal"
+          style="text-align: center; margin-bottom: 4rem"
+        >
+          <div class="section-label">Leadership</div>
+          <h2 class="section-title">Meet Our Founder</h2>
+        </div>
+
+        <div class="founder-content reveal">
+          <div class="founder-image-wrapper">
+            <img src="nick.jpg" alt="Nicholas Quaranta" class="founder-image" />
             <h3 class="founder-name">Nicholas Quaranta</h3>
-            <div class="founder-title">Founder</div>
+            <div class="founder-title">Founder & Principal</div>
+          </div>
+          <div>
             <p class="founder-bio">
-              UChicago Economics. Former Sales & Trading at Guggenheim Partners.
-              Founded Capital Closers NJ (dealership sales training) and VinQlum
-              (Web3 trading).
+              Nicholas founded Crown Merchant Financial to bring
+              institutional-quality risk advisory to the infrastructure sector.
+              His background spans sales & trading at Guggenheim Partners, where
+              he developed deep expertise in structured products and client
+              relationship management. Prior to finance, Nicholas served six
+              years in the U.S. Navy as a Senior Line Corpsman.
+            </p>
+            <p class="founder-bio">
+              He holds degrees in Economics from the University of Chicago and
+              maintains active Property & Casualty and Life & Health licenses in
+              Illinois.
             </p>
             <div class="founder-credentials">
-              <div class="credential">// IL Life & Health License</div>
-              <div class="credential">// IL Property & Casualty License</div>
-              <div class="credential">// U.S. Navy Veteran (2014–2020)</div>
+              <span class="credential-tag">UChicago Economics</span>
+              <span class="credential-tag">Guggenheim Partners</span>
+              <span class="credential-tag">IL P&C License</span>
+              <span class="credential-tag">IL L&H License</span>
+              <span class="credential-tag">U.S. Navy Veteran</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="programs" id="programs">
-      <div class="section-header reveal">
-        <div class="section-label">Choose Your Path</div>
-        <h2 class="section-title">Select Your Specialization.</h2>
-      </div>
-
-      <div class="programs-grid">
-        <div
-          class="program-card reveal"
-          onclick="document.getElementById('modal').classList.add('active')"
-        >
-          <div class="program-type">Long-Term Builder</div>
-          <h3 class="program-title">Infrastructure Risk</h3>
-          <p class="program-subtitle">Property & Casualty Track (Hybrid)</p>
-          <ul class="program-features">
-            <li><strong>Focus:</strong> B2B / Recurring Revenue</li>
-            <li>
-              <strong>Target:</strong> Energy, Data Centers & Medical Cyber
-            </li>
-            <li>
-              <strong>License:</strong> State-Approved Course Voucher Included
-            </li>
-            <li><strong>Outcome:</strong> Build a 20-year asset book</li>
-          </ul>
-          <span class="program-cta">Select Track →</span>
-        </div>
-
-        <div
-          class="program-card reveal"
-          onclick="document.getElementById('modal').classList.add('active')"
-        >
-          <div class="program-type">High-Touch Advisor</div>
-          <h3 class="program-title">Private Wealth</h3>
-          <p class="program-subtitle">Life & Health Track (Hybrid)</p>
-          <ul class="program-features">
-            <li><strong>Focus:</strong> High Velocity / Upfront Cash</li>
-            <li>
-              <strong>Target:</strong> High Net Worth Executives & Founders
-            </li>
-            <li>
-              <strong>License:</strong> State-Approved Course Voucher Included
-            </li>
-            <li>
-              <strong>Outcome:</strong> $10k+ Monthly Commission Potential
-            </li>
-          </ul>
-          <span class="program-cta">Select Track →</span>
-        </div>
-
-        <div
-          class="program-card reveal"
-          onclick="document.getElementById('modal').classList.add('active')"
-        >
-          <div class="program-type">Fast Mover</div>
-          <h3 class="program-title">Strategic Capital</h3>
-          <p class="program-subtitle">Liquidity Desk Track (Hybrid)</p>
-
-          <ul class="program-features">
-            <li><strong>Focus:</strong> Speed / High Volume</li>
-            <li>
-              <strong>Target:</strong> Bridge Capital for Construction & Tech
-            </li>
-            <li><strong>Product:</strong> Merchant Cash Advance (MCA)</li>
-            <li><strong>Outcome:</strong> 24h Funding Cycles & Fast Commish</li>
-          </ul>
-          <span class="program-cta">Select Track →</span>
-        </div>
-      </div>
+    <!-- CTA SECTION -->
+    <section class="cta-section" id="contact">
+      <h2>Let's Discuss Your Risk Profile</h2>
+      <p>
+        Whether you're seeking coverage for a new project or looking to optimize
+        your existing program, we're here to help.
+      </p>
+      <a href="#" class="cta-button" id="openModalBtn"
+        >Schedule a Consultation</a
+      >
     </section>
 
+    <!-- FOOTER -->
     <footer>
-      <div class="footer-content reveal">
-        <div class="footer-left">© 2025 Crown Merchant Financial</div>
-        <div class="footer-left" style="margin-left: auto; opacity: 0.5">
-          Built by CMF
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">Crown Merchant Financial</div>
+          <p class="footer-description">
+            Specialty insurance brokerage for infrastructure, energy, and
+            emerging technology sectors. Chicago, IL.
+          </p>
         </div>
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Energy & Utilities</a></li>
+            <li><a href="#services">Data Centers</a></li>
+            <li><a href="#services">Healthcare</a></li>
+            <li><a href="#services">Construction</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#markets">Markets</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:info@crownmerchant.com">info@crownmerchant.com</a>
+            </li>
+            <li><a href="tel:+13122038106">312-203-8106</a></li>
+            <li><a href="#">Chicago, IL</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 Crown Merchant Financial. All rights reserved.</div>
+        <div>Licensed in IL, IN, WI, MI, OH, TX, FL, CA, NY, NJ, PA, GA</div>
       </div>
     </footer>
 
+    <!-- MODAL -->
     <div class="modal" id="modal">
       <div class="modal-content">
-        <button class="modal-close" id="closeModal" aria-label="Close modal">
-          &times;
-        </button>
-        <div
-          class="section-label"
-          style="color: var(--accent); margin-bottom: 1rem"
-        >
-          Get Started
-        </div>
-        <h3 class="modal-title" style="color: #fff; margin-bottom: 1rem">
-          Access the Full Briefing
-        </h3>
-        <p style="color: #888; margin-bottom: 2rem; font-size: 0.9rem">
-          Enter your details to watch the 15-minute case study video and access
-          the application portal.
+        <button class="modal-close" id="closeModal">&times;</button>
+        <h3 class="modal-title">Request a Consultation</h3>
+        <p class="modal-subtitle">
+          Tell us about your coverage needs and we'll be in touch within 24
+          hours.
         </p>
 
-        <form id="accessForm">
-          <label for="fullName" class="visually-hidden">Full Name</label>
+        <form id="contactForm">
           <input
             type="text"
-            id="fullName"
             class="form-input"
             placeholder="Full Name"
             required
           />
-          <label for="emailAddress" class="visually-hidden"
-            >Email Address</label
-          >
           <input
             type="email"
-            id="emailAddress"
             class="form-input"
             placeholder="Email Address"
             required
           />
-          <button type="submit" class="form-submit">Get Access</button>
+          <input type="text" class="form-input" placeholder="Company Name" />
+          <input type="text" class="form-input" placeholder="Phone Number" />
+          <textarea
+            class="form-input form-textarea"
+            placeholder="Tell us about your insurance needs..."
+          ></textarea>
+          <button type="submit" class="form-submit">Submit Request</button>
         </form>
       </div>
     </div>
 
-    <section
-      class="programs hidden"
-      id="detailed-content"
-      style="background: #050505; min-height: 100vh"
-    >
-      <div class="section-header" style="text-align: center">
-        <div class="section-label">Access Granted</div>
-        <h2 class="section-title">The 30-Day Roadmap</h2>
-      </div>
-
-      <div style="max-width: 900px; margin: 0 auto; padding: 0 2rem">
-        <div
-          style="
-            width: 100%;
-            border: 1px solid var(--border);
-            margin-bottom: 4rem;
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-          "
-        >
-          <iframe
-            src="https://player.vimeo.com/video/1139750248?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0"
-            frameborder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            style="
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-            "
-            title="CMF Briefing"
-          >
-          </iframe>
-        </div>
-        <script src="https://player.vimeo.com/api/player.js"></script>
-
-        <div style="text-align: center; margin-bottom: 6rem">
-          <p style="color: #fff; font-size: 1.2rem; margin-bottom: 2rem">
-            Select your track to begin the application:
-          </p>
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              gap: 1rem;
-              flex-wrap: wrap;
-            "
-          >
-            <a
-              href="https://form.typeform.com/to/T9GWzPLI"
-              class="program-cta"
-              style="background: #fff; color: #000; border: none"
-            >
-              Apply: Infrastructure & Cyber
-            </a>
-            <a
-              href="https://form.typeform.com/to/T9GWzPLI"
-              class="program-cta"
-              style="
-                background: transparent;
-                color: #fff;
-                border: 1px solid #fff;
-              "
-            >
-              Apply: Wealth & Tax
-            </a>
-            <a
-              href="https://form.typeform.com/to/T9GWzPLI"
-              class="program-cta"
-              style="
-                background: transparent;
-                color: #fff;
-                border: 1px solid #fff;
-              "
-            >
-              Apply: Liquidity (MCA)
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Visually hidden class for accessibility -->
-    <style>
-      .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-    </style>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <script>
-      // --- 1. UI LOGIC ---
-
-      window.addEventListener("scroll", () => {
-        const nav = document.getElementById("nav");
-        if (window.scrollY > 50) {
-          nav.classList.add("scrolled");
-        } else {
-          nav.classList.remove("scrolled");
-        }
-      });
-
+      // Modal Logic
       const modal = document.getElementById("modal");
-      const openModal = document.getElementById("openModal");
+      const openModalBtn = document.getElementById("openModal");
+      const openModalBtn2 = document.getElementById("openModalBtn");
       const closeModal = document.getElementById("closeModal");
-      const accessForm = document.getElementById("accessForm");
 
-      const heroSection = document.getElementById("hero");
-      const manifestoSection = document.getElementById("manifesto");
-      const programsSection = document.getElementById("programs");
-      const timelineSection = document.querySelector(".timeline");
-      const detailedContent = document.getElementById("detailed-content");
-
-      openModal.addEventListener("click", (e) => {
+      const openModalHandler = (e) => {
         e.preventDefault();
         modal.classList.add("active");
-      });
+      };
+
+      openModalBtn.addEventListener("click", openModalHandler);
+      openModalBtn2.addEventListener("click", openModalHandler);
 
       closeModal.addEventListener("click", () => {
         modal.classList.remove("active");
       });
 
-      // Close modal when clicking outside content
       modal.addEventListener("click", (e) => {
         if (e.target === modal) {
           modal.classList.remove("active");
         }
       });
 
-      // Close modal with Escape key
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.classList.contains("active")) {
           modal.classList.remove("active");
         }
       });
 
-      // --- 2. FORMSPREE INTEGRATION ---
-      accessForm.addEventListener("submit", (e) => {
+      // Form submission
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
         e.preventDefault();
-
-        const submitBtn = accessForm.querySelector(".form-submit");
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = "Submitting...";
-        submitBtn.disabled = true;
-
-        const nameVal = document.getElementById("fullName").value;
-        const emailVal = document.getElementById("emailAddress").value;
-
-        fetch("https://formspree.io/f/xkgeddzy", {
-          method: "POST",
-          body: JSON.stringify({ name: nameVal, email: emailVal }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => {
-            if (response.ok) {
-              modal.classList.remove("active");
-              heroSection.style.display = "none";
-              manifestoSection.style.display = "none";
-              programsSection.style.display = "none";
-              timelineSection.style.display = "none";
-              document.querySelector(".markets").style.display = "none";
-              document.querySelector(".testimonials").style.display = "none";
-              document.querySelector(".founders").style.display = "none";
-              detailedContent.classList.remove("hidden");
-              window.scrollTo(0, 0);
-            } else {
-              throw new Error("Form submission failed");
-            }
-          })
-          .catch((error) => {
-            alert("Something went wrong. Please try again.");
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-          });
+        alert("Thank you for your inquiry. We'll be in touch within 24 hours.");
+        modal.classList.remove("active");
       });
 
+      // Reveal on scroll
       const revealElements = () => {
         const reveals = document.querySelectorAll(".reveal");
         reveals.forEach((element) => {
@@ -1399,56 +1179,7 @@
       window.addEventListener("scroll", revealElements);
       window.addEventListener("load", revealElements);
 
-      // --- 3. COUNTDOWN LOGIC ---
-      const countdownEl = document.getElementById("countdown");
-      // Set to a future date - update this to your actual cohort start date
-      const targetDate = new Date("February 1, 2026 00:00:00").getTime();
-
-      const updateTimer = () => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-          countdownEl.innerHTML = "APPLICATIONS OPEN";
-          countdownEl.style.color = "var(--accent)";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        countdownEl.innerHTML = `${days.toString().padStart(2, "0")}D ${hours
-          .toString()
-          .padStart(2, "0")}H ${minutes.toString().padStart(2, "0")}M ${seconds
-          .toString()
-          .padStart(2, "0")}S`;
-      };
-
-      setInterval(updateTimer, 1000);
-      updateTimer();
-
-      // --- 4. EXIT INTENT REMOVED (was too aggressive) ---
-      // If you want to re-enable a softer version, uncomment below:
-      /*
-      let exitIntentTriggered = false;
-      document.addEventListener("mouseleave", (e) => {
-        if (e.clientY < 0 && !exitIntentTriggered) {
-          if (
-            !modal.classList.contains("active") &&
-            detailedContent.classList.contains("hidden")
-          ) {
-            modal.classList.add("active");
-            exitIntentTriggered = true;
-          }
-        }
-      });
-      */
-
-      // --- 5. THREE.JS 3D GLOBE ---
+      // Three.js Background
       const initThreeJS = () => {
         const container = document.getElementById("canvas-container");
         const scene = new THREE.Scene();
@@ -1473,13 +1204,13 @@
           color: 0x333333,
           wireframe: true,
           transparent: true,
-          opacity: 0.1,
+          opacity: 0.08,
         });
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
 
         const particlesGeometry = new THREE.BufferGeometry();
-        const particleCount = 300;
+        const particleCount = 200;
         const posArray = new Float32Array(particleCount * 3);
         for (let i = 0; i < particleCount * 3; i++) {
           posArray[i] = (Math.random() - 0.5) * 40;
@@ -1490,10 +1221,10 @@
         );
 
         const particlesMaterial = new THREE.PointsMaterial({
-          size: 0.15,
+          size: 0.1,
           color: 0xff6b35,
           transparent: true,
-          opacity: 0.8,
+          opacity: 0.5,
         });
         const particlesMesh = new THREE.Points(
           particlesGeometry,
@@ -1501,20 +1232,8 @@
         );
         scene.add(particlesMesh);
 
-        const outerGeo = new THREE.IcosahedronGeometry(14.2, 1);
-        const outerMat = new THREE.MeshBasicMaterial({
-          color: 0xff6b35,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.05,
-        });
-        const network = new THREE.Mesh(outerGeo, outerMat);
-        scene.add(network);
-
         let mouseX = 0;
         let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
         const windowHalfX = window.innerWidth / 2;
         const windowHalfY = window.innerHeight / 2;
 
@@ -1525,15 +1244,11 @@
 
         const animate = () => {
           requestAnimationFrame(animate);
-          targetX = mouseX * 0.001;
-          targetY = mouseY * 0.001;
-          globe.rotation.y += 0.002;
-          globe.rotation.y += 0.05 * (targetX - globe.rotation.y);
-          globe.rotation.x += 0.05 * (targetY - globe.rotation.x);
-          particlesMesh.rotation.y = globe.rotation.y * 0.8;
-          particlesMesh.rotation.x = globe.rotation.x * 0.8;
-          network.rotation.y = globe.rotation.y * 1.1;
-          network.rotation.x = globe.rotation.x * 1.1;
+          globe.rotation.y += 0.001;
+          globe.rotation.y += 0.02 * (mouseX * 0.001 - globe.rotation.y);
+          globe.rotation.x += 0.02 * (mouseY * 0.001 - globe.rotation.x);
+          particlesMesh.rotation.y = globe.rotation.y * 0.5;
+          particlesMesh.rotation.x = globe.rotation.x * 0.5;
           renderer.render(scene, camera);
         };
         animate();
