@@ -941,6 +941,388 @@
           gap: 1rem;
         }
       }
+
+      /* Algorithmic Liability Section */
+      .algo-liability {
+        padding: 7rem 4rem;
+        background: linear-gradient(180deg, var(--navy) 0%, #061222 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .algo-liability::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+      }
+
+      .algo-liability::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at 100% 0%,
+          rgba(201, 169, 98, 0.08) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+
+      .algo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .algo-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .algo-badge {
+        display: inline-block;
+        padding: 0.5rem 1.25rem;
+        background: rgba(201, 169, 98, 0.1);
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .algo-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(2.25rem, 5vw, 3.25rem);
+        font-weight: 400;
+        margin-bottom: 1rem;
+        color: var(--white);
+        line-height: 1.2;
+      }
+
+      .algo-title strong {
+        font-weight: 600;
+        color: var(--gold);
+      }
+
+      .algo-subtitle {
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 550px;
+        margin: 0 auto;
+      }
+
+      .risks-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 5rem;
+      }
+
+      .risk-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 2.5rem;
+        transition: all 0.4s ease;
+        position: relative;
+      }
+
+      .risk-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: var(--gold);
+        transition: width 0.4s ease;
+      }
+
+      .risk-card:hover {
+        background: rgba(201, 169, 98, 0.05);
+        border-color: rgba(201, 169, 98, 0.3);
+        transform: translateY(-8px);
+      }
+
+      .risk-card:hover::before {
+        width: 100%;
+      }
+
+      .risk-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .risk-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+
+      .risk-desc {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 1.5rem;
+      }
+
+      .risk-desc strong {
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      .risk-example {
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+      }
+
+      .industries-section {
+        margin-bottom: 4rem;
+      }
+
+      .industries-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        text-align: center;
+        font-size: 1.75rem;
+        font-weight: 500;
+        color: var(--white);
+        margin-bottom: 3rem;
+      }
+
+      .industries-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .industry-item {
+        padding: 1.75rem 2rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-left: 3px solid var(--gold);
+        transition: all 0.3s ease;
+      }
+
+      .industry-item:hover {
+        background: rgba(201, 169, 98, 0.05);
+      }
+
+      .industry-name {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 0.35rem;
+      }
+
+      .industry-risk {
+        font-size: 0.85rem;
+        color: var(--gold);
+        margin-bottom: 0.35rem;
+        font-weight: 500;
+      }
+
+      .industry-coverage {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .partnership-section {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 3rem;
+        margin-bottom: 4rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .partnership-title {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--white);
+        margin-bottom: 0.75rem;
+      }
+
+      .partnership-desc {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 2.5rem;
+      }
+
+      .partnership-flow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .flow-step {
+        flex: 1;
+        max-width: 220px;
+        text-align: center;
+      }
+
+      .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: var(--gold);
+        color: var(--navy);
+        font-weight: 700;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .flow-step p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.5;
+      }
+
+      .flow-arrow {
+        color: var(--gold);
+        font-size: 1.5rem;
+        opacity: 0.6;
+      }
+
+      .positioning-section {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .positioning-box {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem;
+        background: linear-gradient(
+          135deg,
+          rgba(201, 169, 98, 0.08) 0%,
+          transparent 100%
+        );
+        border: 1px solid rgba(201, 169, 98, 0.25);
+      }
+
+      .positioning-headline {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+      }
+
+      .positioning-quote {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.65rem;
+        line-height: 1.5;
+        color: var(--white);
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .positioning-quote strong {
+        color: var(--gold);
+        font-style: normal;
+        font-weight: 600;
+      }
+
+      .positioning-text {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .positioning-text strong {
+        color: var(--white);
+      }
+
+      .algo-cta {
+        text-align: center;
+        padding-top: 1rem;
+      }
+
+      .cta-overline {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 1.5rem;
+      }
+
+      .algo-button {
+        display: inline-block;
+        padding: 1.15rem 2.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--gold) 0%,
+          var(--gold-dark) 100%
+        );
+        color: var(--navy);
+        text-decoration: none;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        transition: all 0.3s ease;
+      }
+
+      .algo-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(201, 169, 98, 0.3);
+      }
+
+      @media (max-width: 1024px) {
+        .risks-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .industries-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .algo-liability {
+          padding: 5rem 1.5rem;
+        }
+
+        .partnership-flow {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .flow-arrow {
+          transform: rotate(90deg);
+        }
+
+        .positioning-box {
+          padding: 2rem;
+        }
+
+        .positioning-quote {
+          font-size: 1.35rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -951,8 +1333,8 @@
       </a>
       <ul class="nav-links">
         <li><a href="#services">Services</a></li>
+        <li><a href="#algo-liability">AI Coverage</a></li>
         <li><a href="#why-us">Why Us</a></li>
-        <li><a href="#process">Process</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="nav-cta">Get a Quote</button>
@@ -1103,6 +1485,146 @@
             Extra liability coverage that kicks in when your other policies
             reach their limits, providing peace of mind for high-value assets.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Algorithmic Liability Section -->
+    <section class="algo-liability" id="algo-liability">
+      <div class="algo-container">
+        <div class="algo-header">
+          <span class="algo-badge">New Product Line</span>
+          <h2 class="algo-title">
+            The AI Revolution Needs <strong>AI Insurance.</strong>
+          </h2>
+          <p class="algo-subtitle">
+            While everyone rushes to deploy AI agents, we insure their downside.
+          </p>
+        </div>
+
+        <div class="risks-grid">
+          <div class="risk-card">
+            <div class="risk-icon">⚠️</div>
+            <h3 class="risk-title">Hallucination Liability</h3>
+            <p class="risk-desc">
+              When the AI tells your customer "Yes, it's waterproof" and it's
+              not. <strong>We cover the lawsuit.</strong>
+            </p>
+            <div class="risk-example">
+              Real Case: AI chatbot promises features that don't exist → $2M
+              settlement
+            </div>
+          </div>
+
+          <div class="risk-card">
+            <div class="risk-icon">🔓</div>
+            <h3 class="risk-title">Prompt Injection Losses</h3>
+            <p class="risk-desc">
+              When hackers trick your AI into revealing trade secrets or
+              customer data. <strong>We cover the breach.</strong>
+            </p>
+            <div class="risk-example">
+              Real Case: AI manipulated to leak pricing strategy → Competitive
+              loss
+            </div>
+          </div>
+
+          <div class="risk-card">
+            <div class="risk-icon">🤖</div>
+            <h3 class="risk-title">Autonomous Action Failure</h3>
+            <p class="risk-desc">
+              When your AI agent spends $500K instead of $5K on ads.
+              <strong>We cover the mistake.</strong>
+            </p>
+            <div class="risk-example">
+              Real Case: AI dispatch sends fleet to wrong state → $180K loss
+            </div>
+          </div>
+        </div>
+
+        <div class="industries-section">
+          <h3 class="industries-title">
+            Who Needs Algorithmic Liability Coverage?
+          </h3>
+          <div class="industries-grid">
+            <div class="industry-item">
+              <div class="industry-name">Transportation & Logistics</div>
+              <div class="industry-risk">AI Dispatch Systems</div>
+              <div class="industry-coverage">
+                Routing errors, fleet misallocation, delivery failures
+              </div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-name">Marketing Agencies</div>
+              <div class="industry-risk">AI Ad Buying & Content</div>
+              <div class="industry-coverage">
+                Budget overruns, brand damage, campaign failures
+              </div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-name">Legal & Accounting</div>
+              <div class="industry-risk">AI Document Analysis</div>
+              <div class="industry-coverage">
+                Contract misinterpretation, compliance failures
+              </div>
+            </div>
+            <div class="industry-item">
+              <div class="industry-name">Manufacturing</div>
+              <div class="industry-risk">AI Quality Control</div>
+              <div class="industry-coverage">
+                Defect detection failures, recall costs
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="partnership-section">
+          <h3 class="partnership-title">
+            The "Zero Trust" Partnership Strategy
+          </h3>
+          <p class="partnership-desc">
+            We partner with Managed Security Service Providers (MSSPs)
+            installing AI firewalls. Their clients qualify for our "AI-Safe"
+            Insurance Program.
+          </p>
+          <div class="partnership-flow">
+            <div class="flow-step">
+              <span class="step-num">1</span>
+              <p>IT consultant sells Zero Trust security</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="step-num">2</span>
+              <p>Client qualifies for 15% CMF discount</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <span class="step-num">3</span>
+              <p>Everyone wins — secure & insured</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="positioning-section">
+          <div class="positioning-box">
+            <h3 class="positioning-headline">
+              The CMF Stance: Your License to Innovate
+            </h3>
+            <blockquote class="positioning-quote">
+              "Go fast. Deploy the AI agents. Automate your workforce.
+              <strong>CMF has the downside covered.</strong>"
+            </blockquote>
+            <p class="positioning-text">
+              We're not just the safety net. We're the
+              <strong>growth partner</strong> that lets you move at startup
+              speed with enterprise protection.
+            </p>
+          </div>
+        </div>
+
+        <div class="algo-cta">
+          <p class="cta-overline">Ready to insure the future?</p>
+          <a href="#contact" class="algo-button">Get AI Liability Quote</a>
         </div>
       </div>
     </section>
@@ -1271,6 +1793,9 @@
               <option value="renters">Renters Insurance</option>
               <option value="landlord">Landlord Insurance</option>
               <option value="commercial">Commercial Property</option>
+              <option value="algo-liability">
+                Algorithmic Liability (AI Coverage)
+              </option>
               <option value="title">Title Insurance</option>
               <option value="umbrella">Umbrella Policy</option>
               <option value="other">Other / Not Sure</option>
@@ -1297,8 +1822,8 @@
       <p class="footer-tagline">Property & Casualty Insurance Solutions</p>
       <div class="footer-links">
         <a href="#services">Services</a>
+        <a href="#algo-liability">AI Coverage</a>
         <a href="#why-us">Why Us</a>
-        <a href="#process">Process</a>
         <a href="#contact">Contact</a>
         <a href="#">Privacy Policy</a>
       </div>
