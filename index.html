@@ -29,6 +29,7 @@
 
       html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
       }
 
       body {
@@ -37,6 +38,8 @@
         color: var(--text);
         line-height: 1.7;
         font-size: 17px;
+        overflow-x: hidden;
+        width: 100%;
       }
 
       /* Navigation */
@@ -913,6 +916,7 @@
           display: block;
         }
 
+        /* Hero Mobile */
         .hero {
           min-height: auto;
           padding: 7rem 0 4rem;
@@ -926,6 +930,17 @@
         .hero-content {
           padding: 0 1.25rem;
           gap: 2.5rem;
+          text-align: center;
+        }
+
+        .hero-text {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .hero-badge {
+          align-self: center;
         }
 
         .hero-badge span {
@@ -936,16 +951,19 @@
         .hero h1 {
           font-size: 2.25rem;
           line-height: 1.1;
+          text-align: center;
         }
 
         .hero-description {
           font-size: 1rem;
           margin-bottom: 2rem;
+          text-align: center;
         }
 
         .hero-buttons {
           flex-direction: column;
           gap: 0.75rem;
+          width: 100%;
         }
 
         .btn-primary,
@@ -953,6 +971,15 @@
           width: 100%;
           text-align: center;
           padding: 1rem 1.5rem;
+        }
+
+        .hero-visual {
+          width: 100%;
+        }
+
+        .hero-card {
+          padding: 1.5rem;
+          width: 100%;
         }
 
         .stat-grid {
@@ -972,10 +999,7 @@
           font-size: 0.7rem;
         }
 
-        .hero-card {
-          padding: 1.5rem;
-        }
-
+        /* Sections Mobile */
         .services,
         .why-us,
         .process,
@@ -985,6 +1009,8 @@
 
         .section-header {
           margin-bottom: 3rem;
+          padding: 0;
+          text-align: center;
         }
 
         .section-label {
@@ -999,19 +1025,22 @@
           font-size: 1rem;
         }
 
+        /* Services Mobile */
         .services-grid {
           grid-template-columns: 1fr;
           gap: 1.25rem;
+          max-width: 100%;
         }
 
         .service-card {
           padding: 1.75rem;
+          text-align: center;
         }
 
         .service-icon {
           width: 48px;
           height: 48px;
-          margin-bottom: 1rem;
+          margin: 0 auto 1rem auto;
         }
 
         .service-icon svg {
@@ -1027,16 +1056,20 @@
           font-size: 0.9rem;
         }
 
+        /* Why Us Mobile */
         .features-grid {
           gap: 2rem;
+          max-width: 100%;
         }
 
         .feature-item {
           gap: 1rem;
+          text-align: left;
         }
 
         .feature-number {
           font-size: 2.25rem;
+          flex-shrink: 0;
         }
 
         .feature-content h4 {
@@ -1047,9 +1080,11 @@
           font-size: 0.9rem;
         }
 
+        /* Process Mobile */
         .process-steps {
           flex-direction: column;
           gap: 2rem;
+          align-items: center;
         }
 
         .process-steps::before {
@@ -1058,6 +1093,7 @@
 
         .step {
           max-width: 100%;
+          text-align: center;
         }
 
         .step-number {
@@ -1074,25 +1110,43 @@
           font-size: 0.9rem;
         }
 
+        /* Contact Mobile */
         .contact-wrapper {
           gap: 2.5rem;
         }
 
         .contact-info {
           padding-right: 0;
+          text-align: center;
+        }
+
+        .contact-info .section-label,
+        .contact-info .section-title {
+          text-align: center;
         }
 
         .contact-info .section-title {
           font-size: 1.75rem;
         }
 
+        .contact-info > p {
+          text-align: center;
+        }
+
+        .contact-details {
+          align-items: center;
+        }
+
         .contact-item {
           gap: 0.75rem;
+          justify-content: flex-start;
+          width: 100%;
         }
 
         .contact-item-icon {
           width: 42px;
           height: 42px;
+          flex-shrink: 0;
         }
 
         .contact-item-icon svg {
@@ -1104,6 +1158,11 @@
           font-size: 0.9rem;
         }
 
+        /* Form Mobile */
+        .contact-form {
+          padding: 1.5rem;
+        }
+
         .form-row {
           grid-template-columns: 1fr;
           gap: 0;
@@ -1113,15 +1172,11 @@
           margin-bottom: 1.25rem;
         }
 
-        .contact-form {
-          padding: 1.5rem;
-        }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
           padding: 0.875rem;
-          font-size: 16px; /* Prevents iOS zoom */
+          font-size: 16px;
         }
 
         .form-submit {
@@ -1129,8 +1184,14 @@
           font-size: 0.85rem;
         }
 
+        /* Footer Mobile */
         footer {
           padding: 3rem 1.25rem 2rem;
+          text-align: center;
+        }
+
+        .footer-logo {
+          justify-content: center;
         }
 
         .footer-logo .logo-icon {
@@ -1150,6 +1211,7 @@
         .footer-links {
           flex-direction: column;
           gap: 0.75rem;
+          align-items: center;
         }
 
         .footer-links a {
@@ -1560,8 +1622,13 @@
           padding: 4rem 1.25rem;
         }
 
+        .algo-container {
+          width: 100%;
+        }
+
         .algo-header {
           margin-bottom: 3rem;
+          text-align: center;
         }
 
         .algo-badge {
@@ -1573,10 +1640,12 @@
         .algo-title {
           font-size: 1.75rem;
           line-height: 1.25;
+          text-align: center;
         }
 
         .algo-subtitle {
           font-size: 1rem;
+          text-align: center;
         }
 
         .risks-grid {
@@ -1586,6 +1655,7 @@
 
         .risk-card {
           padding: 1.5rem;
+          text-align: center;
         }
 
         .risk-icon {
@@ -1613,6 +1683,7 @@
         .industries-title {
           font-size: 1.35rem;
           margin-bottom: 2rem;
+          text-align: center;
         }
 
         .industries-grid {
@@ -1621,6 +1692,7 @@
 
         .industry-item {
           padding: 1.25rem 1.5rem;
+          text-align: left;
         }
 
         .industry-name {
@@ -1638,24 +1710,29 @@
         .partnership-section {
           padding: 2rem 1.5rem;
           margin-bottom: 3rem;
+          text-align: center;
         }
 
         .partnership-title {
           font-size: 1.25rem;
+          text-align: center;
         }
 
         .partnership-desc {
           font-size: 0.95rem;
           margin-bottom: 2rem;
+          text-align: center;
         }
 
         .partnership-flow {
           flex-direction: column;
           gap: 1.25rem;
+          align-items: center;
         }
 
         .flow-step {
           max-width: 100%;
+          text-align: center;
         }
 
         .step-num {
@@ -1680,6 +1757,7 @@
 
         .positioning-box {
           padding: 1.5rem;
+          text-align: center;
         }
 
         .positioning-headline {
