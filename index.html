@@ -1880,67 +1880,38 @@
       /* ============================================
          AI CHATBOT WIDGET
          ============================================ */
-      .chatbot-fab {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 64px;
-        height: 64px;
-        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 2000;
+      /* Hero embedded chat */
+      .hero-chat {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 8px 30px rgba(201, 169, 98, 0.4);
-        transition: all 0.3s ease;
-      }
-      .chatbot-fab:hover {
-        transform: scale(1.08);
-        box-shadow: 0 12px 40px rgba(201, 169, 98, 0.5);
-      }
-      .chatbot-fab svg {
-        width: 28px;
-        height: 28px;
-        fill: var(--navy);
-      }
-      .chatbot-fab.open svg.icon-chat { display: none; }
-      .chatbot-fab:not(.open) svg.icon-close { display: none; }
-
-      .chatbot-panel {
-        position: fixed;
-        bottom: 7rem;
-        right: 2rem;
-        width: 420px;
-        max-height: 600px;
-        background: var(--cream);
-        border: 1px solid rgba(0,0,0,0.1);
-        box-shadow: 0 25px 80px rgba(10,22,40,0.25);
-        z-index: 1999;
-        display: none;
         flex-direction: column;
         overflow: hidden;
-        animation: chatSlideUp 0.3s ease-out;
+        position: relative;
+        height: 520px;
       }
-      .chatbot-panel.open { display: flex; }
-
-      @keyframes chatSlideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+      .hero-chat::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 2rem;
+        right: 2rem;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
       }
 
       .chatbot-header {
-        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-        padding: 1.25rem 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1rem 1.25rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
       }
       .chatbot-header-icon {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
         border-radius: 4px;
         display: flex;
@@ -1948,19 +1919,19 @@
         justify-content: center;
         font-family: "Cormorant Garamond", Georgia, serif;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: var(--navy);
       }
       .chatbot-header-text h3 {
         font-family: "Cormorant Garamond", Georgia, serif;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--white);
         margin: 0;
         line-height: 1.2;
       }
       .chatbot-header-text span {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         color: var(--gold);
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -1969,10 +1940,10 @@
       .chatbot-reset {
         margin-left: auto;
         background: none;
-        border: 1px solid rgba(255,255,255,0.2);
-        color: rgba(255,255,255,0.6);
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255,255,255,0.15);
+        color: rgba(255,255,255,0.5);
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -1987,12 +1958,18 @@
       .chatbot-messages {
         flex: 1;
         overflow-y: auto;
-        padding: 1.25rem;
+        padding: 1rem 1.25rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        min-height: 300px;
-        max-height: 380px;
+        gap: 0.85rem;
+        min-height: 0;
+      }
+      .chatbot-messages::-webkit-scrollbar {
+        width: 4px;
+      }
+      .chatbot-messages::-webkit-scrollbar-thumb {
+        background: rgba(201,169,98,0.3);
+        border-radius: 2px;
       }
 
       .chat-msg {
@@ -2024,53 +2001,54 @@
       }
 
       .chat-bubble {
-        max-width: 80%;
-        padding: 0.85rem 1.1rem;
-        font-size: 0.9rem;
-        line-height: 1.6;
-        color: var(--text);
+        max-width: 82%;
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        color: rgba(255,255,255,0.9);
       }
       .chat-msg:not(.user) .chat-bubble {
-        background: var(--white);
-        border: 1px solid rgba(0,0,0,0.06);
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.08);
       }
       .chat-msg.user .chat-bubble {
-        background: var(--navy);
-        color: var(--white);
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        color: var(--navy);
       }
       .chat-bubble strong {
         font-weight: 700;
+        color: var(--white);
+      }
+      .chat-msg.user .chat-bubble strong {
+        color: var(--navy);
       }
 
       /* Rich blocks in chat */
       .chat-subsidy-alert {
         margin: 0.5rem 0;
-        padding: 0.75rem;
+        padding: 0.65rem;
         border-left: 3px solid var(--gold);
-        background: rgba(201,169,98,0.08);
-        font-size: 0.85rem;
+        background: rgba(201,169,98,0.1);
+        font-size: 0.8rem;
         line-height: 1.5;
+        color: rgba(255,255,255,0.85);
       }
       .chat-subsidy-alert.warning {
-        border-left-color: #dc2626;
-        background: rgba(220,38,38,0.06);
-      }
-      .chat-subsidy-alert.medicaid {
-        border-left-color: #3b82f6;
-        background: rgba(59,130,246,0.06);
+        border-left-color: #f59e0b;
+        background: rgba(245,158,11,0.1);
       }
       .chat-subsidy-alert strong {
         display: block;
         margin-bottom: 0.25rem;
-        color: var(--navy);
+        color: var(--gold-light);
       }
 
       .chat-quote-carrier {
         font-family: "Cormorant Garamond", Georgia, serif;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 600;
-        color: var(--navy);
-        margin: 0.75rem 0 0.4rem;
+        color: var(--gold);
+        margin: 0.6rem 0 0.3rem;
       }
       .chat-quote-cards {
         display: flex;
@@ -2079,15 +2057,15 @@
         padding-bottom: 0.5rem;
       }
       .chat-quote-card {
-        min-width: 140px;
+        min-width: 130px;
         flex: 1;
-        background: var(--white);
-        border: 1.5px solid rgba(0,0,0,0.08);
-        padding: 0.75rem;
+        background: rgba(255,255,255,0.06);
+        border: 1.5px solid rgba(255,255,255,0.1);
+        padding: 0.65rem;
         position: relative;
       }
       .chat-quote-card.value { border-color: var(--gold); }
-      .chat-quote-card.premium { border-color: var(--navy); }
+      .chat-quote-card.premium { border-color: rgba(255,255,255,0.3); }
       .chat-quote-badge {
         display: inline-block;
         font-size: 0.65rem;
@@ -2786,7 +2764,7 @@
       const chatbotSend = document.getElementById('chatbotSend');
       const chatbotReset = document.getElementById('chatbotReset');
 
-      const GREETING = "Welcome to Crown Merchant Financial! I'm your AI insurance concierge. I can help you find the right 2026 coverage for **Illinois** or **New Hampshire**.\n\nAre you looking for **personal** or **business** insurance?";
+      const GREETING = "Welcome to Crown Merchant Financial! I'm your AI insurance concierge. I can help you find **homeowners insurance** quotes for properties in **Illinois** or **New Hampshire**.\n\nAre you looking for **personal** or **business** insurance?";
 
       let chatApiMessages = [{ role: 'assistant', content: GREETING }];
       let chatIsStreaming = false;
@@ -2817,23 +2795,12 @@
         return div;
       }
 
-      function renderSubsidyAlert(data) {
-        let html = `<div class="chat-subsidy-alert"><strong>${data.fplPercent}% of 2026 Federal Poverty Level</strong></div>`;
-        if (data.eligible) {
-          html += `<div class="chat-subsidy-alert"><strong>You may qualify for subsidies!</strong>Estimated: <strong>$${data.monthlySubsidy}/mo</strong> applied to your monthly cost.</div>`;
-        }
-        if (data.cliffWarning) {
-          html += `<div class="chat-subsidy-alert warning"><strong>Marketplace Cliff Warning</strong>Above 400% FPL — 2026 enhanced subsidies expired. Monthly costs may be ~78% higher.</div>`;
-        }
-        if (data.belowMedicaid) {
-          html += `<div class="chat-subsidy-alert medicaid"><strong>You may qualify for Medicaid</strong>Below 138% FPL — you could be eligible for lower-cost or free health coverage.</div>`;
-        }
-        return html;
-      }
-
       function renderQuoteCards(data) {
         const quotes = data.quotes || [];
         let html = '';
+        if (data.source === 'estimate' && data.note) {
+          html += `<div class="chat-subsidy-alert warning"><strong>Estimated Quotes</strong>${data.note}</div>`;
+        }
         quotes.forEach(function(q) {
           html += `<div class="chat-quote-carrier">${q.carrier}</div><div class="chat-quote-cards">`;
           q.plans.forEach(function(plan) {
@@ -2841,10 +2808,12 @@
             html += `<div class="chat-quote-card ${tierClass}">
               <div class="chat-quote-badge ${tierClass}">${plan.tier}</div>
               <div class="chat-quote-price">${formatCurrency(plan.monthlyCost)}<span>/mo</span></div>
-              <div class="chat-quote-detail"><span>Deductible</span><strong>${formatCurrency(plan.deductible)}</strong></div>
-              ${plan.outOfPocketMax > 0 ? `<div class="chat-quote-detail"><span>Max OOP</span><strong>${formatCurrency(plan.outOfPocketMax)}</strong></div>` : ''}
-              ${plan.copay > 0 ? `<div class="chat-quote-detail"><span>Copay</span><strong>${formatCurrency(plan.copay)}</strong></div>` : ''}
-              <button class="chat-quote-select">Select</button>
+              ${plan.annualCost > 0 ? `<div style="font-size:10px;color:#94a3b8;">${formatCurrency(plan.annualCost)}/year</div>` : ''}
+              ${plan.deductible > 0 ? `<div class="chat-quote-detail"><span>Deductible</span><strong>${formatCurrency(plan.deductible)}</strong></div>` : ''}
+              ${plan.dwelling > 0 ? `<div class="chat-quote-detail"><span>Dwelling</span><strong>${formatCurrency(plan.dwelling)}</strong></div>` : ''}
+              ${plan.liability > 0 ? `<div class="chat-quote-detail"><span>Liability</span><strong>${formatCurrency(plan.liability)}</strong></div>` : ''}
+              ${plan.personalProperty > 0 ? `<div class="chat-quote-detail"><span>Personal Prop.</span><strong>${formatCurrency(plan.personalProperty)}</strong></div>` : ''}
+              ${plan.canBindOnline ? '<button class="chat-quote-select" style="background:var(--gold);color:var(--navy);">Get This Policy</button>' : '<button class="chat-quote-select">Select</button>'}
             </div>`;
           });
           html += '</div>';
@@ -2936,9 +2905,8 @@
                       break;
                     case 'tool_start':
                       showTyping(
-                        data.tool === 'calculate_fpl_subsidy' ? 'Calculating subsidy eligibility...' :
-                        data.tool === 'get_il_health_quotes' ? 'Getting health insurance quotes...' :
-                        data.tool === 'get_nh_property_quotes' ? 'Getting property insurance quotes...' :
+                        data.tool === 'lookup_property_data' ? 'Looking up property details...' :
+                        data.tool === 'get_homeowners_quotes' ? 'Getting homeowners insurance quotes...' :
                         'Processing...'
                       );
                       break;
@@ -2948,9 +2916,7 @@
                         richHtml += formatMd(currentText);
                         currentText = '';
                       }
-                      if (data.richType === 'subsidy_alert') {
-                        richHtml += renderSubsidyAlert(data.result);
-                      } else if (data.richType === 'quote_results') {
+                      if (data.richType === 'quote_results') {
                         richHtml += renderQuoteCards(data.result);
                       }
                       if (streamingEl) {
