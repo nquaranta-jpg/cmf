@@ -1,0 +1,16 @@
+{
+  "name": "cmf-final-expense",
+  "version": "1.0.0",
+  "description": "Crown Merchant Financial - Final Expense Insurance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nicholas Quaranta",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "netlify-cli": "^24.0.1"
+  }
+}

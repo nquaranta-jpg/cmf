@@ -781,6 +781,105 @@
         line-height: 1.7;
       }
 
+      /* Carrier Carousel */
+      .carriers {
+        padding: 5rem 0;
+        background: var(--white);
+        overflow: hidden;
+      }
+
+      .carriers .section-header {
+        padding: 0 4rem;
+      }
+
+      .carousel-wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        margin-top: 2rem;
+      }
+
+      .carousel-wrapper::before,
+      .carousel-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .carousel-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, var(--white), transparent);
+      }
+
+      .carousel-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, var(--white), transparent);
+      }
+
+      .carousel-track {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        width: max-content;
+        animation: scrollCarousel 30s linear infinite;
+      }
+
+      .carousel-track:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes scrollCarousel {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      .carrier-logo {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 80px;
+        padding: 1rem 1.5rem;
+        background: var(--cream);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .carrier-logo:hover {
+        border-color: var(--gold);
+        box-shadow: 0 4px 16px rgba(201, 169, 98, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .carrier-logo img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        filter: grayscale(100%);
+        opacity: 0.7;
+        transition: all 0.3s ease;
+      }
+
+      .carrier-logo:hover img {
+        filter: grayscale(0%);
+        opacity: 1;
+      }
+
+      .carrier-logo span {
+        font-family: var(--font-heading);
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--navy);
+        text-align: center;
+        line-height: 1.2;
+      }
+
       /* Process Section */
       .process {
         padding: 8rem 4rem;
@@ -1447,6 +1546,25 @@
           font-size: 0.9rem;
         }
 
+        .carriers {
+          padding: 3rem 0;
+        }
+
+        .carriers .section-header {
+          padding: 0 1.5rem;
+        }
+
+        .carousel-track {
+          gap: 2rem;
+          animation-duration: 20s;
+        }
+
+        .carrier-logo {
+          width: 130px;
+          height: 65px;
+          padding: 0.75rem 1rem;
+        }
+
         .process-steps {
           flex-direction: column;
           gap: 2rem;
@@ -1871,6 +1989,84 @@
             <h4>Fast, Compassionate Service</h4>
             <p>Most applications approved within 24&ndash;48 hours. We guide you
                through every step with patience and respect.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carrier Partners Carousel -->
+    <section class="carriers" id="carriers">
+      <div class="section-header">
+        <div class="section-label">Our Partners</div>
+        <h2 class="section-title">Backed by Carriers You Can Trust</h2>
+        <p class="section-subtitle">
+          We work with top-rated insurance carriers to find the best
+          coverage and rates for you and your family.
+        </p>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="carousel-track">
+          <!-- First set -->
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/mutualofomaha.com" alt="Mutual of Omaha" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Mutual of Omaha</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/aetna.com" alt="Aetna" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Aetna</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/cigna.com" alt="Cigna" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Cigna</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/unitedamerican.com" alt="United American" onerror="this.onerror=null;this.parentElement.innerHTML='<span>United American</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/allstate.com" alt="Allstate" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Allstate</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/anthem.com" alt="Anthem" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Anthem</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/physiciansmutual.com" alt="Physicians Mutual" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Physicians Mutual</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/manhattanlife.com" alt="Manhattan Life" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Manhattan Life</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/wellabe.com" alt="Medico / Wellabe" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Medico / Wellabe</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/gtlic.com" alt="Guaranteed Trust Life" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Guaranteed Trust Life</span>'" />
+          </div>
+          <!-- Duplicate set for seamless infinite scroll -->
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/mutualofomaha.com" alt="Mutual of Omaha" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Mutual of Omaha</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/aetna.com" alt="Aetna" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Aetna</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/cigna.com" alt="Cigna" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Cigna</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/unitedamerican.com" alt="United American" onerror="this.onerror=null;this.parentElement.innerHTML='<span>United American</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/allstate.com" alt="Allstate" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Allstate</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/anthem.com" alt="Anthem" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Anthem</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/physiciansmutual.com" alt="Physicians Mutual" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Physicians Mutual</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/manhattanlife.com" alt="Manhattan Life" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Manhattan Life</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/wellabe.com" alt="Medico / Wellabe" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Medico / Wellabe</span>'" />
+          </div>
+          <div class="carrier-logo">
+            <img src="https://logo.clearbit.com/gtlic.com" alt="Guaranteed Trust Life" onerror="this.onerror=null;this.parentElement.innerHTML='<span>Guaranteed Trust Life</span>'" />
           </div>
         </div>
       </div>

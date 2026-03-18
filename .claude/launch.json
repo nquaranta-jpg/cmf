@@ -1,0 +1,24 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cmf-site",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "5500", "/Users/nicholasquaranta/Desktop/cmf"],
+      "port": 5500
+    },
+    {
+      "name": "backend",
+      "runtimeExecutable": "/Users/nicholasquaranta/Desktop/closepilot/backend/venv/bin/uvicorn",
+      "runtimeArgs": ["app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"],
+      "port": 8000,
+      "cwd": "/Users/nicholasquaranta/Desktop/closepilot/backend"
+    },
+    {
+      "name": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/nicholasquaranta/Desktop/closepilot"],
+      "port": 3000
+    }
+  ]
+}
