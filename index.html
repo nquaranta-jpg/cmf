@@ -31,8 +31,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'AW-17990540500');
-      gtag('config', 'AW-17985807008');
+      gtag('config', 'AW-17990540500', { 'allow_enhanced_conversions': true });
+      gtag('config', 'AW-17985807008', { 'allow_enhanced_conversions': true });
     </script>
 
     <!-- Microsoft/Bing UET Tag -->
@@ -1825,6 +1825,7 @@
               <input type="hidden" name="utm_campaign" class="utm-field" />
               <input type="hidden" name="utm_content" class="utm-field" />
               <input type="hidden" name="utm_term" class="utm-field" />
+              <input type="hidden" name="gclid" class="gclid-field" />
               <button type="submit" class="btn-primary">Get My Free Quote &rarr;</button>
             </form>
             <p class="hero-form-disclaimer">Your information is secure and will never be shared.</p>
@@ -2183,6 +2184,7 @@
           <input type="hidden" name="utm_campaign" class="utm-field" />
           <input type="hidden" name="utm_content" class="utm-field" />
           <input type="hidden" name="utm_term" class="utm-field" />
+          <input type="hidden" name="gclid" class="gclid-field" />
           <button type="submit" class="form-submit">Get My Free Quote &rarr;</button>
         </form>
       </div>
@@ -2226,12 +2228,12 @@
 
     <script>
       // ============================================
-      // UTM PARAMETER CAPTURE
+      // UTM & GCLID PARAMETER CAPTURE
       // ============================================
       (function () {
         var params = new URLSearchParams(window.location.search);
-        var utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-        utmKeys.forEach(function (key) {
+        var trackingKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid"];
+        trackingKeys.forEach(function (key) {
           var value = params.get(key) || "";
           if (value) sessionStorage.setItem(key, value);
           var stored = value || sessionStorage.getItem(key) || "";
@@ -2254,10 +2256,14 @@
         btn.disabled = true;
         btn.textContent = "Sending...";
 
-        // Google Ads conversion
+        // Google Ads enhanced conversion data
         if (typeof gtag !== "undefined") {
+          gtag("set", "user_data", {
+            email: data.get("email"),
+            phone_number: data.get("phone"),
+          });
           gtag("event", "conversion", {
-            send_to: "AW-17990540500/XXXXXXXXXXXXXXXXXXX",
+            send_to: "AW-17990540500/4j1WCNi-m4IcENS5x4JD",
             value: 1.0,
             currency: "USD",
           });
@@ -2303,6 +2309,7 @@
             utm_campaign: data.get("utm_campaign"),
             utm_content: data.get("utm_content"),
             utm_term: data.get("utm_term"),
+            gclid: data.get("gclid"),
           }),
         })
           .then(function () {
