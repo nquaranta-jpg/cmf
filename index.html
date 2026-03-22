@@ -1820,6 +1820,14 @@
                   <option value="25000">$25,000</option>
                 </select>
               </div>
+              <div class="form-field">
+                <select name="timeline" required>
+                  <option value="">When do you need coverage?</option>
+                  <option value="asap">As soon as possible</option>
+                  <option value="30days">Within 30 days</option>
+                  <option value="just-looking">Just looking for now</option>
+                </select>
+              </div>
               <input type="hidden" name="utm_source" class="utm-field" />
               <input type="hidden" name="utm_medium" class="utm-field" />
               <input type="hidden" name="utm_campaign" class="utm-field" />
@@ -2134,7 +2142,7 @@
               <div class="contact-item-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               </div>
-              <span class="contact-item-text">IL License #22145269 &bull; NPN: 22145269</span>
+              <span class="contact-item-text">IL License #3004124919 &bull; NPN: 22145269</span>
             </div>
           </div>
         </div>
@@ -2179,6 +2187,15 @@
               <option value="25000">$25,000</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="contactTimeline">When Do You Need Coverage?</label>
+            <select id="contactTimeline" name="timeline" required>
+              <option value="">Select a timeframe</option>
+              <option value="asap">As soon as possible</option>
+              <option value="30days">Within 30 days</option>
+              <option value="just-looking">Just looking for now</option>
+            </select>
+          </div>
           <input type="hidden" name="utm_source" class="utm-field" />
           <input type="hidden" name="utm_medium" class="utm-field" />
           <input type="hidden" name="utm_campaign" class="utm-field" />
@@ -2214,8 +2231,8 @@
       </div>
       <div class="footer-legal">
         &copy; 2026 Crown Merchant Financial LLC. All rights reserved.<br />
-        Illinois Life Insurance License #22145269 &bull; NPN: 22145269<br />
-        Nicholas Quaranta, Licensed Insurance Agent<br />
+        IL Business Entity Producer License #3004124919<br />
+        Nicholas Quaranta, Licensed Insurance Agent &bull; NPN: 22145269<br />
         nquaranta@crownmerchantfinancial.com &bull; (312) 203-8106
       </div>
     </footer>
@@ -2304,6 +2321,7 @@
             phone: data.get("phone"),
             ageRange: data.get("ageRange"),
             coverageAmount: data.get("coverageAmount"),
+            timeline: data.get("timeline"),
             utm_source: data.get("utm_source"),
             utm_medium: data.get("utm_medium"),
             utm_campaign: data.get("utm_campaign"),
