@@ -1,31 +1,8 @@
 import { getSupabase } from "./lib/supabase.mjs";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_GROUP_CHAT_ID = process.env.TELEGRAM_GROUP_CHAT_ID; // agent group chat
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID; // Nick's personal chat (fallback)
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
-const ALERT_PHONE_NUMBER = process.env.ALERT_PHONE_NUMBER;
-
-async function sendSMS(to, body) {
-  const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
-  const auth = btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`);
-  const params = new URLSearchParams({ To: to, From: TWILIO_PHONE_NUMBER, Body: body });
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-  });
-
-  const result = await res.json();
-  if (!res.ok) console.error("Twilio SMS error:", result);
-  return { ok: res.ok, sid: result.sid };
-}
+const TELEGRAM_GROUP_CHAT_ID = process.env.TELEGRAM_GROUP_CHAT_ID;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID; // fallback
 
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -95,7 +72,6 @@ export async function handler(event) {
     `📢 *Campaign:* ${utm_campaign || "—"}\n` +
     `⏰ *Time:* ${timestamp}`;
 
-  // Build Telegram payload — add CLAIM button if we have a lead ID
   const telegramPayload = {
     chat_id: chatId,
     text: telegramMessage,
@@ -110,49 +86,27 @@ export async function handler(event) {
     };
   }
 
-  const results = await Promise.allSettled([
-    // Telegram with CLAIM button
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(telegramPayload),
-    }).then(async (res) => {
-      const result = await res.json();
-      if (!result.ok) {
-        console.error("Telegram API error:", result);
-      } else if (leadId && result.result) {
-        // Store the message_id so we can edit it when someone claims
-        const msgId = result.result.message_id;
-        const msgChatId = result.result.chat.id;
-        await supabase.from("leads").update({
-          telegram_message_id: msgId,
-          telegram_chat_id: msgChatId,
-        }).eq("id", leadId);
-        console.log("Stored telegram message_id:", msgId);
-      }
-      return { channel: "telegram", ok: result.ok };
-    }),
-
-    // SMS to prospect
-    TWILIO_ACCOUNT_SID && phone
-      ? sendSMS(
-          phone,
-          `Hi ${name ? name.split(" ")[0] : "there"}, this is Crown Merchant Financial. One of our licensed agents will be calling you from (312) 203-8106 in the next few minutes to go over your coverage options. Please save this number!`
-        ).then((r) => ({ channel: "sms-prospect", ...r }))
-      : Promise.resolve({ channel: "sms-prospect", ok: false, skipped: true }),
-
-    // SMS alert to Nick
-    TWILIO_ACCOUNT_SID && ALERT_PHONE_NUMBER
-      ? sendSMS(
-          ALERT_PHONE_NUMBER,
-          `🔥 NEW CMF LEAD\n${name || "Unknown"}\n📱 ${phone || "no phone"}\n📧 ${email || "no email"}\nAge: ${ageRange || "?"} | Coverage: $${coverageAmount ? Number(coverageAmount).toLocaleString() : "?"}\n⏱️ Timeline: ${timelineLabel}\nSource: ${utm_source || "direct"}\n⏰ ${timestamp}`
-        ).then((r) => ({ channel: "sms-alert", ...r }))
-      : Promise.resolve({ channel: "sms-alert", ok: false, skipped: true }),
-  ]);
-
-  results.forEach((r, i) => {
-    if (r.status === "rejected") console.error(`Channel ${i} failed:`, r.reason);
-  });
+    });
+    const result = await res.json();
+    if (!result.ok) {
+      console.error("Telegram API error:", result);
+    } else if (leadId && result.result) {
+      const msgId = result.result.message_id;
+      const msgChatId = result.result.chat.id;
+      await supabase.from("leads").update({
+        telegram_message_id: msgId,
+        telegram_chat_id: msgChatId,
+      }).eq("id", leadId);
+      console.log("Stored telegram message_id:", msgId);
+    }
+  } catch (err) {
+    console.error("Telegram send failed:", err);
+  }
 
   return {
     statusCode: 200,
