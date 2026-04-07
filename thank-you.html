@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <!-- Google Ads — fire conversion on page load -->
+  <!-- Google Ads — page load only (conversion fires from form submission on index.html) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17990540500"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -18,25 +18,12 @@
     gtag('js', new Date());
     gtag('config', 'AW-17990540500', { 'allow_enhanced_conversions': true });
     gtag('config', 'AW-17985807008', { 'allow_enhanced_conversions': true });
-    gtag('event', 'conversion', {
-      'send_to': 'AW-17990540500/4j1WCNi-m4IcENS5x4JD',
-      'value': 1.0,
-      'currency': 'USD'
-    });
   </script>
 
-  <!-- Microsoft/Bing UET — fire conversion on page load -->
+  <!-- Microsoft/Bing UET — page load only (conversion fires from form submission on index.html) -->
   <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"343236848",enableAutoSpaTracking:true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
-  <script>
-    window.uetq = window.uetq || [];
-    window.uetq.push('event', 'submit_lead_form', {
-      'event_category': 'conversion',
-      'event_label': 'final_expense_lead',
-      'event_value': 1
-    });
-  </script>
 
-  <!-- Meta Pixel — fire Lead event on page load -->
+  <!-- Meta Pixel — PageView only (Lead event fires from form submission on index.html) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -47,16 +34,16 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1263380418574595');
-  fbq('track', 'Lead');
+  fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1263380418574595&ev=Lead&noscript=1"/></noscript>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1263380418574595&ev=PageView&noscript=1"/></noscript>
 
-  <!-- TikTok Pixel — fire SubmitForm on page load -->
+  <!-- TikTok Pixel — page load only (SubmitForm fires from form submission on index.html) -->
   <script>
   !function (w, d, t) {
     w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
     ttq.load('D6JJ8J3C77U3LLVVPRMG');
-    ttq.track('SubmitForm');
+    ttq.page();
   }(window, document, 'ttq');
   </script>
 
