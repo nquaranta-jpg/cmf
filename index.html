@@ -412,7 +412,7 @@
         background: rgba(255, 255, 255, 0.05);
         color: var(--white);
         font-family: inherit;
-        font-size: 1rem;
+        font-size: 16px;
         transition: border-color 0.3s ease;
       }
 
@@ -1075,10 +1075,21 @@
         padding: 1rem;
         border: 1.5px solid #e2e8f0;
         font-family: inherit;
-        font-size: 1rem;
+        font-size: 16px;
         color: var(--navy);
         transition: border-color 0.3s ease;
         background: var(--white);
+      }
+
+      .form-error {
+        margin-top: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        color: #991b1b;
+        font-size: 0.9rem;
+        text-align: center;
       }
 
       .form-group input:focus,
@@ -2264,55 +2275,30 @@
       // ============================================
       // FORM SUBMISSION HANDLER
       // ============================================
+      var formSubmitting = false;
+
       function handleFormSubmit(e) {
         e.preventDefault();
+
+        // Prevent duplicate submissions
+        if (formSubmitting) return;
+        formSubmitting = true;
+
         var form = e.target;
         var btn = form.querySelector('button[type="submit"]');
         var data = new FormData(form);
         var originalText = btn.textContent;
 
+        // Clear any previous error
+        var existingError = form.querySelector('.form-error');
+        if (existingError) existingError.remove();
+
         btn.disabled = true;
         btn.textContent = "Sending...";
 
-        // Google Ads enhanced conversion data
-        if (typeof gtag !== "undefined") {
-          gtag("set", "user_data", {
-            email: data.get("email"),
-            phone_number: data.get("phone"),
-          });
-          gtag("event", "conversion", {
-            send_to: "AW-17990540500/4j1WCNi-m4IcENS5x4JD",
-            value: 1.0,
-            currency: "USD",
-          });
-        }
+        var conversionValue = parseFloat(data.get("coverageAmount")) || 1.0;
 
-        // Microsoft/Bing UET conversion
-        if (typeof window.uetq !== "undefined") {
-          window.uetq.push("event", "submit_lead_form", {
-            event_category: "conversion",
-            event_label: "final_expense_lead",
-            event_value: 1,
-          });
-        }
-
-        // Meta Pixel Lead event
-        if (typeof fbq !== "undefined") {
-          fbq("track", "Lead", {
-            content_name: "Final Expense Insurance Quote",
-            value: parseFloat(data.get("coverageAmount")) || 0,
-            currency: "USD",
-          });
-        }
-
-        // TikTok Pixel SubmitForm event
-        if (typeof ttq !== "undefined") {
-          ttq.track("SubmitForm", {
-            content_name: "Final Expense Insurance Quote",
-          });
-        }
-
-        // Submit to serverless function
+        // Submit to serverless function FIRST, then fire pixels on success
         fetch("/.netlify/functions/lead", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -2331,12 +2317,56 @@
             gclid: data.get("gclid"),
           }),
         })
-          .then(function () {
+          .then(function (res) {
+            if (!res.ok) throw new Error("Server returned " + res.status);
+
+            // Fire tracking pixels only after successful save
+            if (typeof gtag !== "undefined") {
+              gtag("set", "user_data", {
+                email: data.get("email"),
+                phone_number: data.get("phone"),
+              });
+              gtag("event", "conversion", {
+                send_to: "AW-17990540500/4j1WCNi-m4IcENS5x4JD",
+                value: conversionValue,
+                currency: "USD",
+              });
+            }
+
+            if (typeof window.uetq !== "undefined") {
+              window.uetq.push("event", "submit_lead_form", {
+                event_category: "conversion",
+                event_label: "final_expense_lead",
+                event_value: conversionValue,
+              });
+            }
+
+            if (typeof fbq !== "undefined") {
+              fbq("track", "Lead", {
+                content_name: "Final Expense Insurance Quote",
+                value: conversionValue,
+                currency: "USD",
+              });
+            }
+
+            if (typeof ttq !== "undefined") {
+              ttq.track("SubmitForm", {
+                content_name: "Final Expense Insurance Quote",
+              });
+            }
+
             window.location.href = "/thank-you.html";
           })
           .catch(function (err) {
             console.error("Form submission error:", err);
-            window.location.href = "/thank-you.html";
+            formSubmitting = false;
+            btn.disabled = false;
+            btn.textContent = originalText;
+
+            var errorDiv = document.createElement("div");
+            errorDiv.className = "form-error";
+            errorDiv.textContent = "Something went wrong. Please try again or call us at (312) 203-8106.";
+            form.appendChild(errorDiv);
           });
       }
 
