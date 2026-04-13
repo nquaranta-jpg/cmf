@@ -1,0 +1,51 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1080" fill="#0a0a0a"/>
+
+  <!-- Logo -->
+  <g transform="translate(60, 50)">
+    <circle cx="45" cy="45" r="45" fill="#0f1b30"/>
+    <polygon points="30,32 35,18 40,32" fill="#c9a962"/>
+    <polygon points="40,32 45,18 50,32" fill="#c9a962"/>
+    <polygon points="50,32 55,18 60,32" fill="#c9a962"/>
+    <rect x="27" y="32" width="36" height="3" fill="#c9a962"/>
+    <text x="45" y="62" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="4">CMF</text>
+  </g>
+
+  <!-- Faint receipt lines -->
+  <line x1="200" y1="180" x2="880" y2="180" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="200" y1="280" x2="880" y2="280" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="200" y1="380" x2="880" y2="380" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="200" y1="480" x2="880" y2="480" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="200" y1="580" x2="880" y2="580" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- Receipt items -->
+  <text x="200" y="240" font-family="Courier New, monospace" font-size="32" fill="#666666">Casket</text>
+  <text x="780" y="240" font-family="Courier New, monospace" font-size="32" fill="#666666" text-anchor="end">$2,500</text>
+
+  <text x="200" y="340" font-family="Courier New, monospace" font-size="32" fill="#666666">Burial Plot</text>
+  <text x="780" y="340" font-family="Courier New, monospace" font-size="32" fill="#666666" text-anchor="end">$1,200</text>
+
+  <text x="200" y="440" font-family="Courier New, monospace" font-size="32" fill="#666666">Service &amp; Viewing</text>
+  <text x="780" y="440" font-family="Courier New, monospace" font-size="32" fill="#666666" text-anchor="end">$2,800</text>
+
+  <text x="200" y="540" font-family="Courier New, monospace" font-size="32" fill="#666666">Transportation</text>
+  <text x="780" y="540" font-family="Courier New, monospace" font-size="32" fill="#666666" text-anchor="end">$1,500</text>
+
+  <!-- Divider line -->
+  <line x1="200" y1="600" x2="880" y2="600" stroke="#c9a962" stroke-width="3"/>
+
+  <!-- Total -->
+  <text x="200" y="670" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#ffffff">TOTAL DUE:</text>
+  <text x="780" y="670" font-family="Arial, sans-serif" font-size="52" font-weight="900" fill="#e53e3e" text-anchor="end">$8,000+</text>
+
+  <!-- Who pays -->
+  <text x="540" y="780" font-family="Arial, sans-serif" font-size="48" font-weight="800" fill="#ffffff" text-anchor="middle">Who's paying this?</text>
+  <text x="540" y="840" font-family="Arial, sans-serif" font-size="36" fill="#c9a962" text-anchor="middle">Your family. Unless you act now.</text>
+
+  <!-- CTA -->
+  <rect x="280" y="890" width="520" height="80" rx="8" fill="#c9a962"/>
+  <text x="540" y="942" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#0a0a0a" text-anchor="middle">COVERAGE STARTS AT $1/DAY</text>
+
+  <!-- Fine print -->
+  <text x="540" y="1040" font-family="Arial, sans-serif" font-size="22" fill="#555555" text-anchor="middle">No Medical Exam | Ages 50-85 | Rates Never Increase</text>
+</svg>

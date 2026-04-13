@@ -1,0 +1,147 @@
+/* ============================================
+   Footer
+   ============================================ */
+
+footer {
+  background: var(--navy);
+  padding: 4rem;
+  text-align: center;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+}
+
+.footer-logo .logo-text {
+  font-size: 1.15rem;
+}
+
+.footer-tagline {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.footer-social a svg {
+  width: 20px;
+  height: 20px;
+  fill: rgba(255, 255, 255, 0.7);
+  transition: fill 0.3s ease;
+}
+
+.footer-social a:hover svg {
+  fill: var(--navy);
+}
+
+.footer-nav,
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-nav a,
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-nav a:hover,
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.footer-legal {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer {
+    padding: 3rem 1.25rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-logo .logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .footer-logo .logo-text {
+    font-size: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+  }
+
+  .footer-nav,
+  .footer-links {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .footer-nav a,
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+
+  .footer-bottom,
+  .footer-legal {
+    font-size: 0.75rem;
+    padding-top: 1.5rem;
+  }
+}

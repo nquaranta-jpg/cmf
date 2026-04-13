@@ -6,16 +6,20 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
 export async function handler(event) {
   const { payload } = JSON.parse(event.body);
-  const { name, email, phone, ageRange, coverageAmount } = payload.data;
+  const { name, email, phone, ageRange, coverageAmount, productInterest } = payload.data;
+
+  const productLabels = { "final-expense": "Final Expense", "term-life": "Term Life", "annuity": "Annuity", "iul": "IUL", "not-sure": "General Inquiry" };
+  const productLabel = productLabels[productInterest] || "General";
 
   const message =
-    `🔔 *New CMF Final Expense Lead*\n` +
+    `🔔 *New CMF ${productLabel} Lead (Fallback)*\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
+    `📋 *Product:* ${productLabel}\n` +
     `👤 *Name:* ${name || "—"}\n` +
     `📧 *Email:* ${email || "—"}\n` +
     `📱 *Phone:* ${phone || "—"}\n` +
     `🎂 *Age Range:* ${ageRange || "—"}\n` +
-    `💰 *Coverage:* $${coverageAmount ? Number(coverageAmount).toLocaleString() : "—"}\n` +
+    (coverageAmount ? `💰 *Coverage:* $${Number(coverageAmount).toLocaleString()}\n` : "") +
     `━━━━━━━━━━━━━━━━━━\n` +
     `📍 *Source:* Netlify Forms Fallback\n` +
     `⏰ *Time:* ${new Date().toLocaleString("en-US", { timeZone: "America/Chicago" })}`;

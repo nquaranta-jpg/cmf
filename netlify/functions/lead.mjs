@@ -4,6 +4,14 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_GROUP_CHAT_ID = process.env.TELEGRAM_GROUP_CHAT_ID;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID; // fallback
 
+const PRODUCT_LABELS = {
+  "final-expense": "Final Expense",
+  "term-life": "Term Life",
+  "annuity": "Annuity",
+  "iul": "Indexed Universal Life (IUL)",
+  "not-sure": "General Inquiry",
+};
+
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method not allowed" };
@@ -16,10 +24,11 @@ export async function handler(event) {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { name, email, phone, ageRange, coverageAmount, timeline, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid } = data;
+  const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid } = data;
   const timestamp = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
+  const productLabel = PRODUCT_LABELS[productInterest] || "Final Expense";
 
-  console.log("=== NEW CMF LEAD ===", JSON.stringify({ name, email, phone, ageRange, coverageAmount, timeline, utm_source, utm_medium, utm_campaign, timestamp }));
+  console.log("=== NEW CMF LEAD ===", JSON.stringify({ name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, timestamp }));
 
   const timelineLabels = { asap: "ASAP", "30days": "Within 30 days", "just-looking": "Just looking" };
   const timelineLabel = timelineLabels[timeline] || timeline || "—";
@@ -28,13 +37,14 @@ export async function handler(event) {
   let leadId = null;
   const supabase = getSupabase();
   try {
-    const { data: lead, error } = await supabase.from("leads").insert({
+    const insertData = {
       name,
       email,
       phone,
       age_range: ageRange,
       coverage_amount: coverageAmount ? Number(coverageAmount) : null,
       timeline,
+      product_interest: productInterest || "final-expense",
       utm_source,
       utm_medium,
       utm_campaign,
@@ -43,7 +53,9 @@ export async function handler(event) {
       gclid,
       status: "unclaimed",
       escalation_deadline: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
-    }).select("id").single();
+    };
+
+    const { data: lead, error } = await supabase.from("leads").insert(insertData).select("id").single();
 
     if (error) {
       console.error("Supabase insert error:", error);
@@ -59,13 +71,14 @@ export async function handler(event) {
   const chatId = TELEGRAM_GROUP_CHAT_ID || TELEGRAM_CHAT_ID;
 
   const telegramMessage =
-    `🔔 *New CMF Final Expense Lead*\n` +
+    `🔔 *New CMF ${productLabel} Lead*\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
+    `📋 *Product:* ${productLabel}\n` +
     `👤 *Name:* ${name || "—"}\n` +
     `📧 *Email:* ${email || "—"}\n` +
     `📱 *Phone:* ${phone || "—"}\n` +
     `🎂 *Age Range:* ${ageRange || "—"}\n` +
-    `💰 *Coverage:* $${coverageAmount ? Number(coverageAmount).toLocaleString() : "—"}\n` +
+    (coverageAmount ? `💰 *Coverage:* $${Number(coverageAmount).toLocaleString()}\n` : "") +
     `⏱️ *Timeline:* ${timelineLabel}\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
     `📍 *Source:* ${utm_source || "direct"} / ${utm_medium || "none"}\n` +

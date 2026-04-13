@@ -1,0 +1,39 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1080" fill="#132238"/>
+
+  <!-- Logo -->
+  <g transform="translate(60, 50)">
+    <circle cx="45" cy="45" r="45" fill="#0f1b30"/>
+    <polygon points="30,32 35,18 40,32" fill="#c9a962"/>
+    <polygon points="40,32 45,18 50,32" fill="#c9a962"/>
+    <polygon points="50,32 55,18 60,32" fill="#c9a962"/>
+    <rect x="27" y="32" width="36" height="3" fill="#c9a962"/>
+    <text x="45" y="62" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="4">CMF</text>
+  </g>
+
+  <!-- Warm glow circle -->
+  <circle cx="540" cy="350" r="200" fill="none" stroke="#c9a962" stroke-width="2" opacity="0.3"/>
+  <circle cx="540" cy="350" r="150" fill="none" stroke="#c9a962" stroke-width="1.5" opacity="0.2"/>
+
+  <!-- Heart icon simplified -->
+  <text x="540" y="310" font-family="Arial, sans-serif" font-size="120" text-anchor="middle" fill="#c9a962" opacity="0.8">&#9829;</text>
+
+  <!-- Main text -->
+  <text x="540" y="520" font-family="Georgia, serif" font-size="44" fill="rgba(255,255,255,0.7)" text-anchor="middle">The last thing you do for</text>
+  <text x="540" y="580" font-family="Georgia, serif" font-size="44" fill="rgba(255,255,255,0.7)" text-anchor="middle">your family shouldn't be</text>
+  <text x="540" y="650" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#ffffff" text-anchor="middle">a financial burden.</text>
+
+  <!-- Divider -->
+  <line x1="380" y1="700" x2="700" y2="700" stroke="#c9a962" stroke-width="2"/>
+
+  <!-- Subtext -->
+  <text x="540" y="770" font-family="Arial, sans-serif" font-size="32" fill="#c9a962" text-anchor="middle">Final Expense Insurance</text>
+  <text x="540" y="820" font-family="Arial, sans-serif" font-size="28" fill="rgba(255,255,255,0.6)" text-anchor="middle">$5,000 - $25,000 coverage</text>
+  <text x="540" y="865" font-family="Arial, sans-serif" font-size="28" fill="rgba(255,255,255,0.6)" text-anchor="middle">No medical exam. No blood tests.</text>
+
+  <!-- CTA -->
+  <rect x="280" y="920" width="520" height="75" rx="8" fill="#c9a962"/>
+  <text x="540" y="968" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#132238" text-anchor="middle">GET YOUR FREE QUOTE</text>
+
+  <text x="540" y="1050" font-family="Arial, sans-serif" font-size="22" fill="rgba(255,255,255,0.35)" text-anchor="middle">Ages 50-85 | Rates locked in for life | Takes 30 seconds</text>
+</svg>

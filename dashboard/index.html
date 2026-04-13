@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMF Lead Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a1628; color: #e2e8f0; min-height: 100vh; }
+
+    /* PIN Screen */
+    .pin-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .pin-box { background: #1a2744; padding: 40px; border-radius: 16px; text-align: center; width: 320px; }
+    .pin-box h2 { color: #c5a44e; margin-bottom: 8px; }
+    .pin-box p { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
+    .pin-box input { width: 100%; padding: 14px; border: 2px solid #2d3f5e; border-radius: 8px; background: #0a1628; color: #fff; font-size: 18px; text-align: center; letter-spacing: 8px; }
+    .pin-box input:focus { outline: none; border-color: #c5a44e; }
+    .pin-box button { width: 100%; margin-top: 16px; padding: 14px; background: #c5a44e; color: #0a1628; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .pin-box .error { color: #ef4444; font-size: 13px; margin-top: 8px; }
+
+    /* Main Dashboard */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+
+    header { background: #1a2744; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2d3f5e; }
+    header h1 { font-size: 20px; color: #c5a44e; }
+    header .agent-select select { padding: 8px 12px; background: #0a1628; color: #e2e8f0; border: 1px solid #2d3f5e; border-radius: 6px; }
+
+    .tabs { display: flex; gap: 4px; padding: 16px 24px 0; }
+    .tab { padding: 10px 20px; background: #1a2744; border: none; color: #94a3b8; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 14px; font-weight: 600; }
+    .tab.active { background: #2d3f5e; color: #c5a44e; }
+
+    .content { padding: 16px 24px; }
+
+    /* Stats Cards */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: #1a2744; padding: 20px; border-radius: 12px; text-align: center; }
+    .stat-card .number { font-size: 36px; font-weight: 800; color: #c5a44e; }
+    .stat-card .label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* Leads Table */
+    .leads-table { width: 100%; border-collapse: collapse; }
+    .leads-table th { text-align: left; padding: 12px 16px; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2d3f5e; }
+    .leads-table td { padding: 12px 16px; border-bottom: 1px solid #1a2744; font-size: 14px; }
+    .leads-table tr:hover { background: #1a2744; }
+
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .status-badge.unclaimed { background: #fbbf2440; color: #fbbf24; }
+    .status-badge.claimed { background: #22c55e40; color: #22c55e; }
+    .status-badge.escalated { background: #ef444440; color: #ef4444; }
+
+    .claim-btn { padding: 6px 16px; background: #c5a44e; color: #0a1628; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .claim-btn:hover { background: #d4b45e; }
+    .claim-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Leaderboard */
+    .leaderboard { max-width: 600px; }
+    .leader-row { display: flex; align-items: center; padding: 16px 20px; background: #1a2744; border-radius: 12px; margin-bottom: 8px; }
+    .leader-rank { font-size: 24px; font-weight: 800; color: #c5a44e; width: 40px; }
+    .leader-name { flex: 1; font-weight: 600; font-size: 16px; }
+    .leader-stat { text-align: right; }
+    .leader-stat .count { font-size: 20px; font-weight: 800; color: #c5a44e; }
+    .leader-stat .sub { font-size: 11px; color: #64748b; }
+
+    .period-btns { display: flex; gap: 8px; margin-bottom: 16px; }
+    .period-btn { padding: 6px 16px; background: #1a2744; border: 1px solid #2d3f5e; color: #94a3b8; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .period-btn.active { background: #2d3f5e; color: #c5a44e; border-color: #c5a44e; }
+
+    .refresh-btn { padding: 8px 16px; background: #2d3f5e; border: none; color: #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 13px; }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .leads-table { font-size: 12px; }
+      .leads-table th, .leads-table td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PIN Entry -->
+  <div class="pin-screen" id="pinScreen">
+    <div class="pin-box">
+      <h2>CMF Dashboard</h2>
+      <p>Enter your agent PIN to continue</p>
+      <input type="password" id="pinInput" maxlength="10" placeholder="PIN">
+      <button onclick="submitPin()">Enter</button>
+      <div class="error" id="pinError"></div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dashboard">
+    <header>
+      <h1>CMF Lead Dashboard</h1>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="agent-select">
+          <select id="agentSelect" onchange="loadLeads()">
+            <option value="">All Agents</option>
+          </select>
+        </div>
+        <button class="refresh-btn" onclick="refresh()">Refresh</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('live')">Live Feed</button>
+      <button class="tab" onclick="showTab('leaderboard')">Leaderboard</button>
+    </div>
+
+    <div class="content">
+      <!-- Stats -->
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card"><div class="number" id="statTotal">—</div><div class="label">Total Leads</div></div>
+        <div class="stat-card"><div class="number" id="statClaimed">—</div><div class="label">Claimed</div></div>
+        <div class="stat-card"><div class="number" id="statUnclaimed">—</div><div class="label">Unclaimed</div></div>
+        <div class="stat-card"><div class="number" id="statEscalated">—</div><div class="label">Escalated</div></div>
+      </div>
+
+      <!-- Live Feed -->
+      <div id="liveTab">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Age / Coverage</th>
+              <th>Timeline</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="leadsBody">
+            <tr><td colspan="7" style="text-align:center;padding:40px;color:#64748b;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Leaderboard -->
+      <div id="leaderboardTab" style="display:none;">
+        <div class="period-btns">
+          <button class="period-btn active" onclick="loadStats('week', this)">This Week</button>
+          <button class="period-btn" onclick="loadStats('month', this)">This Month</button>
+          <button class="period-btn" onclick="loadStats('all', this)">All Time</button>
+        </div>
+        <div class="leaderboard" id="leaderboard"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let PIN = "";
+    let agents = [];
+    let currentAgentId = "";
+
+    function api(action, params = {}, method = "GET", body = null) {
+      const qs = new URLSearchParams({ action, ...params }).toString();
+      const opts = {
+        method,
+        headers: { "X-Dashboard-Pin": PIN, "Content-Type": "application/json" },
+      };
+      if (body) opts.body = JSON.stringify(body);
+      return fetch(`/.netlify/functions/dashboard-api?${qs}`, opts).then(r => r.json());
+    }
+
+    async function submitPin() {
+      PIN = document.getElementById("pinInput").value;
+      try {
+        const data = await api("agents");
+        if (data.error) {
+          document.getElementById("pinError").textContent = "Wrong PIN";
+          return;
+        }
+        localStorage.setItem("cmf_pin", PIN);
+        agents = data;
+        showDashboard();
+      } catch {
+        document.getElementById("pinError").textContent = "Connection error";
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById("pinScreen").style.display = "none";
+      document.getElementById("dashboard").classList.add("active");
+
+      const select = document.getElementById("agentSelect");
+      select.innerHTML = '<option value="">All Agents</option>';
+      agents.forEach(a => {
+        select.innerHTML += `<option value="${a.id}">${a.name}${a.is_owner ? " (Owner)" : ""}</option>`;
+      });
+
+      loadLeads();
+      loadStats("week");
+
+      // Auto-refresh every 10 seconds
+      setInterval(loadLeads, 10000);
+    }
+
+    async function loadLeads() {
+      currentAgentId = document.getElementById("agentSelect").value;
+      const params = {};
+      if (currentAgentId) params.agent = currentAgentId;
+
+      const leads = await api("leads", params);
+      if (leads.error) return;
+
+      // Update stats
+      const total = leads.length;
+      const claimed = leads.filter(l => l.status === "claimed").length;
+      const unclaimed = leads.filter(l => l.status === "unclaimed").length;
+      const escalated = leads.filter(l => l.status === "escalated").length;
+
+      document.getElementById("statTotal").textContent = total;
+      document.getElementById("statClaimed").textContent = claimed;
+      document.getElementById("statUnclaimed").textContent = unclaimed;
+      document.getElementById("statEscalated").textContent = escalated;
+
+      // Render leads
+      const tbody = document.getElementById("leadsBody");
+      if (!leads.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#64748b;">No leads yet</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = leads.map(l => {
+        const time = new Date(l.created_at).toLocaleString("en-US", { timeZone: "America/Chicago", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+        const claimedBy = l.agents?.name || "";
+        const responseTime = l.response_time_seconds != null
+          ? (l.response_time_seconds > 60 ? `${Math.floor(l.response_time_seconds / 60)}m ${l.response_time_seconds % 60}s` : `${l.response_time_seconds}s`)
+          : "";
+        const statusLabel = l.status === "claimed" ? `${claimedBy} (${responseTime})`
+          : l.status === "escalated" ? `Auto → ${claimedBy}`
+          : "Waiting...";
+
+        const actionBtn = l.status === "unclaimed"
+          ? `<button class="claim-btn" onclick="claimLead('${l.id}')">CLAIM</button>`
+          : "";
+
+        const timelineLabels = { asap: "ASAP", "30days": "30 days", "just-looking": "Looking" };
+
+        return `<tr>
+          <td>${time}</td>
+          <td><strong>${l.name || "—"}</strong></td>
+          <td><a href="tel:${l.phone}" style="color:#c5a44e;">${l.phone || "—"}</a></td>
+          <td>${l.age_range || "—"} / $${l.coverage_amount ? l.coverage_amount.toLocaleString() : "—"}</td>
+          <td>${timelineLabels[l.timeline] || l.timeline || "—"}</td>
+          <td><span class="status-badge ${l.status}">${statusLabel}</span></td>
+          <td>${actionBtn}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    async function claimLead(leadId) {
+      const agentId = document.getElementById("agentSelect").value;
+      if (!agentId) {
+        alert("Select your name from the dropdown first!");
+        return;
+      }
+
+      const result = await api("claim", {}, "POST", { lead_id: leadId, agent_id: agentId });
+      if (result.error) {
+        alert(result.error);
+      }
+      loadLeads();
+    }
+
+    async function loadStats(period, btn) {
+      if (btn) {
+        document.querySelectorAll(".period-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+
+      const stats = await api("stats", { period });
+      if (stats.error) return;
+
+      const board = document.getElementById("leaderboard");
+      if (!stats.agents?.length) {
+        board.innerHTML = '<p style="color:#64748b;">No data yet</p>';
+        return;
+      }
+
+      board.innerHTML = stats.agents.map((a, i) => {
+        const avgTime = a.avg_response_seconds != null
+          ? (a.avg_response_seconds > 60 ? `${Math.floor(a.avg_response_seconds / 60)}m ${a.avg_response_seconds % 60}s avg` : `${a.avg_response_seconds}s avg`)
+          : "—";
+
+        return `<div class="leader-row">
+          <div class="leader-rank">#${i + 1}</div>
+          <div class="leader-name">${a.name}${a.is_owner ? " 👑" : ""}</div>
+          <div class="leader-stat">
+            <div class="count">${a.total_claims}</div>
+            <div class="sub">${avgTime}</div>
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("liveTab").style.display = tab === "live" ? "block" : "none";
+      document.getElementById("leaderboardTab").style.display = tab === "leaderboard" ? "block" : "none";
+      event.target.classList.add("active");
+    }
+
+    function refresh() { loadLeads(); loadStats("week"); }
+
+    // Auto-login if PIN saved
+    window.addEventListener("DOMContentLoaded", async () => {
+      const saved = localStorage.getItem("cmf_pin");
+      if (saved) {
+        PIN = saved;
+        try {
+          const data = await api("agents");
+          if (!data.error) {
+            agents = data;
+            showDashboard();
+            return;
+          }
+        } catch {}
+      }
+      document.getElementById("pinInput").addEventListener("keydown", e => {
+        if (e.key === "Enter") submitPin();
+      });
+    });
+  </script>
+</body>
+</html>

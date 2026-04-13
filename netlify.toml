@@ -11,3 +11,28 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/products/final-expense"
+  to = "/products/final-expense.html"
+  status = 200
+
+[[redirects]]
+  from = "/products/term-life"
+  to = "/products/term-life.html"
+  status = 200
+
+[[redirects]]
+  from = "/products/annuity"
+  to = "/products/annuity.html"
+  status = 200
+
+[[redirects]]
+  from = "/products/iul"
+  to = "/products/iul.html"
+  status = 200

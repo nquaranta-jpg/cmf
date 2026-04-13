@@ -1,0 +1,62 @@
+/* ============================================
+   Variables, Reset & Base Styles
+   ============================================ */
+
+:root {
+  --navy: #0a1628;
+  --navy-light: #132238;
+  --gold: #c9a962;
+  --gold-light: #dfc48a;
+  --gold-dark: #a68b4b;
+  --cream: #faf9f7;
+  --white: #ffffff;
+  --slate: #64748b;
+  --text: #334155;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Nunito Sans", -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 5rem 2rem;
+}
+
+.section.alt {
+  background: var(--white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    padding-bottom: 65px;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+}

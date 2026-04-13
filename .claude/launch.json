@@ -19,6 +19,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "/Users/nicholasquaranta/Desktop/closepilot"],
       "port": 3000
+    },
+    {
+      "name": "insurechat",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/nicholasquaranta/Desktop/insurechat && npx netlify dev --port 5501"],
+      "port": 5501
     }
   ]
 }

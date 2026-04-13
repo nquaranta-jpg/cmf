@@ -1,0 +1,39 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1080" fill="#0a0a0a"/>
+
+  <!-- Logo -->
+  <g transform="translate(60, 50)">
+    <circle cx="45" cy="45" r="45" fill="#0f1b30"/>
+    <polygon points="30,32 35,18 40,32" fill="#c9a962"/>
+    <polygon points="40,32 45,18 50,32" fill="#c9a962"/>
+    <polygon points="50,32 55,18 60,32" fill="#c9a962"/>
+    <rect x="27" y="32" width="36" height="3" fill="#c9a962"/>
+    <text x="45" y="62" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="4">CMF</text>
+  </g>
+
+  <!-- Big quote marks -->
+  <text x="120" y="250" font-family="Georgia, serif" font-size="200" fill="#1a1a1a">"</text>
+
+  <!-- Main message -->
+  <text x="540" y="340" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#ffffff" text-anchor="middle">When you get</text>
+  <text x="540" y="420" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#ffffff" text-anchor="middle">THAT phone call...</text>
+
+  <text x="540" y="540" font-family="Georgia, serif" font-size="46" fill="rgba(255,255,255,0.6)" text-anchor="middle">someone has to pay</text>
+  <text x="540" y="610" font-family="Georgia, serif" font-size="46" fill="rgba(255,255,255,0.6)" text-anchor="middle">for the funeral.</text>
+
+  <!-- Cost callout -->
+  <text x="540" y="720" font-family="Arial, sans-serif" font-size="38" fill="#e53e3e" text-anchor="middle">Average cost: $8,000 - $12,000</text>
+
+  <!-- Divider -->
+  <line x1="340" y1="770" x2="740" y2="770" stroke="#c9a962" stroke-width="2"/>
+
+  <!-- Solution -->
+  <text x="540" y="840" font-family="Arial, sans-serif" font-size="36" fill="#ffffff" text-anchor="middle">Make sure it's not your family's problem.</text>
+
+  <!-- CTA box -->
+  <rect x="220" y="890" width="640" height="100" rx="10" fill="#c9a962"/>
+  <text x="540" y="930" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0a0a0a" text-anchor="middle">FINAL EXPENSE INSURANCE</text>
+  <text x="540" y="968" font-family="Arial, sans-serif" font-size="24" fill="#0a0a0a" text-anchor="middle">Starting at $1/day | No medical exam</text>
+
+  <text x="540" y="1050" font-family="Arial, sans-serif" font-size="22" fill="#555555" text-anchor="middle">Ages 50-85 | Rates never increase | Free quote</text>
+</svg>
