@@ -191,7 +191,8 @@
   margin-bottom: 1.5rem;
 }
 
-.form-group {
+.form-group,
+.contact-form .form-field {
   margin-bottom: 1.5rem;
 }
 
@@ -207,7 +208,9 @@
 
 .form-group input,
 .form-group select,
-.form-group textarea {
+.form-group textarea,
+.contact-form .form-field input,
+.contact-form .form-field select {
   width: 100%;
   padding: 1rem;
   border: 1.5px solid #e2e8f0;
@@ -231,7 +234,9 @@
 
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.contact-form .form-field input:focus,
+.contact-form .form-field select:focus {
   outline: none;
   border-color: var(--gold);
 }
