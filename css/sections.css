@@ -1067,12 +1067,12 @@
 
   .contact-info {
     padding-right: 0;
-    text-align: center;
+    text-align: left;
   }
 
   .contact-info .section-label,
   .contact-info .section-title {
-    text-align: center;
+    text-align: left;
   }
 
   .contact-info .section-title {
@@ -1080,16 +1080,17 @@
   }
 
   .contact-info > p {
-    text-align: center;
+    text-align: left;
   }
 
   .contact-details {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .contact-item {
     gap: 0.75rem;
     justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
   }
 
@@ -1106,6 +1107,8 @@
 
   .contact-item-text {
     font-size: 0.9rem;
+    min-width: 0;
+    word-break: break-word;
   }
 }
 
