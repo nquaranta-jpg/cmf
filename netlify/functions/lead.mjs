@@ -10,6 +10,12 @@ const PRODUCT_LABELS = {
   "annuity": "Annuity",
   "iul": "Indexed Universal Life (IUL)",
   "not-sure": "General Inquiry",
+  // Homepage forms send human-readable values
+  "Final Expense": "Final Expense",
+  "Term Life": "Term Life",
+  "Annuity": "Annuity",
+  "IUL": "Indexed Universal Life (IUL)",
+  "Not sure": "General Inquiry",
 };
 
 export async function handler(event) {

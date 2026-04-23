@@ -25,6 +25,11 @@ var productLabels = {
   "annuity": "Annuity",
   "iul": "IUL",
   "not-sure": "General",
+  "Final Expense": "Final Expense",
+  "Term Life": "Term Life",
+  "Annuity": "Annuity",
+  "IUL": "IUL",
+  "Not sure": "General",
 };
 
 function handleFormSubmit(e) {
@@ -109,7 +114,12 @@ function handleFormSubmit(e) {
         });
       }
 
-      window.location.href = "/thank-you.html";
+      // Wait for pixel requests to complete before navigating away.
+      // Without this delay the browser kills outgoing beacon requests
+      // on page unload, so Meta/Google/TikTok never receive the event.
+      setTimeout(function () {
+        window.location.href = "/thank-you.html";
+      }, 750);
     })
     .catch(function (err) {
       console.error("Form submission error:", err);
