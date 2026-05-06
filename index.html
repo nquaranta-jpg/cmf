@@ -132,8 +132,15 @@
             <h3>Get a Free Quote</h3>
             <p>No obligation. Takes 30 seconds.</p>
           </div>
-          <form id="heroLeadForm" class="hero-form" data-netlify="true" name="heroLead" method="POST">
+          <form id="heroLeadForm" class="hero-form" data-netlify="true" data-netlify-honeypot="bot-field" name="heroLead" method="POST">
             <input type="hidden" name="form-name" value="heroLead" />
+            <!-- Bot protection: honeypot (off-screen, real users don't see it) -->
+            <div aria-hidden="true" class="hp-field" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+              <label>Website (leave blank)</label>
+              <input type="text" name="bot-field" tabindex="-1" autocomplete="off" />
+            </div>
+            <!-- Bot protection: time-trap (set by JS on first interaction) -->
+            <input type="hidden" name="formStartedAt" value="" />
             <input type="hidden" name="utm_source" />
             <input type="hidden" name="utm_medium" />
             <input type="hidden" name="utm_campaign" />
@@ -391,8 +398,15 @@
             </div>
           </div>
           <div class="contact-form-wrap">
-            <form id="contactLeadForm" class="contact-form" data-netlify="true" name="contactLead" method="POST">
+            <form id="contactLeadForm" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field" name="contactLead" method="POST">
               <input type="hidden" name="form-name" value="contactLead" />
+              <!-- Bot protection: honeypot (off-screen, real users don't see it) -->
+              <div aria-hidden="true" class="hp-field" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+                <label>Website (leave blank)</label>
+                <input type="text" name="bot-field" tabindex="-1" autocomplete="off" />
+              </div>
+              <!-- Bot protection: time-trap (set by JS on first interaction) -->
+              <input type="hidden" name="formStartedAt" value="" />
               <input type="hidden" name="utm_source" />
               <input type="hidden" name="utm_medium" />
               <input type="hidden" name="utm_campaign" />

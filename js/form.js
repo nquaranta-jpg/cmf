@@ -15,6 +15,28 @@
 })();
 
 // ============================================
+// BOT PROTECTION: time-trap
+// Stamp formStartedAt on first interaction with any field. Bots that
+// dump values via JS without focus/input events leave it blank, and
+// the server rejects. Real users always trip a focus or input event.
+// ============================================
+document.querySelectorAll('[id$="LeadForm"]').forEach(function (form) {
+  var startedAtField = form.querySelector('input[name="formStartedAt"]');
+  if (!startedAtField) return;
+  var marked = false;
+  function markStart() {
+    if (marked) return;
+    marked = true;
+    startedAtField.value = String(Date.now());
+  }
+  form.querySelectorAll("input, select, textarea").forEach(function (field) {
+    if (field === startedAtField) return;
+    field.addEventListener("focus", markStart);
+    field.addEventListener("input", markStart);
+  });
+});
+
+// ============================================
 // FORM SUBMISSION HANDLER
 // ============================================
 var formSubmitting = false;
@@ -31,6 +53,10 @@ var productLabels = {
   "IUL": "IUL",
   "Not sure": "General",
 };
+
+// Minimum elapsed time before allowing submission. Bots fire instantly;
+// even with autofill, real humans take longer than this to click submit.
+var MIN_FORM_FILL_MS = 2000;
 
 function handleFormSubmit(e) {
   e.preventDefault();
@@ -51,6 +77,19 @@ function handleFormSubmit(e) {
   btn.disabled = true;
   btn.textContent = "Sending...";
 
+  // Bot protection: enforce min time client-side so fast humans don't
+  // see an error — we just stall briefly. Server still validates.
+  var startedAt = Number(data.get("formStartedAt")) || 0;
+  var elapsedMs = startedAt ? Date.now() - startedAt : 0;
+  var remainingDelay = Math.max(0, MIN_FORM_FILL_MS - elapsedMs);
+
+  setTimeout(function () {
+    submitLead(form, btn, originalText, data, startedAt);
+  }, remainingDelay);
+}
+
+function submitLead(form, btn, originalText, data, startedAt) {
+  var formElapsedMs = startedAt ? Date.now() - startedAt : 0;
   var conversionValue = parseFloat(data.get("coverageAmount")) || 1.0;
 
   // Dynamic content name based on product selection
@@ -74,6 +113,9 @@ function handleFormSubmit(e) {
       utm_content: data.get("utm_content"),
       utm_term: data.get("utm_term"),
       gclid: data.get("gclid"),
+      // Bot protection signals
+      botField: data.get("bot-field") || "",
+      formElapsedMs: formElapsedMs,
     }),
   })
     .then(function (res) {

@@ -18,6 +18,19 @@ const PRODUCT_LABELS = {
   "Not sure": "General Inquiry",
 };
 
+// Bot protection thresholds + format checks
+const MIN_FORM_ELAPSED_MS = 1500; // client enforces 2000; allow some skew
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const URL_IN_NAME_RE = /https?:\/\/|www\.|\.(com|net|org|biz|info|ru|cn|io|xyz)\b/i;
+
+function reject(reason, body) {
+  return {
+    statusCode: 400,
+    headers: { "Access-Control-Allow-Origin": "*" },
+    body: JSON.stringify(body || { ok: false, reason }),
+  };
+}
+
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method not allowed" };
@@ -30,11 +43,52 @@ export async function handler(event) {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
+  const ip = (event.headers["x-forwarded-for"] || "").split(",")[0].trim()
+    || event.headers["client-ip"]
+    || "unknown";
+  const ua = event.headers["user-agent"] || "unknown";
+
+  // ── Bot protection: honeypot ──
+  // If the hidden bot-field has any value, it was filled by a bot.
+  if (data.botField && String(data.botField).trim() !== "") {
+    console.log("BOT BLOCKED (honeypot):", JSON.stringify({ ip, ua, botField: data.botField, name: data.name, email: data.email, phone: data.phone }));
+    return reject("invalid");
+  }
+
+  // ── Bot protection: time-trap ──
+  // Real users take >= 1.5s between first interaction and submit. Bots
+  // fire instantly. Missing/zero formElapsedMs also fails (no focus
+  // events were ever triggered).
+  const formElapsedMs = Number(data.formElapsedMs) || 0;
+  if (formElapsedMs < MIN_FORM_ELAPSED_MS) {
+    console.log("BOT BLOCKED (time-trap):", JSON.stringify({ ip, ua, formElapsedMs, name: data.name, email: data.email, phone: data.phone }));
+    return reject("invalid");
+  }
+
   const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid } = data;
+
+  // ── Format validation ──
+  // Real users sometimes typo, so return field-specific errors for these.
+  const errors = [];
+  if (!name || typeof name !== "string" || !/[a-zA-Z]{2,}/.test(name) || URL_IN_NAME_RE.test(name)) {
+    errors.push("name");
+  }
+  if (!email || typeof email !== "string" || !EMAIL_RE.test(email)) {
+    errors.push("email");
+  }
+  const phoneDigits = (phone || "").replace(/\D/g, "");
+  if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+    errors.push("phone");
+  }
+  if (errors.length) {
+    console.log("VALIDATION FAILED:", JSON.stringify({ ip, ua, errors, name, email, phone }));
+    return reject("validation", { ok: false, errors });
+  }
+
   const timestamp = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
   const productLabel = PRODUCT_LABELS[productInterest] || "Final Expense";
 
-  console.log("=== NEW CMF LEAD ===", JSON.stringify({ name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, timestamp }));
+  console.log("=== NEW CMF LEAD ===", JSON.stringify({ ip, name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, timestamp }));
 
   const timelineLabels = { asap: "ASAP", "30days": "Within 30 days", "just-looking": "Just looking" };
   const timelineLabel = timelineLabels[timeline] || timeline || "—";
