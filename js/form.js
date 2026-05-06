@@ -6,7 +6,7 @@
 // must be set as TURNSTILE_SECRET_KEY in Netlify env vars.
 // Until both are set, forms run with Tier 1 protection only (honeypot
 // + time-trap + format validation).
-var TURNSTILE_SITE_KEY = "YOUR_TURNSTILE_SITE_KEY";
+var TURNSTILE_SITE_KEY = "0x4AAAAAADKVMJikX-gaT9wf";
 var TURNSTILE_ENABLED = TURNSTILE_SITE_KEY && TURNSTILE_SITE_KEY !== "YOUR_TURNSTILE_SITE_KEY";
 
 // ============================================
