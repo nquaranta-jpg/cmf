@@ -1,4 +1,15 @@
 // ============================================
+// CLOUDFLARE TURNSTILE CONFIG
+// ============================================
+// Public site key from dash.cloudflare.com → Turnstile.
+// Site keys are PUBLIC — safe to commit. The corresponding secret key
+// must be set as TURNSTILE_SECRET_KEY in Netlify env vars.
+// Until both are set, forms run with Tier 1 protection only (honeypot
+// + time-trap + format validation).
+var TURNSTILE_SITE_KEY = "YOUR_TURNSTILE_SITE_KEY";
+var TURNSTILE_ENABLED = TURNSTILE_SITE_KEY && TURNSTILE_SITE_KEY !== "YOUR_TURNSTILE_SITE_KEY";
+
+// ============================================
 // UTM & GCLID PARAMETER CAPTURE
 // ============================================
 (function () {
@@ -12,6 +23,37 @@
       el.value = stored;
     });
   });
+})();
+
+// ============================================
+// CLOUDFLARE TURNSTILE: render widget into each form
+// Injects a managed-mode (mostly invisible) challenge before each
+// submit button. On submit, Turnstile auto-adds a hidden input
+// `cf-turnstile-response` with the verification token, which the
+// server verifies via siteverify API.
+// ============================================
+(function initTurnstile() {
+  if (!TURNSTILE_ENABLED) return;
+
+  document.querySelectorAll('[id$="LeadForm"]').forEach(function (form) {
+    var btn = form.querySelector('button[type="submit"]');
+    if (!btn) return;
+    var widget = document.createElement("div");
+    widget.className = "cf-turnstile";
+    widget.setAttribute("data-sitekey", TURNSTILE_SITE_KEY);
+    widget.setAttribute("data-theme", "light");
+    widget.style.margin = "16px 0";
+    widget.style.display = "flex";
+    widget.style.justifyContent = "center";
+    btn.parentNode.insertBefore(widget, btn);
+  });
+
+  // Load the Turnstile API script
+  var script = document.createElement("script");
+  script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
 })();
 
 // ============================================
@@ -58,6 +100,18 @@ var productLabels = {
 // even with autofill, real humans take longer than this to click submit.
 var MIN_FORM_FILL_MS = 2000;
 
+function showFormError(form, btn, originalText, message) {
+  formSubmitting = false;
+  btn.disabled = false;
+  btn.textContent = originalText;
+  var existing = form.querySelector(".form-error");
+  if (existing) existing.remove();
+  var errorDiv = document.createElement("div");
+  errorDiv.className = "form-error";
+  errorDiv.textContent = message;
+  form.appendChild(errorDiv);
+}
+
 function handleFormSubmit(e) {
   e.preventDefault();
 
@@ -76,6 +130,15 @@ function handleFormSubmit(e) {
 
   btn.disabled = true;
   btn.textContent = "Sending...";
+
+  // Turnstile gate: don't submit if challenge hasn't been completed
+  if (TURNSTILE_ENABLED) {
+    var token = data.get("cf-turnstile-response");
+    if (!token) {
+      showFormError(form, btn, originalText, "Please complete the security check above.");
+      return;
+    }
+  }
 
   // Bot protection: enforce min time client-side so fast humans don't
   // see an error — we just stall briefly. Server still validates.
@@ -116,6 +179,7 @@ function submitLead(form, btn, originalText, data, startedAt) {
       // Bot protection signals
       botField: data.get("bot-field") || "",
       formElapsedMs: formElapsedMs,
+      turnstileToken: data.get("cf-turnstile-response") || "",
     }),
   })
     .then(function (res) {
@@ -165,14 +229,11 @@ function submitLead(form, btn, originalText, data, startedAt) {
     })
     .catch(function (err) {
       console.error("Form submission error:", err);
-      formSubmitting = false;
-      btn.disabled = false;
-      btn.textContent = originalText;
-
-      var errorDiv = document.createElement("div");
-      errorDiv.className = "form-error";
-      errorDiv.textContent = "Something went wrong. Please try again or call us at (312) 203-8106.";
-      form.appendChild(errorDiv);
+      // Reset Turnstile so user can retry without page reload
+      if (TURNSTILE_ENABLED && typeof window.turnstile !== "undefined") {
+        try { window.turnstile.reset(); } catch (e) {}
+      }
+      showFormError(form, btn, originalText, "Something went wrong. Please try again or call us at (312) 203-8106.");
     });
 }
 

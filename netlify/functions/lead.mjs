@@ -65,6 +65,38 @@ export async function handler(event) {
     return reject("invalid");
   }
 
+  // ── Bot protection: Cloudflare Turnstile ──
+  // Active when TURNSTILE_SECRET_KEY is set in Netlify env. Verifies
+  // the token the client got from the Turnstile widget. Fails closed
+  // — if Cloudflare API is unreachable, we reject (better to lose a
+  // few real submissions than let bots through).
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+  if (turnstileSecret) {
+    if (!data.turnstileToken) {
+      console.log("BOT BLOCKED (turnstile missing):", JSON.stringify({ ip, ua, name: data.name, email: data.email }));
+      return reject("invalid");
+    }
+    try {
+      const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: turnstileSecret,
+          response: data.turnstileToken,
+          remoteip: ip,
+        }),
+      });
+      const verifyJson = await verifyRes.json();
+      if (!verifyJson.success) {
+        console.log("BOT BLOCKED (turnstile failed):", JSON.stringify({ ip, ua, errors: verifyJson["error-codes"], name: data.name, email: data.email }));
+        return reject("invalid");
+      }
+    } catch (err) {
+      console.error("Turnstile verify error:", err);
+      return reject("invalid");
+    }
+  }
+
   const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid } = data;
 
   // ── Format validation ──
