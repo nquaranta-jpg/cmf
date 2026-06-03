@@ -172,6 +172,18 @@ nav.scrolled {
   display: flex;
 }
 
+.mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.mobile-menu li {
+  list-style: none;
+  width: 100%;
+}
+
 .mobile-menu a {
   display: block;
   width: 100%;
@@ -191,7 +203,10 @@ nav.scrolled {
   background: rgba(201, 169, 98, 0.05);
 }
 
-.mobile-menu a:last-child {
+/* Gold CTA = only the final DIRECT-child link (.mobile-menu-cta on the
+   home page, or the last flat <a> on product pages). Scoped with > so
+   links wrapped in <ul><li> don't each become a :last-child. */
+.mobile-menu > a:last-child {
   border-bottom: none;
   margin-top: 1rem;
   background: var(--gold);
@@ -200,8 +215,13 @@ nav.scrolled {
   padding: 1rem;
 }
 
-.mobile-menu a:last-child:hover {
+.mobile-menu > a:last-child:hover {
   background: var(--gold-light);
+}
+
+/* Drop the separator under the final nav link so it sits cleanly above the CTA */
+.mobile-menu ul li:last-child a {
+  border-bottom: none;
 }
 
 .mobile-toggle {

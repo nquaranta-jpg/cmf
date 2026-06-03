@@ -78,7 +78,17 @@
     box-shadow:var(--shadow-sm);transition:transform .2s,background .2s;
   }
   .call-btn:hover{background:var(--navy-deep);transform:translateY(-1px)}
-  @media(max-width:820px){.nav-links a:not(.active){display:none}}
+  .call-btn .call-short{display:none}
+  @media(max-width:820px){
+    /* Hide the secondary text links (footer carries full nav); keep the
+       Call CTA visible. Logo links home. */
+    .nav-links a:not(.call-btn){display:none}
+    .brand .name{font-size:15px}
+    .brand .name span{font-size:10px}
+    .call-btn{padding:9px 16px;font-size:14px}
+    .call-btn .call-full{display:none}
+    .call-btn .call-short{display:inline}
+  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -208,7 +218,7 @@
       <a href="/#products">Products</a>
       <a href="/#about">About</a>
       <a href="/community" class="active">Community</a>
-      <a class="call-btn" href="tel:+13122038106">Call (312) 203-8106</a>
+      <a class="call-btn" href="tel:+13122038106"><span class="call-full">Call (312) 203-8106</span><span class="call-short">Call</span></a>
     </nav>
   </div>
 </header>
