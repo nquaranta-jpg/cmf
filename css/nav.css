@@ -42,6 +42,12 @@ nav.scrolled {
   color: var(--navy);
 }
 
+.logo-icon svg {
+  width: 62%;
+  height: 62%;
+  display: block;
+}
+
 .logo-text {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.35rem;
