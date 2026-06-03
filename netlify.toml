@@ -36,3 +36,8 @@
   from = "/products/iul"
   to = "/products/iul.html"
   status = 200
+
+[[redirects]]
+  from = "/community"
+  to = "/community.html"
+  status = 200
