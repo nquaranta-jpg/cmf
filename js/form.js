@@ -210,6 +210,19 @@ function submitLead(form, btn, originalText, data, startedAt) {
       }
 
       if (typeof fbq !== "undefined") {
+        // Manual Advanced Matching: pass the lead's email/phone so Meta can
+        // match this Lead to a real person, improving match quality and
+        // attribution. The pixel SHA-256 hashes these client-side before
+        // sending — pass plaintext, do NOT pre-hash.
+        var fbMatch = {};
+        var fbEmail = (data.get("email") || "").trim().toLowerCase();
+        var fbPhone = (data.get("phone") || "").replace(/\D/g, "");
+        if (fbEmail) fbMatch.em = fbEmail;
+        if (fbPhone) fbMatch.ph = fbPhone;
+        if (fbMatch.em || fbMatch.ph) {
+          fbq("init", "1263380418574595", fbMatch);
+        }
+
         fbq("track", "Lead", {
           content_name: contentName,
           value: conversionValue,
