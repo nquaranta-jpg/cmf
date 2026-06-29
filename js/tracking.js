@@ -95,3 +95,17 @@ fbq("track", "PageView");
   ttq.load("D6JJ8J3C77U3LLVVPRMG");
   ttq.page();
 })(window, document, "ttq");
+
+// --- OpenAI / ChatGPT Pixel ---
+!(function (w, d, s, u) {
+  if (w.oaiq) return;
+  var q = function () { q.q.push(arguments); };
+  q.q = [];
+  w.oaiq = q;
+  var j = d.createElement(s);
+  j.async = 1;
+  j.src = u;
+  var f = d.getElementsByTagName(s)[0];
+  f.parentNode.insertBefore(j, f);
+})(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+oaiq("init", { pixelId: "XgZ6ph1wRQG9ob3R2hH5Yi", debug: true });

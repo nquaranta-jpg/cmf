@@ -236,6 +236,14 @@ function submitLead(form, btn, originalText, data, startedAt) {
         });
       }
 
+      if (typeof oaiq !== "undefined") {
+        oaiq("measure", "lead", {
+          type: "customer_action",
+          amount: conversionValue,
+          currency: "USD",
+        });
+      }
+
       // Wait for pixel requests to complete before navigating away.
       // Without this delay the browser kills outgoing beacon requests
       // on page unload, so Meta/Google/TikTok never receive the event.
