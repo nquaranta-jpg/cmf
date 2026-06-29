@@ -108,4 +108,4 @@ fbq("track", "PageView");
   var f = d.getElementsByTagName(s)[0];
   f.parentNode.insertBefore(j, f);
 })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
-oaiq("init", { pixelId: "XgZ6ph1wRQG9ob3R2hH5Yi", debug: true });
+oaiq("init", { pixelId: "XgZ6ph1wRQG9ob3R2hH5Yi", debug: false });
