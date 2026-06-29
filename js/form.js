@@ -237,7 +237,7 @@ function submitLead(form, btn, originalText, data, startedAt) {
       }
 
       if (typeof oaiq !== "undefined") {
-        oaiq("measure", "lead", {
+        oaiq("measure", "lead_created", {
           type: "customer_action",
           amount: conversionValue,
           currency: "USD",
