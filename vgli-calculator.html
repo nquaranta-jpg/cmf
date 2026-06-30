@@ -143,6 +143,25 @@
       .vgli-calc .totals .tcell .tn{ font-family:Georgia,serif; font-weight:700; font-size:21px; color:#fff; font-variant-numeric:tabular-nums; }
       .vgli-calc .totals .tcell .tk{ font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
 
+      /* ---- gated guide ---- */
+      .vgli-calc .vc-guide{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.45); border-radius:14px; padding:26px 22px; margin-bottom:18px; text-align:center; }
+      .vgli-calc .vc-guide-eyebrow{ font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+      .vgli-calc .vc-guide-head{ font-family:Georgia,serif; font-weight:700; font-size:22px; color:#fff; margin:8px 0 8px; line-height:1.22; }
+      .vgli-calc .vc-guide-sub{ font-size:14px; color:#C5D0E0; margin:0 auto 18px; max-width:32em; }
+      .vgli-calc .vc-guide-form{ display:flex; flex-direction:column; gap:10px; max-width:340px; margin:0 auto; }
+      .vgli-calc .vc-guide-form input{ width:100%; padding:13px 15px; border-radius:10px; border:1px solid var(--line); background:var(--navy-2); color:var(--text); font-size:15px; font-family:inherit; }
+      .vgli-calc .vc-guide-form input::placeholder{ color:var(--muted); }
+      .vgli-calc .vc-guide-form input:focus{ outline:none; border-color:var(--gold); }
+      .vgli-calc .vc-guide-btn{ width:100%; border:none; cursor:pointer; margin-top:2px; }
+      .vgli-calc .vc-guide-btn[disabled]{ opacity:0.7; cursor:default; }
+      .vgli-calc .vc-guide-msg{ font-size:13px; color:#E5A3A3; }
+      .vgli-calc .vc-guide-done{ display:flex; align-items:center; gap:12px; justify-content:center; max-width:360px; margin:0 auto; font-size:14px; color:#D9C99A; line-height:1.4; }
+      .vgli-calc .vc-guide-done a{ color:var(--gold-bright); text-decoration:underline; }
+      .vgli-calc .vc-guide-check{ flex:none; width:34px; height:34px; border-radius:50%; background:var(--gold); color:#0B1D38; display:flex; align-items:center; justify-content:center; font-weight:700; }
+      .vgli-calc .vc-guide-fine{ font-size:11px; color:var(--muted); margin-top:14px; }
+      /* explicit display above defeats the [hidden] attribute — restore it */
+      .vgli-calc .vc-guide-form[hidden], .vgli-calc .vc-guide-done[hidden]{ display:none; }
+
       /* ---- CTA ---- */
       .vgli-calc .cta{ background:linear-gradient(160deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.4); border-radius:14px; padding:26px 22px; text-align:center; }
       .vgli-calc .cta h2{ font-family:Georgia,serif; font-weight:700; font-size:23px; color:#fff; margin:0 0 8px; line-height:1.2; }
@@ -339,6 +358,24 @@
           <div class="sk">Over <b><span id="saveYears">20</span> years</b>, choosing CMF instead of VGLI saves you about</div>
           <div class="sbig">$<span id="saveAmt">38,000</span></div>
           <div class="sfoot">CMF: $<span id="cmfTotal">0</span> total &nbsp;&middot;&nbsp; VGLI: $<span id="vgTotal">0</span> total</div>
+        </div>
+
+        <!-- GATED GUIDE -->
+        <div class="vc-guide" id="vcGuide">
+          <div class="vc-guide-eyebrow">Free Guide</div>
+          <h2 class="vc-guide-head">The Veteran's Guide to Replacing VGLI</h2>
+          <p class="vc-guide-sub">The full breakdown &mdash; when keeping VGLI makes sense, when private term wins, and the exact questions to ask before you switch. Sent straight to your inbox.</p>
+          <form id="guideForm" class="vc-guide-form" novalidate>
+            <input type="text" id="guideName" name="name" placeholder="First name" autocomplete="given-name" aria-label="First name" />
+            <input type="email" id="guideEmail" name="email" placeholder="Email address" autocomplete="email" aria-label="Email address" required />
+            <button type="submit" class="btn vc-guide-btn">Get the free guide</button>
+            <div class="vc-guide-msg" id="guideMsg" aria-live="polite"></div>
+          </form>
+          <div class="vc-guide-done" id="guideDone" hidden>
+            <div class="vc-guide-check">&#x2713;</div>
+            <div>Your guide is ready &mdash; <a id="guideDownload" href="/vgli-cost-guide.pdf" target="_blank" rel="noopener noreferrer">download it here</a>. We've also sent a copy to your email.</div>
+          </div>
+          <div class="vc-guide-fine">No spam. We'll send the guide and the occasional helpful note &mdash; unsubscribe anytime.</div>
         </div>
 
         <!-- CTA -->
@@ -604,6 +641,68 @@
         });
         document.querySelectorAll('a[href^="tel:"], a[href^="mailto:"]').forEach(function (a) {
           a.addEventListener("click", fireContact);
+        });
+      })();
+    </script>
+
+    <!-- Gated guide: capture email, fire Lead conversion, deliver the PDF -->
+    <script>
+      (function () {
+        var form = document.getElementById('guideForm');
+        if (!form) return;
+        var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        function utm(k){ try { return new URLSearchParams(location.search).get(k) || ''; } catch (e) { return ''; } }
+
+        function fireGuideLead(email) {
+          if (typeof fbq !== "undefined") {
+            // Advanced Matching: pass the email so Meta can match this lead.
+            if (email) fbq("init", "1263380418574595", { em: email });
+            fbq("track", "Lead", { content_name: "VGLI Guide Download" });
+          }
+          if (typeof gtag !== "undefined") {
+            gtag("event", "conversion", { send_to: "AW-17990540500/4j1WCNi-m4IcENS5x4JD", value: 1.0, currency: "USD" });
+          }
+          if (typeof window.uetq !== "undefined") {
+            window.uetq.push("event", "submit_lead_form", { event_category: "conversion", event_label: "vgli_guide", event_value: 1.0 });
+          }
+          if (typeof ttq !== "undefined") ttq.track("SubmitForm", { content_name: "VGLI Guide Download" });
+          if (typeof oaiq !== "undefined") oaiq("measure", "lead_created", { type: "customer_action" });
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var nameEl = document.getElementById('guideName');
+          var emailEl = document.getElementById('guideEmail');
+          var msg = document.getElementById('guideMsg');
+          var btn = form.querySelector('button[type=submit]');
+          var email = (emailEl.value || '').trim().toLowerCase();
+          var name = (nameEl.value || '').trim();
+
+          if (!EMAIL_RE.test(email)) { msg.textContent = 'Please enter a valid email address.'; return; }
+          msg.textContent = '';
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+
+          fireGuideLead(email);
+
+          fetch('/.netlify/functions/guide-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: name, email: email, source: 'vgli-calculator',
+              utm_source: utm('utm_source'), utm_medium: utm('utm_medium'),
+              utm_campaign: utm('utm_campaign'), gclid: utm('gclid')
+            })
+          }).catch(function () {}).finally(function () {
+            // Always deliver the guide, even if the capture call hiccups.
+            form.hidden = true;
+            var done = document.getElementById('guideDone');
+            if (done) {
+              done.hidden = false;
+              var dl = document.getElementById('guideDownload');
+              if (dl) window.open(dl.getAttribute('href'), '_blank', 'noopener');
+            }
+          });
         });
       })();
     </script>
