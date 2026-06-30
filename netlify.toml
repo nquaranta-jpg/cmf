@@ -41,3 +41,8 @@
   from = "/community"
   to = "/community.html"
   status = 200
+
+[[redirects]]
+  from = "/vgli-calculator"
+  to = "/vgli-calculator.html"
+  status = 200
