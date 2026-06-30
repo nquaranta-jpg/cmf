@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VGLI Cost Calculator | Crown Merchant Financial</title>
+    <meta name="description" content="See what keeping your VGLI really costs as you age — and how a private level-term policy compares. Free VGLI cost calculator from Crown Merchant Financial, a veteran-built independent agency." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://crownmerchantfinancial.com/vgli-calculator" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="VGLI Cost Calculator | Crown Merchant Financial" />
+    <meta property="og:description" content="See what keeping your VGLI really costs as you age — and how a private level-term policy compares." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://crownmerchantfinancial.com/vgli-calculator" />
+    <meta property="og:image" content="https://crownmerchantfinancial.com/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VGLI Cost Calculator | Crown Merchant Financial" />
+    <meta name="twitter:description" content="See what keeping your VGLI really costs as you age — and how a private level-term policy compares." />
+    <meta name="twitter:image" content="https://crownmerchantfinancial.com/og-image.jpg" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/nav.css" />
+    <link rel="stylesheet" href="/css/sections.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+
+    <!-- VGLI calculator styles — fully namespaced under .vgli-calc so they
+         cannot collide with the site's global CSS (nav, footer, etc.). The
+         calculator's own color tokens live on .vgli-calc, not :root. -->
+    <style>
+      .vgli-calc{
+        --navy:#0B1D38;
+        --navy-2:#0E2342;
+        --card:#13294C;
+        --card-2:#16305A;
+        --line:rgba(255,255,255,0.10);
+        --gold:#C2A14D;
+        --gold-bright:#E0C06A;
+        --text:#EAF0F8;
+        --muted:#9DA9BD;
+        --rise:#C8763E;
+        --rise-soft:rgba(200,118,62,0.28);
+
+        background:
+          radial-gradient(120% 70% at 80% -5%, rgba(224,192,106,0.08) 0%, rgba(224,192,106,0) 45%),
+          var(--navy);
+        color:var(--text);
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        line-height:1.55;
+        -webkit-font-smoothing:antialiased;
+        display:block;
+      }
+      .vgli-calc *{ box-sizing:border-box; }
+      .vgli-calc a{ text-decoration:none; }
+      .vgli-calc .serif{ font-family:Georgia,"Times New Roman",serif; }
+
+      .vgli-calc .wrap{ max-width:600px; margin:0 auto; padding:40px 20px 48px; }
+
+      /* ---- hero ---- */
+      .vgli-calc .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+      .vgli-calc h1.hero{
+        font-family:Georgia,serif; font-weight:700; line-height:1.1; letter-spacing:-0.01em;
+        font-size:33px; margin:12px 0 12px; color:var(--text);
+      }
+      .vgli-calc .sub{ color:#C5D0E0; font-size:15.5px; max-width:30em; }
+      .vgli-calc .rule{ width:46px; height:2px; background:var(--gold); margin:18px 0 26px; }
+
+      /* ---- input card ---- */
+      .vgli-calc .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 20px; margin-bottom:18px; }
+      .vgli-calc .ctl{ margin-bottom:22px; }
+      .vgli-calc .ctl:last-child{ margin-bottom:0; }
+      .vgli-calc .ctl-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+      .vgli-calc .ctl-label{ font-size:12px; letter-spacing:0.13em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+      .vgli-calc .ctl-val{ font-family:Georgia,serif; font-weight:700; font-size:22px; color:#fff; }
+      .vgli-calc .ctl-val .unit{ font-family:inherit; font-size:13px; color:var(--gold); font-weight:400; margin-left:2px; }
+
+      .vgli-calc input[type=range]{
+        -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:3px;
+        background:linear-gradient(90deg,var(--gold) 0%,var(--gold) var(--fill,40%),rgba(255,255,255,0.14) var(--fill,40%),rgba(255,255,255,0.14) 100%);
+        outline:none; cursor:pointer; margin:0;
+      }
+      .vgli-calc input[type=range]::-webkit-slider-thumb{
+        -webkit-appearance:none; appearance:none; width:24px; height:24px; border-radius:50%;
+        background:#fff; border:3px solid var(--gold); cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.35);
+      }
+      .vgli-calc input[type=range]::-moz-range-thumb{
+        width:24px; height:24px; border-radius:50%; background:#fff; border:3px solid var(--gold);
+        cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.35);
+      }
+      .vgli-calc input[type=range]:focus-visible{ box-shadow:0 0 0 3px rgba(194,161,77,0.4); }
+      .vgli-calc .ticks{ display:flex; justify-content:space-between; margin-top:7px; font-size:10.5px; color:var(--muted); }
+
+      /* ---- result hero ---- */
+      .vgli-calc .result{
+        background:linear-gradient(155deg,var(--card-2),var(--card));
+        border:1px solid rgba(194,161,77,0.32); border-radius:14px;
+        padding:24px 22px; margin-bottom:18px; text-align:center;
+      }
+      .vgli-calc .result .rlabel{ font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+      .vgli-calc .result .rbig{ font-family:Georgia,serif; font-weight:700; font-size:54px; line-height:1.04; color:#fff; margin:8px 0 2px; }
+      .vgli-calc .result .rbig .per{ font-size:19px; color:var(--muted); font-weight:400; }
+      .vgli-calc .result .ryear{ font-size:14px; color:#C5D0E0; }
+      .vgli-calc .result .rnote{ margin-top:14px; font-size:13.5px; color:#C5D0E0; border-top:1px solid var(--line); padding-top:13px; }
+      .vgli-calc .result .rnote b{ color:var(--gold-bright); }
+
+      /* ---- staircase chart (the signature) ---- */
+      .vgli-calc .chart-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 18px 18px; margin-bottom:18px; }
+      .vgli-calc .chart-head{ font-family:Georgia,serif; font-weight:700; font-size:18px; color:#fff; margin-bottom:3px; }
+      .vgli-calc .chart-sub{ font-size:12.5px; color:var(--muted); margin-bottom:20px; }
+      .vgli-calc .chart{ display:flex; align-items:flex-end; gap:5px; height:172px; }
+      .vgli-calc .bar-col{ flex:1 1 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; min-width:0; height:100%; }
+      .vgli-calc .bar-val{ font-size:9.5px; font-variant-numeric:tabular-nums; color:var(--muted); margin-bottom:5px; white-space:nowrap; }
+      .vgli-calc .bar-track{ width:100%; max-width:30px; height:128px; display:flex; align-items:flex-end; }
+      .vgli-calc .bar-fill{
+        width:100%; background:var(--rise-soft); border-top:2px solid var(--rise);
+        border-radius:3px 3px 0 0; min-height:3px;
+      }
+      .vgli-calc .bar-age{ font-size:10.5px; color:var(--muted); margin-top:7px; font-variant-numeric:tabular-nums; }
+      .vgli-calc .bar-col.now .bar-fill{ background:var(--gold); border-top:2px solid var(--gold-bright); }
+      .vgli-calc .bar-col.now .bar-val{ color:var(--gold-bright); font-weight:700; }
+      .vgli-calc .bar-col.now .bar-age{ color:#fff; font-weight:700; }
+      @media (prefers-reduced-motion: no-preference){ .vgli-calc .bar-fill{ transition:height .45s cubic-bezier(.2,.7,.3,1); } }
+      .vgli-calc .chart-foot{ display:flex; align-items:center; gap:8px; margin-top:16px; font-size:11px; color:var(--muted); }
+      .vgli-calc .swatch{ width:11px; height:11px; border-radius:2px; flex:none; }
+      .vgli-calc .chart-foot .seg{ display:flex; align-items:center; gap:6px; }
+
+      /* ---- the big number ---- */
+      .vgli-calc .totals{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 20px; margin-bottom:18px; }
+      .vgli-calc .totals .tlabel{ font-size:13.5px; color:#C5D0E0; margin-bottom:4px; }
+      .vgli-calc .totals .tlabel b{ color:#fff; }
+      .vgli-calc .totals .tbig{ font-family:Georgia,serif; font-weight:700; font-size:46px; color:var(--gold); line-height:1.05; }
+      .vgli-calc .totals .trow{ display:flex; gap:10px; margin-top:18px; }
+      .vgli-calc .totals .tcell{ flex:1; background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:13px 12px; text-align:center; }
+      .vgli-calc .totals .tcell .tn{ font-family:Georgia,serif; font-weight:700; font-size:21px; color:#fff; font-variant-numeric:tabular-nums; }
+      .vgli-calc .totals .tcell .tk{ font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
+
+      /* ---- honest note ---- */
+      .vgli-calc .honest{ display:flex; gap:12px; padding:15px 17px; border-left:3px solid var(--gold); background:rgba(194,161,77,0.06); border-radius:0 10px 10px 0; margin-bottom:26px; font-size:13px; color:#C5D0E0; }
+      .vgli-calc .honest b{ color:#fff; }
+
+      /* ---- CTA ---- */
+      .vgli-calc .cta{ background:linear-gradient(160deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.4); border-radius:14px; padding:26px 22px; text-align:center; }
+      .vgli-calc .cta h2{ font-family:Georgia,serif; font-weight:700; font-size:23px; color:#fff; margin:0 0 8px; line-height:1.2; }
+      .vgli-calc .cta p{ font-size:14.5px; color:#C5D0E0; margin:0 auto 20px; max-width:30em; }
+      .vgli-calc .btn{
+        display:inline-block; background:var(--gold); color:#0B1D38; text-decoration:none;
+        font-weight:700; font-size:16px; letter-spacing:0.01em; padding:15px 30px; border-radius:10px;
+        transition:transform .12s ease, background .12s ease;
+      }
+      .vgli-calc .btn:hover{ background:var(--gold-bright); transform:translateY(-1px); }
+      .vgli-calc .btn:focus-visible{ outline:3px solid rgba(194,161,77,0.5); outline-offset:2px; }
+      .vgli-calc .cta-contact{ margin-top:18px; font-size:13px; color:#C5D0E0; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px 14px; }
+      .vgli-calc .cta-contact a{ color:var(--gold-bright); text-decoration:none; white-space:nowrap; }
+
+      /* ---- footer note ---- */
+      .vgli-calc .foot{ margin-top:26px; }
+      .vgli-calc .foot .src{ font-size:11.5px; color:var(--muted); margin-bottom:12px; }
+      .vgli-calc .foot .src a{ color:var(--gold); text-decoration:none; }
+      .vgli-calc .foot .disc{ font-size:10.5px; line-height:1.55; color:#76839A; }
+
+      /* ---- comparison module ---- */
+      .vgli-calc .cmp-head{ font-family:Georgia,serif; font-weight:700; font-size:25px; color:#fff; margin:36px 0 6px; line-height:1.15; }
+      .vgli-calc .cmp-intro{ font-size:13.5px; color:#C5D0E0; margin-bottom:18px; }
+      .vgli-calc .toggles{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
+      .vgli-calc .seg{ display:flex; align-items:center; background:var(--navy-2); border:1px solid var(--line); border-radius:11px; padding:4px; gap:3px; }
+      .vgli-calc .seg .seg-label{ font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:0 8px 0 6px; }
+      .vgli-calc .seg button{
+        appearance:none; -webkit-appearance:none; border:none; background:transparent; color:var(--muted); cursor:pointer;
+        font-size:13px; font-weight:600; padding:8px 15px; border-radius:8px; font-family:inherit; transition:background .12s,color .12s;
+      }
+      .vgli-calc .seg button.on{ background:var(--gold); color:#0B1D38; }
+      .vgli-calc .seg button:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:1px; }
+      .vgli-calc .illus{ font-size:11px; color:var(--muted); font-style:italic; margin-bottom:16px; line-height:1.5; }
+
+      .vgli-calc .vs-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 18px 18px; margin-bottom:16px; }
+      .vgli-calc .vs-row{ display:flex; gap:12px; margin-bottom:20px; }
+      .vgli-calc .vs-box{ flex:1; border-radius:12px; padding:15px 12px; text-align:center; min-width:0; }
+      .vgli-calc .vs-box.cmf{ background:rgba(194,161,77,0.13); border:1px solid rgba(194,161,77,0.5); }
+      .vgli-calc .vs-box.vgli{ background:var(--navy-2); border:1px solid var(--line); }
+      .vgli-calc .vs-box .vk{ font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; margin-bottom:7px; }
+      .vgli-calc .vs-box.cmf .vk{ color:var(--gold-bright); }
+      .vgli-calc .vs-box.vgli .vk{ color:var(--muted); }
+      .vgli-calc .vs-box .vn{ font-family:Georgia,serif; font-weight:700; font-size:30px; color:#fff; line-height:1; }
+      .vgli-calc .vs-box .vn .vp{ font-size:13px; color:var(--muted); font-weight:400; }
+      .vgli-calc .vs-box .vsub{ font-size:11px; margin-top:7px; line-height:1.4; }
+      .vgli-calc .vs-box.cmf .vsub{ color:#D9C99A; }
+      .vgli-calc .vs-box.vgli .vsub{ color:var(--muted); }
+      .vgli-calc .svgwrap{ width:100%; }
+      .vgli-calc .svgwrap svg{ width:100%; height:auto; display:block; }
+
+      .vgli-calc .save-card{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.45); border-radius:14px; padding:22px 20px; margin-bottom:16px; text-align:center; }
+      .vgli-calc .save-card .sk{ font-size:13.5px; color:#C5D0E0; }
+      .vgli-calc .save-card .sk b{ color:#fff; }
+      .vgli-calc .save-card .sbig{ font-family:Georgia,serif; font-weight:700; font-size:50px; color:var(--gold); line-height:1.04; margin:5px 0; }
+      .vgli-calc .save-card .sfoot{ font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+      .vgli-calc .age-flag{ display:none; gap:11px; padding:13px 16px; border-left:3px solid var(--gold-bright); background:rgba(224,192,106,0.08); border-radius:0 10px 10px 0; margin-bottom:16px; font-size:12.5px; color:#D9C99A; line-height:1.45; }
+      .vgli-calc .age-flag.show{ display:flex; }
+      .vgli-calc .age-flag b{ color:#fff; }
+
+      @media (max-width:430px){
+        .vgli-calc h1.hero{ font-size:28px; }
+        .vgli-calc .result .rbig{ font-size:46px; }
+        .vgli-calc .totals .tbig{ font-size:38px; }
+        .vgli-calc .cmp-head{ font-size:22px; }
+        .vgli-calc .save-card .sbig{ font-size:40px; }
+        .vgli-calc .vs-box .vn{ font-size:26px; }
+        .vgli-calc .bar-val{ font-size:8.5px; }
+        .vgli-calc .wrap{ padding:28px 15px 40px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="logo">
+        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
+        <span class="logo-text">Crown Merchant Financial</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-dropdown">
+          <a href="/#products">Products</a>
+          <div class="nav-dropdown-menu">
+            <a href="/products/final-expense">Final Expense</a>
+            <a href="/products/term-life">Term Life</a>
+            <a href="/products/annuity">Annuity</a>
+            <a href="/products/iul">Indexed Universal Life</a>
+          </div>
+        </li>
+        <li><a href="/#about">About Us</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/products/term-life#contact">Get a Quote</a></li>
+      </ul>
+      <a href="tel:+13122038106" class="nav-cta">Call (312) 203-8106</a>
+      <button class="mobile-toggle"><span></span><span></span><span></span></button>
+    </nav>
+
+    <div class="mobile-menu">
+      <a href="/#products">Products</a>
+      <a href="/#about">About Us</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="tel:+13122038106">Call (312) 203-8106</a>
+      <a href="/products/term-life#contact">Get Your Free Quote</a>
+    </div>
+
+    <main class="vgli-calc">
+      <div class="wrap">
+
+        <div class="eyebrow">VGLI Cost Calculator</div>
+        <h1 class="hero">What does keeping VGLI actually cost?</h1>
+        <p class="sub">Move the sliders to see your premium today, what it becomes as you age, and the long-term total most veterans never add up.</p>
+        <div class="rule"></div>
+
+        <!-- INPUTS -->
+        <div class="card">
+          <div class="ctl">
+            <div class="ctl-top">
+              <label class="ctl-label" for="age">Your age</label>
+              <div class="ctl-val"><span id="ageVal">45</span></div>
+            </div>
+            <input type="range" id="age" min="20" max="75" step="1" value="45" aria-label="Your current age">
+            <div class="ticks"><span>20</span><span>40</span><span>60</span><span>75</span></div>
+          </div>
+          <div class="ctl">
+            <div class="ctl-top">
+              <label class="ctl-label" for="cov">VGLI coverage</label>
+              <div class="ctl-val">$<span id="covVal">400,000</span></div>
+            </div>
+            <input type="range" id="cov" min="10000" max="500000" step="10000" value="400000" aria-label="VGLI coverage amount">
+            <div class="ticks"><span>$10k</span><span>$250k</span><span>$500k</span></div>
+          </div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result">
+          <div class="rlabel">Your VGLI premium today</div>
+          <div class="rbig">$<span id="premNow">116</span><span class="per"> / mo</span></div>
+          <div class="ryear">That's $<span id="premYear">1,392</span> a year, for now.</div>
+          <div class="rnote" id="riseNote">By the 70&ndash;74 band, you'd pay <b>$860/month</b> for this same coverage.</div>
+        </div>
+
+        <!-- STAIRCASE -->
+        <div class="chart-card">
+          <div class="chart-head">The staircase you're standing on</div>
+          <div class="chart-sub">VGLI monthly premium for $<span id="chartCov">400,000</span>, at each five-year age band ahead of you.</div>
+          <div class="chart" id="chart" role="img" aria-label="Bar chart of VGLI monthly premiums rising by age band"></div>
+          <div class="chart-foot">
+            <div class="seg"><span class="swatch" style="background:#C2A14D"></span> Where you are now</div>
+            <div class="seg"><span class="swatch" style="background:var(--rise-soft);border-top:2px solid var(--rise)"></span> What's ahead</div>
+          </div>
+        </div>
+
+        <!-- BIG NUMBER -->
+        <div class="totals">
+          <div class="tlabel">Hold this coverage for the next <b>20 years</b> and VGLI will cost you about</div>
+          <div class="tbig">$<span id="total20">52,000</span></div>
+          <div class="trow">
+            <div class="tcell"><div class="tn">$<span id="total10">0</span></div><div class="tk">over 10 yrs</div></div>
+            <div class="tcell"><div class="tn">$<span id="total20b">0</span></div><div class="tk">over 20 yrs</div></div>
+            <div class="tcell"><div class="tn">$<span id="total30">0</span></div><div class="tk">over 30 yrs</div></div>
+          </div>
+        </div>
+
+        <!-- COMPARISON: CMF vs VGLI -->
+        <div class="cmp-head">Now see what CMF would save you</div>
+        <div class="cmp-intro">A private level-term policy locks one rate for the whole term while VGLI keeps climbing. Adjust these for a closer estimate:</div>
+
+        <div class="toggles">
+          <div class="seg" role="group" aria-label="Sex">
+            <span class="seg-label">You</span>
+            <button id="sxM" class="on" type="button">Male</button>
+            <button id="sxF" type="button">Female</button>
+          </div>
+          <div class="seg" role="group" aria-label="Term length">
+            <span class="seg-label">Term</span>
+            <button id="t20" class="on" type="button">20 yrs</button>
+            <button id="t30" type="button">30 yrs</button>
+          </div>
+        </div>
+
+        <div class="illus">Illustrative estimate for a healthy non-smoker, built from 2026 market averages &mdash; not a quote. Your real CMF rate comes from underwriting and may be lower.<span id="termNote"></span></div>
+
+        <div class="vs-card">
+          <div class="vs-row">
+            <div class="vs-box cmf">
+              <div class="vk">CMF private term</div>
+              <div class="vn">$<span id="cmfMo">47</span><span class="vp">/mo</span></div>
+              <div class="vsub">Locked flat for <span id="cmfTerm">20</span> years</div>
+            </div>
+            <div class="vs-box vgli">
+              <div class="vk">VGLI</div>
+              <div class="vn">$<span id="vgNow">56</span><span class="vp">/mo</span></div>
+              <div class="vsub">Climbs to $<span id="vgEnd">200</span>/mo by year <span id="vgTerm">20</span></div>
+            </div>
+          </div>
+          <div class="svgwrap" id="svgwrap" role="img" aria-label="Line chart comparing a flat CMF premium against a rising VGLI premium over the term"></div>
+        </div>
+
+        <div class="age-flag" id="ageFlag">
+          <div><b>A note at your age:</b> private term gets pricier and harder to qualify for, and if you have any health condition, VGLI's guaranteed acceptance may genuinely be the better route. That's exactly the call to make on the phone.</div>
+        </div>
+
+        <div class="save-card">
+          <div class="sk">Over <b><span id="saveYears">20</span> years</b>, choosing CMF instead of VGLI saves you about</div>
+          <div class="sbig">$<span id="saveAmt">38,000</span></div>
+          <div class="sfoot">CMF: $<span id="cmfTotal">0</span> total &nbsp;&middot;&nbsp; VGLI: $<span id="vgTotal">0</span> total</div>
+        </div>
+
+        <!-- HONEST NOTE -->
+        <div class="honest">
+          <div><b>One honest caveat.</b> If you have a service-connected or other health condition, VGLI's guaranteed acceptance can be worth the cost. This tool shows price only, not whether VGLI is right for you. That's the conversation to have.</div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+          <h2>A private policy can lock a rate that never climbs.</h2>
+          <p>We'll run your VGLI numbers against private options, side by side, and tell you honestly which fits. No pressure, no captive sales pitch.</p>
+          <a class="btn" href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer">Book your free 15-minute review</a>
+          <div class="cta-contact">
+            <a href="tel:+13122038106">(312) 203-8106</a><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a>
+          </div>
+        </div>
+
+        <div class="foot">
+          <div class="src">Premiums use the VA's official VGLI rate table, effective July 1, 2025. <a href="https://www.va.gov/life-insurance/options-eligibility/vgli/" target="_blank" rel="noopener noreferrer">va.gov</a></div>
+          <div class="disc">Crown Merchant Financial is an independent insurance agency. This calculator is educational information only and is not financial, tax, legal, or insurance advice, nor an offer or solicitation in any state where Crown Merchant Financial is not licensed. VGLI is administered by the U.S. Department of Veterans Affairs; rates and rules are set by the VA and subject to change. Private-policy availability and pricing depend on age, health, tobacco use, coverage amount, state, carrier, and underwriting, and are not guaranteed until a policy is approved and issued. Crown Merchant Financial is not affiliated with or endorsed by the VA or any government agency.</div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-logo">
+        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
+        <span class="logo-text">Crown Merchant Financial</span>
+      </div>
+      <p class="footer-tagline">Life Insurance &amp; Financial Products</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/nicholasquaranta/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@crownmerchantfinance" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13a8.28 8.28 0 005.58 2.16V11.7a4.83 4.83 0 01-3.77-1.24V6.69h3.77z"/></svg>
+        </a>
+      </div>
+      <div class="footer-links">
+        <a href="/products/final-expense">Final Expense</a>
+        <a href="/products/term-life">Term Life</a>
+        <a href="/products/annuity">Annuity</a>
+        <a href="/products/iul">IUL</a>
+        <a href="/#about">About Us</a>
+        <a href="/products/term-life#contact">Get a Quote</a>
+      </div>
+      <div class="footer-legal">
+        &copy; 2026 Crown Merchant Financial LLC. All rights reserved.<br />
+        IL Business Entity Producer License #3004124919<br />
+        Nicholas Quaranta, Licensed Insurance Agent &bull; NPN: 22145269<br />
+        nquaranta@crownmerchantfinancial.com &bull; (312) 203-8106
+      </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="mobile-cta-bar">
+      <a href="tel:+13122038106" class="call-btn">Call Now</a>
+      <a href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer" class="quote-btn">Book Review</a>
+    </div>
+
+    <script src="/js/tracking.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/animations.js"></script>
+
+    <!-- VGLI calculator logic -->
+    <script>
+      // ===== Official VGLI monthly rate per $1,000 of coverage (effective 7/1/2025) =====
+      var BANDS = [
+        { start: 0,  end: 29, rate: 0.06 },
+        { start: 30, end: 34, rate: 0.08 },
+        { start: 35, end: 39, rate: 0.10 },
+        { start: 40, end: 44, rate: 0.14 },
+        { start: 45, end: 49, rate: 0.19 },
+        { start: 50, end: 54, rate: 0.29 },
+        { start: 55, end: 59, rate: 0.50 },
+        { start: 60, end: 64, rate: 0.85 },
+        { start: 65, end: 69, rate: 1.38 },
+        { start: 70, end: 74, rate: 2.15 },
+        { start: 75, end: 79, rate: 3.85 },
+        { start: 80, end: 200, rate: 4.40 }
+      ];
+      function bandFor(age){
+        for (var i = 0; i < BANDS.length; i++){
+          if (age >= BANDS[i].start && age <= BANDS[i].end) return BANDS[i];
+        }
+        return BANDS[BANDS.length - 1];
+      }
+      function vgliMonthly(age, cov){ return (cov / 1000) * bandFor(age).rate; }
+      function vgliNYear(age, cov, n){ var t = 0; for (var y = age; y < age + n; y++){ t += vgliMonthly(y, cov) * 12; } return t; }
+      function commas(n){ return Math.round(n).toLocaleString('en-US'); }
+
+      // ===== Illustrative private level-term rate per $1,000/mo, healthy non-smoker =====
+      // Anchored to 2026 market averages (male, 20-yr, $500k); see on-page disclaimer.
+      var PANCH = [[25,0.066],[30,0.076],[35,0.090],[40,0.118],[45,0.185],[50,0.274],[55,0.420],[60,0.680],[65,1.120],[70,1.900]];
+      function privateRate(age, sex, term){
+        var a = age; if (a < 25) a = 25; if (a > 70) a = 70;
+        var r = PANCH[PANCH.length - 1][1];
+        if (a <= PANCH[0][0]) r = PANCH[0][1];
+        else {
+          for (var i = 0; i < PANCH.length - 1; i++){
+            if (a >= PANCH[i][0] && a <= PANCH[i+1][0]){
+              var f = (a - PANCH[i][0]) / (PANCH[i+1][0] - PANCH[i][0]);
+              r = PANCH[i][1] + f * (PANCH[i+1][1] - PANCH[i][1]);
+              break;
+            }
+          }
+        }
+        if (sex === 'F') r *= 0.82;       // women average ~18% lower
+        if (term === 30) r *= 1.35;        // 30-yr term premium uplift
+        return r;
+      }
+      function privateMonthly(age, cov, sex, term){ return (cov / 1000) * privateRate(age, sex, term); }
+
+      // ===== state =====
+      var sex = 'M', term = 20;
+      var ageEl = document.getElementById('age');
+      var covEl = document.getElementById('cov');
+
+      function setSliderFill(el){
+        var pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+        el.style.setProperty('--fill', pct + '%');
+      }
+
+      // ===== VGLI staircase =====
+      function buildStaircase(age, cov){
+        var curBand = bandFor(age);
+        var startIdx = BANDS.indexOf(curBand);
+        var maxPrem = (cov / 1000) * BANDS[BANDS.length - 1].rate;
+        var TRACK = 128, html = '';
+        for (var i = startIdx; i < BANDS.length; i++){
+          var b = BANDS[i];
+          var prem = (cov / 1000) * b.rate;
+          var h = Math.max(3, (prem / maxPrem) * TRACK);
+          var isNow = (i === startIdx);
+          html += '<div class="bar-col' + (isNow ? ' now' : '') + '">' +
+                    '<div class="bar-val">$' + commas(prem) + '</div>' +
+                    '<div class="bar-track"><div class="bar-fill" style="height:' + h.toFixed(0) + 'px"></div></div>' +
+                    '<div class="bar-age">' + (b.start === 80 ? '80+' : b.start) + '</div>' +
+                  '</div>';
+        }
+        return html;
+      }
+
+      // ===== flat-vs-rising savings chart =====
+      function buildSavingsChart(age, cov, effTerm, cmfMo){
+        var W = 340, H = 172, L = 10, R = 10, T = 22, B = 26;
+        var plotW = W - L - R, plotH = H - T - B;
+        var maxV = cmfMo;
+        var t;
+        for (t = 0; t <= effTerm; t++){ var v = vgliMonthly(age + t, cov); if (v > maxV) maxV = v; }
+        function X(tt){ return L + (tt / effTerm) * plotW; }
+        function Y(vv){ return T + plotH - (vv / maxV) * plotH; }
+
+        var vg = [];
+        for (t = 0; t <= effTerm; t++){ vg.push([X(t), Y(vgliMonthly(age + t, cov))]); }
+        var cmfY = Y(cmfMo);
+
+        var area = 'M' + vg[0][0].toFixed(1) + ',' + vg[0][1].toFixed(1);
+        for (t = 1; t < vg.length; t++){ area += ' L' + vg[t][0].toFixed(1) + ',' + vg[t][1].toFixed(1); }
+        area += ' L' + X(effTerm).toFixed(1) + ',' + cmfY.toFixed(1) + ' L' + X(0).toFixed(1) + ',' + cmfY.toFixed(1) + ' Z';
+
+        var vline = 'M' + vg[0][0].toFixed(1) + ',' + vg[0][1].toFixed(1);
+        for (t = 1; t < vg.length; t++){ vline += ' L' + vg[t][0].toFixed(1) + ',' + vg[t][1].toFixed(1); }
+
+        var midX = X(effTerm * 0.55);
+        var labY = (cmfY + vg[Math.round(effTerm * 0.7)][1]) / 2;
+
+        var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">';
+        s += '<path d="' + area + '" fill="rgba(194,161,77,0.18)"/>';
+        s += '<line x1="' + X(0).toFixed(1) + '" y1="' + cmfY.toFixed(1) + '" x2="' + X(effTerm).toFixed(1) + '" y2="' + cmfY.toFixed(1) + '" stroke="#E0C06A" stroke-width="2.5"/>';
+        s += '<path d="' + vline + '" fill="none" stroke="#C8763E" stroke-width="2.5" stroke-linejoin="round"/>';
+        s += '<text x="' + (X(effTerm) - 3).toFixed(1) + '" y="' + Math.max(12, vg[vg.length-1][1] - 6).toFixed(1) + '" fill="#C8763E" font-size="11" font-weight="700" text-anchor="end" font-family="Georgia,serif">VGLI</text>';
+        s += '<text x="' + (X(0) + 4).toFixed(1) + '" y="' + (cmfY - 7).toFixed(1) + '" fill="#E0C06A" font-size="11" font-weight="700" font-family="Georgia,serif">CMF locked</text>';
+        s += '<text x="' + midX.toFixed(1) + '" y="' + labY.toFixed(1) + '" fill="#EBD08A" font-size="10.5" font-weight="700" text-anchor="middle" font-family="-apple-system,sans-serif">Your savings</text>';
+        s += '<text x="' + X(0).toFixed(1) + '" y="' + (H - 8) + '" fill="#9DA9BD" font-size="9.5" font-family="-apple-system,sans-serif">Today</text>';
+        s += '<text x="' + X(effTerm).toFixed(1) + '" y="' + (H - 8) + '" fill="#9DA9BD" font-size="9.5" text-anchor="end" font-family="-apple-system,sans-serif">Year ' + effTerm + '</text>';
+        s += '</svg>';
+        return s;
+      }
+
+      function render(){
+        var age = parseInt(ageEl.value, 10);
+        var cov = parseInt(covEl.value, 10);
+        setSliderFill(ageEl); setSliderFill(covEl);
+
+        document.getElementById('ageVal').textContent = age;
+        document.getElementById('covVal').textContent = commas(cov);
+        document.getElementById('chartCov').textContent = commas(cov);
+
+        var nowPrem = vgliMonthly(age, cov);
+        document.getElementById('premNow').textContent = commas(nowPrem);
+        document.getElementById('premYear').textContent = commas(nowPrem * 12);
+
+        var fut = age < 70 ? vgliMonthly(72, cov) : vgliMonthly(82, cov);
+        var futLabel = age < 70 ? '70–74' : '80+';
+        document.getElementById('riseNote').innerHTML =
+          'By the ' + futLabel + ' band, you’d pay <b>$' + commas(fut) + '/month</b> for this same coverage.';
+
+        document.getElementById('total20').textContent = commas(vgliNYear(age, cov, 20));
+        document.getElementById('total10').textContent = commas(vgliNYear(age, cov, 10));
+        document.getElementById('total20b').textContent = commas(vgliNYear(age, cov, 20));
+        document.getElementById('total30').textContent = commas(vgliNYear(age, cov, 30));
+
+        document.getElementById('chart').innerHTML = buildStaircase(age, cov);
+
+        // ----- CMF vs VGLI comparison -----
+        var capped = (term === 30 && age > 55);
+        var effTerm = capped ? 20 : term;
+        document.getElementById('termNote').textContent = capped ?
+          ' (30-year term generally isn’t available at your age, so this shows a 20-year term.)' : '';
+
+        var cmfMo = privateMonthly(age, cov, sex, effTerm);
+        var vgEnd = vgliMonthly(age + effTerm - 1, cov);
+        document.getElementById('cmfMo').textContent = commas(cmfMo);
+        document.getElementById('cmfTerm').textContent = effTerm;
+        document.getElementById('vgNow').textContent = commas(nowPrem);
+        document.getElementById('vgEnd').textContent = commas(vgEnd);
+        document.getElementById('vgTerm').textContent = effTerm;
+
+        var cmfTotal = cmfMo * 12 * effTerm;
+        var vgTotal = vgliNYear(age, cov, effTerm);
+        var savings = Math.max(0, vgTotal - cmfTotal);
+        document.getElementById('saveYears').textContent = effTerm;
+        document.getElementById('saveAmt').textContent = commas(savings);
+        document.getElementById('cmfTotal').textContent = commas(cmfTotal);
+        document.getElementById('vgTotal').textContent = commas(vgTotal);
+
+        document.getElementById('svgwrap').innerHTML = buildSavingsChart(age, cov, effTerm, cmfMo);
+
+        var flag = document.getElementById('ageFlag');
+        if (age >= 60) flag.classList.add('show'); else flag.classList.remove('show');
+      }
+
+      // toggles
+      function pick(onBtn, offBtn){ onBtn.classList.add('on'); offBtn.classList.remove('on'); }
+      document.getElementById('sxM').addEventListener('click', function(){ sex = 'M'; pick(this, document.getElementById('sxF')); render(); });
+      document.getElementById('sxF').addEventListener('click', function(){ sex = 'F'; pick(this, document.getElementById('sxM')); render(); });
+      document.getElementById('t20').addEventListener('click', function(){ term = 20; pick(this, document.getElementById('t30')); render(); });
+      document.getElementById('t30').addEventListener('click', function(){ term = 30; pick(this, document.getElementById('t20')); render(); });
+
+      ageEl.addEventListener('input', render);
+      covEl.addEventListener('input', render);
+      render();
+    </script>
+
+    <!-- CTA conversion tracking: the Book button is a Calendly link (no on-site
+         form), so fire the lead conversion stack on click. Note: this counts
+         booking *intent* (the click), not a confirmed Calendly booking. -->
+    <script>
+      (function () {
+        function fireLead() {
+          if (typeof gtag !== "undefined") {
+            gtag("event", "conversion", { send_to: "AW-17990540500/4j1WCNi-m4IcENS5x4JD", value: 1.0, currency: "USD" });
+          }
+          if (typeof window.uetq !== "undefined") {
+            window.uetq.push("event", "submit_lead_form", { event_category: "conversion", event_label: "vgli_calculator_book", event_value: 1.0 });
+          }
+          if (typeof fbq !== "undefined") fbq("track", "Lead", { content_name: "VGLI Calculator Booking" });
+          if (typeof ttq !== "undefined") ttq.track("SubmitForm", { content_name: "VGLI Calculator Booking" });
+          if (typeof oaiq !== "undefined") oaiq("measure", "lead_created", { type: "customer_action" });
+        }
+        function fireContact() {
+          if (typeof gtag !== "undefined") gtag("event", "contact", { event_category: "engagement", event_label: "vgli_calculator" });
+          if (typeof fbq !== "undefined") fbq("track", "Contact");
+          if (typeof ttq !== "undefined") ttq.track("Contact");
+        }
+        document.querySelectorAll('a[href^="https://calendly.com"]').forEach(function (a) {
+          a.addEventListener("click", fireLead);
+        });
+        document.querySelectorAll('a[href^="tel:"], a[href^="mailto:"]').forEach(function (a) {
+          a.addEventListener("click", fireContact);
+        });
+      })();
+    </script>
+  </body>
+</html>
