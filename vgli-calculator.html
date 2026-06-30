@@ -62,13 +62,14 @@
       .vgli-calc a{ text-decoration:none; }
       .vgli-calc .serif{ font-family:Georgia,"Times New Roman",serif; }
 
-      .vgli-calc .wrap{ max-width:600px; margin:0 auto; padding:40px 20px 48px; }
+      .vgli-calc .wrap{ max-width:600px; margin:0 auto; padding:104px 20px 48px; }
 
       /* ---- hero ---- */
       .vgli-calc .eyebrow{ font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); font-weight:700; }
-      .vgli-calc h1.hero{
+      .vgli-calc h1.vc-hero{
         font-family:Georgia,serif; font-weight:700; line-height:1.1; letter-spacing:-0.01em;
         font-size:33px; margin:12px 0 12px; color:var(--text);
+        min-height:0; position:static; max-width:none;
       }
       .vgli-calc .sub{ color:#C5D0E0; font-size:15.5px; max-width:30em; }
       .vgli-calc .rule{ width:46px; height:2px; background:var(--gold); margin:18px 0 26px; }
@@ -206,14 +207,14 @@
       .vgli-calc .age-flag b{ color:#fff; }
 
       @media (max-width:430px){
-        .vgli-calc h1.hero{ font-size:28px; }
+        .vgli-calc h1.vc-hero{ font-size:28px; }
         .vgli-calc .result .rbig{ font-size:46px; }
         .vgli-calc .totals .tbig{ font-size:38px; }
         .vgli-calc .cmp-head{ font-size:22px; }
         .vgli-calc .save-card .sbig{ font-size:40px; }
         .vgli-calc .vs-box .vn{ font-size:26px; }
         .vgli-calc .bar-val{ font-size:8.5px; }
-        .vgli-calc .wrap{ padding:28px 15px 40px; }
+        .vgli-calc .wrap{ padding:88px 15px 40px; }
       }
     </style>
   </head>
@@ -253,7 +254,7 @@
       <div class="wrap">
 
         <div class="eyebrow">VGLI Cost Calculator</div>
-        <h1 class="hero">What does keeping VGLI actually cost?</h1>
+        <h1 class="vc-hero">What does keeping VGLI actually cost?</h1>
         <p class="sub">Move the sliders to see your premium today, what it becomes as you age, and the long-term total most veterans never add up.</p>
         <div class="rule"></div>
 
