@@ -155,10 +155,16 @@
       .vgli-calc .vc-guide-btn{ width:100%; border:none; cursor:pointer; margin-top:2px; }
       .vgli-calc .vc-guide-btn[disabled]{ opacity:0.7; cursor:default; }
       .vgli-calc .vc-guide-msg{ font-size:13px; color:#E5A3A3; }
-      .vgli-calc .vc-guide-done{ display:flex; align-items:center; gap:12px; justify-content:center; max-width:360px; margin:0 auto; font-size:14px; color:#D9C99A; line-height:1.4; }
-      .vgli-calc .vc-guide-done a{ color:var(--gold-bright); text-decoration:underline; }
-      .vgli-calc .vc-guide-check{ flex:none; width:34px; height:34px; border-radius:50%; background:var(--gold); color:#0B1D38; display:flex; align-items:center; justify-content:center; font-weight:700; }
+      .vgli-calc .vc-guide-orbook{ font-size:12.5px; color:var(--muted); margin-top:12px; }
+      .vgli-calc .vc-guide-orbook a{ color:var(--gold-bright); text-decoration:none; font-weight:600; }
       .vgli-calc .vc-guide-fine{ font-size:11px; color:var(--muted); margin-top:14px; }
+      .vgli-calc .vc-guide-done{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+      .vgli-calc .vc-guide-done-lead a{ color:var(--gold-bright); text-decoration:underline; }
+      .vgli-calc .vc-guide-check{ flex:none; width:40px; height:40px; border-radius:50%; background:var(--gold); color:#0B1D38; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; }
+      .vgli-calc .vc-guide-done-lead{ font-size:14px; color:#D9C99A; margin:12px 0 0; }
+      .vgli-calc .vc-guide-upsell{ width:100%; border-top:1px solid var(--line); margin-top:20px; padding-top:20px; }
+      .vgli-calc .vc-guide-upsell-lead{ font-size:14px; color:#C5D0E0; margin:0 auto 16px; max-width:34em; line-height:1.5; }
+      .vgli-calc .vc-guide-upsell em{ font-style:italic; color:#fff; }
       /* explicit display above defeats the [hidden] attribute — restore it */
       .vgli-calc .vc-guide-form[hidden], .vgli-calc .vc-guide-done[hidden]{ display:none; }
 
@@ -360,31 +366,31 @@
           <div class="sfoot">CMF: $<span id="cmfTotal">0</span> total &nbsp;&middot;&nbsp; VGLI: $<span id="vgTotal">0</span> total</div>
         </div>
 
-        <!-- GATED GUIDE -->
+        <!-- GATED GUIDE (single primary CTA; the call is upsold after submit) -->
         <div class="vc-guide" id="vcGuide">
           <div class="vc-guide-eyebrow">Free Guide</div>
           <h2 class="vc-guide-head">The Veteran's Guide to Replacing VGLI</h2>
-          <p class="vc-guide-sub">The full breakdown &mdash; when keeping VGLI makes sense, when private term wins, and the exact questions to ask before you switch. Sent straight to your inbox.</p>
+          <p class="vc-guide-sub">The full breakdown &mdash; when keeping VGLI makes sense, when private term wins, and the exact questions to ask before you switch.</p>
           <form id="guideForm" class="vc-guide-form" novalidate>
             <input type="text" id="guideName" name="name" placeholder="First name" autocomplete="given-name" aria-label="First name" />
             <input type="email" id="guideEmail" name="email" placeholder="Email address" autocomplete="email" aria-label="Email address" required />
             <button type="submit" class="btn vc-guide-btn">Get the free guide</button>
             <div class="vc-guide-msg" id="guideMsg" aria-live="polite"></div>
           </form>
+          <div class="vc-guide-orbook" id="guideOrbook">Already know you want to talk? <a href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer">Book a call &rarr;</a></div>
+          <div class="vc-guide-fine" id="guideFine">No spam. We'll send the guide and the occasional helpful note &mdash; unsubscribe anytime.</div>
+
+          <!-- success state: confirm the download, then upsell the call -->
           <div class="vc-guide-done" id="guideDone" hidden>
             <div class="vc-guide-check">&#x2713;</div>
-            <div>Your guide is ready &mdash; <a id="guideDownload" href="/vgli-cost-guide.pdf" target="_blank" rel="noopener noreferrer">download it here</a>. We've also sent a copy to your email.</div>
-          </div>
-          <div class="vc-guide-fine">No spam. We'll send the guide and the occasional helpful note &mdash; unsubscribe anytime.</div>
-        </div>
-
-        <!-- CTA -->
-        <div class="cta">
-          <h2>A private policy can lock a rate that never climbs.</h2>
-          <p>We'll run your VGLI numbers against private options, side by side, and tell you honestly which fits. No pressure, no captive sales pitch.</p>
-          <a class="btn" href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer">Book your free 15-minute review</a>
-          <div class="cta-contact">
-            <a href="tel:+13122038106">(312) 203-8106</a><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a>
+            <p class="vc-guide-done-lead">Your guide is ready &mdash; <a id="guideDownload" href="/vgli-cost-guide.pdf" target="_blank" rel="noopener noreferrer">download it now</a>.</p>
+            <div class="vc-guide-upsell">
+              <p class="vc-guide-upsell-lead"><b>Now &mdash; want us to run <em>your</em> numbers?</b> Book a free 15-minute review and we'll put your VGLI up against private options, side by side. No pressure, no captive sales pitch.</p>
+              <a class="btn" href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer">Book your free review</a>
+              <div class="cta-contact">
+                <a href="tel:+13122038106">(312) 203-8106</a><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -696,6 +702,8 @@
           }).catch(function () {}).finally(function () {
             // Always deliver the guide, even if the capture call hiccups.
             form.hidden = true;
+            var ob = document.getElementById('guideOrbook'); if (ob) ob.hidden = true;
+            var fn = document.getElementById('guideFine'); if (fn) fn.hidden = true;
             var done = document.getElementById('guideDone');
             if (done) {
               done.hidden = false;
