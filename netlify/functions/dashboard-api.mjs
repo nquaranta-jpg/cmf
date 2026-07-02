@@ -1,6 +1,9 @@
 import { getSupabase } from "./lib/supabase.mjs";
 
-const DASHBOARD_PIN = process.env.DASHBOARD_PIN || "cmf2026";
+// Fail closed: the dashboard is disabled until DASHBOARD_PIN is set in
+// Netlify env vars. A hardcoded fallback here would be readable by anyone
+// with repo access and gates every lead's name/phone/email.
+const DASHBOARD_PIN = process.env.DASHBOARD_PIN;
 
 function corsHeaders() {
   return {
@@ -11,6 +14,7 @@ function corsHeaders() {
 }
 
 function verifyPin(event) {
+  if (!DASHBOARD_PIN) return false;
   const pin = event.headers["x-dashboard-pin"];
   return pin === DASHBOARD_PIN;
 }
@@ -18,6 +22,16 @@ function verifyPin(event) {
 export async function handler(event) {
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 200, headers: corsHeaders(), body: "" };
+  }
+
+  // Distinguish "not configured" from "wrong PIN" so an unset env var is
+  // diagnosable instead of looking like a login failure.
+  if (!DASHBOARD_PIN) {
+    return {
+      statusCode: 503,
+      headers: corsHeaders(),
+      body: JSON.stringify({ error: "Dashboard not configured: set the DASHBOARD_PIN environment variable in Netlify." }),
+    };
   }
 
   if (!verifyPin(event)) {

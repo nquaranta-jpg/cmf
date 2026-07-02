@@ -254,7 +254,7 @@
     <h1>Thank <span>You!</span></h1>
     <p class="subtitle">
       We've received your request for an insurance quote.
-      Nick will be calling you in the next few minutes from <strong style="color: var(--gold);">(312) 203-8106</strong> &mdash; please save this number!
+      Nick will be calling you shortly from <strong style="color: var(--gold);">(312) 203-8106</strong> &mdash; usually within minutes during business hours. Please save this number!
     </p>
 
     <div class="next-steps">
@@ -269,7 +269,7 @@
       </div>
       <div class="next-step">
         <div class="step-num">3</div>
-        <p><strong>Get covered</strong> &mdash; Choose your plan and coverage begins immediately. No medical exam needed</p>
+        <p><strong>Get covered</strong> &mdash; Choose your plan and get protected fast. Many plans offer same-day approval with no medical exam</p>
       </div>
     </div>
 
@@ -294,5 +294,21 @@
 
     <a href="/" class="back-link">&larr; Back to Crown Merchant Financial</a>
   </div>
+
+  <script>
+    // Post-conversion engagement tracking: calling or booking from the
+    // thank-you page signals a hot lead. (This page inlines its pixels in
+    // the head and doesn't load /js/tracking.js.)
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"], a[href^="https://calendly.com"]');
+      if (!a) return;
+      var isPhone = a.getAttribute("href").indexOf("tel:") === 0;
+      if (typeof fbq !== "undefined") fbq("track", isPhone ? "Contact" : "Schedule");
+      if (typeof ttq !== "undefined") ttq.track("Contact");
+      if (typeof gtag !== "undefined") {
+        gtag("event", isPhone ? "phone_call_click" : "book_call", { event_category: "conversion", event_label: "thank_you_page" });
+      }
+    });
+  </script>
 </body>
 </html>

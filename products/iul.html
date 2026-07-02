@@ -48,6 +48,8 @@
     }(window, document, 'ttq');
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/nav.css" />
@@ -261,17 +263,17 @@
           <div class="form-row">
             <div class="form-group">
               <label for="contactName">Full Name</label>
-              <input type="text" id="contactName" name="name" placeholder="First &amp; Last Name" required />
+              <input type="text" id="contactName" name="name" autocomplete="name" placeholder="First &amp; Last Name" required />
             </div>
             <div class="form-group">
               <label for="contactPhone">Phone Number</label>
-              <input type="tel" id="contactPhone" name="phone" placeholder="(555) 123-4567" required />
+              <input type="tel" id="contactPhone" name="phone" autocomplete="tel" placeholder="(555) 123-4567" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="contactEmail">Email Address</label>
-              <input type="email" id="contactEmail" name="email" placeholder="you@email.com" required />
+              <input type="email" id="contactEmail" name="email" autocomplete="email" placeholder="you@email.com" required />
             </div>
             <div class="form-group">
               <label for="contactAge">Age Range</label>
@@ -303,6 +305,7 @@
           <input type="hidden" name="utm_term" class="utm-field" />
           <input type="hidden" name="gclid" class="gclid-field" />
           <button type="submit" class="form-submit">Get My Free Quote &rarr;</button>
+          <div style="text-align:center;font-size:0.75rem;opacity:0.75;margin-top:0.75rem;">By submitting, you agree to our <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a> and consent to receive calls/texts from Crown Merchant Financial, including via automated technology, at the number provided. Consent is not a condition of purchase.</div>
         </form>
       </div>
     </section>

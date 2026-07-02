@@ -156,7 +156,10 @@ function handleFormSubmit(e) {
 
 function submitLead(form, btn, originalText, data, startedAt) {
   var formElapsedMs = startedAt ? Date.now() - startedAt : 0;
-  var conversionValue = parseFloat(data.get("coverageAmount")) || 1.0;
+  // Flat lead value. Passing the requested coverage amount ($5k-$25k) as the
+  // conversion value told every ad platform each lead was worth thousands of
+  // dollars, which poisons value-based bidding and reporting.
+  var conversionValue = 1.0;
 
   // Dynamic content name based on product selection
   var contentName = (productLabels[data.get("productInterest")] || "Insurance") + " Quote";
