@@ -26,6 +26,8 @@
     <meta name="twitter:description" content="See what keeping your VGLI really costs as you age — and how a private level-term policy compares." />
     <meta name="twitter:image" content="https://crownmerchantfinancial.com/og-image.jpg" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/nav.css" />
@@ -374,11 +376,12 @@
           <form id="guideForm" class="vc-guide-form" novalidate>
             <input type="text" id="guideName" name="name" placeholder="First name" autocomplete="given-name" aria-label="First name" />
             <input type="email" id="guideEmail" name="email" placeholder="Email address" autocomplete="email" aria-label="Email address" required />
+            <input type="tel" id="guidePhone" name="phone" placeholder="Phone (optional &mdash; for a faster answer)" autocomplete="tel" aria-label="Phone number, optional" />
             <button type="submit" class="btn vc-guide-btn">Get the free guide</button>
             <div class="vc-guide-msg" id="guideMsg" aria-live="polite"></div>
           </form>
           <div class="vc-guide-orbook" id="guideOrbook">Already know you want to talk? <a href="https://calendly.com/nquaranta-crownmerchantfinancial/30min" target="_blank" rel="noopener noreferrer">Book a call &rarr;</a></div>
-          <div class="vc-guide-fine" id="guideFine">No spam. We'll send the guide and the occasional helpful note &mdash; unsubscribe anytime.</div>
+          <div class="vc-guide-fine" id="guideFine">No spam &mdash; unsubscribe anytime. By submitting, you agree to our <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a>; if you include your phone, you consent to receive calls/texts from Crown Merchant Financial, including via automated technology. Consent is not a condition of purchase.</div>
 
           <!-- success state: confirm the download, then upsell the call -->
           <div class="vc-guide-done" id="guideDone" hidden>
@@ -637,17 +640,24 @@
           if (typeof ttq !== "undefined") ttq.track("SubmitForm", { content_name: "VGLI Calculator Booking" });
           if (typeof oaiq !== "undefined") oaiq("measure", "lead_created", { type: "customer_action" });
         }
-        function fireContact() {
-          if (typeof gtag !== "undefined") gtag("event", "contact", { event_category: "engagement", event_label: "vgli_calculator" });
-          if (typeof fbq !== "undefined") fbq("track", "Contact");
+        // Booking BEFORE the guide submit is this visitor's only conversion →
+        // fire the full Lead stack. Booking AFTER the guide submit already
+        // fired Lead once, so fire Schedule instead of double-counting.
+        function fireSchedule() {
+          if (typeof fbq !== "undefined") fbq("track", "Schedule");
           if (typeof ttq !== "undefined") ttq.track("Contact");
+          if (typeof gtag !== "undefined") gtag("event", "book_call", { event_category: "conversion", event_label: "vgli_calculator_post_guide" });
         }
         document.querySelectorAll('a[href^="https://calendly.com"]').forEach(function (a) {
-          a.addEventListener("click", fireLead);
+          a.addEventListener("click", function () {
+            // Decide at click time: once the guide submit has fired Lead
+            // (window.__cmfGuideLeadFired), ANY later booking — including via
+            // the mobile sticky bar — is a Schedule, never a second Lead.
+            if (window.__cmfGuideLeadFired || a.closest("#guideDone")) fireSchedule();
+            else fireLead();
+          });
         });
-        document.querySelectorAll('a[href^="tel:"], a[href^="mailto:"]').forEach(function (a) {
-          a.addEventListener("click", fireContact);
-        });
+        // tel:/mailto: clicks are tracked globally in /js/tracking.js
       })();
     </script>
 
@@ -659,10 +669,15 @@
         var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         function utm(k){ try { return new URLSearchParams(location.search).get(k) || ''; } catch (e) { return ''; } }
 
-        function fireGuideLead(email) {
+        function fireGuideLead(email, phone) {
+          window.__cmfGuideLeadFired = true;
           if (typeof fbq !== "undefined") {
-            // Advanced Matching: pass the email so Meta can match this lead.
-            if (email) fbq("init", "1263380418574595", { em: email });
+            // Advanced Matching: pass email (and phone when given) so Meta
+            // can match this lead. The pixel hashes these client-side.
+            var match = {};
+            if (email) match.em = email;
+            if (phone) match.ph = phone;
+            if (match.em || match.ph) fbq("init", "1263380418574595", match);
             fbq("track", "Lead", { content_name: "VGLI Guide Download" });
           }
           if (typeof gtag !== "undefined") {
@@ -679,23 +694,25 @@
           e.preventDefault();
           var nameEl = document.getElementById('guideName');
           var emailEl = document.getElementById('guideEmail');
+          var phoneEl = document.getElementById('guidePhone');
           var msg = document.getElementById('guideMsg');
           var btn = form.querySelector('button[type=submit]');
           var email = (emailEl.value || '').trim().toLowerCase();
           var name = (nameEl.value || '').trim();
+          var phone = phoneEl ? (phoneEl.value || '').replace(/\D/g, '') : '';
 
           if (!EMAIL_RE.test(email)) { msg.textContent = 'Please enter a valid email address.'; return; }
           msg.textContent = '';
           btn.disabled = true;
           btn.textContent = 'Sending…';
 
-          fireGuideLead(email);
+          fireGuideLead(email, phone);
 
           fetch('/.netlify/functions/guide-lead', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              name: name, email: email, source: 'vgli-calculator',
+              name: name, email: email, phone: phone, source: 'vgli-calculator',
               utm_source: utm('utm_source'), utm_medium: utm('utm_medium'),
               utm_campaign: utm('utm_campaign'), gclid: utm('gclid')
             })
@@ -707,6 +724,13 @@
             var done = document.getElementById('guideDone');
             if (done) {
               done.hidden = false;
+              // Prefill Calendly with what they just typed — one less wall
+              // between a warm lead and a booked call.
+              var book = done.querySelector('a[href^="https://calendly.com"]');
+              if (book) {
+                var sep = book.href.indexOf('?') === -1 ? '?' : '&';
+                book.href += sep + 'name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email);
+              }
               var dl = document.getElementById('guideDownload');
               if (dl) window.open(dl.getAttribute('href'), '_blank', 'noopener');
             }

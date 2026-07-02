@@ -25,6 +25,11 @@ html {
   overflow-x: hidden;
 }
 
+/* Anchor jumps must clear the fixed nav, or the target's top hides under it */
+[id] {
+  scroll-margin-top: 100px;
+}
+
 body {
   font-family: "Nunito Sans", -apple-system, sans-serif;
   background: var(--cream);

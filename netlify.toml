@@ -12,6 +12,27 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# publish = "." serves the whole repo as static files, which would expose
+# backend source (and anything else) unless blocked. Keep these first —
+# Netlify applies the first matching redirect.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/index.html"
+  status = 404
+  force = true
+
 [[redirects]]
   from = "/dashboard"
   to = "/dashboard/index.html"
@@ -45,4 +66,9 @@
 [[redirects]]
   from = "/vgli-calculator"
   to = "/vgli-calculator.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
   status = 200

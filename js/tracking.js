@@ -109,3 +109,27 @@ fbq("track", "PageView");
   f.parentNode.insertBefore(j, f);
 })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
 oaiq("init", { pixelId: "XgZ6ph1wRQG9ob3R2hH5Yi", debug: false });
+
+// --- Contact click tracking (tel: / mailto:) ---
+// The senior audience converts by tapping the phone number at least as often
+// as by submitting a form; without this, ad platforms never see those
+// conversions. Delegated listener so it covers every page that loads this
+// file, including links added after load.
+document.addEventListener("click", function (e) {
+  var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
+  if (!a) return;
+  var isPhone = a.getAttribute("href").indexOf("tel:") === 0;
+  if (typeof fbq !== "undefined") fbq("track", "Contact");
+  if (typeof ttq !== "undefined") ttq.track("Contact");
+  if (typeof gtag !== "undefined") {
+    gtag("event", isPhone ? "phone_call_click" : "email_click", {
+      event_category: "conversion",
+      event_label: location.pathname,
+    });
+  }
+  if (typeof window.uetq !== "undefined") {
+    window.uetq.push("event", isPhone ? "phone_call_click" : "email_click", {
+      event_category: "conversion",
+    });
+  }
+});

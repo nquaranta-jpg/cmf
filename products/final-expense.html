@@ -48,6 +48,8 @@
     }(window, document, 'ttq');
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/nav.css" />
@@ -90,7 +92,11 @@
     <!-- Product Hero -->
     <section class="product-hero">
       <h1>Final Expense Insurance</h1>
-      <p class="product-tagline">Affordable whole life insurance that covers funeral costs, medical bills, and final expenses &mdash; so your family never has to worry.</p>
+      <p class="product-tagline">Whole life insurance that covers funeral costs, medical bills, and final expenses &mdash; most clients pay between <strong>$18 and $89 a month</strong>, locked in for life.</p>
+      <div class="hero-buttons" style="justify-content:center;margin:1.75rem 0 2.25rem;display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="#contact" class="btn-primary">Check My Price &rarr;</a>
+        <a href="tel:+13122038106" class="btn-secondary">Call (312) 203-8106</a>
+      </div>
       <div class="product-stats">
         <div class="product-stat">
           <strong>No Medical Exam</strong>
@@ -112,7 +118,7 @@
     </section>
 
     <!-- What Final Expense Covers -->
-    <section class="services" style="padding: 6rem 4rem;">
+    <section class="services">
       <div class="section-header">
         <div class="section-label">Coverage Details</div>
         <h2 class="section-title">What Final Expense Covers</h2>
@@ -206,6 +212,33 @@
           </summary>
           <p style="margin-top: 1rem; color: var(--slate); line-height: 1.7;">Most applicants are approved within 24&ndash;48 hours. Some guaranteed issue policies provide same-day approval.</p>
         </details>
+        <details style="border-bottom: 1px solid #e2e8f0; padding: 1.25rem 0;">
+          <summary style="cursor: pointer; font-weight: 600; color: var(--navy); font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            How much does it cost?
+            <span style="color: var(--gold); font-size: 1.5rem; transition: transform 0.3s;">+</span>
+          </summary>
+          <p style="margin-top: 1rem; color: var(--slate); line-height: 1.7;">Most of our clients pay between $18 and $89 per month, depending on age, coverage amount, and health answers. Your rate is locked from day one and never increases. We shop multiple A-rated carriers to find the lowest price you qualify for &mdash; the quote is free and takes one phone call.</p>
+        </details>
+        <details style="border-bottom: 1px solid #e2e8f0; padding: 1.25rem 0;">
+          <summary style="cursor: pointer; font-weight: 600; color: var(--navy); font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            Is there a waiting period before I'm covered?
+            <span style="color: var(--gold); font-size: 1.5rem; transition: transform 0.3s;">+</span>
+          </summary>
+          <p style="margin-top: 1rem; color: var(--slate); line-height: 1.7;">It depends on the plan you qualify for. With simplified issue (most of our clients), coverage is in force from day one with no waiting period. Guaranteed-acceptance plans, which ask no health questions, typically have a two-year graded period. We'll tell you exactly which one you qualify for before you commit &mdash; no surprises.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Meet your agent -->
+    <section style="padding: 4rem 2rem; background: var(--white);">
+      <div style="max-width: 800px; margin: 0 auto; display: flex; gap: 2.25rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+        <img src="/nick.jpg" alt="Nick Quaranta, licensed insurance agent and U.S. veteran" width="150" height="150" loading="lazy" style="border-radius: 50%; object-fit: cover; flex: none; box-shadow: 0 8px 30px rgba(10,22,40,0.18);" />
+        <div style="flex: 1; min-width: 280px;">
+          <div class="section-label">Your Agent</div>
+          <h2 class="section-title" style="font-size: 1.7rem; text-align: left;">When you call, you get Nick &mdash; not a call center.</h2>
+          <p style="color: var(--slate); line-height: 1.7; margin-top: 0.6rem;">I'm Nick Quaranta, a U.S. veteran and independent licensed agent (NPN 22145269). I shop multiple A-rated carriers and tell you honestly which plan fits your budget &mdash; even when that means recommending a smaller policy. No pressure, no scripts, no runaround.</p>
+          <a href="tel:+13122038106" style="display: inline-block; margin-top: 1rem; font-weight: 700; color: var(--navy);">Call me directly: (312) 203-8106</a>
+        </div>
       </div>
     </section>
 
@@ -262,17 +295,17 @@
           <div class="form-row">
             <div class="form-group">
               <label for="contactName">Full Name</label>
-              <input type="text" id="contactName" name="name" placeholder="First &amp; Last Name" required />
+              <input type="text" id="contactName" name="name" autocomplete="name" placeholder="First &amp; Last Name" required />
             </div>
             <div class="form-group">
               <label for="contactPhone">Phone Number</label>
-              <input type="tel" id="contactPhone" name="phone" placeholder="(555) 123-4567" required />
+              <input type="tel" id="contactPhone" name="phone" autocomplete="tel" placeholder="(555) 123-4567" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="contactEmail">Email Address</label>
-              <input type="email" id="contactEmail" name="email" placeholder="you@email.com" required />
+              <input type="email" id="contactEmail" name="email" autocomplete="email" placeholder="you@email.com" required />
             </div>
             <div class="form-group">
               <label for="contactAge">Age Range</label>
@@ -315,6 +348,7 @@
           <input type="hidden" name="utm_term" class="utm-field" />
           <input type="hidden" name="gclid" class="gclid-field" />
           <button type="submit" class="form-submit">Get My Free Quote &rarr;</button>
+          <div style="text-align:center;font-size:0.75rem;opacity:0.75;margin-top:0.75rem;">By submitting, you agree to our <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a> and consent to receive calls/texts from Crown Merchant Financial, including via automated technology, at the number provided. Consent is not a condition of purchase.</div>
         </form>
       </div>
     </section>
