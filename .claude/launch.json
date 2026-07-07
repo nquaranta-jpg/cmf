@@ -4,7 +4,7 @@
     {
       "name": "cmf-site",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "5500", "/Users/nicholasquaranta/Desktop/cmf"],
+      "runtimeArgs": ["serve", "-l", "5500", "/Users/nicholasquaranta/Desktop/Code Projects/cmf"],
       "port": 5500
     },
     {
@@ -25,6 +25,12 @@
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "cd /Users/nicholasquaranta/Desktop/insurechat && npx netlify dev --port 5501"],
       "port": 5501
+    },
+    {
+      "name": "qgroup",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "5502", "/Users/nicholasquaranta/Desktop/qgroup"],
+      "port": 5502
     }
   ]
 }

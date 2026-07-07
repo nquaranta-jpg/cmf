@@ -1,0 +1,495 @@
+/* ============================================
+   Pick Your Policy — quote wizard
+   ============================================ */
+
+.qz-main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
+}
+
+/* Progress bar */
+.qz-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.qz-progress::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: #e2e8f0;
+}
+
+.qz-progress-step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  flex: 1;
+}
+
+.qz-progress-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid #e2e8f0;
+  color: var(--slate);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.qz-progress-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top: 0.4rem;
+}
+
+.qz-progress-step.active .qz-progress-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.qz-progress-step.active .qz-progress-label {
+  color: var(--navy);
+}
+
+.qz-progress-step.done .qz-progress-dot {
+  border-color: var(--gold);
+  background: var(--white);
+  color: var(--gold-dark);
+}
+
+/* Step cards */
+.qz-step {
+  display: none;
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 20px 60px rgba(10, 22, 40, 0.06);
+  padding: 2.5rem;
+  animation: qzFade 0.35s ease;
+}
+
+.qz-step.active {
+  display: block;
+}
+
+@keyframes qzFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.qz-step h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  line-height: 1.25;
+}
+
+.qz-step-sub {
+  color: var(--slate);
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.qz-question-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 1.75rem 0 0.75rem;
+}
+
+.qz-question-label:first-of-type {
+  margin-top: 0;
+}
+
+/* Option cards (goal picker) */
+.qz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.qz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  text-align: left;
+  background: var(--white);
+  border: 1.5px solid #e2e8f0;
+  padding: 1.15rem 1.25rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+.qz-option:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.08);
+}
+
+.qz-option.selected {
+  border-color: var(--gold);
+  background: rgba(201, 169, 98, 0.07);
+}
+
+.qz-option-icon {
+  color: var(--gold-dark);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.qz-option-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.qz-option strong {
+  display: block;
+  color: var(--navy);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.qz-option span {
+  display: block;
+  color: var(--slate);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Pills (age, tobacco, coverage) */
+.qz-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.qz-pill {
+  border: 1.5px solid #e2e8f0;
+  background: var(--white);
+  color: var(--text);
+  padding: 0.6rem 1.15rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qz-pill:hover {
+  border-color: var(--gold);
+}
+
+.qz-pill.selected {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* Recommendation card */
+.qz-match-card {
+  border: 1.5px solid var(--gold);
+  background: rgba(201, 169, 98, 0.06);
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.qz-match-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.qz-match-card h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.qz-match-card p {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.qz-match-features {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.qz-match-features li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.qz-match-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.qz-note {
+  background: rgba(201, 169, 98, 0.1);
+  border-left: 3px solid var(--gold);
+  padding: 0.85rem 1.1rem;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+/* Compare other products */
+.qz-compare-toggle {
+  background: none;
+  border: none;
+  color: var(--gold-dark);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.qz-compare {
+  display: none;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.qz-compare.open {
+  display: grid;
+}
+
+.qz-compare-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1.5px solid #e2e8f0;
+  padding: 1rem 1.25rem;
+}
+
+.qz-compare-item strong {
+  display: block;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+
+.qz-compare-item span {
+  display: block;
+  color: var(--slate);
+  font-size: 0.82rem;
+}
+
+.qz-compare-item button {
+  border: 1.5px solid var(--navy);
+  background: var(--white);
+  color: var(--navy);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.qz-compare-item button:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.qz-compare-item.ineligible {
+  opacity: 0.55;
+}
+
+.qz-compare-item.ineligible button {
+  display: none;
+}
+
+/* Estimate panel */
+.qz-estimate {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white);
+  padding: 1.75rem;
+  text-align: center;
+  margin: 1.75rem 0 1rem;
+}
+
+.qz-estimate-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.35rem;
+}
+
+.qz-estimate-value {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.qz-estimate-unit {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.qz-disclaimer {
+  font-size: 0.75rem;
+  color: var(--slate);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+/* Summary on contact step */
+.qz-summary {
+  border: 1.5px solid #e2e8f0;
+  background: var(--cream);
+  padding: 1.1rem 1.35rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.qz-summary strong {
+  color: var(--navy);
+}
+
+.qz-summary .qz-summary-est {
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+/* Navigation buttons */
+.qz-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.75rem;
+}
+
+.qz-back {
+  background: none;
+  border: none;
+  color: var(--slate);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.qz-back:hover {
+  color: var(--navy);
+}
+
+.qz-next {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: var(--navy);
+  padding: 0.95rem 2rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qz-next:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201, 169, 98, 0.3);
+}
+
+.qz-next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.qz-consent {
+  font-size: 0.72rem;
+  color: var(--slate);
+  line-height: 1.55;
+  margin: 1rem 0 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .qz-main {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .qz-step {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .qz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .qz-progress-label {
+    display: none;
+  }
+
+  .qz-step h2 {
+    font-size: 1.55rem;
+  }
+
+  .qz-estimate-value {
+    font-size: 2.1rem;
+  }
+
+  .qz-compare-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

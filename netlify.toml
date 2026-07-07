@@ -34,6 +34,16 @@
   force = true
 
 [[redirects]]
+  from = "/quote"
+  to = "/quote.html"
+  status = 200
+
+[[redirects]]
+  from = "/pick-your-policy"
+  to = "/quote.html"
+  status = 200
+
+[[redirects]]
   from = "/dashboard"
   to = "/dashboard/index.html"
   status = 200

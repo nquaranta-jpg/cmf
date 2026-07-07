@@ -119,6 +119,22 @@
   gap: 1rem;
 }
 
+.hero-tool-link {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-tool-link a {
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-tool-link a:hover {
+  color: var(--gold-light);
+}
+
 /* Section Headers */
 .section-header {
   text-align: center;

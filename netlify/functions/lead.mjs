@@ -134,7 +134,7 @@ export async function handler(event) {
     || "unknown";
   const ua = event.headers["user-agent"] || "unknown";
 
-  const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid } = data;
+  const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, quote } = data;
 
   // ── Bot protection: honeypot ──
   // If the hidden bot-field has any value, it was filled by a bot.
@@ -239,6 +239,9 @@ export async function handler(event) {
   const timelineLabels = { asap: "ASAP", "30days": "Within 30 days", "just-looking": "Just looking" };
   const timelineLabel = timelineLabels[timeline] || timeline || "—";
 
+  // Pick Your Policy wizard context (optional; sent by /quote page)
+  const quoteInfo = quote && typeof quote === "object" ? quote : null;
+
   // ── 1. Insert lead into Supabase ──
   let leadId = null;
   const supabase = getSupabase();
@@ -261,7 +264,18 @@ export async function handler(event) {
       escalation_deadline: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
     };
 
-    const { data: lead, error } = await supabase.from("leads").insert(insertData).select("id").single();
+    let { data: lead, error } = await supabase
+      .from("leads")
+      .insert(quoteInfo ? { ...insertData, quote_details: quoteInfo } : insertData)
+      .select("id")
+      .single();
+
+    // If the leads table doesn't have a quote_details column yet, don't
+    // lose the lead — retry without it (details still reach Telegram).
+    if (error && quoteInfo) {
+      console.warn("Insert with quote_details failed, retrying without it:", error.message);
+      ({ data: lead, error } = await supabase.from("leads").insert(insertData).select("id").single());
+    }
 
     if (error) {
       console.error("Supabase insert error:", error);
@@ -276,6 +290,24 @@ export async function handler(event) {
   // ── 2. Telegram message with CLAIM button ──
   const chatId = TELEGRAM_GROUP_CHAT_ID || TELEGRAM_CHAT_ID;
 
+  // Extra context for leads that came through the Pick Your Policy tool
+  const goalLabels = {
+    "final-expense": "Cover funeral & final costs",
+    "term-life": "Protect family income",
+    "iul": "Build wealth with protection",
+    "annuity": "Grow savings safely",
+    "not-sure": "Wasn't sure — guided to match",
+  };
+  let quoteLines = "";
+  if (quoteInfo) {
+    quoteLines = `🧭 *Via:* Pick Your Policy tool\n`;
+    if (quoteInfo.goal) quoteLines += `🎯 *Goal:* ${goalLabels[quoteInfo.goal] || quoteInfo.goal}\n`;
+    if (quoteInfo.estimateLabel) quoteLines += `💵 *Estimate Shown:* ${quoteInfo.estimateLabel}\n`;
+    if (quoteInfo.termLength) quoteLines += `📆 *Term:* ${quoteInfo.termLength} years\n`;
+    if (quoteInfo.gender) quoteLines += `⚧ *Gender:* ${quoteInfo.gender === "male" ? "Male" : "Female"}\n`;
+    if (quoteInfo.tobacco) quoteLines += `🚬 *Tobacco:* ${quoteInfo.tobacco === "yes" ? "Yes" : "No"}\n`;
+  }
+
   const telegramMessage =
     `🔔 *New CMF ${productLabel} Lead*\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
@@ -286,6 +318,7 @@ export async function handler(event) {
     `🎂 *Age Range:* ${ageRange || "—"}\n` +
     (coverageAmount ? `💰 *Coverage:* $${Number(coverageAmount).toLocaleString()}\n` : "") +
     `⏱️ *Timeline:* ${timelineLabel}\n` +
+    quoteLines +
     `━━━━━━━━━━━━━━━━━━\n` +
     `📍 *Source:* ${utm_source || "direct"} / ${utm_medium || "none"}\n` +
     `📢 *Campaign:* ${utm_campaign || "—"}\n` +

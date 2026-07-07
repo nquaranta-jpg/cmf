@@ -69,6 +69,7 @@ nav.scrolled {
   font-weight: 500;
   letter-spacing: 0.02em;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -278,6 +279,52 @@ nav.scrolled {
 }
 
 /* Responsive */
+@media (max-width: 1160px) {
+  nav {
+    padding: 1.25rem 1.5rem;
+  }
+
+  nav.scrolled {
+    padding: 1rem 1.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    gap: 1.25rem;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+
+  .nav-cta {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
+/* Between phone and full desktop the links don't fit on one line —
+   hand over to the hamburger early (mobile menu is a full-screen
+   overlay, so it works at any width). */
+@media (max-width: 960px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   nav {
     padding: 1rem 1.25rem;
