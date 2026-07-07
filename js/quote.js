@@ -145,7 +145,7 @@ var PRODUCTS = {
     features: ["No medical exam — just a few health questions", "$5,000–$50,000 in coverage", "Your rate is locked for life and never increases", "Coverage never expires as long as you pay premiums"],
     minAge: 2, maxAge: 9, // 40–85
     eligibilityLabel: "Ages 40–85",
-    coverageOptions: [5000, 10000, 15000, 25000, 50000],
+    coverageMin: 5000, coverageMax: 50000, coverageStep: 1000, coverageDefault: 10000,
     coverageTitle: "How much final expense coverage?",
     coverageSub: "The average funeral in the U.S. costs $8,000–$12,000. Most families choose $10,000–$15,000.",
   },
@@ -156,7 +156,7 @@ var PRODUCTS = {
     features: ["Instant decision — no waiting weeks for approval", "15, 20, 25 & 30 year terms", "Level premiums that never increase during your term", "Up to $450,000 with no medical exam"],
     minAge: 0, maxAge: 7, // issue ages 20–75
     eligibilityLabel: "Ages 20–75",
-    coverageOptions: [100000, 150000, 250000, 350000, 450000],
+    coverageMin: 25000, coverageMax: 450000, coverageStep: 5000, coverageDefault: 250000,
     coverageTitle: "How much protection does your family need?",
     coverageSub: "A common rule of thumb is 10× your annual income. $450,000 is the instant-decision maximum — need more? We shop other carriers too.",
   },
@@ -167,7 +167,7 @@ var PRODUCTS = {
     features: ["Market-linked growth with downside protection", "Tax-advantaged cash value you can access while living", "Living benefits for serious illness included at no cost", "No medical exam up to $450,000"],
     minAge: 0, maxAge: 6, // 18–70
     eligibilityLabel: "Ages 18–70",
-    coverageOptions: [50000, 100000, 250000, 450000],
+    coverageMin: 50000, coverageMax: 450000, coverageStep: 5000, coverageDefault: 100000,
     coverageTitle: "How much coverage do you want to build on?",
     coverageSub: "Your death benefit is the foundation — cash value grows alongside it. Most clients start between $100,000 and $250,000.",
   },
@@ -178,7 +178,7 @@ var PRODUCTS = {
     features: ["Guaranteed interest rate locked for the full 5-year term", "Tax-deferred growth — no taxes until withdrawal", "Principal 100% protected from market losses", "Withdraw up to 5% per year penalty-free"],
     minAge: 0, maxAge: 9,
     eligibilityLabel: "All ages",
-    coverageOptions: [25000, 50000, 100000, 250000, 500000],
+    coverageMin: 25000, coverageMax: 500000, coverageStep: 5000, coverageDefault: 50000,
     coverageTitle: "How much would you like to grow?",
     coverageSub: "The minimum deposit is $25,000 — best for savings you won't need for the next 5 years, like money sitting in a low-interest account.",
   },
@@ -417,7 +417,7 @@ function renderCoverage() {
   $("qzCoverageSub").textContent = p.coverageSub;
 
   // Reset selections when arriving (product may have changed)
-  state.coverage = null;
+  state.coverage = p.coverageDefault;
   state.termLength = null;
   $("qzEstimate").style.display = "none";
   $("qzEstimateNote").style.display = "none";
@@ -431,22 +431,45 @@ function renderCoverage() {
   covLabel.textContent = state.product === "annuity" ? "Amount to deposit" : "Coverage amount";
   controls.appendChild(covLabel);
 
-  var covPills = document.createElement("div");
-  covPills.className = "qz-pills";
-  p.coverageOptions.forEach(function (amount) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "qz-pill";
-    b.textContent = fmtMoney(amount);
-    b.addEventListener("click", function () {
-      covPills.querySelectorAll(".qz-pill").forEach(function (x) { x.classList.remove("selected"); });
-      b.classList.add("selected");
-      state.coverage = amount;
-      updateEstimate();
-    });
-    covPills.appendChild(b);
+  var wrap = document.createElement("div");
+  wrap.className = "qz-slider-wrap";
+
+  var readout = document.createElement("div");
+  readout.className = "qz-slider-value";
+  readout.textContent = fmtMoney(p.coverageDefault);
+  wrap.appendChild(readout);
+
+  var slider = document.createElement("input");
+  slider.type = "range";
+  slider.className = "qz-slider";
+  slider.min = p.coverageMin;
+  slider.max = p.coverageMax;
+  slider.step = p.coverageStep;
+  slider.value = p.coverageDefault;
+  slider.setAttribute("aria-label", covLabel.textContent);
+
+  function paintTrack() {
+    var pct = ((slider.value - p.coverageMin) / (p.coverageMax - p.coverageMin)) * 100;
+    slider.style.background = "linear-gradient(to right, var(--gold) 0%, var(--gold) " + pct + "%, #e2e8f0 " + pct + "%, #e2e8f0 100%)";
+  }
+  slider.addEventListener("input", function () {
+    state.coverage = Number(slider.value);
+    readout.textContent = fmtMoney(state.coverage);
+    paintTrack();
+    updateEstimate();
   });
-  controls.appendChild(covPills);
+  paintTrack();
+  wrap.appendChild(slider);
+
+  var bounds = document.createElement("div");
+  bounds.className = "qz-slider-bounds";
+  bounds.innerHTML = "<span>" + fmtMoney(p.coverageMin) + "</span><span>" + fmtMoney(p.coverageMax) + "</span>";
+  wrap.appendChild(bounds);
+
+  controls.appendChild(wrap);
+  // Slider always has a value — show the estimate right away
+  // (term life waits for a term length below).
+  updateEstimate();
 
   if (state.product === "term-life") {
     var termLabel = document.createElement("label");
