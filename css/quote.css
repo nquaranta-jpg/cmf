@@ -147,10 +147,14 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--navy);
-  margin: 1.75rem 0 0.75rem;
+  margin: 2.25rem 0 1rem;
 }
 
-.qz-question-label:first-of-type {
+/* Only the label that directly follows the step intro loses its top
+   margin — labels wrapped in their own divs (gender, tobacco) keep
+   theirs, otherwise the questions pile onto each other. */
+.qz-step > .qz-question-label:first-of-type,
+#qzCoverageControls > .qz-question-label:first-child {
   margin-top: 0;
 }
 
