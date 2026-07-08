@@ -26,6 +26,17 @@
   background: #e2e8f0;
 }
 
+/* Gold line that grows as the visitor advances (width set by JS) */
+.qz-progress-fill {
+  position: absolute;
+  top: 15px;
+  left: 8%;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  transition: width 0.55s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
 .qz-progress-step {
   position: relative;
   z-index: 1;
@@ -62,6 +73,8 @@
   border-color: var(--gold);
   background: var(--gold);
   color: var(--navy);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(201, 169, 98, 0.18);
 }
 
 .qz-progress-step.active .qz-progress-label {
@@ -74,23 +87,42 @@
   color: var(--gold-dark);
 }
 
+/* Completed steps are clickable shortcuts back */
+.qz-progress-step.done {
+  cursor: pointer;
+}
+
+.qz-progress-step.done:hover .qz-progress-dot {
+  background: rgba(201, 169, 98, 0.12);
+}
+
 /* Step cards */
 .qz-step {
   display: none;
   background: var(--white);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 20px 60px rgba(10, 22, 40, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(10, 22, 40, 0.08);
   padding: 2.5rem;
-  animation: qzFade 0.35s ease;
 }
 
 .qz-step.active {
   display: block;
+  animation: qzInForward 0.45s cubic-bezier(0.22, 0.9, 0.36, 1) both;
 }
 
-@keyframes qzFade {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.qz-step.active.qz-back {
+  animation-name: qzInBack;
+}
+
+@keyframes qzInForward {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes qzInBack {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .qz-step h2 {
@@ -130,27 +162,73 @@
 }
 
 .qz-option {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.9rem;
   text-align: left;
   background: var(--white);
   border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
   padding: 1.15rem 1.25rem;
   cursor: pointer;
   font-family: inherit;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.22, 0.9, 0.36, 1), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+/* Staggered entrance on the goal step. `backwards` (not `both`) so the
+   finished animation releases the transform and hover lift still works. */
+.qz-step.active .qz-option {
+  animation: qzRise 0.5s cubic-bezier(0.22, 0.9, 0.36, 1) backwards;
+}
+
+.qz-step.active .qz-option:nth-child(2) { animation-delay: 0.05s; }
+.qz-step.active .qz-option:nth-child(3) { animation-delay: 0.1s; }
+.qz-step.active .qz-option:nth-child(4) { animation-delay: 0.15s; }
+.qz-step.active .qz-option:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes qzRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .qz-option:hover {
   border-color: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(10, 22, 40, 0.1);
+}
+
+.qz-option:active {
+  transform: translateY(0) scale(0.985);
 }
 
 .qz-option.selected {
   border-color: var(--gold);
   background: rgba(201, 169, 98, 0.07);
+  box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.18);
+}
+
+.qz-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: qzPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes qzPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }
 
 .qz-option-icon {
@@ -193,24 +271,37 @@
 
 .qz-pill {
   border: 1.5px solid #e2e8f0;
+  border-radius: 999px;
   background: var(--white);
   color: var(--text);
-  padding: 0.6rem 1.15rem;
+  padding: 0.6rem 1.3rem;
   font-family: inherit;
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .qz-pill:hover {
   border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 22, 40, 0.08);
+}
+
+.qz-pill:active {
+  transform: scale(0.96);
 }
 
 .qz-pill.selected {
   border-color: var(--navy);
   background: var(--navy);
   color: var(--white);
+  animation: qzPillPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes qzPillPop {
+  from { transform: scale(0.92); }
+  to { transform: scale(1); }
 }
 
 /* Coverage slider */
@@ -291,9 +382,11 @@
 /* Recommendation card */
 .qz-match-card {
   border: 1.5px solid var(--gold);
+  border-radius: 14px;
   background: rgba(201, 169, 98, 0.06);
   padding: 1.75rem;
   margin-bottom: 1.25rem;
+  animation: qzRise 0.5s cubic-bezier(0.22, 0.9, 0.36, 1) both;
 }
 
 .qz-match-badge {
@@ -347,6 +440,7 @@
 .qz-note {
   background: rgba(201, 169, 98, 0.1);
   border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0;
   padding: 0.85rem 1.1rem;
   font-size: 0.88rem;
   color: var(--text);
@@ -383,7 +477,14 @@
   justify-content: space-between;
   gap: 1rem;
   border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
   padding: 1rem 1.25rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qz-compare-item:not(.ineligible):hover {
+  border-color: var(--gold);
+  box-shadow: 0 6px 18px rgba(10, 22, 40, 0.07);
 }
 
 .qz-compare-item strong {
@@ -430,9 +531,16 @@
 .qz-estimate {
   background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
   color: var(--white);
+  border-radius: 14px;
   padding: 1.75rem;
   text-align: center;
   margin: 1.75rem 0 1rem;
+  animation: qzEstimateIn 0.5s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
+@keyframes qzEstimateIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .qz-estimate-label {
@@ -467,6 +575,7 @@
 /* Summary on contact step */
 .qz-summary {
   border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
   background: var(--cream);
   padding: 1.1rem 1.35rem;
   margin-bottom: 1.5rem;
@@ -509,6 +618,7 @@
 .qz-next {
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
   color: var(--navy);
+  border-radius: 8px;
   padding: 0.95rem 2rem;
   font-family: inherit;
   font-size: 0.88rem;
@@ -518,6 +628,10 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.qz-next:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
 }
 
 .qz-next:hover:not(:disabled) {
@@ -535,6 +649,24 @@
   color: var(--slate);
   line-height: 1.55;
   margin: 1rem 0 0;
+}
+
+/* Accessibility: honor reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .qz-step.active,
+  .qz-step.active .qz-option,
+  .qz-match-card,
+  .qz-estimate,
+  .qz-option.selected::after,
+  .qz-pill.selected {
+    animation: none;
+  }
+
+  .qz-progress-fill,
+  .qz-option,
+  .qz-pill {
+    transition: none;
+  }
 }
 
 /* Responsive */

@@ -216,17 +216,36 @@ function isEligible(productKey, idx) {
 var stepHistory = [];
 
 function showStep(n) {
+  var goingBack = n < currentStep;
   document.querySelectorAll(".qz-step").forEach(function (el) {
-    el.classList.toggle("active", Number(el.dataset.step) === n);
+    var isTarget = Number(el.dataset.step) === n;
+    el.classList.toggle("qz-back", isTarget && goingBack);
+    el.classList.toggle("active", isTarget);
   });
   document.querySelectorAll(".qz-progress-step").forEach(function (el) {
     var s = Number(el.dataset.step);
     el.classList.toggle("active", s === n);
     el.classList.toggle("done", s < n);
+    el.querySelector(".qz-progress-dot").textContent = s < n ? "✓" : String(s);
   });
+  // Grow the gold line to the active dot (track spans 8%..92%)
+  $("qzProgressFill").style.width = (((n - 1) / 4) * 84) + "%";
   currentStep = n;
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+// Completed progress dots are shortcuts back to earlier steps
+document.querySelectorAll(".qz-progress-step").forEach(function (el) {
+  el.addEventListener("click", function () {
+    var s = Number(el.dataset.step);
+    if (s < currentStep) {
+      // Drop history entries at/after the target so the Back button
+      // keeps walking backwards instead of replaying skipped steps
+      stepHistory = stepHistory.filter(function (x) { return x < s; });
+      showStep(s);
+    }
+  });
+});
 
 function goTo(n) {
   stepHistory.push(currentStep);
