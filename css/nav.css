@@ -2,6 +2,9 @@
    Navigation
    ============================================ */
 
+/* 3-column grid so the center links align to the true page center —
+   with flex space-between they centered in the leftover space, which
+   sits right of page center because the logo is wider than the CTA. */
 nav {
   position: fixed;
   top: 0;
@@ -9,10 +12,22 @@ nav {
   right: 0;
   z-index: 1000;
   padding: 1.25rem 3rem;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   transition: all 0.4s ease;
+}
+
+nav .logo {
+  justify-self: start;
+}
+
+nav .nav-links {
+  justify-self: center;
+}
+
+nav .nav-cta {
+  justify-self: end;
 }
 
 nav.scrolled {
@@ -312,6 +327,12 @@ nav.scrolled {
    hand over to the hamburger early (mobile menu is a full-screen
    overlay, so it works at any width). */
 @media (max-width: 960px) {
+  /* Back to flex: only the logo and hamburger remain */
+  nav {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .nav-links {
     display: none;
   }
