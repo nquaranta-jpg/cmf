@@ -1,0 +1,11 @@
+# Render blueprint (repo root so Render auto-detects it): builds dealvet/ via its Dockerfile.
+services:
+  - type: web
+    name: dealvet
+    runtime: docker
+    rootDir: dealvet
+    plan: free
+    healthCheckPath: /api/analyses
+    envVars:
+      - key: DATA_DIR
+        value: /app/data
