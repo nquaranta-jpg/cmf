@@ -75,8 +75,45 @@ function fromJsonLd($: cheerio.CheerioAPI, fields: ScrapedFields): void {
   })
 }
 
-/** Loose single-string text patterns (works on both raw and rendered text). */
+/**
+ * Loose single-string text patterns (works on both raw and rendered text).
+ * Also handles MLS label/value pairs flattened onto one line — pasting into a
+ * single-line input strips newlines, so labels and values end up space-joined.
+ */
 function fromText(text: string, fields: ScrapedFields): void {
+  const ensureUnit = (n: number): ScrapedUnit => {
+    fields.units ??= []
+    while (fields.units.length < n) fields.units.push({})
+    return fields.units[n - 1]
+  }
+  if (fields.unitCount === undefined) {
+    const m = text.match(/total units\s*:?\s*(\d{1,2})\b/i)
+    if (m) fields.unitCount = parseNum(m[1])
+  }
+  for (const m of text.matchAll(/unit\s*(\d{1,2})\s*rental amount[^$\d]{0,20}\$\s?([\d,]+(?:\.\d{2})?)/gi)) {
+    ensureUnit(Number(m[1])).currentRent ??= parseNum(m[2])
+  }
+  for (const m of text.matchAll(/unit\s*(\d{1,2})\s*baths?\s*:?\s*([\d.]+)/gi)) {
+    ensureUnit(Number(m[1])).baths ??= parseNum(m[2])
+  }
+  if (!fields.heatType) {
+    const m = text.match(/heating\s*:?\s*([A-Za-z][A-Za-z ,/-]{2,40}?)\s*(?:cooling|water source|electric|sewer|lot size|$)/i)
+    if (m) fields.heatType = m[1].trim()
+  }
+  if (!fields.address) {
+    const m = text.match(
+      /\b(\d{1,6}\s+[A-Za-z0-9'. -]{2,40}?\b(?:street|st|avenue|ave|road|rd|drive|dr|lane|ln|way|court|ct|place|pl|blvd|boulevard|terrace|ter|circle|cir|square|sq)\.?),?\s+([A-Za-z'. -]+?,?\s+[A-Z]{2}\s+\d{5})\b/i,
+    )
+    if (m) fields.address = `${m[1]}, ${m[2]}`
+  }
+  if (!fields.lotSize) {
+    const m = text.match(/lot size acres\s*:?\s*([\d.]+)/i)
+    if (m) fields.lotSize = `${m[1]} acres`
+  }
+  if (fields.sqft === undefined) {
+    const m = text.match(/(?:total finished area|agfinarea)\s*:?\s*([\d,]+)/i)
+    if (m) fields.sqft = parseNum(m[1])
+  }
   if (fields.price === undefined) {
     // First $ amount that plausibly reads as a price (≥ $50k), skipping amounts
     // whose surrounding context says tax/income/rent/loan.

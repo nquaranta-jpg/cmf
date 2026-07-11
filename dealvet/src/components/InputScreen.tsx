@@ -30,13 +30,13 @@ export default function InputScreen({ history, busy, scrapeNote, onScrape, onPar
     <div className="mx-auto max-w-3xl space-y-6">
       <Card title="Screen a new deal">
         <p className="mb-4 text-sm text-slate-600">
-          Paste a listing URL and DealVet will try to extract the numbers (best-effort, always editable), or skip
-          straight to manual entry.
+          Paste a listing URL — or the entire listing page text — and DealVet will extract the numbers (best-effort,
+          always editable). Manual entry is the fallback.
         </p>
         <div className="flex gap-2">
           <input
-            type="url"
-            placeholder="https://…  (listing URL)"
+            type="text"
+            placeholder="https://…  (listing URL, or paste the whole listing text)"
             className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-400"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

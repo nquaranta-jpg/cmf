@@ -133,17 +133,27 @@ export default function App() {
     startWizard(p, new Set(res.found))
   }
 
-  const handleScrape = async (url: string) => {
+  const handleScrape = async (input: string) => {
+    const trimmed = input.trim()
+    // Not a URL? Treat it as pasted listing text — that's almost always the intent.
+    if (!/^https?:\/\/\S+$/i.test(trimmed)) {
+      if (trimmed.length >= 60) {
+        await handleParseText(trimmed)
+      } else {
+        setScrapeNote('That doesn’t look like a listing URL — paste a full link, or paste the whole listing page text.')
+      }
+      return
+    }
     setScrapeBusy(true)
     setScrapeNote(null)
     try {
-      const res = await scrapeUrl(url)
+      const res = await scrapeUrl(trimmed)
       if (!res.ok) {
-        res.note += ' Tip: open the listing in your browser, select-all and copy the page, then use “Paste listing text” below.'
+        res.note += ' Tip: open the listing in your browser, select-all and copy the page, then paste the text right here — the box accepts either.'
       }
       applyExtraction(res)
     } catch {
-      setScrapeNote('The extractor could not reach the server — enter the details manually.')
+      setScrapeNote('Extraction failed — try pasting the listing page text instead, or enter the details manually.')
     } finally {
       setScrapeBusy(false)
     }
