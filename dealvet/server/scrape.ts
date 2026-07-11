@@ -78,9 +78,16 @@ function fromJsonLd($: cheerio.CheerioAPI, fields: ScrapedFields): void {
 /** Loose single-string text patterns (works on both raw and rendered text). */
 function fromText(text: string, fields: ScrapedFields): void {
   if (fields.price === undefined) {
-    const m = text.match(/\$\s?([\d]{1,3}(?:,\d{3}){1,3})(?!\d)/)
-    const n = m ? parseNum(m[1]) : undefined
-    if (n && n >= 50_000) fields.price = n
+    // First $ amount that plausibly reads as a price (≥ $50k), skipping amounts
+    // whose surrounding context says tax/income/rent/loan.
+    for (const m of text.matchAll(/\$\s?([\d]{1,3}(?:,\d{3}){1,3})(?!\d)/g)) {
+      const n = parseNum(m[1])
+      if (!n || n < 50_000) continue
+      const context = text.slice(Math.max(0, (m.index ?? 0) - 45), m.index).toLowerCase()
+      if (/tax|income|rent|loan|payment|assess/.test(context)) continue
+      fields.price = n
+      break
+    }
   }
   if (fields.yearBuilt === undefined) {
     const m = text.match(/(?:built|year built|constructed)[^\d]{0,15}((?:18|19|20)\d{2})/i)
@@ -194,6 +201,30 @@ function foundKeys(fields: ScrapedFields): string[] {
 
 function countFound(fields: ScrapedFields): number {
   return foundKeys(fields).length + (fields.units?.some((u) => u.currentRent) ? 1 : 0)
+}
+
+/**
+ * Parse raw listing-page text the user copied from their own browser.
+ * Bot-protected sites (MLS portals behind Cloudflare) block datacenter IPs,
+ * so in the cloud this is the reliable path: same parsers, zero fetching.
+ */
+export function parseListingText(text: string): ScrapeResult {
+  const fields: ScrapedFields = {}
+  const lines = text.split('\n').map((s) => s.trim()).filter(Boolean)
+  fromLines(lines, fields)
+  addressFromLines(lines, fields)
+  fromText(text.replace(/\s+/g, ' '), fields)
+  const found = foundKeys(fields)
+  const rentCount = fields.units?.filter((u) => u.currentRent).length ?? 0
+  if (found.length === 0) {
+    return { ok: false, fields: {}, found: [], note: 'Nothing recognizable in that text — enter the details manually.' }
+  }
+  return {
+    ok: true,
+    fields,
+    found,
+    note: `Extracted ${found.length} field(s)${rentCount ? ` including ${rentCount} unit rent(s)` : ''} from the pasted text — all unverified. Confirm or correct each one.`,
+  }
 }
 
 // ---------- Pass 1: plain fetch ----------

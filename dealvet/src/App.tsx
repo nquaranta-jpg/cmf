@@ -7,7 +7,15 @@ import {
   type Assumptions,
   type PropertyData,
 } from './lib/underwriting'
-import { deleteAnalysis, listAnalyses, saveAnalysis, scrapeUrl, type AnalysisRecord } from './api'
+import {
+  deleteAnalysis,
+  listAnalyses,
+  parseListingText,
+  saveAnalysis,
+  scrapeUrl,
+  type AnalysisRecord,
+  type ScrapeResponse,
+} from './api'
 import InputScreen from './components/InputScreen'
 import PropertyForm from './components/PropertyForm'
 import StageIncome from './components/stages/StageIncome'
@@ -98,38 +106,56 @@ export default function App() {
     setScreen('wizard')
   }
 
+  const applyExtraction = (res: ScrapeResponse) => {
+    if (!res.ok) {
+      setScrapeNote(res.note)
+      return
+    }
+    const f = res.fields
+    const unitCount =
+      f.unitCount && f.unitCount >= 1 && f.unitCount <= 60 ? f.unitCount : Math.max(f.units?.length ?? 0, 2)
+    const p = blankProperty(unitCount)
+    if (f.address) p.address = f.address
+    if (f.price) p.price = f.price
+    if (f.yearBuilt) p.yearBuilt = f.yearBuilt
+    if (f.sqft) p.sqft = f.sqft
+    if (f.annualTaxes) p.annualTaxes = f.annualTaxes
+    if (f.listedGrossIncome) p.listedGrossIncome = f.listedGrossIncome
+    if (f.heatType) p.heatType = f.heatType
+    if (f.lotSize) p.lotSize = f.lotSize
+    if (f.parkingSpaces) p.parkingSpaces = f.parkingSpaces
+    if (f.units?.length) {
+      p.units = p.units.map((u, i) => {
+        const s = f.units![i]
+        return s ? { ...u, beds: s.beds ?? u.beds, baths: s.baths ?? u.baths, currentRent: s.currentRent ?? 0 } : u
+      })
+    }
+    startWizard(p, new Set(res.found))
+  }
+
   const handleScrape = async (url: string) => {
     setScrapeBusy(true)
     setScrapeNote(null)
     try {
       const res = await scrapeUrl(url)
-      const f = res.fields
-      const unitCount =
-        f.unitCount && f.unitCount >= 1 && f.unitCount <= 60 ? f.unitCount : Math.max(f.units?.length ?? 0, 2)
-      const p = blankProperty(unitCount)
-      if (f.address) p.address = f.address
-      if (f.price) p.price = f.price
-      if (f.yearBuilt) p.yearBuilt = f.yearBuilt
-      if (f.sqft) p.sqft = f.sqft
-      if (f.annualTaxes) p.annualTaxes = f.annualTaxes
-      if (f.listedGrossIncome) p.listedGrossIncome = f.listedGrossIncome
-      if (f.heatType) p.heatType = f.heatType
-      if (f.lotSize) p.lotSize = f.lotSize
-      if (f.parkingSpaces) p.parkingSpaces = f.parkingSpaces
-      if (f.units?.length) {
-        p.units = p.units.map((u, i) => {
-          const s = f.units![i]
-          return s ? { ...u, beds: s.beds ?? u.beds, baths: s.baths ?? u.baths, currentRent: s.currentRent ?? 0 } : u
-        })
-      }
       if (!res.ok) {
-        setScrapeNote(res.note)
-        setScrapeBusy(false)
-        return
+        res.note += ' Tip: open the listing in your browser, select-all and copy the page, then use “Paste listing text” below.'
       }
-      startWizard(p, new Set(res.found))
+      applyExtraction(res)
     } catch {
       setScrapeNote('The extractor could not reach the server — enter the details manually.')
+    } finally {
+      setScrapeBusy(false)
+    }
+  }
+
+  const handleParseText = async (text: string) => {
+    setScrapeBusy(true)
+    setScrapeNote(null)
+    try {
+      applyExtraction(await parseListingText(text))
+    } catch {
+      setScrapeNote('The parser could not reach the server — enter the details manually.')
     } finally {
       setScrapeBusy(false)
     }
@@ -197,6 +223,7 @@ export default function App() {
           busy={scrapeBusy}
           scrapeNote={scrapeNote}
           onScrape={handleScrape}
+          onParseText={handleParseText}
           onManual={() => startWizard(blankProperty(), new Set())}
           onSample={() => startWizard(sampleProperty(), new Set())}
           onOpen={openSaved}

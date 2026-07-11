@@ -8,6 +8,7 @@ interface Props {
   busy: boolean
   scrapeNote: string | null
   onScrape: (url: string) => void
+  onParseText: (text: string) => void
   onManual: () => void
   onSample: () => void
   onOpen: (rec: AnalysisRecord) => void
@@ -20,8 +21,10 @@ const verdictColor: Record<string, string> = {
   FAIL: 'bg-red-100 text-red-800',
 }
 
-export default function InputScreen({ history, busy, scrapeNote, onScrape, onManual, onSample, onOpen, onDelete }: Props) {
+export default function InputScreen({ history, busy, scrapeNote, onScrape, onParseText, onManual, onSample, onOpen, onDelete }: Props) {
   const [url, setUrl] = useState('')
+  const [pasteMode, setPasteMode] = useState(false)
+  const [pasted, setPasted] = useState('')
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -46,6 +49,29 @@ export default function InputScreen({ history, busy, scrapeNote, onScrape, onMan
         {scrapeNote && (
           <div className="mt-3">
             <Banner tone="warn">{scrapeNote}</Banner>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => setPasteMode(!pasteMode)}
+          className="mt-3 text-sm font-medium text-indigo-600 hover:underline"
+        >
+          {pasteMode ? 'Hide paste mode' : 'Or paste the listing page text (for sites that block scraping)'}
+        </button>
+        {pasteMode && (
+          <div className="mt-2">
+            <textarea
+              rows={6}
+              placeholder="Open the listing in your browser, select all (⌘A), copy (⌘C), and paste everything here…"
+              className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-400"
+              value={pasted}
+              onChange={(e) => setPasted(e.target.value)}
+            />
+            <div className="mt-2">
+              <PrimaryButton onClick={() => onParseText(pasted)} disabled={pasted.trim().length < 20 || busy}>
+                {busy ? 'Parsing…' : 'Extract from pasted text'}
+              </PrimaryButton>
+            </div>
           </div>
         )}
         <div className="mt-4 flex items-center gap-3">

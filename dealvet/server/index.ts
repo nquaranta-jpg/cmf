@@ -1,7 +1,7 @@
 import path from 'node:path'
 import express from 'express'
 import { getBrowser } from './browser'
-import { scrapeListing } from './scrape'
+import { parseListingText, scrapeListing } from './scrape'
 import { deleteAnalysis, getAnalysis, listAnalyses, saveAnalysis, type AnalysisRecord } from './store'
 import {
   CHECKLIST_ITEMS,
@@ -22,6 +22,15 @@ app.post('/api/scrape', async (req, res) => {
     return
   }
   res.json(await scrapeListing(url))
+})
+
+app.post('/api/parse-text', (req, res) => {
+  const text = typeof req.body?.text === 'string' ? req.body.text : ''
+  if (text.trim().length < 20) {
+    res.status(400).json({ ok: false, fields: {}, found: [], note: 'Paste the full listing page text (select-all, copy).' })
+    return
+  }
+  res.json(parseListingText(text.slice(0, 500_000)))
 })
 
 app.get('/api/analyses', (_req, res) => {
@@ -99,5 +108,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const PORT = Number(process.env.PORT ?? 3001)
+// Respect the platform's PORT only in production — in dev the harness may set
+// PORT to the Vite port, and the API must stay on 3001 (vite proxies to it).
+const PORT = process.env.NODE_ENV === 'production' ? Number(process.env.PORT ?? 3001) : 3001
 app.listen(PORT, () => console.log(`DealVet listening on http://localhost:${PORT}`))

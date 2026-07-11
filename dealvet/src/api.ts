@@ -43,6 +43,13 @@ export const scrapeUrl = (url: string): Promise<ScrapeResponse> =>
     body: JSON.stringify({ url }),
   }).then((r) => json<ScrapeResponse>(r))
 
+export const parseListingText = (text: string): Promise<ScrapeResponse> =>
+  fetch('/api/parse-text', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ text }),
+  }).then((r) => json<ScrapeResponse>(r))
+
 // Free-tier hosts (Render/Railway/Fly) have ephemeral disks — the server's JSON
 // store can be wiped on redeploys. The browser keeps a localStorage mirror of
 // every save and silently re-uploads anything the server has lost.
