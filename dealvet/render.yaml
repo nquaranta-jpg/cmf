@@ -1,0 +1,13 @@
+# Render blueprint. If deploying from the parent repo, either move this file to
+# the repo root (keeping rootDir below) or create the service manually in the
+# Render dashboard with Root Directory = dealvet.
+services:
+  - type: web
+    name: dealvet
+    runtime: docker
+    rootDir: dealvet
+    plan: free
+    healthCheckPath: /api/analyses
+    envVars:
+      - key: DATA_DIR
+        value: /app/data
