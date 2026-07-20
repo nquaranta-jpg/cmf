@@ -1,0 +1,46 @@
+---
+import CtaButton from "./CtaButton.astro";
+import { nav, site } from "../copy/shared";
+
+// TODO: point these at the GoHighLevel portal via env vars before launch.
+const loginUrl = import.meta.env.PUBLIC_LOGIN_URL || "#";
+const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
+---
+
+<header class="sticky top-0 z-50 border-b border-brand-text/10 bg-brand-bg/90 backdrop-blur">
+  <nav
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
+    aria-label="Main"
+  >
+    <a href="/" class="text-lg font-extrabold tracking-tight text-brand-text">
+      {site.name}
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {
+        nav.links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm font-medium text-brand-text/70 transition-colors hover:text-brand-text"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={loginUrl}
+        class="hidden text-sm font-medium text-brand-text/70 transition-colors hover:text-brand-text sm:inline-block"
+      >
+        {nav.login}
+      </a>
+      <CtaButton href={signupUrl} class="!px-4 !py-2 !text-sm">
+        {nav.signup}
+      </CtaButton>
+    </div>
+  </nav>
+</header>

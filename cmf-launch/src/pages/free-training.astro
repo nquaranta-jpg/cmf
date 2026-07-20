@@ -1,0 +1,238 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { meta, optIn } from "../copy/free-training";
+
+// Copy rule 5: no carrier names anywhere on this page.
+
+// TODO: GoHighLevel inbound webhook URL. The form refuses to submit and shows
+// the inline error while this is unset.
+const webhookUrl = import.meta.env.PUBLIC_FORM_WEBHOOK_URL || "";
+const errors = optIn.form.errors;
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <section class="band">
+    <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
+      <h1
+        class="text-center text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
+      >
+        {optIn.h1}
+      </h1>
+      <p class="mt-6 text-center text-lg leading-relaxed text-brand-text/70">
+        {optIn.subhead}
+      </p>
+
+      {optIn.bodyParagraphs.map((p) => (
+        <p class="mt-4 text-brand-text/70">{p}</p>
+      ))}
+      {
+        optIn.bullets.length > 0 && (
+          <ul class="mt-6 space-y-3">
+            {optIn.bullets.map((b) => (
+              <li class="flex gap-3 text-brand-text">
+                <span class="mt-1 text-brand-accent" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <form
+        id="opt-in-form"
+        class="mt-12 rounded-2xl border border-brand-text/10 bg-brand-text/[0.03] p-6 sm:p-8"
+        novalidate
+        data-webhook-url={webhookUrl}
+      >
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="firstName" class="mb-1.5 block text-sm font-semibold text-brand-text">
+              {optIn.form.firstName}
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              autocomplete="given-name"
+              required
+              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+            />
+            <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="firstName"></p>
+          </div>
+          <div>
+            <label for="lastName" class="mb-1.5 block text-sm font-semibold text-brand-text">
+              {optIn.form.lastName}
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              autocomplete="family-name"
+              required
+              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+            />
+            <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="lastName"></p>
+          </div>
+          <div>
+            <label for="email" class="mb-1.5 block text-sm font-semibold text-brand-text">
+              {optIn.form.email}
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+              required
+              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+            />
+            <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="email"></p>
+          </div>
+          <div>
+            <label for="mobile" class="mb-1.5 block text-sm font-semibold text-brand-text">
+              {optIn.form.mobile}
+            </label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+            />
+            <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="mobile"></p>
+          </div>
+        </div>
+
+        {/* TCPA consent: unchecked by default, required to submit.
+            Copy rule 7: label must be the exact consent text from
+            cmf-launch-free-training-page.md (see src/copy/free-training.ts). */}
+        <div class="mt-6">
+          <label class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="consent"
+              name="consent"
+              required
+              class="mt-1 h-4 w-4 shrink-0 accent-[var(--brand-accent)]"
+            />
+            <span class="text-xs leading-relaxed text-brand-text/60">
+              {optIn.form.consentLabel}
+            </span>
+          </label>
+          <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="consent"></p>
+        </div>
+
+        <button
+          type="submit"
+          class="mt-8 w-full rounded-lg bg-brand-accent px-6 py-4 text-lg font-bold text-brand-bg transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {optIn.form.submitLabel}
+        </button>
+
+        <p id="form-error" class="mt-4 hidden text-center text-sm text-red-400" role="alert"></p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script
+  is:inline
+  define:vars={{ errors }}
+>
+  const form = document.getElementById("opt-in-form");
+  const formError = document.getElementById("form-error");
+  const webhookUrl = form.dataset.webhookUrl;
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  // US phone: 10 digits, optionally with a leading 1, tolerant of common
+  // separators. Normalized before sending.
+  const phoneRe = /^\+?1?[\s.-]?\(?([2-9]\d{2})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})$/;
+
+  function showFieldError(name, message) {
+    const el = form.querySelector(`.field-error[data-for="${name}"]`);
+    const input = form.elements[name];
+    if (el) {
+      el.textContent = message;
+      el.classList.toggle("hidden", !message);
+    }
+    if (input && input.setAttribute) {
+      if (message) input.setAttribute("aria-invalid", "true");
+      else input.removeAttribute("aria-invalid");
+    }
+  }
+
+  function validate() {
+    let firstInvalid = null;
+    const check = (name, ok, message) => {
+      showFieldError(name, ok ? "" : message);
+      if (!ok && !firstInvalid) firstInvalid = form.elements[name];
+      return ok;
+    };
+
+    const v = (name) => form.elements[name].value.trim();
+    let valid = true;
+    valid = check("firstName", v("firstName").length > 0, errors.required) && valid;
+    valid = check("lastName", v("lastName").length > 0, errors.required) && valid;
+    valid =
+      check(
+        "email",
+        v("email").length > 0 && emailRe.test(v("email")),
+        v("email").length === 0 ? errors.required : errors.email,
+      ) && valid;
+    valid =
+      check(
+        "mobile",
+        v("mobile").length > 0 && phoneRe.test(v("mobile")),
+        v("mobile").length === 0 ? errors.required : errors.phone,
+      ) && valid;
+    valid = check("consent", form.elements.consent.checked, errors.consent) && valid;
+
+    if (firstInvalid) firstInvalid.focus();
+    return valid;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    formError.classList.add("hidden");
+    if (!validate()) return;
+
+    if (!webhookUrl) {
+      // PUBLIC_FORM_WEBHOOK_URL is not configured; keep the user's input.
+      formError.textContent = errors.submit;
+      formError.classList.remove("hidden");
+      return;
+    }
+
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+
+    const payload = {
+      firstName: form.elements.firstName.value.trim(),
+      lastName: form.elements.lastName.value.trim(),
+      email: form.elements.email.value.trim(),
+      mobile: form.elements.mobile.value.trim(),
+      consent: form.elements.consent.checked,
+      // Hidden source field so GoHighLevel can attribute the lead.
+      source: "free-training-page",
+    };
+
+    try {
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
+      window.location.assign("/thank-you");
+    } catch (err) {
+      // Inline error; the user's input stays in the fields.
+      formError.textContent = errors.submit;
+      formError.classList.remove("hidden");
+      button.disabled = false;
+    }
+  });
+</script>

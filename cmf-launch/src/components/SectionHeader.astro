@@ -1,0 +1,16 @@
+---
+/** Shared section header: heading plus optional intro line. */
+interface Props {
+  heading: string;
+  intro?: string;
+  id?: string;
+}
+const { heading, intro, id } = Astro.props;
+---
+
+<div class="mx-auto max-w-3xl text-center" id={id}>
+  <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+    {heading}
+  </h2>
+  {intro && <p class="mt-4 text-lg text-brand-text/70">{intro}</p>}
+</div>

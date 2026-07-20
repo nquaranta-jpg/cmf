@@ -1,0 +1,21 @@
+---
+/**
+ * Shared CTA button. `variant="primary"` is the accent-filled signup button,
+ * `variant="ghost"` is the outlined secondary (e.g. Log In).
+ */
+interface Props {
+  href: string;
+  variant?: "primary" | "ghost";
+  class?: string;
+}
+const { href, variant = "primary", class: className = "" } = Astro.props;
+
+const base =
+  "inline-block rounded-lg px-6 py-3 text-base font-semibold transition-colors duration-150 text-center";
+const styles =
+  variant === "primary"
+    ? "bg-brand-accent text-brand-bg hover:brightness-110"
+    : "border border-brand-text/30 text-brand-text hover:border-brand-accent hover:text-brand-accent";
+---
+
+<a href={href} class={`${base} ${styles} ${className}`}><slot /></a>

@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Brand tokens - the single place to adjust the palette.             */
+/* Everything on the site keys off these four variables.              */
+/* ------------------------------------------------------------------ */
+:root {
+  --brand-bg: #0b0e14; /* near-black page background */
+  --brand-accent: #c9a227; /* deep gold */
+  --brand-accent-2: #4a6fa5; /* secondary steel blue */
+  --brand-text: #f4f4f2; /* high-contrast off-white */
+}
+
+/* Expose the tokens to Tailwind utilities (bg-brand-bg, text-brand-accent, ...) */
+@theme inline {
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-2: var(--brand-accent-2);
+  --color-brand-text: var(--brand-text);
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--brand-bg);
+  color: var(--brand-text);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Alternating section bands: subtle background treatments only,
+   both derived from the brand background so token changes propagate. */
+.band {
+  background-color: var(--brand-bg);
+}
+.band-alt {
+  background-color: color-mix(in srgb, var(--brand-bg) 92%, white);
+}
+
+/* Accessible focus states on the dark background */
+:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* FAQ accordion: rotate the chevron when open, hide default markers */
+details.faq > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details.faq > summary::-webkit-details-marker {
+  display: none;
+}
+details.faq[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+.faq-chevron {
+  transition: transform 150ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .faq-chevron {
+    transition: none;
+  }
+}

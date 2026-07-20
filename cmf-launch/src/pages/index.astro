@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaButton from "../components/CtaButton.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import FaqItem from "../components/FaqItem.astro";
+import {
+  meta,
+  hero,
+  howItWorks,
+  whoThisIsFor,
+  crownMatch,
+  faq,
+  finalCta,
+} from "../copy/landing";
+
+// TODO: point these at the GoHighLevel portal via env vars before launch.
+const loginUrl = import.meta.env.PUBLIC_LOGIN_URL || "#";
+const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  {/* ================================================================
+      HERO
+      ================================================================ */}
+  <section id="platform" class="band">
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+      <div class="max-w-3xl">
+        <h1
+          class="text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-6xl"
+        >
+          {hero.h1}
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-brand-text/70 sm:text-xl">
+          {hero.subhead}
+        </p>
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+          <CtaButton href={signupUrl}>{hero.primaryCta}</CtaButton>
+          <CtaButton href={loginUrl} variant="ghost">{hero.secondaryCta}</CtaButton>
+        </div>
+      </div>
+
+      {/* TODO: hero imagery slot. The copy doc may imply a product visual
+          here; use a styled placeholder block with alt text, not stock
+          photos. Currently renders nothing. */}
+    </div>
+  </section>
+
+  {/* ================================================================
+      OPTIONAL STAT BLOCKS - intentionally empty.
+      The copy doc marks this as a bracketed placeholder; per copy rule 3
+      it renders nothing. When real, approved figures exist, use
+      src/components/StatCard.astro in a grid here.
+      ================================================================ */}
+
+  {/* ================================================================
+      HOW IT WORKS - numbered vertical timeline on mobile,
+      4-across row on desktop.
+      ================================================================ */}
+  <section class="band-alt">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <SectionHeader heading={howItWorks.heading} intro={howItWorks.intro || undefined} />
+      <ol class="mt-14 grid gap-10 md:grid-cols-4 md:gap-6">
+        {
+          howItWorks.steps.map((step, i) => (
+            <li class="relative flex gap-5 md:block">
+              <div class="flex flex-col items-center md:mb-5 md:flex-row md:gap-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-accent font-bold text-brand-bg">
+                  {i + 1}
+                </span>
+                {/* connector line: vertical on mobile, hidden on desktop */}
+                {i < howItWorks.steps.length - 1 && (
+                  <span
+                    class="mt-2 w-px flex-1 bg-brand-text/15 md:hidden"
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
+              <div class="pb-2">
+                <h3 class="text-lg font-bold text-brand-text">{step.title}</h3>
+                <p class="mt-2 text-brand-text/70">{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ================================================================
+      WHO THIS IS FOR - side-by-side cards, stacked on mobile.
+      "For you" positive, "not for you" muted.
+      ================================================================ */}
+  <section id="partners" class="band">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <SectionHeader heading={whoThisIsFor.heading} />
+      <div class="mt-14 grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-brand-accent/40 bg-brand-accent/5 p-8">
+          <h3 class="text-xl font-bold text-brand-accent">
+            {whoThisIsFor.forYou.title}
+          </h3>
+          <ul class="mt-6 space-y-4">
+            {
+              whoThisIsFor.forYou.items.map((item) => (
+                <li class="flex gap-3 text-brand-text">
+                  <span class="mt-1 text-brand-accent" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-brand-text/10 bg-brand-text/[0.03] p-8">
+          <h3 class="text-xl font-bold text-brand-text/50">
+            {whoThisIsFor.notForYou.title}
+          </h3>
+          <ul class="mt-6 space-y-4">
+            {
+              whoThisIsFor.notForYou.items.map((item) => (
+                <li class="flex gap-3 text-brand-text/50">
+                  <span class="mt-1" aria-hidden="true">
+                    ✕
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ================================================================
+      CROWN MATCH - the emotional peak of the page. Distinct treatment:
+      more space, larger type, accent color doing real work.
+      ================================================================ */}
+  <section id="about" class="band-alt relative overflow-hidden">
+    <div
+      class="pointer-events-none absolute inset-0 opacity-20"
+      style="background: radial-gradient(60% 50% at 50% 40%, var(--brand-accent) 0%, transparent 70%);"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative mx-auto max-w-4xl px-4 py-28 text-center sm:px-6 sm:py-40">
+      <h2
+        class="text-4xl font-black leading-tight tracking-tight text-brand-accent sm:text-6xl"
+      >
+        {crownMatch.heading}
+      </h2>
+      {
+        crownMatch.paragraphs.map((p) => (
+          <p class="mx-auto mt-8 max-w-2xl text-xl leading-relaxed text-brand-text sm:text-2xl">
+            {p}
+          </p>
+        ))
+      }
+      <div class="mt-12">
+        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
+          {crownMatch.ctaLabel}
+        </CtaButton>
+      </div>
+    </div>
+  </section>
+
+  {/* ================================================================
+      FAQ - accessible accordion on native details/summary.
+      ================================================================ */}
+  <section class="band">
+    <div class="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
+      <SectionHeader heading={faq.heading} />
+      <div class="mt-12">
+        {faq.items.map((item) => <FaqItem question={item.q} answer={item.a} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* ================================================================
+      FINAL CTA - keeps "Create Your Free Account" within one viewport
+      of the page end (the sticky nav covers the rest of the page).
+      ================================================================ */}
+  <section class="band-alt">
+    <div class="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
+      <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        {finalCta.heading}
+      </h2>
+      <div class="mt-8">
+        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
+          {finalCta.ctaLabel}
+        </CtaButton>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

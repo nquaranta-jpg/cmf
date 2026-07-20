@@ -1,0 +1,18 @@
+---
+/**
+ * Stat card. NOT currently rendered anywhere: the copy docs intentionally
+ * contain no statistics (copy rule 4), and bracketed placeholders like
+ * "[Optional stat blocks...]" render nothing. This component exists so the
+ * owner can drop in real, approved figures later without new markup.
+ */
+interface Props {
+  value: string;
+  label: string;
+}
+const { value, label } = Astro.props;
+---
+
+<div class="rounded-xl border border-brand-text/10 bg-brand-text/5 p-6 text-center">
+  <div class="text-4xl font-extrabold text-brand-accent">{value}</div>
+  <div class="mt-2 text-sm text-brand-text/70">{label}</div>
+</div>

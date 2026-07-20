@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { thankYou } from "../copy/free-training";
+---
+
+<BaseLayout title={thankYou.meta.title} description={thankYou.meta.description}>
+  <section class="band">
+    <div class="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 sm:py-36">
+      <h1
+        class="text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
+      >
+        {thankYou.h1}
+      </h1>
+      {
+        thankYou.paragraphs.map((p) => (
+          <p class="mt-6 text-lg leading-relaxed text-brand-text/70">{p}</p>
+        ))
+      }
+
+      {/* TODO: if the thank-you copy in cmf-launch-free-training-page.md
+          embeds a training video or a next-step CTA, add it here per the doc.
+          Currently renders nothing beyond the copy above. */}
+    </div>
+  </section>
+</BaseLayout>

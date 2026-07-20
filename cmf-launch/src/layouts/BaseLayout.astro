@@ -1,0 +1,84 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../copy/shared";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set false on pages that manage their own nav (none currently). */
+  showNav?: boolean;
+}
+const { title, description, showNav = true } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+// TODO: add a real OG image at public/og-image.jpg (1200x630) before launch.
+const ogImage = new URL("/og-image.jpg", site.url).href;
+
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Favicon placeholder - swap public/favicon.svg for the real mark. */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    {/* Twitter card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Inter with system-font fallback while it loads (display=swap). */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap"
+    />
+
+    {/* ---- Google Tag Manager slot (renders nothing when PUBLIC_GTM_ID is unset) ---- */}
+    {
+      gtmId && (
+        <script
+          is:inline
+          define:vars={{ gtmId }}
+        >{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);`}</script>
+      )
+    }
+
+    {/* ---- Meta Pixel slot (renders nothing when PUBLIC_META_PIXEL_ID is unset) ---- */}
+    {
+      metaPixelId && (
+        <script
+          is:inline
+          define:vars={{ metaPixelId }}
+        >{`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',metaPixelId);fbq('track','PageView');`}</script>
+      )
+    }
+  </head>
+  <body class="min-h-screen bg-brand-bg text-brand-text">
+    {showNav && <Nav />}
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
