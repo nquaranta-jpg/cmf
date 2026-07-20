@@ -67,12 +67,14 @@ export const whoThisIsFor = {
 };
 
 export const crownMatch = {
-  // TODO: owner review. Crown Match is described as producer-mentor matching
-  // because no definition of the program existed in the provided materials.
-  heading: "Nobody builds alone here.",
+  // Owner-defined program: two years with CMF, then CMF invests in the
+  // agent's own agency. TODO: document the concrete program terms (what the
+  // investment covers, what "stay two years" requires) and get them
+  // reviewed before advertising this section.
+  heading: "The end goal is your name on the door.",
   paragraphs: [
-    "Every agent who joins CMF Launch gets matched with a working producer who has already built what you are building. Not a recruiter. Not an upline you never hear from. A producer who dials, closes, and picks up when you call.",
-    "Your first week, your first case, your first bad month. Crown Match means someone who has been through all three is in your corner from day one.",
+    "Crown Match is simple: stay with CMF for two years and we invest in you to build your own agency.",
+    "Most platforms are built to keep you producing on someone else's ladder forever. This one is built to hand you the ladder. Your book, your brand, your team, with Crown Merchant Financial behind you instead of over you.",
   ],
   ctaLabel: "Create Your Free Account",
 };

@@ -54,11 +54,11 @@ This is not for you if
 
 ## Crown Match
 
-Nobody builds alone here.
+The end goal is your name on the door.
 
-Every agent who joins CMF Launch gets matched with a working producer who has already built what you are building. Not a recruiter. Not an upline you never hear from. A producer who dials, closes, and picks up when you call.
+Crown Match is simple: stay with CMF for two years and we invest in you to build your own agency.
 
-Your first week, your first case, your first bad month. Crown Match means someone who has been through all three is in your corner from day one.
+Most platforms are built to keep you producing on someone else's ladder forever. This one is built to hand you the ladder. Your book, your brand, your team, with Crown Merchant Financial behind you instead of over you.
 
 [Create Your Free Account]
 
@@ -93,7 +93,7 @@ Crown Merchant Financial LLC is an independent, licensed life insurance agency. 
 
 ## Build Notes (not page copy)
 
-1. This entire document is a draft written without the original source doc. The owner should review every section, especially Crown Match: the program is described here as producer-mentor matching because no definition of Crown Match existed anywhere in the provided materials. If Crown Match is actually a different program, rewrite that section before launch.
+1. This document is a draft written without the original source doc; the owner should review every section. Crown Match is now owner-defined: stay with CMF for two years and CMF invests in the agent building their own agency. Before the first ad dollar, document the concrete program terms (what the investment covers, what qualifies as staying two years, who is eligible) and have the promise reviewed. A public commitment to invest in agents is a claim regulators and recruits will both hold you to.
 2. Positioning: per build note 7 of the free-training doc, the platform vertical is stated as "final expense, term, and IUL telesales" so this page agrees with the IUL flagship training page.
 3. The first-week target is stated as "first application submitted", not issued, matching the compliance reasoning in the free-training doc's build note 3.
 4. The compliance paragraph is drafted, not approved. Legal review before the first ad dollar.
