@@ -1,8 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { meta, optIn } from "../copy/free-training";
+import {
+  meta,
+  hero,
+  optIn,
+  whatYoullLearn,
+  whoThisIsFor,
+  trainer,
+  closer,
+} from "../copy/free-training";
 
-// Copy rule 5: no carrier names anywhere on this page.
+// Copy rule: no carrier names anywhere on this page (build note 2).
 
 // TODO: GoHighLevel inbound webhook URL. The form refuses to submit and shows
 // the inline error while this is unset.
@@ -11,38 +19,59 @@ const errors = optIn.form.errors;
 ---
 
 <BaseLayout title={meta.title} description={meta.description}>
+  {/* ================================================================
+      HERO
+      ================================================================ */}
   <section class="band">
-    <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
+    <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-28">
+      <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
+        {hero.eyebrow}
+      </p>
       <h1
-        class="text-center text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
+        class="mt-5 text-3xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
       >
-        {optIn.h1}
+        {hero.h1}
       </h1>
-      <p class="mt-6 text-center text-lg leading-relaxed text-brand-text/70">
+      <p class="mt-6 text-lg leading-relaxed text-brand-text/70">
+        {hero.body}
+      </p>
+      <p class="mt-8 text-base font-bold text-brand-text">
+        {hero.accessLine}
+      </p>
+
+      <div class="mt-10 flex items-center justify-center gap-4 text-left">
+        {/* TODO: trainer headshot. Swap this placeholder block for a real
+            photo of Nicholas Quaranta with alt text "Nicholas Quaranta,
+            founder of Crown Merchant Financial". No stock photos. */}
+        <div
+          class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-brand-accent/40 bg-brand-accent/10 text-xl font-black text-brand-accent"
+          aria-hidden="true"
+        >
+          NQ
+        </div>
+        <div>
+          <p class="font-bold text-brand-text">{hero.hostedBy}</p>
+          <p class="text-sm text-brand-text/60">{hero.hostCredentials}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ================================================================
+      OPT-IN FORM
+      ================================================================ */}
+  <section id="register" class="band-alt">
+    <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
+      <h2 class="text-center text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        {optIn.heading}
+      </h2>
+      <p class="mt-4 text-center text-lg text-brand-text/70">
         {optIn.subhead}
       </p>
 
-      {optIn.bodyParagraphs.map((p) => (
-        <p class="mt-4 text-brand-text/70">{p}</p>
-      ))}
-      {
-        optIn.bullets.length > 0 && (
-          <ul class="mt-6 space-y-3">
-            {optIn.bullets.map((b) => (
-              <li class="flex gap-3 text-brand-text">
-                <span class="mt-1 text-brand-accent" aria-hidden="true">
-                  ✓
-                </span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-
       <form
         id="opt-in-form"
-        class="mt-12 rounded-2xl border border-brand-text/10 bg-brand-text/[0.03] p-6 sm:p-8"
+        class="mt-10 rounded-2xl border border-brand-text/10 bg-brand-bg p-6 sm:p-8"
         novalidate
         data-webhook-url={webhookUrl}
       >
@@ -107,9 +136,9 @@ const errors = optIn.form.errors;
           </div>
         </div>
 
-        {/* TCPA consent: unchecked by default, required to submit.
-            Copy rule 7: label must be the exact consent text from
-            cmf-launch-free-training-page.md (see src/copy/free-training.ts). */}
+        {/* TCPA consent: unchecked by default, required to submit. The label
+            is the exact drafted consent text from the copy doc; legal review
+            required before launch (build note 1). */}
         <div class="mt-6">
           <label class="flex items-start gap-3">
             <input
@@ -134,7 +163,124 @@ const errors = optIn.form.errors;
         </button>
 
         <p id="form-error" class="mt-4 hidden text-center text-sm text-red-400" role="alert"></p>
+
+        <p class="mt-5 text-center text-sm text-brand-text/60">
+          {optIn.form.postSubmitNote}
+        </p>
       </form>
+    </div>
+  </section>
+
+  {/* ================================================================
+      WHAT YOU'LL LEARN - six numbered modules (the numbering is the
+      training outline, so it carries real sequence information).
+      ================================================================ */}
+  <section class="band">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
+          {whatYoullLearn.eyebrow}
+        </p>
+        <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+          {whatYoullLearn.heading}
+        </h2>
+        <p class="mt-4 text-lg text-brand-text/70">{whatYoullLearn.intro}</p>
+      </div>
+      <ol class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2">
+        {
+          whatYoullLearn.modules.map((m, i) => (
+            <li class="flex gap-5">
+              <span
+                class="text-3xl font-black tabular-nums text-brand-accent/60"
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.15em] text-brand-accent">
+                  {m.label}
+                </p>
+                <h3 class="mt-2 text-xl font-bold text-brand-text">{m.title}</h3>
+                <p class="mt-2 leading-relaxed text-brand-text/70">{m.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ================================================================
+      WHO THIS IS FOR - three agent-type cards.
+      ================================================================ */}
+  <section class="band-alt">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
+          {whoThisIsFor.eyebrow}
+        </p>
+        <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+          {whoThisIsFor.heading}
+        </h2>
+      </div>
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {
+          whoThisIsFor.cards.map((card) => (
+            <div class="rounded-2xl border border-brand-text/10 bg-brand-bg p-8">
+              <h3 class="text-xl font-bold text-brand-accent">{card.title}</h3>
+              <p class="mt-2 font-semibold text-brand-text">{card.lead}</p>
+              <p class="mt-3 leading-relaxed text-brand-text/70">{card.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ================================================================
+      YOUR TRAINER
+      ================================================================ */}
+  <section class="band">
+    <div class="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
+      <p class="text-center text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
+        {trainer.eyebrow}
+      </p>
+      <h2 class="mt-5 text-center text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        {trainer.heading}
+      </h2>
+      {
+        trainer.paragraphs.map((p) => (
+          <p class="mt-6 text-lg leading-relaxed text-brand-text/70">{p}</p>
+        ))
+      }
+
+      {/* Optional stat blocks slot - intentionally empty per the copy doc:
+          "go here only when the numbers are real and defensible: personal
+          production, agent count, persistency. Do not fabricate."
+          When real figures exist, render StatCard components in a grid here. */}
+    </div>
+  </section>
+
+  {/* ================================================================
+      CLOSER - CTA anchors back up to the opt-in form.
+      ================================================================ */}
+  <section class="band-alt">
+    <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-28">
+      <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        {closer.heading}
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-brand-text/70">
+        {closer.body}
+      </p>
+      <div class="mt-10">
+        <a
+          href="#register"
+          class="inline-block rounded-lg bg-brand-accent px-10 py-4 text-center text-lg font-bold text-brand-bg transition-all hover:brightness-110"
+        >
+          {closer.ctaLabel}
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-brand-text/60">{closer.note}</p>
     </div>
   </section>
 </BaseLayout>
@@ -149,7 +295,7 @@ const errors = optIn.form.errors;
 
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   // US phone: 10 digits, optionally with a leading 1, tolerant of common
-  // separators. Normalized before sending.
+  // separators.
   const phoneRe = /^\+?1?[\s.-]?\(?([2-9]\d{2})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})$/;
 
   function showFieldError(name, message) {

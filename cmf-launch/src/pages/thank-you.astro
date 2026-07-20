@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaButton from "../components/CtaButton.astro";
 import { thankYou } from "../copy/free-training";
+
+// TODO: point at the GoHighLevel portal via env var before launch.
+const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
 ---
 
 <BaseLayout title={thankYou.meta.title} description={thankYou.meta.description}>
@@ -16,10 +20,11 @@ import { thankYou } from "../copy/free-training";
           <p class="mt-6 text-lg leading-relaxed text-brand-text/70">{p}</p>
         ))
       }
-
-      {/* TODO: if the thank-you copy in cmf-launch-free-training-page.md
-          embeds a training video or a next-step CTA, add it here per the doc.
-          Currently renders nothing beyond the copy above. */}
+      <div class="mt-10">
+        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
+          {thankYou.ctaLabel}
+        </CtaButton>
+      </div>
     </div>
   </section>
 </BaseLayout>

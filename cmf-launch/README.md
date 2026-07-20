@@ -4,19 +4,17 @@ Static marketing site for CMF Launch, the agent platform run by Crown
 Merchant Financial LLC. Built with Astro and Tailwind CSS, static output,
 no backend.
 
-## IMPORTANT: copy is not final
+## Copy status
 
-The two source-of-truth copy documents were not present in the repository
-when this site was scaffolded:
-
-- `cmf-launch-landing-page.md`
-- `cmf-launch-free-training-page.md`
-
-Every user-visible string currently renders a bracketed
-`[PASTE VERBATIM: ...]` slot. **The site must not go live until every slot
-in `src/copy/` is replaced with the exact text from those documents** -
-especially the TCPA consent checkbox label and the footer compliance
-paragraph, which are legally significant. See "How to swap copy" below.
+- `/free-training` and `/thank-you`: **final copy**, verbatim from
+  `cmf-launch-free-training-page.md` (committed in this directory). The
+  TCPA consent text is drafted, not approved: legal review is required
+  before the first ad dollar (build note 1 in the doc).
+- `/` (landing page): the source document `cmf-launch-landing-page.md` is
+  still missing from the repository. Every user-visible string on the home
+  page renders a bracketed `[PASTE VERBATIM: ...]` slot, including the
+  footer compliance paragraph (which appears on all pages). **The site
+  must not go live until those slots are filled from the document.**
 
 ## Local dev
 
