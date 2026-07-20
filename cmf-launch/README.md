@@ -10,11 +10,14 @@ no backend.
   `cmf-launch-free-training-page.md` (committed in this directory). The
   TCPA consent text is drafted, not approved: legal review is required
   before the first ad dollar (build note 1 in the doc).
-- `/` (landing page): the source document `cmf-launch-landing-page.md` is
-  still missing from the repository. Every user-visible string on the home
-  page renders a bracketed `[PASTE VERBATIM: ...]` slot, including the
-  footer compliance paragraph (which appears on all pages). **The site
-  must not go live until those slots are filled from the document.**
+- `/` (landing page): **draft copy, owner review required.** The original
+  source doc was never provided, so the copy in
+  `cmf-launch-landing-page.md` was drafted at the owner's request following
+  the free-training doc's voice and compliance rules. Review every section
+  before launch, especially the Crown Match section (described as
+  producer-mentor matching; the program was never defined in the provided
+  materials) and the footer compliance paragraph (drafted, needs legal
+  review; it renders on all pages).
 
 ## Local dev
 

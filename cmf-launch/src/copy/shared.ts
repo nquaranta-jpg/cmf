@@ -32,9 +32,9 @@ export const nav = {
 };
 
 export const footer = {
-  // TODO [PASTE VERBATIM: cmf-launch-landing-page.md - footer compliance paragraph].
-  // Copy rule 7: this paragraph must render exactly as written in the doc.
+  // TODO: drafted compliance language, legal review required before launch
+  // (see cmf-launch-landing-page.md build notes).
   compliance:
-    "[PASTE VERBATIM: cmf-launch-landing-page.md - compliance paragraph]",
+    "Crown Merchant Financial LLC is an independent, licensed life insurance agency. CMF Launch is a platform for licensed insurance professionals and those pursuing licensure. It is not an offer of employment, and no income is guaranteed or implied; results depend on individual effort, licensing, and market conditions. Life insurance products are subject to carrier underwriting and availability, and product features vary by state. Nothing on this site is financial, tax, or legal advice. Not affiliated with or endorsed by any government agency.",
   copyright: `${new Date().getFullYear()} Crown Merchant Financial LLC`,
 };
