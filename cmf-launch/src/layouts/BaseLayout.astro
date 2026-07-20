@@ -2,6 +2,10 @@
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../copy/shared";
+// Self-hosted Inter (variable font, weights 100-900) - no third-party
+// request, font-display: swap gives the system-font fallback while loading.
+import "@fontsource-variable/inter";
+import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 
 interface Props {
@@ -32,6 +36,16 @@ const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
     {/* Favicon placeholder - swap public/favicon.svg for the real mark. */}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    {/* Preload the latin subset of the self-hosted webfont; system font
+        shows first (font-display: swap), so no layout-shifting flash. */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={interLatinWoff2}
+      crossorigin="anonymous"
+    />
+
     {/* Open Graph */}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
@@ -45,14 +59,6 @@ const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-
-    {/* Inter with system-font fallback while it loads (display=swap). */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap"
-    />
 
     {/* ---- Google Tag Manager slot (renders nothing when PUBLIC_GTM_ID is unset) ---- */}
     {
