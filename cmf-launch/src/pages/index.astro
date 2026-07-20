@@ -22,20 +22,20 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
   {/* ================================================================
       HERO
       ================================================================ */}
-  <section id="platform" class="band">
-    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+  <section id="platform" class="band hero-atmos overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 pb-24 pt-20 sm:px-6 sm:pb-32 sm:pt-28">
       <div class="max-w-3xl">
-        <h1
-          class="text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-6xl"
-        >
+        <h1 class="display text-[2.5rem] text-brand-text sm:text-6xl md:text-[4.25rem]">
           {hero.h1}
         </h1>
-        <p class="mt-6 text-lg leading-relaxed text-brand-text/70 sm:text-xl">
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-brand-text/65 sm:text-xl">
           {hero.subhead}
         </p>
         <div class="mt-10 flex flex-col gap-4 sm:flex-row">
-          <CtaButton href={signupUrl}>{hero.primaryCta}</CtaButton>
-          <CtaButton href={loginUrl} variant="ghost">{hero.secondaryCta}</CtaButton>
+          <CtaButton href={signupUrl} size="lg">{hero.primaryCta}</CtaButton>
+          <CtaButton href={loginUrl} variant="ghost" size="lg">
+            {hero.secondaryCta}
+          </CtaButton>
         </div>
       </div>
 
@@ -63,21 +63,23 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
         {
           howItWorks.steps.map((step, i) => (
             <li class="relative flex gap-5 md:block">
-              <div class="flex flex-col items-center md:mb-5 md:flex-row md:gap-4">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-accent font-bold text-brand-bg">
+              <div class="flex flex-col items-center md:mb-6 md:flex-row md:gap-4">
+                <span class="grid h-11 w-11 shrink-0 place-content-center rounded-xl bg-gradient-to-b from-[var(--gold-bright)] to-[var(--brand-accent)] font-black text-brand-bg">
                   {i + 1}
                 </span>
-                {/* connector line: vertical on mobile, hidden on desktop */}
+                {/* connector: vertical on mobile, horizontal on desktop */}
                 {i < howItWorks.steps.length - 1 && (
-                  <span
-                    class="mt-2 w-px flex-1 bg-brand-text/15 md:hidden"
-                    aria-hidden="true"
-                  />
+                  <>
+                    <span class="mt-2 w-px flex-1 bg-gradient-to-b from-[var(--line-strong)] to-transparent md:hidden" aria-hidden="true" />
+                    <span class="hidden h-px flex-1 bg-gradient-to-r from-[var(--line-strong)] to-transparent md:block" aria-hidden="true" />
+                  </>
                 )}
               </div>
               <div class="pb-2">
-                <h3 class="text-lg font-bold text-brand-text">{step.title}</h3>
-                <p class="mt-2 text-brand-text/70">{step.body}</p>
+                <h3 class="text-lg font-extrabold tracking-tight text-brand-text">
+                  {step.title}
+                </h3>
+                <p class="mt-2 leading-relaxed text-brand-text/65">{step.body}</p>
               </div>
             </li>
           ))
@@ -93,16 +95,20 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
   <section id="partners" class="band">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
       <SectionHeader heading={whoThisIsFor.heading} />
-      <div class="mt-14 grid gap-6 md:grid-cols-2">
-        <div class="rounded-2xl border border-brand-accent/40 bg-brand-accent/5 p-8">
-          <h3 class="text-xl font-bold text-brand-accent">
+      <div class="mt-14 grid gap-5 md:grid-cols-2">
+        <div class="card card-gold p-8 sm:p-9">
+          <h3 class="text-xl font-extrabold tracking-tight text-brand-accent">
             {whoThisIsFor.forYou.title}
           </h3>
           <ul class="mt-6 space-y-4">
             {
               whoThisIsFor.forYou.items.map((item) => (
-                <li class="flex gap-3 text-brand-text">
-                  <span class="mt-1 text-brand-accent" aria-hidden="true">
+                <li class="flex gap-3.5 text-brand-text">
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-content-center rounded-full text-[0.65rem] font-black text-brand-bg"
+                    style="background: var(--brand-accent);"
+                    aria-hidden="true"
+                  >
                     ✓
                   </span>
                   <span>{item}</span>
@@ -111,15 +117,18 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
             }
           </ul>
         </div>
-        <div class="rounded-2xl border border-brand-text/10 bg-brand-text/[0.03] p-8">
-          <h3 class="text-xl font-bold text-brand-text/50">
+        <div class="card p-8 opacity-80 sm:p-9">
+          <h3 class="text-xl font-extrabold tracking-tight text-brand-text/45">
             {whoThisIsFor.notForYou.title}
           </h3>
           <ul class="mt-6 space-y-4">
             {
               whoThisIsFor.notForYou.items.map((item) => (
-                <li class="flex gap-3 text-brand-text/50">
-                  <span class="mt-1" aria-hidden="true">
+                <li class="flex gap-3.5 text-brand-text/50">
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-content-center rounded-full border border-brand-text/20 text-[0.6rem]"
+                    aria-hidden="true"
+                  >
                     ✕
                   </span>
                   <span>{item}</span>
@@ -138,28 +147,27 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
       ================================================================ */}
   <section id="about" class="band-alt relative overflow-hidden">
     <div
-      class="pointer-events-none absolute inset-0 opacity-20"
-      style="background: radial-gradient(60% 50% at 50% 40%, var(--brand-accent) 0%, transparent 70%);"
+      class="pointer-events-none absolute inset-0"
+      style="background: radial-gradient(55% 45% at 50% 42%, var(--accent-glow) 0%, transparent 72%), radial-gradient(35% 30% at 15% 85%, color-mix(in srgb, var(--brand-accent-2) 16%, transparent) 0%, transparent 70%);"
       aria-hidden="true"
     >
     </div>
-    <div class="relative mx-auto max-w-4xl px-4 py-28 text-center sm:px-6 sm:py-40">
+    <div class="relative mx-auto max-w-4xl px-4 py-28 text-center sm:px-6 sm:py-44">
       <h2
-        class="text-4xl font-black leading-tight tracking-tight text-brand-accent sm:text-6xl"
+        class="display text-4xl sm:text-6xl md:text-[4.5rem]"
+        style="background: linear-gradient(180deg, var(--gold-bright), var(--brand-accent)); -webkit-background-clip: text; background-clip: text; color: transparent;"
       >
         {crownMatch.heading}
       </h2>
       {
         crownMatch.paragraphs.map((p) => (
-          <p class="mx-auto mt-8 max-w-2xl text-xl leading-relaxed text-brand-text sm:text-2xl">
+          <p class="mx-auto mt-9 max-w-2xl text-xl leading-relaxed text-brand-text sm:text-2xl">
             {p}
           </p>
         ))
       }
       <div class="mt-12">
-        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
-          {crownMatch.ctaLabel}
-        </CtaButton>
+        <CtaButton href={signupUrl} size="lg">{crownMatch.ctaLabel}</CtaButton>
       </div>
     </div>
   </section>
@@ -180,15 +188,13 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
       FINAL CTA - keeps "Create Your Free Account" within one viewport
       of the page end (the sticky nav covers the rest of the page).
       ================================================================ */}
-  <section class="band-alt">
-    <div class="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
-      <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+  <section class="band-alt hero-atmos overflow-hidden">
+    <div class="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6 sm:py-32">
+      <h2 class="display text-3xl text-brand-text sm:text-5xl">
         {finalCta.heading}
       </h2>
-      <div class="mt-8">
-        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
-          {finalCta.ctaLabel}
-        </CtaButton>
+      <div class="mt-10">
+        <CtaButton href={signupUrl} size="lg">{finalCta.ctaLabel}</CtaButton>
       </div>
     </div>
   </section>

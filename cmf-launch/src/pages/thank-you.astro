@@ -8,22 +8,18 @@ const signupUrl = import.meta.env.PUBLIC_SIGNUP_URL || "#";
 ---
 
 <BaseLayout title={thankYou.meta.title} description={thankYou.meta.description}>
-  <section class="band">
-    <div class="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 sm:py-36">
-      <h1
-        class="text-4xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
-      >
+  <section class="band hero-atmos overflow-hidden">
+    <div class="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 sm:py-40">
+      <h1 class="display text-4xl text-brand-text sm:text-[3.4rem]">
         {thankYou.h1}
       </h1>
       {
         thankYou.paragraphs.map((p) => (
-          <p class="mt-6 text-lg leading-relaxed text-brand-text/70">{p}</p>
+          <p class="mt-7 text-lg leading-relaxed text-brand-text/70">{p}</p>
         ))
       }
       <div class="mt-10">
-        <CtaButton href={signupUrl} class="!px-10 !py-4 !text-lg">
-          {thankYou.ctaLabel}
-        </CtaButton>
+        <CtaButton href={signupUrl} size="lg">{thankYou.ctaLabel}</CtaButton>
       </div>
     </div>
   </section>

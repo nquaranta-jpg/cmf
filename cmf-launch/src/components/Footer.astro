@@ -2,14 +2,26 @@
 import { footer, nav, site } from "../copy/shared";
 ---
 
-<footer id="contact" class="border-t border-brand-text/10 bg-brand-bg">
-  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+<footer id="contact" class="relative border-t border-brand-text/8 bg-brand-bg">
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-px"
+    style="background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
     <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-      <div>
-        <p class="text-lg font-extrabold tracking-tight text-brand-text">
-          {site.name}
-        </p>
-        <p class="mt-1 text-sm text-brand-text/60">{site.company}</p>
+      <div class="flex items-center gap-2.5">
+        <span
+          class="grid h-8 w-8 place-content-center rounded-lg bg-gradient-to-b from-[var(--gold-bright)] to-[var(--brand-accent)] text-sm font-black text-brand-bg"
+          aria-hidden="true"
+        >
+          C
+        </span>
+        <div>
+          <p class="font-extrabold tracking-tight text-brand-text">{site.name}</p>
+          <p class="text-xs text-brand-text/50">{site.company}</p>
+        </div>
       </div>
       <ul class="flex flex-wrap gap-x-8 gap-y-3">
         {
@@ -17,7 +29,7 @@ import { footer, nav, site } from "../copy/shared";
             <li>
               <a
                 href={link.href}
-                class="text-sm text-brand-text/60 transition-colors hover:text-brand-text"
+                class="text-sm text-brand-text/55 transition-colors hover:text-brand-text"
               >
                 {link.label}
               </a>

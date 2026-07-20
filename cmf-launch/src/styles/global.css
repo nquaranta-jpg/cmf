@@ -9,6 +9,16 @@
   --brand-accent: #c9a227; /* deep gold */
   --brand-accent-2: #4a6fa5; /* secondary steel blue */
   --brand-text: #f4f4f2; /* high-contrast off-white */
+
+  /* Derived surfaces - all mixed from the tokens so palette changes
+     propagate everywhere. */
+  --surface-1: color-mix(in srgb, var(--brand-bg) 96%, white);
+  --surface-2: color-mix(in srgb, var(--brand-bg) 92%, white);
+  --line: color-mix(in srgb, var(--brand-text) 8%, transparent);
+  --line-strong: color-mix(in srgb, var(--brand-text) 14%, transparent);
+  --accent-soft: color-mix(in srgb, var(--brand-accent) 14%, transparent);
+  --accent-glow: color-mix(in srgb, var(--brand-accent) 28%, transparent);
+  --gold-bright: color-mix(in srgb, var(--brand-accent) 78%, white);
 }
 
 /* Expose the tokens to Tailwind utilities (bg-brand-bg, text-brand-accent, ...) */
@@ -31,24 +41,284 @@ html {
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Alternating section bands: subtle background treatments only,
-   both derived from the brand background so token changes propagate. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--brand-accent);
+  color: var(--brand-bg);
+}
+
+/* ------------------------------------------------------------------ */
+/* Type                                                               */
+/* ------------------------------------------------------------------ */
+.display {
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brand-accent));
+}
+.eyebrow::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brand-accent), transparent);
+}
+.eyebrow-left::before {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Section bands and atmosphere                                       */
+/* ------------------------------------------------------------------ */
 .band {
+  position: relative;
   background-color: var(--brand-bg);
 }
 .band-alt {
-  background-color: color-mix(in srgb, var(--brand-bg) 92%, white);
+  position: relative;
+  background-color: var(--surface-1);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-/* Accessible focus states on the dark background */
+/* Hero atmosphere: gold + steel glows over a faint grid that fades out. */
+.hero-atmos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(52% 44% at 50% 0%, var(--accent-glow) 0%, transparent 68%),
+    radial-gradient(
+      40% 36% at 82% 78%,
+      color-mix(in srgb, var(--brand-accent-2) 20%, transparent) 0%,
+      transparent 70%
+    );
+}
+.hero-atmos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 62% at 50% 30%, black 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    70% 62% at 50% 30%,
+    black 0%,
+    transparent 100%
+  );
+}
+.hero-atmos > * {
+  position: relative;
+}
+
+/* ------------------------------------------------------------------ */
+/* Cards                                                              */
+/* ------------------------------------------------------------------ */
+.card {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--brand-text) 5%, transparent),
+    color-mix(in srgb, var(--brand-text) 2%, transparent)
+  );
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--brand-text) 22%, transparent),
+    transparent
+  );
+}
+.card-hover:hover {
+  border-color: color-mix(in srgb, var(--brand-accent) 45%, transparent);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+}
+.card-gold {
+  border-color: color-mix(in srgb, var(--brand-accent) 35%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--brand-accent) 9%, transparent),
+    color-mix(in srgb, var(--brand-accent) 3%, transparent)
+  );
+}
+.card-gold::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--brand-accent) 60%, transparent),
+    transparent
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                            */
+/* ------------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 1rem 1.75rem;
+  font-size: 1rem;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+  cursor: pointer;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  color: var(--brand-bg);
+  background: linear-gradient(180deg, var(--gold-bright), var(--brand-accent));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 35%, transparent) inset,
+    0 10px 30px -8px var(--accent-glow);
+}
+.btn-primary:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 35%, transparent) inset,
+    0 16px 40px -10px var(--accent-glow);
+}
+.btn-ghost {
+  color: var(--brand-text);
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--brand-text) 4%, transparent);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+  border-color: color-mix(in srgb, var(--brand-accent) 55%, transparent);
+  color: var(--gold-bright);
+}
+.btn-sm {
+  padding: 0.65rem 1.1rem;
+  font-size: 0.875rem;
+  border-radius: 0.65rem;
+}
+.btn-lg {
+  padding: 1.15rem 2.5rem;
+  font-size: 1.1rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Form controls                                                      */
+/* ------------------------------------------------------------------ */
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--brand-text) 4%, transparent);
+  padding: 0.85rem 1rem;
+  color: var(--brand-text);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.input::placeholder {
+  color: color-mix(in srgb, var(--brand-text) 35%, transparent);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.input[aria-invalid="true"] {
+  border-color: #f87171;
+}
+
+.checkbox {
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--brand-text) 4%, transparent);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+.checkbox::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  transform: scale(0);
+  transition: transform 120ms ease;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  background: var(--brand-bg);
+}
+.checkbox:checked {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+.checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Accessible focus states on the dark background                     */
+/* ------------------------------------------------------------------ */
 :focus-visible {
   outline: 2px solid var(--brand-accent);
   outline-offset: 2px;
 }
 
-/* FAQ accordion: rotate the chevron when open, hide default markers */
+/* ------------------------------------------------------------------ */
+/* FAQ accordion                                                      */
+/* ------------------------------------------------------------------ */
 details.faq > summary {
   list-style: none;
   cursor: pointer;
@@ -57,17 +327,19 @@ details.faq > summary::-webkit-details-marker {
   display: none;
 }
 details.faq[open] .faq-chevron {
-  transform: rotate(180deg);
+  transform: rotate(45deg);
 }
 .faq-chevron {
-  transition: transform 150ms ease;
+  transition: transform 180ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .faq-chevron {
+  .faq-chevron,
+  .card,
+  .btn {
     transition: none;
   }
 }

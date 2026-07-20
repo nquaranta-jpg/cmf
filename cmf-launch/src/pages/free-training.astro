@@ -22,36 +22,38 @@ const errors = optIn.form.errors;
   {/* ================================================================
       HERO
       ================================================================ */}
-  <section class="band">
-    <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-28">
-      <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
-        {hero.eyebrow}
-      </p>
+  <section class="band hero-atmos overflow-hidden">
+    <div class="mx-auto max-w-4xl px-4 pb-20 pt-16 text-center sm:px-6 sm:pb-28 sm:pt-24">
+      <p class="eyebrow justify-center">{hero.eyebrow}</p>
       <h1
-        class="mt-5 text-3xl font-black leading-tight tracking-tight text-brand-text sm:text-5xl"
+        class="display mt-7 text-[2.1rem] text-brand-text sm:text-[3.4rem] md:text-[3.9rem]"
       >
         {hero.h1}
       </h1>
-      <p class="mt-6 text-lg leading-relaxed text-brand-text/70">
+      <p class="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-brand-text/65">
         {hero.body}
       </p>
-      <p class="mt-8 text-base font-bold text-brand-text">
+      <p class="mt-8 text-base font-extrabold tracking-tight text-brand-text sm:text-lg">
         {hero.accessLine}
       </p>
 
-      <div class="mt-10 flex items-center justify-center gap-4 text-left">
-        {/* TODO: trainer headshot. Swap this placeholder block for a real
-            photo of Nicholas Quaranta with alt text "Nicholas Quaranta,
-            founder of Crown Merchant Financial". No stock photos. */}
-        <div
-          class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-brand-accent/40 bg-brand-accent/10 text-xl font-black text-brand-accent"
-          aria-hidden="true"
-        >
-          NQ
-        </div>
-        <div>
-          <p class="font-bold text-brand-text">{hero.hostedBy}</p>
-          <p class="text-sm text-brand-text/60">{hero.hostCredentials}</p>
+      <div class="mt-10 flex justify-center">
+        <div class="card flex items-center gap-4 px-6 py-4 text-left">
+          {/* TODO: trainer headshot. Swap this placeholder block for a real
+              photo of Nicholas Quaranta with alt text "Nicholas Quaranta,
+              founder of Crown Merchant Financial". No stock photos. */}
+          <div
+            class="grid h-12 w-12 shrink-0 place-content-center rounded-full bg-gradient-to-b from-[var(--gold-bright)] to-[var(--brand-accent)] text-base font-black text-brand-bg"
+            aria-hidden="true"
+          >
+            NQ
+          </div>
+          <div>
+            <p class="text-sm font-bold text-brand-text sm:text-base">{hero.hostedBy}</p>
+            <p class="mt-0.5 text-xs text-brand-text/55 sm:text-sm">
+              {hero.hostCredentials}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -62,16 +64,16 @@ const errors = optIn.form.errors;
       ================================================================ */}
   <section id="register" class="band-alt">
     <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
-      <h2 class="text-center text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+      <h2 class="display text-center text-3xl text-brand-text sm:text-[2.75rem] sm:leading-[1.05]">
         {optIn.heading}
       </h2>
-      <p class="mt-4 text-center text-lg text-brand-text/70">
+      <p class="mt-5 text-center text-lg text-brand-text/65">
         {optIn.subhead}
       </p>
 
       <form
         id="opt-in-form"
-        class="mt-10 rounded-2xl border border-brand-text/10 bg-brand-bg p-6 sm:p-8"
+        class="card card-gold mt-10 p-6 sm:p-9"
         novalidate
         data-webhook-url={webhookUrl}
       >
@@ -86,7 +88,7 @@ const errors = optIn.form.errors;
               name="firstName"
               autocomplete="given-name"
               required
-              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+              class="input"
             />
             <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="firstName"></p>
           </div>
@@ -100,7 +102,7 @@ const errors = optIn.form.errors;
               name="lastName"
               autocomplete="family-name"
               required
-              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+              class="input"
             />
             <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="lastName"></p>
           </div>
@@ -115,7 +117,7 @@ const errors = optIn.form.errors;
               autocomplete="email"
               inputmode="email"
               required
-              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+              class="input"
             />
             <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="email"></p>
           </div>
@@ -130,7 +132,7 @@ const errors = optIn.form.errors;
               autocomplete="tel"
               inputmode="tel"
               required
-              class="w-full rounded-lg border border-brand-text/20 bg-brand-bg px-4 py-3 text-brand-text placeholder:text-brand-text/40 focus:border-brand-accent focus:outline-none"
+              class="input"
             />
             <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="mobile"></p>
           </div>
@@ -141,13 +143,7 @@ const errors = optIn.form.errors;
             required before launch (build note 1). */}
         <div class="mt-6">
           <label class="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="consent"
-              name="consent"
-              required
-              class="mt-1 h-4 w-4 shrink-0 accent-[var(--brand-accent)]"
-            />
+            <input type="checkbox" id="consent" name="consent" required class="checkbox" />
             <span class="text-xs leading-relaxed text-brand-text/60">
               {optIn.form.consentLabel}
             </span>
@@ -155,16 +151,13 @@ const errors = optIn.form.errors;
           <p class="field-error mt-1.5 hidden text-sm text-red-400" data-for="consent"></p>
         </div>
 
-        <button
-          type="submit"
-          class="mt-8 w-full rounded-lg bg-brand-accent px-6 py-4 text-lg font-bold text-brand-bg transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
-        >
+        <button type="submit" class="btn btn-primary mt-8 w-full py-4 text-lg disabled:cursor-not-allowed disabled:opacity-60">
           {optIn.form.submitLabel}
         </button>
 
         <p id="form-error" class="mt-4 hidden text-center text-sm text-red-400" role="alert"></p>
 
-        <p class="mt-5 text-center text-sm text-brand-text/60">
+        <p class="mt-5 text-center text-sm text-brand-text/55">
           {optIn.form.postSubmitNote}
         </p>
       </form>
@@ -172,36 +165,37 @@ const errors = optIn.form.errors;
   </section>
 
   {/* ================================================================
-      WHAT YOU'LL LEARN - six numbered modules (the numbering is the
-      training outline, so it carries real sequence information).
+      WHAT YOU'LL LEARN - six numbered module cards (the numbering is
+      the training outline, so it carries real sequence information).
       ================================================================ */}
   <section class="band">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
       <div class="mx-auto max-w-3xl text-center">
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
-          {whatYoullLearn.eyebrow}
-        </p>
-        <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        <p class="eyebrow justify-center">{whatYoullLearn.eyebrow}</p>
+        <h2 class="display mt-5 text-3xl text-brand-text sm:text-[2.75rem] sm:leading-[1.05]">
           {whatYoullLearn.heading}
         </h2>
-        <p class="mt-4 text-lg text-brand-text/70">{whatYoullLearn.intro}</p>
+        <p class="mt-5 text-lg leading-relaxed text-brand-text/65">
+          {whatYoullLearn.intro}
+        </p>
       </div>
-      <ol class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2">
+      <ol class="mt-14 grid gap-5 md:grid-cols-2">
         {
           whatYoullLearn.modules.map((m, i) => (
-            <li class="flex gap-5">
+            <li class="card card-hover relative overflow-hidden p-7 sm:p-8">
               <span
-                class="text-3xl font-black tabular-nums text-brand-accent/60"
+                class="display pointer-events-none absolute -right-2 -top-6 text-[7rem] tabular-nums"
+                style="color: var(--accent-soft);"
                 aria-hidden="true"
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <div>
-                <p class="text-xs font-bold uppercase tracking-[0.15em] text-brand-accent">
-                  {m.label}
-                </p>
-                <h3 class="mt-2 text-xl font-bold text-brand-text">{m.title}</h3>
-                <p class="mt-2 leading-relaxed text-brand-text/70">{m.body}</p>
+              <div class="relative">
+                <p class="eyebrow eyebrow-left text-[0.65rem]">{m.label}</p>
+                <h3 class="mt-3 max-w-[26rem] text-xl font-extrabold tracking-tight text-brand-text">
+                  {m.title}
+                </h3>
+                <p class="mt-3 max-w-[28rem] leading-relaxed text-brand-text/65">{m.body}</p>
               </div>
             </li>
           ))
@@ -216,20 +210,20 @@ const errors = optIn.form.errors;
   <section class="band-alt">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
       <div class="mx-auto max-w-3xl text-center">
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
-          {whoThisIsFor.eyebrow}
-        </p>
-        <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+        <p class="eyebrow justify-center">{whoThisIsFor.eyebrow}</p>
+        <h2 class="display mt-5 text-3xl text-brand-text sm:text-[2.75rem] sm:leading-[1.05]">
           {whoThisIsFor.heading}
         </h2>
       </div>
-      <div class="mt-14 grid gap-6 md:grid-cols-3">
+      <div class="mt-14 grid gap-5 md:grid-cols-3">
         {
           whoThisIsFor.cards.map((card) => (
-            <div class="rounded-2xl border border-brand-text/10 bg-brand-bg p-8">
-              <h3 class="text-xl font-bold text-brand-accent">{card.title}</h3>
-              <p class="mt-2 font-semibold text-brand-text">{card.lead}</p>
-              <p class="mt-3 leading-relaxed text-brand-text/70">{card.body}</p>
+            <div class="card card-hover p-8">
+              <h3 class="text-lg font-extrabold tracking-tight text-brand-accent">
+                {card.title}
+              </h3>
+              <p class="mt-2 font-bold text-brand-text">{card.lead}</p>
+              <p class="mt-3 leading-relaxed text-brand-text/65">{card.body}</p>
             </div>
           ))
         }
@@ -241,46 +235,57 @@ const errors = optIn.form.errors;
       YOUR TRAINER
       ================================================================ */}
   <section class="band">
-    <div class="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
-      <p class="text-center text-sm font-bold uppercase tracking-[0.2em] text-brand-accent">
-        {trainer.eyebrow}
-      </p>
-      <h2 class="mt-5 text-center text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
-        {trainer.heading}
-      </h2>
-      {
-        trainer.paragraphs.map((p) => (
-          <p class="mt-6 text-lg leading-relaxed text-brand-text/70">{p}</p>
-        ))
-      }
+    <div class="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+      <div class="grid items-center gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        {/* TODO: trainer photo. Swap this placeholder panel for a real photo
+            of Nicholas Quaranta (alt: "Nicholas Quaranta, founder of Crown
+            Merchant Financial"). No stock photos. */}
+        <div
+          class="card relative mx-auto grid aspect-[4/5] w-full max-w-sm place-content-center overflow-hidden"
+          aria-hidden="true"
+        >
+          <div
+            class="absolute inset-0"
+            style="background: radial-gradient(80% 60% at 50% 20%, var(--accent-soft), transparent 70%), radial-gradient(60% 50% at 80% 90%, color-mix(in srgb, var(--brand-accent-2) 18%, transparent), transparent 70%);"
+          >
+          </div>
+          <span class="display relative text-7xl" style="color: var(--accent-glow);">NQ</span>
+        </div>
+        <div class="">
+          <p class="eyebrow eyebrow-left">{trainer.eyebrow}</p>
+          <h2 class="display mt-5 text-3xl text-brand-text sm:text-[2.5rem] sm:leading-[1.05]">
+            {trainer.heading}
+          </h2>
+          {
+            trainer.paragraphs.map((p) => (
+              <p class="mt-6 leading-relaxed text-brand-text/70">{p}</p>
+            ))
+          }
 
-      {/* Optional stat blocks slot - intentionally empty per the copy doc:
-          "go here only when the numbers are real and defensible: personal
-          production, agent count, persistency. Do not fabricate."
-          When real figures exist, render StatCard components in a grid here. */}
+          {/* Optional stat blocks slot - intentionally empty per the copy doc:
+              "go here only when the numbers are real and defensible: personal
+              production, agent count, persistency. Do not fabricate."
+              When real figures exist, render StatCard components in a grid here. */}
+        </div>
+      </div>
     </div>
   </section>
 
   {/* ================================================================
       CLOSER - CTA anchors back up to the opt-in form.
       ================================================================ */}
-  <section class="band-alt">
-    <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-28">
-      <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+  <section class="band-alt hero-atmos overflow-hidden">
+    <div class="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 sm:py-32">
+      <h2 class="display text-4xl text-brand-text sm:text-5xl">
         {closer.heading}
       </h2>
-      <p class="mt-5 text-lg leading-relaxed text-brand-text/70">
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-brand-text/65">
         {closer.body}
       </p>
       <div class="mt-10">
-        <a
-          href="#register"
-          class="inline-block rounded-lg bg-brand-accent px-10 py-4 text-center text-lg font-bold text-brand-bg transition-all hover:brightness-110"
-        >
-          {closer.ctaLabel}
-        </a>
+        <a href="#register" class="btn btn-primary btn-lg">{closer.ctaLabel}</a>
       </div>
-      <p class="mt-4 text-sm text-brand-text/60">{closer.note}</p>
+      <p class="mt-5 text-sm text-brand-text/55">{closer.note}</p>
     </div>
   </section>
 </BaseLayout>

@@ -1,16 +1,20 @@
 ---
-/** Shared section header: heading plus optional intro line. */
+/** Shared section header: optional eyebrow, heading, optional intro line. */
 interface Props {
   heading: string;
+  eyebrow?: string;
   intro?: string;
   id?: string;
 }
-const { heading, intro, id } = Astro.props;
+const { heading, eyebrow, intro, id } = Astro.props;
 ---
 
 <div class="mx-auto max-w-3xl text-center" id={id}>
-  <h2 class="text-3xl font-extrabold tracking-tight text-brand-text sm:text-4xl">
+  {eyebrow && <p class="eyebrow justify-center">{eyebrow}</p>}
+  <h2
+    class="display mt-5 text-3xl text-brand-text sm:text-[2.75rem] sm:leading-[1.05]"
+  >
     {heading}
   </h2>
-  {intro && <p class="mt-4 text-lg text-brand-text/70">{intro}</p>}
+  {intro && <p class="mt-5 text-lg leading-relaxed text-brand-text/65">{intro}</p>}
 </div>

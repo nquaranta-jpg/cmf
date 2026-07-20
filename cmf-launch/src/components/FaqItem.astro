@@ -7,22 +7,19 @@ interface Props {
 const { question, answer } = Astro.props;
 ---
 
-<details class="faq group border-b border-brand-text/10">
-  <summary class="flex items-center justify-between gap-4 py-5 text-left text-lg font-semibold text-brand-text">
+<details class="faq card mb-3 px-6 sm:px-7">
+  <summary class="flex items-center justify-between gap-6 py-5 text-left text-base font-semibold text-brand-text sm:text-lg">
     <span>{question}</span>
-    <svg
-      class="faq-chevron h-5 w-5 shrink-0 text-brand-accent"
-      viewBox="0 0 20 20"
-      fill="currentColor"
+    <span
+      class="faq-chevron grid h-8 w-8 shrink-0 place-content-center rounded-full border border-brand-text/15 text-brand-accent"
       aria-hidden="true"
     >
-      <path
-        fill-rule="evenodd"
-        d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clip-rule="evenodd"></path>
-    </svg>
+      <svg viewBox="0 0 16 16" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round">
+        <path d="M8 2v12M2 8h12"></path>
+      </svg>
+    </span>
   </summary>
-  <div class="pb-5 text-brand-text/70">
+  <div class="pb-6 pr-14 leading-relaxed text-brand-text/65">
     <p>{answer}</p>
   </div>
 </details>
