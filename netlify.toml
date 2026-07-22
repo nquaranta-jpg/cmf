@@ -74,6 +74,16 @@
   status = 200
 
 [[redirects]]
+  from = "/society"
+  to = "/society/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/society/workshops"
+  to = "/society/workshops.html"
+  status = 200
+
+[[redirects]]
   from = "/vgli-calculator"
   to = "/vgli-calculator.html"
   status = 200
