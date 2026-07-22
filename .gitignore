@@ -5,3 +5,16 @@ node_modules
 cold-outreach/state.json
 cold-outreach/realtors.csv
 cold-outreach/send.log
+
+# Local business documents — repo and site are PUBLIC, never commit these
+# (lead sheets and client docs contain consumer PII)
+CMF-Aged-Leads-Order-70219-Call-Sheet.xlsx
+Martha_Cossey_Summit_Title_Prep.pdf
+CMF-Brochure.pdf
+CMF-Lead-Pipeline-Reference.docx
+CMF-Lead-Pipeline-Reference.pdf
+CMF_Term_Life_Qualifier_Sheet.pages
+CMF_Veteran_Benefits_Review.pptx
+
+# Legacy local copy of CMF Launch (live version is /launch in this repo)
+cmf-launch/
