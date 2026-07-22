@@ -1,0 +1,16 @@
+Subject: last note from me, {{first_name|promise}}
+
+Hi {{first_name|there}},
+
+I'll keep this one short — I don't want to be another email cluttering your inbox.
+
+If helping your past clients protect the homes you helped them buy ever becomes a priority, my door's open. One reply and I'll send the one-pager, or we can grab 10 minutes whenever suits you.
+
+Either way, good luck out there in {{city|your market}} — I'll leave you be.
+
+{{from_name}}
+Crown Merchant Financial
+{{phone}}
+{{postal_address}}
+
+Reply "unsubscribe" to never hear from me again.

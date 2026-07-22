@@ -13,6 +13,7 @@
   "dependencies": {
     "@netlify/blobs": "^8.2.0",
     "@supabase/supabase-js": "^2.100.1",
-    "netlify-cli": "^24.0.1"
+    "netlify-cli": "^24.0.1",
+    "nodemailer": "^9.0.3"
   }
 }

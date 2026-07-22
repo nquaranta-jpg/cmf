@@ -40,6 +40,19 @@
   status = 404
   force = true
 
+# Email tooling source — never serve
+[[redirects]]
+  from = "/cold-outreach/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/email-campaigns/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
 # CMF Launch routes
 [[redirects]]
   from = "/launch"

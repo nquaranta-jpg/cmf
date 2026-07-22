@@ -1,0 +1,16 @@
+Subject: quick question about your past clients, {{first_name|hi}}
+
+Hi {{first_name|there}},
+
+I work with homeowners on mortgage protection — coverage that pays off the mortgage if something happens to the breadwinner. Most families ask about it right after closing, but almost nobody follows up with them once the keys are handed over.
+
+That's where I think there's a fit with {{brokerage|your brokerage}}. Your past clients trust you, and a "here's someone I trust to walk you through protecting the house" intro from you is genuinely useful to them — it keeps you in touch with your sphere without you selling anything.
+
+No cost to you, and I'm licensed and local to {{city|the area}}. Would you be open to a 10-minute call this week to see if it makes sense?
+
+{{from_name}}
+Crown Merchant Financial
+{{phone}}
+{{postal_address}}
+
+If you'd rather not hear from me again, just reply "unsubscribe" and I'll take you off my list.

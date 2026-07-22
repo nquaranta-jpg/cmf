@@ -1,0 +1,16 @@
+Subject: re: your past clients, {{first_name|hi}}
+
+Hi {{first_name|there}},
+
+Following up on my note from a few days ago — I know closings keep you busy.
+
+The short version: I help your past buyers set up mortgage protection, you get a reason to check back in with them that isn't "just checking in," and their families are covered if the worst happens. Several agents I work with send it as part of their post-closing follow-up and their clients thank them for it.
+
+Happy to send over a one-page summary you can look at first, or just grab 10 minutes on a call — whichever is easier.
+
+{{from_name}}
+Crown Merchant Financial
+{{phone}}
+{{postal_address}}
+
+Reply "unsubscribe" any time and I won't email again.
