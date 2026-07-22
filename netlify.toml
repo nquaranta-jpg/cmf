@@ -33,6 +33,49 @@
   status = 404
   force = true
 
+# SQL migrations for CMF Launch live in /supabase — never serve them
+[[redirects]]
+  from = "/supabase/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+# CMF Launch routes
+[[redirects]]
+  from = "/launch"
+  to = "/launch/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/leads"
+  to = "/launch/leads.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/ads"
+  to = "/launch/ads.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/training"
+  to = "/launch/training.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/match"
+  to = "/launch/match.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/login"
+  to = "/launch/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/launch/app"
+  to = "/launch/app.html"
+  status = 200
+
 [[redirects]]
   from = "/quote"
   to = "/quote.html"
