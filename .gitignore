@@ -18,3 +18,6 @@ CMF_Veteran_Benefits_Review.pptx
 
 # Legacy local copy of CMF Launch (live version is /launch in this repo)
 cmf-launch/
+
+# Outreach tooling is private — lives on this Mac + its own Netlify site
+cold-outreach/
