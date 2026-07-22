@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Workshops | CMF Society</title>
+<meta name="description" content="Upcoming CMF Society workshops on funeral costs, estate documents, life insurance, and retirement. Educational gatherings open to everyone at no charge." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://crownmerchantfinancial.com/society/workshops" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Workshops | CMF Society" />
+<meta property="og:description" content="Monthly educational gatherings from the CMF Society. Open to everyone at no charge. Nothing is ever sold in the room." />
+<meta property="og:url" content="https://crownmerchantfinancial.com/society/workshops" />
+<meta property="og:image" content="https://crownmerchantfinancial.com/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/society.css" />
+</head>
+<body class="society">
+
+<!-- CMF Society emblem: crown within a shield, drawn as a single-color crest -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="soc-emblem" viewBox="0 0 140 168">
+      <path d="M70 6 L127 25 V80 C127 116 105 141 70 158 C35 141 13 116 13 80 V25 Z" fill="none" stroke="currentColor" stroke-width="4"/>
+      <path d="M70 16 L118 32 V80 C118 108 100 130 70 146 C40 130 22 108 22 80 V32 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M46 82 L46 52 L60 63 L70 42 L80 63 L94 52 L94 82 Z" fill="currentColor"/>
+      <circle cx="46" cy="48.5" r="3" fill="currentColor"/>
+      <circle cx="70" cy="38" r="3.5" fill="currentColor"/>
+      <circle cx="94" cy="48.5" r="3" fill="currentColor"/>
+      <rect x="46" y="87" width="48" height="6" fill="currentColor"/>
+      <line x1="44" y1="104" x2="96" y2="104" stroke="currentColor" stroke-width="1.5"/>
+      <use href="#soc-star" x="52" y="119" width="13" height="13" transform="translate(-6.5,-6.5)"/>
+      <use href="#soc-star" x="70" y="119" width="15" height="15" transform="translate(-7.5,-7.5)"/>
+      <use href="#soc-star" x="88" y="119" width="13" height="13" transform="translate(-6.5,-6.5)"/>
+      <rect x="66.7" y="132.7" width="6.6" height="6.6" transform="rotate(45 70 136)" fill="currentColor"/>
+    </symbol>
+    <symbol id="soc-star" viewBox="-7 -7 14 14">
+      <path d="M0 -6 L1.41 -1.94 L5.71 -1.85 L2.28 0.74 L3.53 4.85 L0 2.4 L-3.53 4.85 L-2.28 0.74 L-5.71 -1.85 L-1.41 -1.94 Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="soc-nav">
+  <div class="soc-wrap">
+    <a class="soc-brand" href="/society">
+      <svg aria-hidden="true"><use href="#soc-emblem"/></svg>
+      <span class="t"><strong>CMF Society</strong><span>Est. 2026</span></span>
+    </a>
+    <nav class="soc-nav-links" aria-label="Society">
+      <a href="/">Crown Merchant Financial</a>
+      <a href="/society">The Society</a>
+      <a href="/society/workshops" class="active">Workshops</a>
+      <a href="/society#join" class="join-link">Become a Member</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Page hero -->
+<section class="soc-hero paper">
+  <svg class="watermark" aria-hidden="true"><use href="#soc-emblem"/></svg>
+  <div class="soc-wrap" style="padding-top:64px;padding-bottom:64px">
+    <svg class="emblem" style="width:84px;height:100px" role="img" aria-label="CMF Society emblem, a crown within a shield"><use href="#soc-emblem"/></svg>
+    <h1 style="font-size:clamp(36px,5.5vw,56px)">Society Workshops</h1>
+    <p class="subline">Monthly Gatherings &middot; Open to All &middot; No Charge</p>
+    <hr class="gold-rule" />
+    <p class="tagline" style="font-style:normal;font-family:var(--soc-sans);font-size:17.5px;max-width:58ch">Each month the Society gathers to take the mystery out of one subject families face together, from funeral costs to estate documents to retirement. Workshops are educational, nothing is ever sold in the room, and food and drinks are on us. Bring a neighbor.</p>
+  </div>
+</section>
+
+<!-- Upcoming -->
+<section class="soc-section">
+  <div class="soc-wrap">
+    <div class="soc-section-head">
+      <span class="soc-label">On the Calendar</span>
+      <h2>Upcoming Workshops</h2>
+      <hr class="gold-rule" />
+    </div>
+    <div id="upcoming-workshops" class="events-list"><!-- rendered from /js/society-events.js --></div>
+  </div>
+</section>
+
+<!-- Past -->
+<section class="soc-section tint paper">
+  <div class="soc-wrap">
+    <div class="soc-section-head">
+      <span class="soc-label">From the Archive</span>
+      <h2>Past Workshops</h2>
+      <hr class="gold-rule" />
+    </div>
+    <div id="past-workshops" class="events-list"><!-- rendered from /js/society-events.js --></div>
+  </div>
+</section>
+
+<!-- Membership invitation -->
+<section class="soc-section">
+  <div class="soc-wrap" style="text-align:center">
+    <div class="soc-section-head" style="margin-bottom:28px">
+      <span class="soc-label">Membership</span>
+      <h2>Not a Member Yet?</h2>
+      <hr class="gold-rule" />
+      <p>Membership is open to everyone and costs nothing to join. Members hear about each workshop first.</p>
+    </div>
+    <a class="soc-btn" href="/society#join">Become a Member</a>
+  </div>
+</section>
+
+<!-- COMPLIANCE FOOTER -->
+<footer class="soc-footer">
+  <div class="soc-wrap">
+    <svg class="emblem" aria-hidden="true"><use href="#soc-emblem"/></svg>
+    <p class="foot-name">CMF Society</p>
+    <span class="soc-label">A Community of Crown Merchant Financial &middot; Est. 2026</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/society">The Society</a>
+      <a href="/society/workshops">Workshops</a>
+      <a href="/society#join">Become a Member</a>
+      <a href="/">Crown Merchant Financial</a>
+      <a href="/privacy">Privacy Policy</a>
+    </nav>
+    <p class="compliance">The CMF Society is a community program of Crown Merchant Financial LLC, a licensed insurance agency. Insurance products may be discussed at Society events. Society membership is open to the public at no charge and is not conditioned on the purchase of any insurance product. Society Plus, when available, will be offered on identical terms to all members. Client Services are policy servicing provided to Crown Merchant Financial clients and confer no separate insurance coverage or policy benefit.</p>
+    <p class="legal">Crown Merchant Financial LLC &middot; IL Business Entity Producer License #3004124919 &middot; NPN: 22145269 &middot; Licensed nationwide.<br/>&copy; 2026 Crown Merchant Financial. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/society-events.js"></script>
+<script src="/js/society.js"></script>
+<script src="/js/tracking.js"></script>
+</body>
+</html>
