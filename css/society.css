@@ -237,6 +237,11 @@ body.society {
   padding: 6px;
   background: #fff;
 }
+.archive-photo .frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .archive-photo .plate {
   background: var(--soc-cream-dark);
   border: 1px solid var(--soc-line);
