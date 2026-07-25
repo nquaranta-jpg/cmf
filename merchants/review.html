@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Statement Review | CMF Internal</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <style>
+      body { background: var(--navy); color: #e2e8f0; font-family: "Nunito Sans", sans-serif; padding: 2rem 1rem; }
+      .wrap { max-width: 1100px; margin: 0 auto; }
+      h1 { font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--gold); }
+      h2 { font-size: 1.1rem; margin: 1.5rem 0 0.75rem; color: var(--gold-light); }
+      .card { background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; margin-bottom: 1rem; border-radius: 6px; }
+      input, textarea, select { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 0.6rem 0.8rem; font-family: inherit; font-size: 0.95rem; border-radius: 4px; width: 100%; }
+      input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+      label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; margin: 0.75rem 0 0.25rem; }
+      button { background: var(--gold); color: var(--navy); border: none; padding: 0.6rem 1.2rem; font-weight: 700; cursor: pointer; border-radius: 4px; font-size: 0.9rem; }
+      button:hover { background: var(--gold-light); }
+      button.ghost { background: transparent; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.25); }
+      button.danger { background: #7f1d1d; color: #fecaca; }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+      th, td { text-align: left; padding: 0.6rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      th { color: #94a3b8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+      tr.clickable { cursor: pointer; }
+      tr.clickable:hover { background: rgba(255,255,255,0.04); }
+      .status { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+      .status.received, .status.queued, .status.analyzing { background: rgba(96,165,250,0.15); color: #93c5fd; }
+      .status.analyzed { background: rgba(201,169,98,0.18); color: var(--gold-light); }
+      .status.needs_manual { background: rgba(251,146,60,0.15); color: #fdba74; }
+      .status.approved { background: rgba(74,222,128,0.15); color: #86efac; }
+      .status.rejected { background: rgba(248,113,113,0.15); color: #fca5a5; }
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.25rem; }
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 1.25rem; }
+      .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
+      .muted { color: #94a3b8; font-size: 0.85rem; }
+      .filelinks a { color: var(--gold-light); margin-right: 1rem; font-size: 0.88rem; }
+      .err { color: #fca5a5; margin-top: 0.75rem; font-size: 0.9rem; }
+      .okmsg { color: #86efac; margin-top: 0.75rem; font-size: 0.9rem; }
+      pre { background: rgba(0,0,0,0.3); padding: 1rem; overflow-x: auto; font-size: 0.78rem; border-radius: 4px; }
+      .back { color: #94a3b8; text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; cursor: pointer; }
+      .back:hover { color: #fff; }
+      @media (max-width: 700px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>CMF Merchants — Statement Review</h1>
+
+      <!-- Login -->
+      <div class="card" id="login-card">
+        <label for="pw">Review password</label>
+        <input type="password" id="pw" autocomplete="current-password" />
+        <div class="actions"><button id="login-btn">Unlock</button></div>
+        <div class="err" id="login-err" style="display:none;"></div>
+      </div>
+
+      <!-- List -->
+      <div id="list-view" style="display:none;">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+            <h2 style="margin:0;">Submissions</h2>
+            <button class="ghost" id="refresh-btn">Refresh</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Received</th><th>Business</th><th>Status</th><th>Eff. rate</th><th>Est. annual savings</th><th>Conf.</th></tr>
+            </thead>
+            <tbody id="list-body"></tbody>
+          </table>
+          <p class="muted" id="list-empty" style="display:none;margin-top:1rem;">No submissions yet.</p>
+        </div>
+      </div>
+
+      <!-- Detail -->
+      <div id="detail-view" style="display:none;"></div>
+    </div>
+
+    <script src="/js/merchants-review.js"></script>
+  </body>
+</html>

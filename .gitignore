@@ -21,3 +21,6 @@ cmf-launch/
 
 # Outreach tooling is private — lives on this Mac + its own Netlify site
 cold-outreach/
+
+# Netlify CLI artifact
+deno.lock
