@@ -204,7 +204,7 @@ export async function runExtraction(store, record) {
   content.push({ type: "text", text: EXTRACTION_PROMPT });
 
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-6",
+    model: "claude-sonnet-5",
     max_tokens: 16000,
     thinking: { type: "adaptive" },
     output_config: { format: { type: "json_schema", schema: EXTRACTION_SCHEMA } },

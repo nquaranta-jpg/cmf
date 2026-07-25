@@ -27,7 +27,7 @@ Flow: prospect uploads a processing statement (PDF or phone photos; images
 are compressed client-side) → `merchant-analyzer.mjs` stores the lead +
 files in Netlify Blobs (store `merchant-statements`) and notifies
 Telegram/email → `merchant-analyzer-background.mjs` runs a Claude
-(`claude-sonnet-4-6`) extraction with a conservative prompt and recomputes
+(`claude-sonnet-5`) extraction with a conservative prompt and recomputes
 the fair-pricing math server-side (interchange + 0.30% + $0.10/txn) →
 result waits in the review queue. **Nothing is ever sent to the prospect
 automatically**; approve on the review page, then deliver the one-pager
