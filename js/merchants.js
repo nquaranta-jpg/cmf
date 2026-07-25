@@ -4,6 +4,64 @@
 // huge), then create → upload each page → finalize against the
 // merchant-analyzer function. Statement contents never touch URL params or
 // client-side storage.
+// ── Quick estimator (client-side ballpark, no data leaves the page) ──
+// Mirrors the server benchmark: card cost + 0.30% + $0.10 per transaction.
+// Card cost is a deliberately conservative blended estimate; the real
+// analysis reads it off the statement.
+(function () {
+  var volumeEl = document.getElementById("est-volume");
+  if (!volumeEl) return;
+
+  var EST_CARD_COST = 0.019; // conservative blended card cost (interchange + network)
+  var FAIR_MARKUP = 0.003;
+  var FAIR_PER_TXN = 0.1;
+  var FAIR_TOLERANCE = 1.1;
+
+  var rateEl = document.getElementById("est-rate");
+  var ticketEl = document.getElementById("est-ticket");
+  var nowEl = document.getElementById("est-now");
+  var fairEl = document.getElementById("est-fair");
+  var savingsEl = document.getElementById("est-savings");
+  var noteEl = document.getElementById("est-note");
+
+  function money(n) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+
+  function update() {
+    var volume = parseFloat(volumeEl.value);
+    var rate = parseFloat(rateEl.value);
+    var ticket = parseFloat(ticketEl.value) || 50;
+
+    if (!(volume > 0) || !(rate > 0)) {
+      nowEl.textContent = "–";
+      fairEl.textContent = "–";
+      savingsEl.textContent = "–";
+      noteEl.textContent = "Fill in your numbers and the comparison updates as you type.";
+      return;
+    }
+
+    var feesNow = volume * (rate / 100);
+    var txns = volume / Math.max(1, ticket);
+    var fair = volume * (EST_CARD_COST + FAIR_MARKUP) + txns * FAIR_PER_TXN;
+    var monthlyDiff = Math.max(0, feesNow - fair);
+
+    nowEl.textContent = money(feesNow) + "/mo";
+    fairEl.textContent = money(fair) + "/mo";
+    savingsEl.textContent = money(monthlyDiff * 12) + "/yr";
+
+    if (feesNow <= fair * FAIR_TOLERANCE) {
+      noteEl.textContent = "On these numbers you look close to fair. Good. Upload a statement and we will confirm it in writing, no strings.";
+    } else {
+      noteEl.textContent = "Worth two minutes to confirm. The statement analysis pins down the real number, line by line, checked by a person.";
+    }
+  }
+
+  [volumeEl, rateEl, ticketEl].forEach(function (el) {
+    el.addEventListener("input", update);
+  });
+})();
+
 (function () {
   var form = document.getElementById("mrc-form");
   if (!form) return;

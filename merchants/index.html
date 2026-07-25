@@ -76,7 +76,10 @@
       <div class="badge">CMF Payments Desk &middot; Veteran Founded</div>
       <h1>You Are Probably <span class="accent">Overpaying</span> to Get Paid.</h1>
       <p class="mrc-hero-sub">Upload one processing statement. We will show you, in plain English, exactly where your money is going. Free, no obligation. And if your pricing is fair, we will tell you that too.</p>
-      <a href="#analyzer" class="btn-primary">Get My Free Statement Analysis &rarr;</a>
+      <div class="hero-buttons" style="justify-content:center;">
+        <a href="#analyzer" class="btn-primary">Get My Free Statement Analysis &rarr;</a>
+        <a href="#estimate" class="btn-secondary">Estimate Without a Statement</a>
+      </div>
       <p class="mrc-hero-note">No sales call required. A real person checks every number.</p>
     </section>
 
@@ -95,6 +98,51 @@
           <h3>Sunlight fixes it.</h3>
           <p>We put your statement in plain English. What you paid, what a fair price looks like, and the difference. That is the whole pitch.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Quick estimator -->
+    <section class="section alt" id="estimate">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Quick Estimate</span>
+          <h2>No Statement Handy? Get a Ballpark.</h2>
+        </div>
+        <p class="mrc-analyzer-sub" style="color:var(--slate);">Enter three numbers and see a rough monthly comparison in seconds. It is directional, not a promise. The real analysis needs a statement.</p>
+        <div class="mrc-est-grid">
+          <div class="mrc-est-inputs">
+            <label for="est-volume">Monthly card volume</label>
+            <input type="number" id="est-volume" inputmode="decimal" min="0" placeholder="50000" />
+            <p class="mrc-est-hint">Total card sales you process in a typical month, in dollars.</p>
+
+            <label for="est-rate">Current effective rate (%)</label>
+            <input type="number" id="est-rate" inputmode="decimal" min="0" max="15" step="0.01" placeholder="3.0" />
+            <p class="mrc-est-hint">Total monthly fees divided by card volume. Not sure? Many small businesses land near 3%. Your statement has the real figure.</p>
+
+            <label for="est-ticket">Average sale</label>
+            <input type="number" id="est-ticket" inputmode="decimal" min="1" placeholder="50" />
+            <p class="mrc-est-hint">Used to estimate your per-transaction costs. A guess is fine.</p>
+          </div>
+          <div class="mrc-est-results">
+            <div class="mrc-est-stats">
+              <div class="mrc-est-stat">
+                <div class="label">What you likely pay now</div>
+                <div class="value" id="est-now">&ndash;</div>
+              </div>
+              <div class="mrc-est-stat">
+                <div class="label">A fair total on your volume</div>
+                <div class="value" id="est-fair">&ndash;</div>
+              </div>
+              <div class="mrc-est-stat gold">
+                <div class="label">Estimated annual difference</div>
+                <div class="value" id="est-savings">&ndash;</div>
+              </div>
+            </div>
+            <p class="mrc-est-note" id="est-note">Fill in your numbers and the comparison updates as you type.</p>
+            <a href="#analyzer" class="btn-primary">Confirm With My Statement &rarr;</a>
+          </div>
+        </div>
+        <p class="mrc-est-disclaimer">Ballpark only. Your true card cost depends on your card mix, so this estimate uses a conservative benchmark on purpose. The statement analysis replaces guesses with your actual numbers, checked by a person.</p>
       </div>
     </section>
 
@@ -125,8 +173,53 @@
       </div>
     </section>
 
+    <!-- Industry playbook -->
+    <section class="mrc-playbook" id="playbook">
+      <div class="section-header">
+        <span class="section-label" style="color: var(--gold);">The Industry Playbook</span>
+        <h2>Six Ways You End Up Overpaying</h2>
+      </div>
+      <p class="mrc-playbook-sub">None of this is illegal. Most of it is standard practice. All of it depends on you not looking closely.</p>
+      <div class="mrc-playbook-grid">
+        <div class="mrc-play-card">
+          <div class="kicker">The Teaser Rate</div>
+          <h3>The quote is not the price.</h3>
+          <p>You were quoted a low rate. It applies to almost nothing. Most of your transactions get downgraded to higher "tiers" with names nobody explains. The quote looked great. The bill does not.</p>
+        </div>
+        <div class="mrc-play-card">
+          <div class="kicker">The Real Number</div>
+          <h3>Effective rate is all that matters.</h3>
+          <p>Take your total fees. Divide by your total card volume. That is your effective rate. Owners quoted 1.6% routinely discover they pay 3% or more. The gap is the whole business model.</p>
+        </div>
+        <div class="mrc-play-card">
+          <div class="kicker">The Padding</div>
+          <h3>Fees invented out of thin air.</h3>
+          <p>PCI non-compliance fees. Batch fees. Statement fees. Vague "regulatory" line items. These are not card costs. They are manufactured charges that exist because most owners never ask.</p>
+        </div>
+        <div class="mrc-play-card">
+          <div class="kicker">The Equipment Trap</div>
+          <h3>Free terminals are the most expensive kind.</h3>
+          <p>A terminal that wholesales for a few hundred dollars gets leased at $40 to $50 a month, for years, on a contract you cannot cancel. Add an early termination fee and the exit is padlocked too.</p>
+        </div>
+        <div class="mrc-play-card">
+          <div class="kicker">The Rate Creep</div>
+          <h3>Your rate drifts up while nobody calls.</h3>
+          <p>A buried clause lets your pricing get "adjusted" over time. No signature, no heads-up, just a slightly bigger bill each year. They are counting on you not noticing.</p>
+        </div>
+        <div class="mrc-play-card">
+          <div class="kicker">Confusion by Design</div>
+          <h3>The statement is hard to read on purpose.</h3>
+          <p>Pages of line items, in abbreviations used nowhere else on earth. That is not an accident. The harder your bill is to read, the easier it is to pad.</p>
+        </div>
+      </div>
+      <div class="mrc-playbook-close">
+        <p>Sunlight fixes all six. Upload your statement and we will show you which ones are on yours.</p>
+        <a href="#analyzer" class="btn-primary">Check My Statement &rarr;</a>
+      </div>
+    </section>
+
     <!-- Why CMF + candor -->
-    <section class="section alt" id="why-cmf">
+    <section class="section" id="why-cmf">
       <div class="container">
         <div class="section-header">
           <span class="section-label">Why CMF</span>
