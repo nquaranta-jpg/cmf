@@ -452,7 +452,8 @@
     check("Checkbox481", data.dbaType === "individual");
     check("Checkbox482", data.dbaType === "business");
     check("Checkbox483", data.dbaType === "solicitor");
-    setText("Text238", data.assignCommissionsTo);
+    // All CMF agents assign commissions to CMF regardless of DBA type
+    setText("Text238", data.assignCommissionsTo || "Crown Merchant Financial");
     if (data.dbaType === "business") {
       setText("Number484", data.ein);
       setText("Text240", data.businessName);
