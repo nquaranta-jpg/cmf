@@ -858,6 +858,28 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
   }
 
+  // POST JSON with one automatic retry for transient failures
+  async function postJson(url, payload) {
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        var res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) return res;
+        if (attempt === 1 || (res.status >= 400 && res.status < 500)) {
+          throw new Error("send failed (" + res.status + ")");
+        }
+      } catch (e) {
+        if (attempt === 1) throw e;
+      }
+      await new Promise(function (r) { setTimeout(r, 1500); });
+    }
+  }
+
+  var CHUNK_B64 = 3000000; // ~3MB base64 per upload call, well under Netlify's 6MB cap
+
   async function generateAndSubmit() {
     var status = $("submitStatus");
     status.className = "status";
@@ -869,40 +891,58 @@
     btn.disabled = true;
     status.textContent = "Building your packet…";
 
+    var filename = "CMF-Onboarding-Packet.pdf";
     try {
       var d = collect();
       var bytes = await buildPdf(d, sigPad.toPng(), initPad.toPng());
-      var filename = "CMF-Onboarding-" + (d.lastName || "Agent") + "-" + (d.firstName || "") + ".pdf";
+      filename = "CMF-Onboarding-" + (d.lastName || "Agent") + "-" + (d.firstName || "") + ".pdf";
       downloadPdf(bytes, filename);
 
       status.textContent = "Packet built — sending to Crown Merchant Financial…";
       var b64 = bytesToBase64(bytes);
-      if (b64.length > 5500000) {
+      var meta = {
+        name: d.fullName,
+        email: d.email,
+        phone: d.phone,
+        npn: d.npn,
+        filename: filename,
+        docsLater: $("docsLater").checked,
+        website: "" // honeypot
+      };
+
+      if (b64.length > 26000000) {
         status.className = "status err";
-        status.innerHTML = "Your packet (with attachments) is too large to send automatically. It has been downloaded to your device — please email the PDF to <b>nquaranta@crownmerchantfinancial.com</b>.";
+        status.innerHTML = "Your packet (with attachments) is too large to send automatically. A copy was downloaded to your device — please email it to <b>nquaranta@crownmerchantfinancial.com</b>. <b>Important: attach the file</b> (<code>" + filename + "</code>, in your Downloads folder) before hitting send.";
         btn.disabled = false;
         return;
       }
-      var res = await fetch("/.netlify/functions/onboarding-submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: d.fullName,
-          email: d.email,
-          phone: d.phone,
-          npn: d.npn,
-          filename: filename,
-          docsLater: $("docsLater").checked,
-          pdf: b64,
-          website: "" // honeypot
-        })
-      });
-      if (!res.ok) throw new Error("send failed (" + res.status + ")");
+
+      if (b64.length <= CHUNK_B64) {
+        meta.pdf = b64;
+        await postJson("/.netlify/functions/onboarding-submit", meta);
+      } else {
+        // Large packet: upload in ~3MB chunks, then ask the server to assemble
+        var uploadId = "up-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+        var chunkCount = Math.ceil(b64.length / CHUNK_B64);
+        for (var i = 0; i < chunkCount; i++) {
+          status.textContent = "Sending your packet… " + Math.round((i / chunkCount) * 100) + "%";
+          await postJson("/.netlify/functions/onboarding-upload", {
+            id: uploadId,
+            seq: i,
+            data: b64.slice(i * CHUNK_B64, (i + 1) * CHUNK_B64),
+            website: ""
+          });
+        }
+        status.textContent = "Sending your packet… finalizing";
+        meta.uploadId = uploadId;
+        meta.chunkCount = chunkCount;
+        await postJson("/.netlify/functions/onboarding-submit", meta);
+      }
       showStep("done");
     } catch (err) {
       console.error(err);
       status.className = "status err";
-      status.innerHTML = "The packet PDF was downloaded to your device, but sending it automatically failed. Please email the downloaded PDF to <b>nquaranta@crownmerchantfinancial.com</b> — or try again.";
+      status.innerHTML = "The packet PDF was downloaded to your device, but sending it automatically failed. Please try again — or email it to <b>nquaranta@crownmerchantfinancial.com</b>. <b>Important: attach the file</b> (<code>" + filename + "</code>, in your Downloads folder) before hitting send.";
       btn.disabled = false;
     }
   }

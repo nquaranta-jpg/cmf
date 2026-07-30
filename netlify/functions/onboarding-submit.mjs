@@ -1,13 +1,21 @@
 // Receives a completed agent onboarding packet (PDF, base64) from
-// /onboarding and emails it via Resend. The PDF contains SSN/banking
-// details, so nothing is persisted here — the email is the only copy.
+// /onboarding and emails it via Resend. Small packets arrive inline; large
+// ones are reassembled from chunks parked in Netlify Blobs by
+// onboarding-upload (chunks are deleted here win or lose — the email is the
+// only copy of the packet on our side).
+
+import { getStore } from "@netlify/blobs";
 
 const NOTIFY_TO =
   process.env.ONBOARDING_NOTIFY_EMAIL || "nquaranta@crownmerchantfinancial.com";
 const FROM = process.env.ONBOARDING_NOTIFY_FROM || "no-reply@crownmerchantfinancial.com";
 
-// Base64 of ~4MB PDF ≈ 5.4MB; Netlify sync functions cap bodies at 6MB.
-const MAX_PDF_B64 = 5_600_000;
+// Netlify sync functions cap request bodies at 6MB, so inline uploads stop
+// short of that. Reassembled chunked uploads only face Resend's 40MB email
+// cap — we allow ~26MB of base64 (≈19MB PDF).
+const MAX_INLINE_B64 = 5_600_000;
+const MAX_TOTAL_B64 = 26_000_000;
+const MAX_CHUNKS = 16;
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
@@ -32,14 +40,50 @@ export default async (req) => {
   const email = String(body.email || "").slice(0, 200).trim();
   const phone = String(body.phone || "").slice(0, 40).trim();
   const npn = String(body.npn || "").slice(0, 40).trim();
-  const pdf = String(body.pdf || "");
+
+  let pdf = String(body.pdf || "");
+  let cleanupChunks = null;
+
+  if (pdf) {
+    if (pdf.length > MAX_INLINE_B64) return json(413, { error: "pdf too large" });
+  } else if (body.uploadId) {
+    const id = String(body.uploadId);
+    const count = Number(body.chunkCount);
+    if (!/^[a-z0-9-]{10,64}$/.test(id)) return json(400, { error: "bad upload id" });
+    if (!Number.isInteger(count) || count < 1 || count > MAX_CHUNKS) {
+      return json(400, { error: "bad chunk count" });
+    }
+    const store = getStore("onboarding-uploads");
+    cleanupChunks = async () => {
+      await Promise.allSettled(
+        Array.from({ length: count }, (_, i) => store.delete(`${id}/${i}`))
+      );
+    };
+    const parts = [];
+    for (let i = 0; i < count; i++) {
+      const part = await store.get(`${id}/${i}`);
+      if (!part) {
+        await cleanupChunks();
+        return json(400, { error: `missing chunk ${i}` });
+      }
+      parts.push(part);
+    }
+    pdf = parts.join("");
+  }
 
   if (!name || !pdf) return json(400, { error: "missing name or pdf" });
-  if (pdf.length > MAX_PDF_B64) return json(413, { error: "pdf too large" });
-  if (!/^[A-Za-z0-9+/=]+$/.test(pdf)) return json(400, { error: "bad pdf encoding" });
+  if (pdf.length > MAX_TOTAL_B64) {
+    if (cleanupChunks) await cleanupChunks();
+    return json(413, { error: "pdf too large" });
+  }
+  if (!/^[A-Za-z0-9+/=]+$/.test(pdf)) {
+    if (cleanupChunks) await cleanupChunks();
+    return json(400, { error: "bad pdf encoding" });
+  }
 
   if (!process.env.RESEND_API_KEY) {
     console.error("onboarding-submit: RESEND_API_KEY not configured");
+    if (cleanupChunks) await cleanupChunks();
     return json(500, { error: "email not configured" });
   }
 
@@ -84,6 +128,8 @@ export default async (req) => {
   } catch (err) {
     console.error("onboarding-submit:", err);
     return json(502, { error: "email send failed" });
+  } finally {
+    if (cleanupChunks) await cleanupChunks();
   }
 
   return json(200, { ok: true });
