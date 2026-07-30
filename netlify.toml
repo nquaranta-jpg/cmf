@@ -23,12 +23,6 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
-# Agent onboarding packet: recruits get the link directly; never index
-[[headers]]
-  for = "/onboarding/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-
 # publish = "." serves the whole repo as static files, which would expose
 # backend source (and anything else) unless blocked. Keep these first —
 # Netlify applies the first matching redirect.
