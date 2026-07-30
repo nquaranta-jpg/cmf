@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Onboarding Packet | Crown Merchant Financial</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <style>
+      body { background: #eef1f5; font-family: "Nunito Sans", sans-serif; color: var(--text); padding: 2rem 1rem 4rem; }
+      .wrap { max-width: 860px; margin: 0 auto; }
+      .brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
+      .brand .mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--navy); }
+      .brand strong { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.2rem; color: var(--navy); }
+      .card { background: #fff; padding: 2.25rem; box-shadow: 0 10px 40px rgba(10,22,40,0.12); border-radius: 6px; }
+      h1 { font-family: "Cormorant Garamond", Georgia, serif; color: var(--navy); font-size: 2rem; font-weight: 600; margin-bottom: 0.35rem; }
+      .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
+      h2 { font-family: "Cormorant Garamond", Georgia, serif; color: var(--navy); font-size: 1.4rem; font-weight: 600; margin: 0 0 1rem; }
+      h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gold-dark); margin: 1.5rem 0 0.75rem; }
+      .progress { display: flex; gap: 4px; margin-bottom: 1.75rem; }
+      .progress span { flex: 1; height: 5px; border-radius: 3px; background: #e2e8f0; }
+      .progress span.done { background: var(--gold); }
+      .step-label { font-size: 0.8rem; color: var(--slate); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.06em; }
+      .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0.9rem 1rem; }
+      .f { display: flex; flex-direction: column; gap: 0.3rem; }
+      .f label { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+      .f label .opt { font-weight: 400; color: var(--slate); }
+      .f input[type="text"], .f input[type="email"], .f input[type="tel"], .f input[type="date"], .f select, .f textarea {
+        border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.55rem 0.7rem; font: inherit; font-size: 0.95rem; background: #fff; color: var(--text); width: 100%;
+      }
+      .f input:focus, .f select:focus, .f textarea:focus { outline: 2px solid var(--gold); outline-offset: 0; border-color: var(--gold); }
+      .f input.invalid, .f select.invalid { border-color: #dc2626; background: #fef2f2; }
+      .c12 { grid-column: span 12; } .c8 { grid-column: span 8; } .c6 { grid-column: span 6; } .c4 { grid-column: span 4; } .c3 { grid-column: span 3; }
+      @media (max-width: 640px) { .c8, .c6, .c4, .c3 { grid-column: span 12; } .card { padding: 1.4rem; } }
+      .choices { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+      .choices label { display: flex; align-items: center; gap: 0.4rem; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.45rem 0.8rem; cursor: pointer; font-size: 0.9rem; }
+      .choices label:has(input:checked) { border-color: var(--gold); background: rgba(201,169,98,0.1); }
+      .choices input { accent-color: var(--gold-dark); }
+      fieldset { border: none; margin: 0; padding: 0; }
+      .hint { font-size: 0.8rem; color: var(--slate); line-height: 1.5; }
+      .note { background: rgba(201,169,98,0.1); border-left: 3px solid var(--gold); padding: 0.75rem 1rem; font-size: 0.87rem; margin: 1rem 0; line-height: 1.6; }
+      .warn { background: #fef2f2; border-left: 3px solid #dc2626; padding: 0.75rem 1rem; font-size: 0.87rem; margin: 1rem 0; line-height: 1.6; color: #991b1b; }
+      .qrow { display: flex; align-items: flex-start; gap: 1rem; padding: 0.65rem 0; border-bottom: 1px solid #f1f5f9; }
+      .qrow .qnum { flex: 0 0 2.2rem; font-weight: 700; color: var(--navy); font-size: 0.85rem; padding-top: 0.1rem; }
+      .qrow .qtext { flex: 1; font-size: 0.88rem; line-height: 1.5; }
+      .qrow .qopts { flex: 0 0 auto; display: flex; gap: 0.4rem; }
+      .qrow .qopts label { display: flex; align-items: center; gap: 0.3rem; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.25rem 0.6rem; cursor: pointer; font-size: 0.82rem; }
+      .qrow .qopts label:has(input:checked) { border-color: var(--gold); background: rgba(201,169,98,0.12); }
+      .qrow.unanswered .qopts label { border-color: #fca5a5; }
+      .carrier-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.3rem 0; border-bottom: 1px solid #f1f5f9; }
+      .carrier-row span { flex: 1; font-size: 0.88rem; }
+      .carrier-row input { flex: 0 0 46%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.4rem 0.6rem; font: inherit; font-size: 0.88rem; }
+      .repeat-block { border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem 1.1rem 1.2rem; margin-bottom: 1rem; }
+      .repeat-block .rb-title { font-size: 0.8rem; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.7rem; }
+      .btnbar { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
+      button.btn { background: var(--navy); color: #fff; border: none; padding: 0.75rem 1.6rem; font: inherit; font-weight: 700; cursor: pointer; border-radius: 4px; font-size: 0.95rem; }
+      button.btn.gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--navy); }
+      button.btn.ghost { background: #fff; color: var(--navy); border: 1px solid #cbd5e1; }
+      button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      button.mini { background: #fff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.35rem 0.8rem; font: inherit; font-size: 0.8rem; cursor: pointer; color: var(--navy); }
+      .sigpad { border: 2px dashed #cbd5e1; border-radius: 6px; background: #fff; touch-action: none; width: 100%; }
+      .sigpad.signed { border-style: solid; border-color: var(--gold); }
+      .sigrow { display: flex; align-items: center; justify-content: space-between; margin: 0.35rem 0 0; }
+      .upload { border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.9rem 1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+      .upload .u-label { flex: 1 1 220px; }
+      .upload .u-label strong { display: block; font-size: 0.9rem; color: var(--navy); }
+      .upload .u-label span { font-size: 0.78rem; color: var(--slate); }
+      .upload input[type="file"] { font-size: 0.82rem; max-width: 260px; }
+      .upload .u-status { font-size: 0.78rem; color: var(--gold-dark); font-weight: 700; }
+      .status { margin-top: 1.25rem; font-size: 0.92rem; line-height: 1.6; }
+      .status.ok { color: #15803d; }
+      .status.err { color: #b91c1c; }
+      .done-box { text-align: center; padding: 2rem 1rem; }
+      .done-box .big { font-size: 3rem; margin-bottom: 0.5rem; }
+      .hidden { display: none !important; }
+      .review-summary { font-size: 0.9rem; line-height: 1.8; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+      .review-summary b { color: var(--navy); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="brand">
+        <div class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
+        <strong>Crown Merchant Financial</strong>
+      </div>
+
+      <div class="card">
+        <h1>Agent Onboarding Packet</h1>
+        <p class="subtitle">
+          Complete this form to generate your Crown Merchant Financial agent onboarding packet. Everything you enter goes
+          directly into the official fillable PDF &mdash; no printing or scanning needed. It takes about 15&ndash;20 minutes.
+          Have handy: your insurance license info, NPN, driver's license, a voided check, and your E&amp;O certificate.
+        </p>
+
+        <div class="step-label" id="stepLabel">Step 1 of 10</div>
+        <div class="progress" id="progress"></div>
+
+        <form id="obForm" novalidate>
+
+          <!-- STEP 1: Personal info -->
+          <section class="step" data-step="0">
+            <h2>Your Information</h2>
+            <div class="grid">
+              <div class="f c6"><label>First Name *</label><input type="text" id="firstName" autocomplete="given-name" required /></div>
+              <div class="f c3"><label>M.I. <span class="opt">(optional)</span></label><input type="text" id="mi" maxlength="2" /></div>
+              <div class="f c3"><label>Last Name *</label><input type="text" id="lastName" autocomplete="family-name" required /></div>
+              <div class="f c6"><label>Social Security # *</label><input type="text" id="ssn" inputmode="numeric" placeholder="XXX-XX-XXXX" required /></div>
+              <div class="f c3"><label>Gender *</label><select id="gender" required><option value=""></option><option>M</option><option>F</option></select></div>
+              <div class="f c3"><label>Date of Birth *</label><input type="date" id="dob" required /></div>
+              <div class="f c6"><label>Email *</label><input type="email" id="email" autocomplete="email" required /></div>
+              <div class="f c6"><label>Marital Status <span class="opt">(optional)</span></label><select id="maritalStatus"><option value=""></option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+              <div class="f c4"><label>Phone *</label><input type="tel" id="phone" autocomplete="tel" required /></div>
+              <div class="f c4"><label>Cell <span class="opt">(if different)</span></label><input type="tel" id="cell" /></div>
+              <div class="f c4"><label>Fax <span class="opt">(optional)</span></label><input type="tel" id="fax" /></div>
+              <div class="f c4"><label>Title <span class="opt">(e.g. Agent)</span></label><input type="text" id="title" placeholder="Agent" /></div>
+              <div class="f c8"><label>Maiden Name <span class="opt">(if applicable)</span></label><input type="text" id="maidenName" /></div>
+            </div>
+
+            <h3>Licensing</h3>
+            <div class="grid">
+              <div class="f c6"><label>Resident Insurance License # &amp; State *</label><input type="text" id="resLicense" placeholder="e.g. 1234567 — IL" required /></div>
+              <div class="f c6"><label>NPN (National Producer Number) *</label><input type="text" id="npn" inputmode="numeric" required /></div>
+              <div class="f c8"><label>Driver's License # *</label><input type="text" id="dlNumber" required /></div>
+              <div class="f c4"><label>DL State *</label><input type="text" id="dlState" maxlength="2" placeholder="IL" required /></div>
+            </div>
+
+            <h3>Residential Address <span style="text-transform:none;letter-spacing:0">(no PO boxes &mdash; city/state not needed)</span></h3>
+            <div class="grid">
+              <div class="f c6"><label>Address Line 1 *</label><input type="text" id="resLine1" required /></div>
+              <div class="f c3"><label>Line 2</label><input type="text" id="resLine2" /></div>
+              <div class="f c3"><label>Zip Code *</label><input type="text" id="resZip" inputmode="numeric" required /></div>
+              <div class="f c6"><label>Living Here Since *</label><input type="date" id="resStart" required /></div>
+            </div>
+
+            <h3>Mailing Address</h3>
+            <div class="f c12" style="margin-bottom:0.75rem">
+              <label class="choices" style="border:none;padding:0"><label><input type="checkbox" id="mailSame" checked /> Same as residential</label></label>
+            </div>
+            <div class="grid hidden" id="mailFields">
+              <div class="f c6"><label>Address Line 1</label><input type="text" id="mailLine1" /></div>
+              <div class="f c3"><label>Line 2</label><input type="text" id="mailLine2" /></div>
+              <div class="f c3"><label>Zip Code</label><input type="text" id="mailZip" inputmode="numeric" /></div>
+              <div class="f c6"><label>Since</label><input type="date" id="mailStart" /></div>
+            </div>
+
+            <h3>Doing Business As</h3>
+            <p class="hint" style="margin-bottom:0.5rem">Leave this as pre-selected unless we've discussed otherwise.</p>
+            <fieldset class="f">
+              <div class="choices">
+                <label><input type="radio" name="dbaType" value="solicitor" checked /> Solicitor / LOA (standard)</label>
+                <label><input type="radio" name="dbaType" value="individual" /> Individual</label>
+                <label><input type="radio" name="dbaType" value="business" /> Business Entity</label>
+              </div>
+            </fieldset>
+            <div class="grid" id="solicitorFields" style="margin-top:0.9rem">
+              <div class="f c12"><label>Assigning commissions to *</label><input type="text" id="assignCommissionsTo" value="Crown Merchant Financial" /></div>
+            </div>
+            <div class="hidden" id="businessFields" style="margin-top:0.9rem">
+              <div class="grid">
+                <div class="f c4"><label>EIN *</label><input type="text" id="ein" inputmode="numeric" /></div>
+                <div class="f c8"><label>Business Name *</label><input type="text" id="businessName" /></div>
+                <div class="f c6"><label>Website</label><input type="text" id="website" /></div>
+                <div class="f c6"><label>Your Title in the Business</label><input type="text" id="bizTitle" placeholder="Owner" /></div>
+                <div class="f c6"><label>Business Phone</label><input type="tel" id="bizPhone" /></div>
+                <div class="f c6"><label>Business Fax</label><input type="tel" id="bizFax" /></div>
+                <div class="f c4"><label>Principal Name</label><input type="text" id="principalName" /></div>
+                <div class="f c4"><label>Principal Title</label><input type="text" id="principalTitle" /></div>
+                <div class="f c4"><label>Principal Email</label><input type="text" id="principalEmail" /></div>
+                <div class="f c12"><label>Company Type</label>
+                  <div class="choices">
+                    <label><input type="radio" name="companyType" value="corp" /> Corporation</label>
+                    <label><input type="radio" name="companyType" value="partnership" /> Partnership</label>
+                    <label><input type="radio" name="companyType" value="llc" /> LLC</label>
+                    <label><input type="radio" name="companyType" value="llp" /> LLP</label>
+                  </div>
+                </div>
+                <div class="f c6"><label>Corporate Address Line 1</label><input type="text" id="corpLine1" /></div>
+                <div class="f c3"><label>Line 2</label><input type="text" id="corpLine2" /></div>
+                <div class="f c3"><label>Zip Code</label><input type="text" id="corpZip" /></div>
+                <div class="f c6"><label>At This Address Since</label><input type="date" id="corpStart" /></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STEP 2: History -->
+          <section class="step hidden" data-step="1">
+            <h2>Employment History</h2>
+            <p class="hint" style="margin-bottom:1rem">Please provide the past 7 years of employment history, most recent first.</p>
+            <div id="employmentBlocks"></div>
+            <h2 style="margin-top:2rem">Address History</h2>
+            <p class="hint" style="margin-bottom:1rem">Past 7 years of address history. Your current residential address counts as the first entry &mdash; we pre-fill it for you. City/state not needed.</p>
+            <div id="addressBlocks"></div>
+          </section>
+
+          <!-- STEP 3: Beneficiary & practice -->
+          <section class="step hidden" data-step="2">
+            <h2>Commission Beneficiary</h2>
+            <p class="hint" style="margin-bottom:1rem">Who should receive any commissions owed to you if something happens to you? Recommended, but optional.</p>
+            <div class="grid">
+              <div class="f c6"><label>Beneficiary Name</label><input type="text" id="benName" /></div>
+              <div class="f c3"><label>Beneficiary SSN</label><input type="text" id="benSsn" placeholder="XXX-XX-XXXX" /></div>
+              <div class="f c3"><label>Relationship</label><input type="text" id="benRelationship" /></div>
+              <div class="f c5 c6"><label>Street Address</label><input type="text" id="benStreet" /></div>
+              <div class="f c3"><label>City</label><input type="text" id="benCity" /></div>
+              <div class="f c2 c3" style="grid-column: span 2"><label>State</label><input type="text" id="benState" maxlength="2" /></div>
+              <div class="f c1 c3" style="grid-column: span 1"><label>Zip</label><input type="text" id="benZip" /></div>
+            </div>
+
+            <h2 style="margin-top:2rem">Practice Details</h2>
+            <div class="qwrap" id="practiceQuestions">
+              <div class="qrow"><div class="qtext">May a carrier publish your name in company publications?</div>
+                <div class="qopts"><label><input type="radio" name="publishName" value="yes" checked /> Yes</label><label><input type="radio" name="publishName" value="no" /> No</label></div></div>
+              <div class="qrow hidden" id="recognitionRow"><div class="qtext">If no &mdash; is recognition (awards, conference) acceptable?</div>
+                <div class="qopts"><label><input type="radio" name="recognitionOk" value="yes" /> Yes</label><label><input type="radio" name="recognitionOk" value="no" /> No</label></div></div>
+              <div class="qrow"><div class="qtext">Is new business being submitted?</div>
+                <div class="qopts"><label><input type="radio" name="newBusiness" value="yes" checked /> Yes</label><label><input type="radio" name="newBusiness" value="no" /> No</label></div></div>
+              <div class="qrow"><div class="qtext">Deliver client contracts to agent? (client otherwise)</div>
+                <div class="qopts"><label><input type="radio" name="deliverContracts" value="yes" /> Yes</label><label><input type="radio" name="deliverContracts" value="no" checked /> No</label></div></div>
+            </div>
+            <div class="grid" style="margin-top:1rem">
+              <div class="f c6"><label>Commission Frequency</label>
+                <select id="commissionFrequency"><option value="daily">Daily</option><option value="weekly" selected>Weekly</option><option value="biweekly">Bi-Weekly</option><option value="monthly">Monthly</option></select></div>
+              <div class="f c6"><label>MDRT Status <span class="opt">(if any)</span></label>
+                <select id="mdrt"><option value="">None</option><option value="qualifying">Qualifying</option><option value="life">Life</option><option value="court">Court of the Table</option><option value="top">Top of the Table</option></select></div>
+              <div class="f c6"><label>Broker/Dealer TIN <span class="opt">(if applicable)</span></label><input type="text" id="brokerDealerTin" /></div>
+            </div>
+            <div class="qwrap" style="margin-top:0.5rem">
+              <div class="qrow"><div class="qtext">Have you ever been expelled or disciplined by a professional organization such as NALU?</div>
+                <div class="qopts"><label><input type="radio" name="nalu" value="yes" /> Yes</label><label><input type="radio" name="nalu" value="no" checked /> No</label></div></div>
+              <div class="qrow"><div class="qtext">If you currently are, or ever have been, FINRA registered &mdash; do you have any reportable events on your U-4 or U-5?</div>
+                <div class="qopts"><label><input type="radio" name="finraReportable" value="yes" /> Yes</label><label><input type="radio" name="finraReportable" value="no" checked /> No</label></div></div>
+              <div class="qrow"><div class="qtext">Are you now, or have you ever been, a party to a legal settlement of a dispute involving a client or company for which you worked?</div>
+                <div class="qopts"><label><input type="radio" name="legalSettlement" value="yes" /> Yes</label><label><input type="radio" name="legalSettlement" value="no" checked /> No</label></div></div>
+            </div>
+          </section>
+
+          <!-- STEP 4: Background questions -->
+          <section class="step hidden" data-step="3">
+            <h2>Background Questions</h2>
+            <p class="hint">Carriers require every question answered. If any answer is Yes, you'll add a letter of explanation on the next screen.</p>
+            <div style="margin:0.9rem 0"><button type="button" class="mini" id="allNoBtn">Answer all unanswered questions "No"</button></div>
+            <div id="legalQuestions"></div>
+          </section>
+
+          <!-- STEP 5: Explanations + licenses -->
+          <section class="step hidden" data-step="4">
+            <div id="explanationSection" class="hidden">
+              <h2>Letter of Explanation</h2>
+              <p class="hint" style="margin-bottom:1rem">You answered Yes to at least one background question. Provide a full, detailed explanation including specific dates. Add up to three separate incidents.</p>
+              <div id="explanationBlocks"></div>
+            </div>
+            <h2 id="licensesHeading">Licenses &amp; Certifications</h2>
+            <div class="grid">
+              <div class="f c6"><label>AML (Anti-Money Laundering) Provider *</label>
+                <select id="amlProvider"><option value="limra">LIMRA</option><option value="other">Other</option><option value="none">None</option></select></div>
+              <div class="f c6"><label>AML Course Completion Date</label><input type="date" id="amlDate" /></div>
+              <div class="f c12 hidden" id="amlOtherWrap"><label>Provider / Certificate Details <span class="opt">(you'll also attach the certificate later)</span></label><input type="text" id="amlOther" /></div>
+            </div>
+            <div class="qwrap" style="margin:0.75rem 0">
+              <div class="qrow"><div class="qtext">Are you a Registered Rep with FINRA?</div>
+                <div class="qopts"><label><input type="radio" name="finraRep" value="yes" /> Yes</label><label><input type="radio" name="finraRep" value="no" checked /> No</label></div></div>
+            </div>
+            <div class="grid hidden" id="finraRepFields">
+              <div class="f c8"><label>Broker/Dealer Name</label><input type="text" id="bdName" /></div>
+              <div class="f c4"><label>CRD #</label><input type="text" id="crd" /></div>
+            </div>
+            <div class="grid" style="margin-top:0.75rem">
+              <div class="f c12"><label>Honors you currently hold <span class="opt">(optional)</span></label><input type="text" id="honors" /></div>
+            </div>
+          </section>
+
+          <!-- STEP 6: EFT / banking -->
+          <section class="step hidden" data-step="5">
+            <h2>Direct Deposit (EFT)</h2>
+            <p class="hint" style="margin-bottom:1rem">Direct deposit details for your commission payouts. You'll attach a voided check or bank letter in the Documents step.</p>
+            <div class="grid">
+              <div class="f c12"><label>Account Owner Name *</label><input type="text" id="eftOwner" required /></div>
+              <div class="f c6"><label>Routing / ABA # *</label><input type="text" id="eftRouting" inputmode="numeric" maxlength="9" required /></div>
+              <div class="f c6"><label>Account # *</label><input type="text" id="eftAccount" inputmode="numeric" required /></div>
+              <div class="f c8"><label>Financial Institution Name *</label><input type="text" id="eftBank" required /></div>
+              <div class="f c4"><label>Account Type *</label>
+                <div class="choices"><label><input type="radio" name="eftType" value="checking" checked /> Checking</label><label><input type="radio" name="eftType" value="saving" /> Saving</label></div></div>
+            </div>
+            <h3>Advance Commissions</h3>
+            <div class="qwrap">
+              <div class="qrow"><div class="qtext">Are you requesting advance commissions? If yes, the Agent/Agency Debit Balance Agreement (personal guarantee for chargebacks) will be signed as part of this packet.</div>
+                <div class="qopts"><label><input type="radio" name="advanceCommissions" value="yes" /> Yes</label><label><input type="radio" name="advanceCommissions" value="no" checked /> No</label></div></div>
+            </div>
+          </section>
+
+          <!-- STEP 7: Authorizations -->
+          <section class="step hidden" data-step="6">
+            <h2>Authorizations</h2>
+            <div class="note">
+              These correspond to the authorization forms inside the packet. Your signature and initials (captured at the final
+              step) are applied to each form you authorize here.
+            </div>
+            <h3>Signature Authorization</h3>
+            <p class="hint">Authorizes our contracting office to affix your signature to carrier contracting forms submitted through SureLC. Required to process appointments.</p>
+            <h3>VectorOne Debit-Check Authorization</h3>
+            <p class="hint" style="margin-bottom:0.5rem">Authorizes a commission-related debit balance screening. Your initials are applied to statements A&ndash;E and your signature to the form.</p>
+            <h3>Email Setup &amp; Signature Approval</h3>
+            <fieldset class="f">
+              <div class="choices" style="flex-direction:column; align-items:stretch">
+                <label><input type="radio" name="emailChoice" value="own" checked /> Send carrier appointment requests to my own email address for review and signature</label>
+                <label><input type="radio" name="emailChoice" value="dedicated" /> Create a dedicated contracting email address for me to review appointment requests</label>
+              </div>
+            </fieldset>
+          </section>
+
+          <!-- STEP 8: Carriers -->
+          <section class="step hidden" data-step="7">
+            <h2>Carrier Appointments</h2>
+            <p class="hint" style="margin-bottom:1rem">
+              For each carrier you want to be appointed with, enter the state(s) &mdash; e.g. <em>IL, MO, TX</em>. Leave blank to skip a carrier.
+              Not sure yet? Leave them all blank and sort it out with your upline later.
+            </p>
+            <h3>ACA</h3>
+            <div id="carriersAca"></div>
+            <h3>Medicare Advantage / MAPD / PDP</h3>
+            <div id="carriersMa"></div>
+            <h3>Health &amp; Life</h3>
+            <div id="carriersHl"></div>
+          </section>
+
+          <!-- STEP 9: Documents -->
+          <section class="step hidden" data-step="8">
+            <h2>Supporting Documents</h2>
+            <p class="hint" style="margin-bottom:1rem">
+              These get attached to the end of your packet automatically. Photos are fine &mdash; make sure text is readable.
+              Accepted: JPG, PNG, or PDF.
+            </p>
+            <div class="upload"><div class="u-label"><strong>Driver's License or State ID *</strong><span>Required by some carriers</span></div><input type="file" id="docDl" accept="image/*,.pdf" /><span class="u-status" id="docDlStatus"></span></div>
+            <div class="upload"><div class="u-label"><strong>Voided Check or Bank Letter *</strong><span>Must show name on account, routing #, account #</span></div><input type="file" id="docCheck" accept="image/*,.pdf" /><span class="u-status" id="docCheckStatus"></span></div>
+            <div class="upload"><div class="u-label"><strong>E&amp;O Certificate of Coverage *</strong><span>Must list your full name as the insured</span></div><input type="file" id="docEo" accept="image/*,.pdf" /><span class="u-status" id="docEoStatus"></span></div>
+            <div class="upload"><div class="u-label"><strong>AML Certification</strong><span>Completed within the last 24 months (skip if LIMRA &mdash; name/date given earlier)</span></div><input type="file" id="docAml" accept="image/*,.pdf" /><span class="u-status" id="docAmlStatus"></span></div>
+            <div class="upload"><div class="u-label"><strong>Carrier Release Documents</strong><span>Only if you're active with a carrier you're requesting appointment to</span></div><input type="file" id="docRelease" accept="image/*,.pdf" multiple /><span class="u-status" id="docReleaseStatus"></span></div>
+            <p class="hint">If a required document isn't handy, you can still submit &mdash; but your contracting can't start until your upline has everything.</p>
+            <div class="choices" style="margin-top:0.5rem"><label><input type="checkbox" id="docsLater" /> I'll send missing documents separately</label></div>
+          </section>
+
+          <!-- STEP 10: Sign & submit -->
+          <section class="step hidden" data-step="9">
+            <h2>Sign &amp; Submit</h2>
+            <div class="review-summary" id="reviewSummary"></div>
+
+            <h3>Your Signature *</h3>
+            <p class="hint" style="margin-bottom:0.4rem">Draw with your finger or mouse. Applied to the attestation, EFT, Signature Authorization, VectorOne, and Email Setup forms<span id="sigAdvanceNote"></span>.</p>
+            <canvas id="sigPad" class="sigpad" height="140"></canvas>
+            <div class="sigrow"><span class="hint">Sign above the line</span><button type="button" class="mini" id="sigClear">Clear</button></div>
+
+            <h3>Your Initials *</h3>
+            <p class="hint" style="margin-bottom:0.4rem">Applied to the VectorOne statements (A&ndash;E) and your email setup choice.</p>
+            <canvas id="initPad" class="sigpad" height="110" style="max-width:280px"></canvas>
+            <div class="sigrow" style="max-width:280px"><span class="hint">Initials above</span><button type="button" class="mini" id="initClear">Clear</button></div>
+
+            <div class="note" style="margin-top:1.5rem">
+              By signing and submitting, you attest that the information provided is true and accurate to the best of your
+              knowledge, you acknowledge that if any information changes you will notify your agency office within 5 days,
+              and you authorize our contracting office to register you with its contracting platforms. You also agree to the
+              Signature Authorization, VectorOne Debit-Check Authorization, and Email Setup terms contained in the packet<span id="attestAdvanceNote"></span>.
+            </div>
+            <div class="choices"><label><input type="checkbox" id="attest" /> I have read and agree to the statements above *</label></div>
+
+            <div id="submitStatus" class="status"></div>
+            <div class="btnbar" style="justify-content:flex-end">
+              <button type="button" class="btn gold" id="generateBtn">Generate &amp; Submit Packet</button>
+            </div>
+            <p class="hint" style="margin-top:0.75rem">
+              A copy of the finished PDF downloads to your device, and it's sent to Crown Merchant Financial automatically.
+            </p>
+          </section>
+
+          <!-- Success -->
+          <section class="step hidden" data-step="done">
+            <div class="done-box">
+              <div class="big">&#127881;</div>
+              <h2>Packet Submitted</h2>
+              <p style="max-width:480px;margin:0 auto 1rem">
+                Your completed onboarding packet was sent to Crown Merchant Financial and a copy was downloaded to your
+                device. We'll review it and kick off contracting &mdash; expect to hear from us within 1&ndash;2 business days.
+              </p>
+              <p class="hint">Questions? Email <a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a></p>
+            </div>
+          </section>
+
+          <div class="btnbar" id="navBar">
+            <button type="button" class="btn ghost" id="backBtn">Back</button>
+            <button type="button" class="btn" id="nextBtn">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/onboarding/pdf-lib.min.js"></script>
+    <script src="/js/onboarding.js"></script>
+  </body>
+</html>
