@@ -698,7 +698,7 @@
 
     // ---- Append uploaded documents
     var docList = [
-      ["Driver's License / State ID", docs.dl],
+      ["Photo ID (Driver's License / State ID / Passport)", docs.dl],
       ["Voided Check / Bank Letter", docs.check],
       ["E&O Certificate of Coverage", docs.eo],
       ["AML Certification", docs.aml],
