@@ -696,6 +696,10 @@
 
     try { form.updateFieldAppearances(helv); } catch (e) { console.warn("appearances", e); }
 
+    // Non-advancing agents don't sign the Debit Balance Agreement — drop the
+    // page entirely rather than shipping a blank "unsigned-looking" form
+    if (!advancing) pdf.removePage(10);
+
     // ---- Append uploaded documents
     var docList = [
       ["Photo ID (Driver's License / State ID / Passport)", docs.dl],
@@ -832,6 +836,11 @@
       case 5: {
         var ok5 = requireIds(["eftOwner", "eftRouting", "eftAccount", "eftBank"]);
         if (d.eftRouting && d.eftRouting.replace(/\D/g, "").length !== 9) { markInvalid($("eftRouting"), true); ok5 = false; }
+        var advRow = $("advanceRow");
+        advRow.classList.toggle("unanswered", !d.advanceCommissions);
+        if (!d.advanceCommissions) {
+          return "Please answer the advance commissions question — if you're not sure, ask us before submitting.";
+        }
         return ok5 || "Please complete your direct deposit details (routing # is 9 digits).";
       }
       case 8: {
