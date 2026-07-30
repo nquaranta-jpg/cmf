@@ -305,8 +305,10 @@
 
   function bindUpload(inputId, key, statusId, multiple) {
     $(inputId).addEventListener("change", function () {
+      var input = this;
       var files = Array.from(this.files || []);
       docs[key] = [];
+      $(statusId).textContent = files.length ? "processing…" : "";
       var promises = files.map(function (f) { return prepareDoc(f); });
       Promise.all(promises).then(function (items) {
         docs[key] = items.filter(Boolean);
@@ -314,10 +316,33 @@
           ? (docs[key].length === 1 ? "✓ attached" : "✓ " + docs[key].length + " attached")
           : "";
       }).catch(function (err) {
-        $(statusId).textContent = "⚠ " + err.message;
         docs[key] = [];
+        input.value = "";
+        $(statusId).textContent = "⚠ not attached";
+        alert("That file couldn't be attached: " + err.message +
+          "\n\nPlease use a JPG, PNG, or PDF — a clear photo or screenshot of the document works great.");
       });
     });
+  }
+
+  // heic2any is 1.3MB, so only load it if someone actually uploads a HEIC
+  var heicLibPromise = null;
+  function loadHeicLib() {
+    if (!heicLibPromise) {
+      heicLibPromise = new Promise(function (resolve, reject) {
+        var s = document.createElement("script");
+        s.src = "/onboarding/heic2any.min.js";
+        s.onload = function () { resolve(window.heic2any); };
+        s.onerror = function () { reject(new Error("converter failed to load")); };
+        document.head.appendChild(s);
+      });
+    }
+    return heicLibPromise;
+  }
+
+  function isHeic(file) {
+    return /\.(heic|heif)$/i.test(file.name || "") ||
+      file.type === "image/heic" || file.type === "image/heif";
   }
 
   function prepareDoc(file) {
@@ -327,12 +352,28 @@
         return { kind: "pdf", name: name, bytes: new Uint8Array(buf) };
       });
     }
-    if (!/^image\//.test(file.type)) {
-      return Promise.reject(new Error("Use a JPG, PNG, or PDF"));
+    // iPhone photos shared to a desktop browser arrive as HEIC, which most
+    // browsers can't decode — convert to JPEG first.
+    if (isHeic(file)) {
+      return loadHeicLib().then(function (heic2any) {
+        return heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
+      }).then(function (blob) {
+        return imageToDoc(Array.isArray(blob) ? blob[0] : blob, name);
+      }).catch(function (err) {
+        console.warn("heic conversion failed", err);
+        throw new Error("this iPhone photo (HEIC) couldn't be converted");
+      });
     }
-    // Downscale + JPEG-compress images so the packet stays emailable
+    if (!/^image\//.test(file.type)) {
+      return Promise.reject(new Error("unsupported file type"));
+    }
+    return imageToDoc(file, name);
+  }
+
+  // Downscale + JPEG-compress images so the packet stays emailable
+  function imageToDoc(blob, name) {
     return new Promise(function (resolve, reject) {
-      var url = URL.createObjectURL(file);
+      var url = URL.createObjectURL(blob);
       var img = new Image();
       img.onload = function () {
         var MAX = 1600;
@@ -347,7 +388,7 @@
         URL.revokeObjectURL(url);
         resolve({ kind: "image", name: name, dataUrl: c.toDataURL("image/jpeg", 0.85), w: c.width, h: c.height });
       };
-      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("Couldn't read image")); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("this image format isn't supported by your browser")); };
       img.src = url;
     });
   }
@@ -405,8 +446,11 @@
       if (!value) return;
       try {
         var f = form.getTextField(name);
-        var max = f.getMaxLength();
-        if (max && value.length > max) value = value.slice(0, max);
+        // The template's date fields are "comb" fields with short character
+        // limits — they truncate values and scatter huge glyphs across cells.
+        // Strip both so every field renders as plain, uniform text.
+        try { f.disableCombing(); } catch (eC) {}
+        try { f.removeMaxLength(); } catch (eM) {}
         f.setText(value);
         // Shrink the font so long values render fully instead of clipping
         try {
