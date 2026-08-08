@@ -17,29 +17,6 @@ dashboard/                             internal agent dashboard (PIN-gated)
 
 Local dev: `npx netlify dev` (pulls env vars from the linked Netlify site).
 
-## Merchants (payments desk + statement analyzer)
-
-Routes: `/merchants` (marketing page + upload form), `/merchants/review`
-(internal, password-gated, noindex), `/merchants/onepager?id=...` (printable
-analysis, opened from the review page).
-
-Flow: prospect uploads a processing statement (PDF or phone photos; images
-are compressed client-side) → `merchant-analyzer.mjs` stores the lead +
-files in Netlify Blobs (store `merchant-statements`) and notifies
-Telegram/email → `merchant-analyzer-background.mjs` runs a Claude
-(`claude-sonnet-5`) extraction with a conservative prompt and recomputes
-the fair-pricing math server-side (interchange + 0.30% + $0.10/txn) →
-result waits in the review queue. **Nothing is ever sent to the prospect
-automatically**; approve on the review page, then deliver the one-pager
-manually by email. Low-confidence or failed extractions land as
-`needs_manual` with the lead intact.
-
-Env vars: `ANTHROPIC_API_KEY` (required), `MERCHANTS_REVIEW_PASSWORD`
-(required for the review page), `BREVO_API_KEY` + `MERCHANTS_NOTIFY_EMAIL`
-(+ optional `MERCHANTS_NOTIFY_FROM`) for email notifications — see
-`.env.example`. The one-pager's scheduling link is the `SCHEDULING_URL`
-constant at the top of the script in `merchants/onepager.html`.
-
 ## CMF Launch
 
 Routes: `/launch` (funnel), `/launch/leads`, `/launch/ads`, `/launch/training`,

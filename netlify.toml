@@ -12,17 +12,6 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Internal merchants pages: never index (they're also never linked publicly)
-[[headers]]
-  for = "/merchants/review*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-
-[[headers]]
-  for = "/merchants/onepager*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-
 # publish = "." serves the whole repo as static files, which would expose
 # backend source (and anything else) unless blocked. Keep these first —
 # Netlify applies the first matching redirect.
@@ -63,22 +52,6 @@
   to = "/index.html"
   status = 404
   force = true
-
-# Merchants routes
-[[redirects]]
-  from = "/merchants"
-  to = "/merchants/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/merchants/review"
-  to = "/merchants/review.html"
-  status = 200
-
-[[redirects]]
-  from = "/merchants/onepager"
-  to = "/merchants/onepager.html"
-  status = 200
 
 # CMF Launch routes
 [[redirects]]

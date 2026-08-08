@@ -3,7 +3,5 @@ Allow: /
 Disallow: /launch/login
 Disallow: /launch/app
 Disallow: /dashboard
-Disallow: /merchants/review
-Disallow: /merchants/onepager
 
 Sitemap: https://crownmerchantfinancial.com/sitemap.xml
