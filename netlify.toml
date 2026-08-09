@@ -53,6 +53,12 @@
   status = 404
   force = true
 
+# Lending route
+[[redirects]]
+  from = "/lending"
+  to = "/lending/index.html"
+  status = 200
+
 # CMF Launch routes
 [[redirects]]
   from = "/launch"

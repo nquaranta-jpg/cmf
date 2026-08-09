@@ -17,6 +17,20 @@ dashboard/                             internal agent dashboard (PIN-gated)
 
 Local dev: `npx netlify dev` (pulls env vars from the linked Netlify site).
 
+## Lending (hard money capital desk)
+
+Route: `/lending` — CMF-branded hard money brokerage page (fix & flip,
+bridge, new construction), mirroring the affiliated Q Group Brokers pitch
+(qgroupbrokers.com). CMF brokers business-purpose loans on investment real
+estate only; disclosures on the page cover the broker (not lender) role and
+the Q Group affiliation.
+
+Deal inquiries: form on the page → `lending-inquiry.mjs` (notification-only,
+no database) → Telegram (TELEGRAM_BOT_TOKEN + group chat) and email via
+Resend (recipient `LENDING_NOTIFY_EMAIL`, falling back to `BACKUP_EMAIL` —
+all already set in Netlify). Kept separate from `lead.mjs` so deal
+inquiries never enter the insurance-lead escalation flow.
+
 ## CMF Launch
 
 Routes: `/launch` (funnel), `/launch/leads`, `/launch/ads`, `/launch/training`,
