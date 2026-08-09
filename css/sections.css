@@ -1197,3 +1197,89 @@
     padding: 1.5rem;
   }
 }
+
+/* ============================================
+   Carrier Banner
+   ============================================ */
+
+.carrier-banner {
+  background: var(--white);
+  border-bottom: 1px solid rgba(10, 22, 40, 0.06);
+  padding: 2.25rem 0 2.5rem;
+}
+
+.carrier-banner-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 1.75rem;
+}
+
+.carrier-marquee {
+  overflow: hidden;
+  /* fade logos in/out at the edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.carrier-track {
+  display: flex;
+  align-items: center;
+  gap: 4.5rem;
+  width: max-content;
+  padding-right: 4.5rem; /* keeps the loop gap even between last and first logo */
+  animation: carrier-scroll 35s linear infinite;
+}
+
+.carrier-marquee:hover .carrier-track {
+  animation-play-state: paused;
+}
+
+.carrier-track img {
+  height: 42px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+@keyframes carrier-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carrier-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 2rem;
+  }
+
+  /* the duplicate set exists only for the seamless loop */
+  .carrier-track img[aria-hidden="true"] {
+    display: none;
+  }
+
+  .carrier-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .carrier-track {
+    gap: 3rem;
+    padding-right: 3rem;
+  }
+
+  .carrier-track img {
+    height: 34px;
+  }
+}
