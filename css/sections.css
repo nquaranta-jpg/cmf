@@ -1320,8 +1320,21 @@
   display: block;
 }
 
+/* FMCSA logo is squarer than the SBA/VA wordmarks; bump it so it reads at chip size */
+.hero-trust-chip img[src*="fmcsa"] {
+  height: 34px;
+}
+
+.carrier-track img[src*="fmcsa"] {
+  height: 52px;
+}
+
 @media (max-width: 480px) {
   .hero-trust-chip img {
     height: 22px;
+  }
+
+  .hero-trust-chip img[src*="fmcsa"] {
+    height: 28px;
   }
 }
