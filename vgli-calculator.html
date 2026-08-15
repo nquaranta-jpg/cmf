@@ -141,7 +141,8 @@
       .vgli-calc .totals .tlabel b{ color:#fff; }
       .vgli-calc .totals .tbig{ font-family:Georgia,serif; font-weight:700; font-size:46px; color:var(--gold); line-height:1.05; }
       .vgli-calc .totals .trow{ display:flex; gap:10px; margin-top:18px; }
-      .vgli-calc .totals .tcell{ flex:1; background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:13px 12px; text-align:center; }
+      /* min-width:0 so six-figure totals can't push the row past the viewport */
+      .vgli-calc .totals .tcell{ flex:1 1 0; min-width:0; background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:13px 12px; text-align:center; }
       .vgli-calc .totals .tcell .tn{ font-family:Georgia,serif; font-weight:700; font-size:21px; color:#fff; font-variant-numeric:tabular-nums; }
       .vgli-calc .totals .tcell .tk{ font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
 
@@ -225,6 +226,12 @@
       .vgli-calc .save-card .sk b{ color:#fff; }
       .vgli-calc .save-card .sbig{ font-family:Georgia,serif; font-weight:700; font-size:50px; color:var(--gold); line-height:1.04; margin:5px 0; }
       .vgli-calc .save-card .sfoot{ font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+      @media (max-width:600px){
+        .vgli-calc .totals .trow{ gap:6px; }
+        .vgli-calc .totals .tcell{ padding:12px 6px; }
+        .vgli-calc .totals .tcell .tn{ font-size:clamp(13px, 4.2vw, 21px); }
+        .vgli-calc .totals .tcell .tk{ font-size:9.5px; letter-spacing:0.04em; }
+      }
       @media (max-width:430px){
         .vgli-calc h1.vc-hero{ font-size:28px; }
         .vgli-calc .result .rbig{ font-size:46px; }

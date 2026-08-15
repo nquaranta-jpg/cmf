@@ -940,8 +940,20 @@
     opacity: 0.5;
   }
 
-  .hero-content {
+  /* .hero is a flex container, so the grid's min-content width would push the
+     whole column off-center inside the clipped section. Let it shrink. */
+  .hero-grid {
+    min-width: 0;
     padding: 0 1.25rem;
+  }
+
+  .hero-content,
+  .hero-card {
+    min-width: 0;
+  }
+
+  .hero-content {
+    padding: 0;
     gap: 2.5rem;
     text-align: center;
   }
@@ -1304,6 +1316,7 @@
 .hero-trust-logos {
   display: flex;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .hero-trust-chip {
@@ -1327,6 +1340,31 @@
 
 .carrier-track img[src*="fmcsa"] {
   height: 52px;
+}
+
+@media (max-width: 768px) {
+  .hero-trust,
+  .hero-trust-logos {
+    justify-content: center;
+  }
+
+  .hero-trust {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .hero-trust-label {
+    text-align: center;
+  }
+
+  /* Tighter chips so all three partner logos hold one row on a phone */
+  .hero-trust-chip {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .hero-trust-logos {
+    gap: 0.5rem;
+  }
 }
 
 @media (max-width: 480px) {
