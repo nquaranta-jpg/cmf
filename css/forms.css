@@ -4,8 +4,8 @@
 
 /* Buttons */
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-  color: var(--navy);
+  background: var(--gold);
+  color: var(--on-gold);
   padding: 1rem 2rem;
   font-size: 0.9rem;
   font-weight: 700;
@@ -19,7 +19,7 @@
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(201, 169, 98, 0.3);
+  box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.3);
 }
 
 .btn-secondary {
@@ -46,7 +46,6 @@
 /* Hero Form Card */
 .hero-visual {
   position: relative;
-  animation: slideUp 1s ease-out 0.2s both;
 }
 
 .hero-card {
@@ -108,7 +107,7 @@
 .hero-form select {
   color: rgba(255, 255, 255, 0.7);
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a962' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237dadff' stroke-width='1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   cursor: pointer;

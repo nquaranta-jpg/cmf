@@ -2,16 +2,60 @@
    Variables, Reset & Base Styles
    ============================================ */
 
+/* Palette modeled on citadel.com: deep navy, one royal blue for
+   buttons/links, cool grays, and white pages with light gray bands.
+
+   The --gold* tokens are legacy names from the old navy/gold theme.
+   They now resolve to the blue accent so every stylesheet picks the
+   new palette up without renaming. On dark surfaces (see the block
+   below) they flip to a light blue so the accent stays readable. */
 :root {
-  --navy: #0a1628;
-  --navy-light: #132238;
-  --gold: #c9a962;
-  --gold-light: #dfc48a;
-  --gold-dark: #a68b4b;
-  --cream: #faf9f7;
+  --navy: #08225a;
+  --navy-light: #0d2f75;
+  --blue: #144aa5;
+  --blue-dark: #0e3a85;
+  --blue-light: #7dadff;
+  --blue-pale: #d6e0f6;
+  --gold: var(--blue);
+  --gold-light: #427fe5;
+  --gold-dark: var(--blue-dark);
+  /* rgb triplet for rgba(var(--accent-rgb), a) tints */
+  --accent-rgb: 20, 74, 165;
+  /* text color to use on top of a --gold fill */
+  --on-gold: #ffffff;
+  --cream: #f4f5f7;
   --white: #ffffff;
-  --slate: #64748b;
-  --text: #334155;
+  --slate: #68717a;
+  --text: #373a3c;
+}
+
+/* Dark surfaces: blue-on-navy has no contrast, so the accent becomes
+   light blue here and text on an accent fill becomes navy. */
+nav,
+.nav-dropdown-menu,
+.mobile-menu,
+.mobile-cta-bar,
+footer,
+.hero,
+.why-us,
+.product-hero,
+.team-social a,
+.team-photo-placeholder,
+.service-icon,
+.contact-item-icon,
+.hml-hero,
+.hml-truth,
+.hml-panel.navy,
+.hml-inquiry,
+.launch-hero,
+.launch-proof,
+.service-card.launch-flagship,
+.launch-login-wrap {
+  --gold: var(--blue-light);
+  --gold-light: #a9c8ff;
+  --gold-dark: var(--blue-light);
+  --accent-rgb: 125, 173, 255;
+  --on-gold: var(--navy);
 }
 
 * {
@@ -31,8 +75,10 @@ html {
 }
 
 body {
+  /* the one brand accent: a thin blue rule across the top of every page */
+  border-top: 3px solid var(--blue-light);
   font-family: "Nunito Sans", -apple-system, sans-serif;
-  background: var(--cream);
+  background: var(--white);
   color: var(--text);
   line-height: 1.7;
   font-size: 17px;
@@ -51,7 +97,7 @@ body {
 }
 
 .section.alt {
-  background: var(--white);
+  background: var(--cream);
 }
 
 /* Responsive */

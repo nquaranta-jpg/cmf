@@ -78,7 +78,6 @@
         <span class="logo-text">Crown Merchant Financial</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#about">About Us</a></li>
         <li class="nav-dropdown">
           <a href="#products">Products</a>
           <div class="nav-dropdown-menu">
@@ -88,10 +87,10 @@
             <a href="/products/iul">Indexed Universal Life</a>
           </div>
         </li>
-        <li><a href="/quote">Pick Your Policy</a></li>
         <li><a href="/lending">Lending</a></li>
-        <li><a href="/society">Society</a></li>
-        <li><a href="/launch">Launch</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="/onboarding/">Agents</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
       <a href="tel:+13122038106" class="nav-cta">Call (312) 203-8106</a>
       <button class="mobile-toggle">
@@ -104,12 +103,11 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu">
       <ul>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="/quote">Pick Your Policy</a></li>
         <li><a href="#products">Products</a></li>
         <li><a href="/lending">Lending</a></li>
-        <li><a href="/society">Society</a></li>
-        <li><a href="/launch">Launch</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="/onboarding/">Agents</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
       <a href="tel:+13122038106" class="mobile-menu-cta">Call (312) 203-8106</a>
     </div>
@@ -119,8 +117,8 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <div class="badge">Veteran Owned &middot; SBA &amp; VA Approved &middot; Licensed Nationwide</div>
-          <h1>Don't Leave Your Family With the Bill</h1>
-          <p class="hero-sub">Final expense and life insurance plans from <strong>$18/month</strong> &mdash; most with no medical exam. Honest guidance from a veteran-owned agency, and a real person who calls you back in minutes.</p>
+          <h1>Life insurance and financial protection for veterans and working families</h1>
+          <p class="hero-sub">Crown Merchant Financial is a veteran-owned, nationally licensed insurance agency headquartered in Chicago. We place final expense, term life, indexed universal life, and annuity coverage with A-rated carriers, and arrange business-purpose lending for real estate investors.</p>
           <div class="hero-buttons">
             <a href="/quote" class="btn-primary">Pick Your Policy &rarr;</a>
             <a href="tel:+13122038106" class="btn-secondary">
@@ -140,15 +138,14 @@
         <div class="hero-card" id="quote">
           <div class="hero-card-header">
             <h3>Pick Your Policy</h3>
-            <p>Find your fit and see your estimated rate in 60 seconds. No obligation.</p>
+            <p>Answer a few questions to see which product fits and an estimated monthly rate. No obligation.</p>
           </div>
           <div class="hero-tool-steps">
-            <div class="hero-tool-step"><span>1</span>Tell us your goal &mdash; funeral costs, family income, savings</div>
-            <div class="hero-tool-step"><span>2</span>Answer a few quick questions &mdash; no medical exam, no pressure</div>
-            <div class="hero-tool-step"><span>3</span>See your match and your estimated monthly rate instantly</div>
+            <div class="hero-tool-step"><span>1</span>Tell us your goal: final expenses, family income, or savings</div>
+            <div class="hero-tool-step"><span>2</span>Answer a few questions about your age, health, and budget</div>
+            <div class="hero-tool-step"><span>3</span>Review your match and estimated monthly premium</div>
           </div>
-          <a href="/quote" class="btn-primary hero-tool-cta">Start &mdash; It's Free &rarr;</a>
-          <div class="hero-form-disclaimer">Rates are set by your age &mdash; the youngest (and cheapest) you'll ever be is today.</div>
+          <a href="/quote" class="btn-primary hero-tool-cta">Get Your Estimate &rarr;</a>
           <div class="hero-stats-row">
             <div class="hero-stat-mini"><strong>A-Rated</strong>Carriers</div>
             <div class="hero-stat-mini"><strong>Veteran</strong>Owned &amp; Operated</div>
@@ -161,7 +158,7 @@
     <!-- Carrier Banner -->
     <section class="carrier-banner" aria-label="Carriers and partners we work with">
       <p class="carrier-banner-label">Working with A-rated carriers and trusted partners</p>
-      <div class="carrier-marquee">
+      <div class="carrier-row">
         <div class="carrier-track">
           <img src="/images/carriers/americo.png" alt="Americo" />
           <img src="/images/carriers/mutual-of-omaha.svg" alt="Mutual of Omaha" />
@@ -173,16 +170,6 @@
           <img src="/images/carriers/sba.svg" alt="U.S. Small Business Administration" />
           <img src="/images/carriers/va.png" alt="U.S. Department of Veterans Affairs" />
           <img src="/images/carriers/fmcsa.svg" alt="Federal Motor Carrier Safety Administration" />
-          <img src="/images/carriers/americo.png" alt="" aria-hidden="true" />
-          <img src="/images/carriers/mutual-of-omaha.svg" alt="" aria-hidden="true" />
-          <img src="/images/carriers/foresters.svg" alt="" aria-hidden="true" />
-          <img src="/images/carriers/american-amicable.png" alt="" aria-hidden="true" />
-          <img src="/images/carriers/transamerica.svg" alt="" aria-hidden="true" />
-          <img src="/images/carriers/corebridge.svg" alt="" aria-hidden="true" />
-          <img src="/images/carriers/rcn-capital.png" alt="" aria-hidden="true" />
-          <img src="/images/carriers/sba.svg" alt="" aria-hidden="true" />
-          <img src="/images/carriers/va.png" alt="" aria-hidden="true" />
-          <img src="/images/carriers/fmcsa.svg" alt="" aria-hidden="true" />
         </div>
       </div>
     </section>
@@ -192,7 +179,7 @@
       <div class="container">
         <div class="section-header">
           <span class="section-label">Our Products</span>
-          <h2>Insurance Solutions for Every Stage of Life</h2>
+          <h2 class="section-title">Insurance Solutions for Every Stage of Life</h2>
         </div>
         <div class="products-grid">
 
@@ -269,19 +256,113 @@
     </section>
 
 
-    <!-- About Us Section -->
-    <section class="section" id="about">
+<!-- About Section -->
+    <section class="section alt" id="about">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">Our Team</span>
-          <h2>Meet the Founders</h2>
+          <span class="section-label">About Us</span>
+          <h2 class="section-title">About Crown Merchant Financial</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>Crown Merchant Financial LLC is an independent insurance agency founded by two U.S. military veterans and University of Chicago alumni. We are licensed nationwide and headquartered in Chicago, Illinois.</p>
+            <p>We work as a broker, not a carrier. We compare products from multiple A-rated insurers on your behalf and recommend the policy that fits your goals, health, and budget, whether that is final expense coverage, term life, indexed universal life, or a fixed annuity. Through our capital desk, we also arrange business-purpose lending for real estate investors.</p>
+          </div>
+          <ul class="about-facts">
+            <li><strong>Veteran owned</strong>Founded and operated by U.S. military veterans</li>
+            <li><strong>Independent</strong>Products from multiple A-rated carriers, not one</li>
+            <li><strong>Licensed nationwide</strong>IL Business Entity Producer License #3004124919</li>
+            <li><strong>SBA &amp; VA approved</strong>Recognized veteran-owned small business</li>
+            <li><strong>Chicago based</strong>Serving clients in every state by phone and online</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- How We Work Section -->
+    <section class="section" id="how-we-work">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Our Process</span>
+          <h2 class="section-title">How We Work</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Consultation</h3>
+            <p>A licensed producer reviews your goals, budget, and existing coverage by phone. No cost and no obligation.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Comparison</h3>
+            <p>We shop your case across our carrier network and present the options side by side, with the trade-offs in plain language.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Placement and Service</h3>
+            <p>We handle the application and underwriting, then stay on as your point of contact for policy changes, claims, and annual reviews.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section alt" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="section-label">Contact</div>
+            <h2 class="section-title">Get in Touch</h2>
+            <p>Call or email and a licensed producer responds, not a call center. Consultations are free and carry no obligation.</p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+                <span class="contact-item-text"><small>Phone</small><a href="tel:+13122038106">(312) 203-8106</a></span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <span class="contact-item-text"><small>Email</small><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a></span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <span class="contact-item-text"><small>Hours</small>Monday to Friday, 9am to 6pm CT</span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                <span class="contact-item-text"><small>Office</small>Chicago, Illinois. Licensed nationwide.</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <h3>Start online</h3>
+            <p>Answer a few questions and see which product fits, with an estimated monthly rate. A licensed producer confirms the exact figure before anything is issued.</p>
+            <a href="/quote" class="btn-primary">Pick Your Policy &rarr;</a>
+            <div class="contact-card-divider"></div>
+            <h3>Real estate investors</h3>
+            <p>Our capital desk arranges business-purpose hard money loans through a vetted network of private lenders.</p>
+            <a href="/lending" class="contact-card-link">Tell us about your deal &rarr;</a>
+            <div class="contact-card-divider"></div>
+            <h3>Agents</h3>
+            <p>Licensed producers interested in joining Crown Merchant Financial can start the onboarding process online.</p>
+            <a href="/onboarding/" class="contact-card-link">Agent onboarding &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="section" id="leadership">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Leadership</span>
+          <h2 class="section-title">Leadership</h2>
         </div>
         <div class="team-grid">
           <div class="team-card">
             <img src="nick.jpg" alt="Nicholas Quaranta" class="team-photo" />
             <h3>Nicholas Quaranta</h3>
             <p class="team-title">Co-Founder &amp; Licensed Insurance Producer</p>
-            <p>University of Chicago graduate and U.S. military veteran. Licensed Insurance Producer serving clients nationwide (NPN #22145269). Nick brings a service-first mindset to everything he does.</p>
+            <p class="team-npn">NPN 22145269</p>
             <div class="team-social">
               <a href="https://www.instagram.com/nicholasquaranta" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -301,7 +382,7 @@
             <img src="conrad.jpg" alt="Conrad Farinola" class="team-photo" />
             <h3>Conrad Farinola</h3>
             <p class="team-title">Co-Founder &amp; Licensed Insurance Producer</p>
-            <p>MA from the University of Chicago and U.S. military veteran. Licensed Insurance Producer serving clients nationwide (NPN #22293566). Conrad combines business acumen with a deep commitment to helping families plan for a secure future.</p>
+            <p class="team-npn">NPN 22293566</p>
           </div>
         </div>
       </div>
@@ -312,41 +393,63 @@
     <!-- Footer -->
     <footer>
       <div class="container">
-        <div class="footer-logo">
-          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
-          <span class="logo-text">Crown Merchant Financial</span>
-        </div>
-        <p class="footer-tagline">Insurance &amp; Financial Services</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/nicholasquaranta" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-          <a href="https://www.tiktok.com/@crownmerchantfinance" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.16z"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/qmakescontent/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
-          </a>
-          <a href="https://substack.com/@nicholas201128" target="_blank" rel="noopener noreferrer" aria-label="Substack">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-          </a>
-        </div>
-        <div class="footer-nav">
-          <a href="/products/final-expense">Final Expense</a>
-          <a href="/products/term-life">Term Life</a>
-          <a href="/products/annuity">Annuity</a>
-          <a href="/products/iul">Indexed Universal Life</a>
-        </div>
-        <div class="footer-links">
-          <a href="/quote">Pick Your Policy</a>
-          <a href="#products">Products</a>
-          <a href="/lending">Lending</a>
-          <a href="/society">Society</a>
-          <a href="#about">About Us</a>
-          <a href="/onboarding/">Agents</a>
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <a href="/" class="footer-logo">
+              <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
+              <span class="logo-text">Crown Merchant Financial</span>
+            </a>
+            <p class="footer-about">Independent, veteran-owned insurance agency headquartered in Chicago, Illinois. Licensed nationwide.</p>
+            <div class="footer-social">
+              <a href="https://www.instagram.com/nicholasquaranta" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@crownmerchantfinance" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.16z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/qmakescontent/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+              </a>
+              <a href="https://substack.com/@nicholas201128" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+              <li><a href="/products/final-expense">Final Expense</a></li>
+              <li><a href="/products/term-life">Term Life</a></li>
+              <li><a href="/products/annuity">Annuity</a></li>
+              <li><a href="/products/iul">Indexed Universal Life</a></li>
+              <li><a href="/quote">Pick Your Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#leadership">Leadership</a></li>
+              <li><a href="#how-we-work">How We Work</a></li>
+              <li><a href="/lending">Lending</a></li>
+              <li><a href="/society">Society</a></li>
+              <li><a href="/launch">Launch</a></li>
+              <li><a href="/onboarding/">Agents</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="tel:+13122038106">(312) 203-8106</a></li>
+              <li><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a></li>
+              <li>Chicago, Illinois</li>
+              <li>Monday to Friday, 9am to 6pm CT</li>
+            </ul>
+          </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-legal">Crown Merchant Financial LLC. IL Business Entity Producer License #3004124919. Licensed nationwide. NPN: 22145269. <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a></p>
+          <p class="footer-legal">Crown Merchant Financial LLC. IL Business Entity Producer License #3004124919. Licensed nationwide. NPN: 22145269.</p>
           <p class="footer-copyright">&copy; 2026 Crown Merchant Financial. All rights reserved.</p>
         </div>
       </div>

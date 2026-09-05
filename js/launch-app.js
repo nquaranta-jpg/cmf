@@ -270,7 +270,7 @@
     entries.forEach(function (e, i) {
       var x = padL + (iw * i) / n + ((iw / n) - bw) / 2;
       var h = (Number(e.spend) / maxSpend) * ih;
-      parts.push('<rect x="' + x.toFixed(1) + '" y="' + (padT + ih - h).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="#c9a962" opacity="0.85"><title>' + e.entry_date + ": $" + e.spend + "</title></rect>");
+      parts.push('<rect x="' + x.toFixed(1) + '" y="' + (padT + ih - h).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="#144aa5" opacity="0.85"><title>' + e.entry_date + ": $" + e.spend + "</title></rect>");
     });
     // leads line
     var pts = entries.map(function (e, i) {
@@ -278,7 +278,7 @@
       var y = padT + ih - (Number(e.leads_count) / maxLeads) * ih;
       return x.toFixed(1) + "," + y.toFixed(1);
     });
-    parts.push('<polyline points="' + pts.join(" ") + '" fill="none" stroke="#0a1628" stroke-width="1.8"/>');
+    parts.push('<polyline points="' + pts.join(" ") + '" fill="none" stroke="#08225a" stroke-width="1.8"/>');
     // right axis (leads)
     for (var g2 = 0; g2 <= 4; g2++) {
       var gy2 = padT + ih - (ih * g2) / 4;

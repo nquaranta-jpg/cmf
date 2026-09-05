@@ -46,7 +46,7 @@ nav.scrolled {
 .logo-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  background: var(--white);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -107,7 +107,7 @@ nav.scrolled {
 
 .nav-cta:hover {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--on-gold);
 }
 
 /* Products Dropdown */
@@ -147,7 +147,7 @@ nav.scrolled {
 
 .nav-dropdown-menu a:hover {
   color: var(--gold);
-  background: rgba(201, 169, 98, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 /* Mobile Menu */
@@ -216,7 +216,7 @@ nav.scrolled {
 .mobile-menu a:hover,
 .mobile-menu a:active {
   color: var(--gold);
-  background: rgba(201, 169, 98, 0.05);
+  background: rgba(var(--accent-rgb), 0.05);
 }
 
 /* Gold CTA = only the final DIRECT-child link (.mobile-menu-cta on the
@@ -226,7 +226,7 @@ nav.scrolled {
   border-bottom: none;
   margin-top: 1rem;
   background: var(--gold);
-  color: var(--navy);
+  color: var(--on-gold);
   font-weight: 700;
   padding: 1rem;
 }
@@ -284,7 +284,7 @@ nav.scrolled {
 
 .mobile-cta-bar .call-btn {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--on-gold);
 }
 
 .mobile-cta-bar .quote-btn {

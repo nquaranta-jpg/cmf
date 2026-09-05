@@ -39,12 +39,12 @@
          calculator's own color tokens live on .vgli-calc, not :root. -->
     <style>
       .vgli-calc{
-        --navy:#0B1D38;
-        --navy-2:#0E2342;
-        --card:#13294C;
+        --navy:#08225a;
+        --navy-2:#08225a;
+        --card:#0d2f75;
         --card-2:#16305A;
         --line:rgba(255,255,255,0.10);
-        --gold:#C2A14D;
+        --gold:var(--blue-light);
         --gold-bright:#E0C06A;
         --text:#EAF0F8;
         --muted:#9DA9BD;
@@ -98,13 +98,13 @@
         width:24px; height:24px; border-radius:50%; background:#fff; border:3px solid var(--gold);
         cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.35);
       }
-      .vgli-calc input[type=range]:focus-visible{ box-shadow:0 0 0 3px rgba(194,161,77,0.4); }
+      .vgli-calc input[type=range]:focus-visible{ box-shadow:0 0 0 3px rgba(125,173,255,0.4); }
       .vgli-calc .ticks{ display:flex; justify-content:space-between; margin-top:7px; font-size:10.5px; color:var(--muted); }
 
       /* ---- result hero ---- */
       .vgli-calc .result{
         background:linear-gradient(155deg,var(--card-2),var(--card));
-        border:1px solid rgba(194,161,77,0.32); border-radius:14px;
+        border:1px solid rgba(125,173,255,0.32); border-radius:14px;
         padding:24px 22px; margin-bottom:18px; text-align:center;
       }
       .vgli-calc .result .rlabel{ font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); font-weight:700; }
@@ -147,7 +147,7 @@
       .vgli-calc .totals .tcell .tk{ font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
 
       /* ---- gated guide ---- */
-      .vgli-calc .vc-guide{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.45); border-radius:14px; padding:26px 22px; margin-bottom:18px; text-align:center; }
+      .vgli-calc .vc-guide{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(125,173,255,0.45); border-radius:14px; padding:26px 22px; margin-bottom:18px; text-align:center; }
       .vgli-calc .vc-guide-eyebrow{ font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; }
       .vgli-calc .vc-guide-head{ font-family:Georgia,serif; font-weight:700; font-size:22px; color:#fff; margin:8px 0 8px; line-height:1.22; }
       .vgli-calc .vc-guide-sub{ font-size:14px; color:#C5D0E0; margin:0 auto 18px; max-width:32em; }
@@ -163,8 +163,8 @@
       .vgli-calc .vc-guide-fine{ font-size:11px; color:var(--muted); margin-top:14px; }
       .vgli-calc .vc-guide-done{ display:flex; flex-direction:column; align-items:center; text-align:center; }
       .vgli-calc .vc-guide-done-lead a{ color:var(--gold-bright); text-decoration:underline; }
-      .vgli-calc .vc-guide-check{ flex:none; width:40px; height:40px; border-radius:50%; background:var(--gold); color:#0B1D38; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; }
-      .vgli-calc .vc-guide-done-lead{ font-size:14px; color:#D9C99A; margin:12px 0 0; }
+      .vgli-calc .vc-guide-check{ flex:none; width:40px; height:40px; border-radius:50%; background:var(--gold); color:#08225a; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; }
+      .vgli-calc .vc-guide-done-lead{ font-size:14px; color:var(--blue-light); margin:12px 0 0; }
       .vgli-calc .vc-guide-upsell{ width:100%; border-top:1px solid var(--line); margin-top:20px; padding-top:20px; }
       .vgli-calc .vc-guide-upsell-lead{ font-size:14px; color:#C5D0E0; margin:0 auto 16px; max-width:34em; line-height:1.5; }
       .vgli-calc .vc-guide-upsell em{ font-style:italic; color:#fff; }
@@ -172,16 +172,16 @@
       .vgli-calc .vc-guide-form[hidden], .vgli-calc .vc-guide-done[hidden]{ display:none; }
 
       /* ---- CTA ---- */
-      .vgli-calc .cta{ background:linear-gradient(160deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.4); border-radius:14px; padding:26px 22px; text-align:center; }
+      .vgli-calc .cta{ background:linear-gradient(160deg,var(--card-2),var(--card)); border:1px solid rgba(125,173,255,0.4); border-radius:14px; padding:26px 22px; text-align:center; }
       .vgli-calc .cta h2{ font-family:Georgia,serif; font-weight:700; font-size:23px; color:#fff; margin:0 0 8px; line-height:1.2; }
       .vgli-calc .cta p{ font-size:14.5px; color:#C5D0E0; margin:0 auto 20px; max-width:30em; }
       .vgli-calc .btn{
-        display:inline-block; background:var(--gold); color:#0B1D38; text-decoration:none;
+        display:inline-block; background:var(--gold); color:#08225a; text-decoration:none;
         font-weight:700; font-size:16px; letter-spacing:0.01em; padding:15px 30px; border-radius:10px;
         transition:transform .12s ease, background .12s ease;
       }
       .vgli-calc .btn:hover{ background:var(--gold-bright); transform:translateY(-1px); }
-      .vgli-calc .btn:focus-visible{ outline:3px solid rgba(194,161,77,0.5); outline-offset:2px; }
+      .vgli-calc .btn:focus-visible{ outline:3px solid rgba(125,173,255,0.5); outline-offset:2px; }
       .vgli-calc .cta-contact{ margin-top:18px; font-size:13px; color:#C5D0E0; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px 14px; }
       .vgli-calc .cta-contact a{ color:var(--gold-bright); text-decoration:none; white-space:nowrap; }
 
@@ -201,14 +201,14 @@
         appearance:none; -webkit-appearance:none; border:none; background:transparent; color:var(--muted); cursor:pointer;
         font-size:13px; font-weight:600; padding:8px 15px; border-radius:8px; font-family:inherit; transition:background .12s,color .12s;
       }
-      .vgli-calc .seg button.on{ background:var(--gold); color:#0B1D38; }
+      .vgli-calc .seg button.on{ background:var(--gold); color:#08225a; }
       .vgli-calc .seg button:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:1px; }
       .vgli-calc .illus{ font-size:11px; color:var(--muted); font-style:italic; margin-bottom:16px; line-height:1.5; }
 
       .vgli-calc .vs-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 18px 18px; margin-bottom:16px; }
       .vgli-calc .vs-row{ display:flex; gap:12px; margin-bottom:20px; }
       .vgli-calc .vs-box{ flex:1; border-radius:12px; padding:15px 12px; text-align:center; min-width:0; }
-      .vgli-calc .vs-box.cmf{ background:rgba(194,161,77,0.13); border:1px solid rgba(194,161,77,0.5); }
+      .vgli-calc .vs-box.cmf{ background:rgba(125,173,255,0.13); border:1px solid rgba(125,173,255,0.5); }
       .vgli-calc .vs-box.vgli{ background:var(--navy-2); border:1px solid var(--line); }
       .vgli-calc .vs-box .vk{ font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; margin-bottom:7px; }
       .vgli-calc .vs-box.cmf .vk{ color:var(--gold-bright); }
@@ -216,12 +216,12 @@
       .vgli-calc .vs-box .vn{ font-family:Georgia,serif; font-weight:700; font-size:30px; color:#fff; line-height:1; }
       .vgli-calc .vs-box .vn .vp{ font-size:13px; color:var(--muted); font-weight:400; }
       .vgli-calc .vs-box .vsub{ font-size:11px; margin-top:7px; line-height:1.4; }
-      .vgli-calc .vs-box.cmf .vsub{ color:#D9C99A; }
+      .vgli-calc .vs-box.cmf .vsub{ color:var(--blue-light); }
       .vgli-calc .vs-box.vgli .vsub{ color:var(--muted); }
       .vgli-calc .svgwrap{ width:100%; }
       .vgli-calc .svgwrap svg{ width:100%; height:auto; display:block; }
 
-      .vgli-calc .save-card{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(194,161,77,0.45); border-radius:14px; padding:22px 20px; margin-bottom:16px; text-align:center; }
+      .vgli-calc .save-card{ background:linear-gradient(155deg,var(--card-2),var(--card)); border:1px solid rgba(125,173,255,0.45); border-radius:14px; padding:22px 20px; margin-bottom:16px; text-align:center; }
       .vgli-calc .save-card .sk{ font-size:13.5px; color:#C5D0E0; }
       .vgli-calc .save-card .sk b{ color:#fff; }
       .vgli-calc .save-card .sbig{ font-family:Georgia,serif; font-weight:700; font-size:50px; color:var(--gold); line-height:1.04; margin:5px 0; }
@@ -251,7 +251,6 @@
         <span class="logo-text">Crown Merchant Financial</span>
       </a>
       <ul class="nav-links">
-        <li><a href="/#about">About Us</a></li>
         <li class="nav-dropdown">
           <a href="/#products">Products</a>
           <div class="nav-dropdown-menu">
@@ -262,10 +261,9 @@
           </div>
         </li>
         <li><a href="/lending">Lending</a></li>
-        <li><a href="/society">Society</a></li>
-        <li><a href="/launch">Launch</a></li>
-        <li><a href="/#how-it-works">How It Works</a></li>
-        <li><a href="/products/term-life#contact">Get a Quote</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/onboarding/">Agents</a></li>
+        <li><a href="/#contact">Contact</a></li>
       </ul>
       <a href="tel:+13122038106" class="nav-cta">Call (312) 203-8106</a>
       <button class="mobile-toggle"><span></span><span></span><span></span></button>
@@ -324,7 +322,7 @@
           <div class="chart-sub">VGLI monthly premium for $<span id="chartCov">400,000</span>, at each five-year age band ahead of you.</div>
           <div class="chart" id="chart" role="img" aria-label="Bar chart of VGLI monthly premiums rising by age band"></div>
           <div class="chart-foot">
-            <div class="seg"><span class="swatch" style="background:#C2A14D"></span> Where you are now</div>
+            <div class="seg"><span class="swatch" style="background:var(--blue-light)"></span> Where you are now</div>
             <div class="seg"><span class="swatch" style="background:var(--rise-soft);border-top:2px solid var(--rise)"></span> What's ahead</div>
           </div>
         </div>
@@ -420,33 +418,66 @@
 
     <!-- Footer -->
     <footer>
-      <div class="footer-logo">
-        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
-        <span class="logo-text">Crown Merchant Financial</span>
-      </div>
-      <p class="footer-tagline">Life Insurance &amp; Financial Products</p>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/nicholasquaranta/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/@crownmerchantfinance" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13a8.28 8.28 0 005.58 2.16V11.7a4.83 4.83 0 01-3.77-1.24V6.69h3.77z"/></svg>
-        </a>
-      </div>
-      <div class="footer-links">
-        <a href="/products/final-expense">Final Expense</a>
-        <a href="/products/term-life">Term Life</a>
-        <a href="/products/annuity">Annuity</a>
-        <a href="/products/iul">IUL</a>
-        <a href="/#about">About Us</a>
-        <a href="/products/term-life#contact">Get a Quote</a>
-        <a href="/onboarding/">Agents</a>
-      </div>
-      <div class="footer-legal">
-        &copy; 2026 Crown Merchant Financial LLC. All rights reserved.<br />
-        IL Business Entity Producer License #3004124919<br />
-        Nicholas Quaranta, Licensed Insurance Agent &bull; NPN: 22145269<br />
-        nquaranta@crownmerchantfinancial.com &bull; (312) 203-8106
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <a href="/" class="footer-logo">
+              <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
+              <span class="logo-text">Crown Merchant Financial</span>
+            </a>
+            <p class="footer-about">Independent, veteran-owned insurance agency headquartered in Chicago, Illinois. Licensed nationwide.</p>
+            <div class="footer-social">
+              <a href="https://www.instagram.com/nicholasquaranta" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@crownmerchantfinance" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.16z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/qmakescontent/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+              </a>
+              <a href="https://substack.com/@nicholas201128" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+              <li><a href="/products/final-expense">Final Expense</a></li>
+              <li><a href="/products/term-life">Term Life</a></li>
+              <li><a href="/products/annuity">Annuity</a></li>
+              <li><a href="/products/iul">Indexed Universal Life</a></li>
+              <li><a href="/quote">Pick Your Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/#about">About Us</a></li>
+              <li><a href="/#leadership">Leadership</a></li>
+              <li><a href="/#how-we-work">How We Work</a></li>
+              <li><a href="/lending">Lending</a></li>
+              <li><a href="/society">Society</a></li>
+              <li><a href="/launch">Launch</a></li>
+              <li><a href="/onboarding/">Agents</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="tel:+13122038106">(312) 203-8106</a></li>
+              <li><a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a></li>
+              <li>Chicago, Illinois</li>
+              <li>Monday to Friday, 9am to 6pm CT</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-legal">Crown Merchant Financial LLC. IL Business Entity Producer License #3004124919. Licensed nationwide. NPN: 22145269.</p>
+          <p class="footer-copyright">&copy; 2026 Crown Merchant Financial. All rights reserved.</p>
+        </div>
       </div>
     </footer>
 
@@ -564,7 +595,7 @@
         var labY = (cmfY + vg[Math.round(effTerm * 0.7)][1]) / 2;
 
         var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">';
-        s += '<path d="' + area + '" fill="rgba(194,161,77,0.18)"/>';
+        s += '<path d="' + area + '" fill="rgba(125,173,255,0.18)"/>';
         s += '<line x1="' + X(0).toFixed(1) + '" y1="' + cmfY.toFixed(1) + '" x2="' + X(effTerm).toFixed(1) + '" y2="' + cmfY.toFixed(1) + '" stroke="#E0C06A" stroke-width="2.5"/>';
         s += '<path d="' + vline + '" fill="none" stroke="#C8763E" stroke-width="2.5" stroke-linejoin="round"/>';
         s += '<text x="' + (X(effTerm) - 3).toFixed(1) + '" y="' + Math.max(12, vg[vg.length-1][1] - 6).toFixed(1) + '" fill="#C8763E" font-size="11" font-weight="700" text-anchor="end" font-family="Georgia,serif">VGLI</text>';

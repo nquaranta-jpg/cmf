@@ -5,7 +5,7 @@
 /* Hero */
 .hml-hero {
   min-height: 88vh;
-  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 55%, #1a3a5c 100%);
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 55%, #10367f 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,8 +20,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 20% 80%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(201, 169, 98, 0.05) 0%, transparent 40%);
+  background: radial-gradient(ellipse at 20% 80%, rgba(var(--accent-rgb), 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(var(--accent-rgb), 0.05) 0%, transparent 40%);
   pointer-events: none;
 }
 
@@ -41,8 +41,8 @@
 }
 
 .hml-hero h1 .accent {
-  color: var(--gold);
-  font-style: italic;
+  color: inherit;
+  font-style: normal;
 }
 
 .hml-hero-sub {
@@ -67,7 +67,7 @@
 /* Plain-talk strip */
 .hml-truth {
   background: var(--navy);
-  border-top: 1px solid rgba(201, 169, 98, 0.2);
+  border-top: 1px solid rgba(var(--accent-rgb), 0.2);
   padding: 3.5rem 2rem;
 }
 
@@ -147,7 +147,7 @@
   margin: 0 auto 1.25rem;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-  color: var(--navy);
+  color: var(--on-gold);
   font-weight: 700;
   font-size: 1.25rem;
   display: flex;
@@ -198,7 +198,7 @@
 
 .hml-panel.navy {
   background: linear-gradient(150deg, var(--navy) 0%, var(--navy-light) 100%);
-  border: 1px solid rgba(201, 169, 98, 0.25);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
 }
 
 .hml-panel h3 {
@@ -254,7 +254,7 @@
 
 /* Inquiry form */
 .hml-inquiry {
-  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 60%, #1a3a5c 100%);
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 60%, #10367f 100%);
   padding: 6rem 2rem;
 }
 
@@ -330,7 +330,7 @@
 
 .hml-form-card select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a962' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237dadff' stroke-width='1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   cursor: pointer;
@@ -392,7 +392,7 @@
   height: 64px;
   margin: 0 auto 1.5rem;
   border-radius: 50%;
-  background: rgba(201, 169, 98, 0.15);
+  background: rgba(var(--accent-rgb), 0.15);
   border: 1.5px solid var(--gold);
   display: flex;
   align-items: center;

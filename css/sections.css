@@ -16,34 +16,13 @@
 /* Hero Section */
 .hero {
   min-height: 100vh;
-  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 50%, #1a3a5c 100%);
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 50%, #10367f 100%);
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 20% 80%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(201, 169, 98, 0.05) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L30 60M0 30L60 30' stroke='%23c9a962' stroke-width='0.5' opacity='0.07'/%3E%3C/svg%3E");
-  pointer-events: none;
+  /* clear the fixed nav when the content column is taller than the viewport */
+  padding: 7.5rem 0 4rem;
 }
 
 .hero-grid {
@@ -59,11 +38,11 @@
 }
 
 .hero-content {
-  animation: slideUp 1s ease-out;
+  position: relative;
 }
 
 .hero-text {
-  animation: slideUp 1s ease-out;
+  position: relative;
 }
 
 .hero-badge,
@@ -71,8 +50,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(201, 169, 98, 0.15);
-  border: 1px solid rgba(201, 169, 98, 0.3);
+  background: rgba(var(--accent-rgb), 0.15);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
   padding: 0.5rem 1rem;
   border-radius: 2px;
   margin-bottom: 2rem;
@@ -93,7 +72,7 @@
 
 .hero h1 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2.75rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 4.2vw, 3.5rem);
   font-weight: 500;
   color: var(--white);
   line-height: 1.15;
@@ -101,8 +80,8 @@
 }
 
 .hero h1 .accent {
-  color: var(--gold);
-  font-style: italic;
+  color: inherit;
+  font-style: normal;
 }
 
 .hero-description,
@@ -228,8 +207,6 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
   position: relative;
   transition: all 0.4s ease;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .service-card.visible {
@@ -310,8 +287,6 @@
   background: var(--cream);
   border: 1px solid rgba(0, 0, 0, 0.06);
   transition: all 0.4s ease;
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .team-card.visible {
@@ -397,7 +372,7 @@
 
 .team-social a:hover {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--on-gold);
 }
 
 .team-social a svg {
@@ -420,7 +395,7 @@
   right: -20%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(201, 169, 98, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -449,8 +424,6 @@
 .feature-item {
   display: flex;
   gap: 1.5rem;
-  opacity: 0;
-  transform: translateX(-20px);
   transition: all 0.6s ease;
 }
 
@@ -549,7 +522,7 @@
 
 .carrier-logo:hover {
   border-color: var(--gold);
-  box-shadow: 0 4px 16px rgba(201, 169, 98, 0.15);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.15);
   transform: translateY(-2px);
 }
 
@@ -610,8 +583,6 @@
   z-index: 1;
   flex: 1;
   max-width: 280px;
-  opacity: 0;
-  transform: translateY(20px);
 }
 
 .step.visible {
@@ -638,7 +609,7 @@
 
 .step:hover .step-number {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--on-gold);
   transform: scale(1.1);
 }
 
@@ -783,7 +754,7 @@
   width: 64px;
   height: 64px;
   margin: 0 auto 1.5rem;
-  background: rgba(201, 169, 98, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -853,7 +824,7 @@
 /* Product Hero (product pages) */
 .product-hero {
   padding: 10rem 2rem 5rem;
-  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 50%, #1a3a5c 100%);
+  background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 50%, #10367f 100%);
   text-align: center;
   position: relative;
 }
@@ -1230,69 +1201,41 @@
   margin-bottom: 1.75rem;
 }
 
-.carrier-marquee {
-  overflow: hidden;
-  /* fade logos in/out at the edges */
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+.carrier-row {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .carrier-track {
   display: flex;
   align-items: center;
-  gap: 4.5rem;
-  width: max-content;
-  padding-right: 4.5rem; /* keeps the loop gap even between last and first logo */
-  animation: carrier-scroll 35s linear infinite;
-}
-
-.carrier-marquee:hover .carrier-track {
-  animation-play-state: paused;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem 4rem;
 }
 
 .carrier-track img {
-  height: 42px;
+  height: 40px;
   width: auto;
   flex-shrink: 0;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
-@keyframes carrier-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .carrier-track {
-    animation: none;
-    width: auto;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 2rem;
-  }
-
-  /* the duplicate set exists only for the seamless loop */
-  .carrier-track img[aria-hidden="true"] {
-    display: none;
-  }
-
-  .carrier-marquee {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
+.carrier-track img:hover {
+  filter: none;
+  opacity: 1;
 }
 
 @media (max-width: 600px) {
   .carrier-track {
-    gap: 3rem;
-    padding-right: 3rem;
+    gap: 1.5rem 2.25rem;
   }
 
   .carrier-track img {
-    height: 34px;
+    height: 30px;
   }
 }
 
@@ -1374,5 +1317,127 @@
 
   .hero-trust-chip img[src*="fmcsa"] {
     height: 28px;
+  }
+}
+
+/* ============================================
+   About / Contact blocks (homepage)
+   ============================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-copy p {
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.about-facts {
+  list-style: none;
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-top: 3px solid var(--blue);
+  padding: 0.5rem 1.75rem;
+}
+
+.about-facts li {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+.about-facts li:last-child {
+  border-bottom: none;
+}
+
+.about-facts li strong {
+  display: block;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+
+.contact-item-text small {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.contact-card {
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+  border-top: 3px solid var(--blue);
+  padding: 2.5rem;
+}
+
+.contact-card h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+  color: var(--slate);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.contact-card .btn-primary {
+  display: inline-block;
+}
+
+.contact-card-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 2rem 0;
+}
+
+.contact-card-link {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.contact-card-link:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+}
+
+.team-title {
+  font-size: 0.85rem;
+  color: var(--blue-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+}
+
+.team-npn {
+  font-size: 0.85rem;
+  color: var(--slate);
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 }
