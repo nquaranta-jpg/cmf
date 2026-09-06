@@ -30,6 +30,19 @@ const FLEET_SIZES = {
   "16_plus": "16+ trucks",
 };
 
+const NEEDS = {
+  factoring: "Factoring",
+  advance: "Working capital advance",
+  both: "Factoring + advance",
+  not_sure: "Not sure",
+};
+
+const FACTOR_STATUS = {
+  no: "Not factoring",
+  yes_contract: "Factoring, under contract",
+  yes_monthly: "Factoring, month to month",
+};
+
 const MONEY_RANGES = {
   under_10k: "Under $10k",
   "10k_25k": "$10k–$25k",
@@ -72,6 +85,8 @@ export async function handler(event) {
 
   if (trucking) {
     const authority = clean(data.authority, 40);
+    const need = NEEDS[data.need] || clean(data.need, 40) || "—";
+    const factorStatus = FACTOR_STATUS[data.current_factor] || clean(data.current_factor, 40) || "—";
     const fleet = FLEET_SIZES[data.fleet_size] || clean(data.fleet_size, 40) || "—";
     const revenue = MONEY_RANGES[data.monthly_revenue] || clean(data.monthly_revenue, 40) || "—";
     const amount = MONEY_RANGES[data.amount] || clean(data.amount, 40) || "—";
@@ -81,22 +96,26 @@ export async function handler(event) {
       `*Name:* ${name}${company ? ` (${company})` : ""}`,
       `*Email:* ${email}`,
       `*Phone:* ${phone || "—"}`,
+      `*Needs:* ${need}`,
+      `*Current factor:* ${factorStatus}`,
       `*MC/DOT:* ${authority || "—"}`,
       `*Fleet:* ${fleet}`,
-      `*Monthly deposits:* ${revenue}`,
-      `*Funding needed:* ${amount}`,
+      `*Monthly revenue:* ${revenue}`,
+      `*Amount / volume:* ${amount}`,
       `*Timeline:* ${timeline}`,
       details ? `*Use of funds:* ${details}` : null,
     ].filter((l) => l !== null);
-    subject = `Trucking capital inquiry — ${name}${company ? ` (${company})` : ""}`;
+    subject = `Trucking ${need === "—" ? "capital" : need.toLowerCase()} inquiry — ${name}${company ? ` (${company})` : ""}`;
     html = `<h2>New trucking capital inquiry</h2>
        <p><strong>Name:</strong> ${esc(name)}${company ? ` (${esc(company)})` : ""}<br>
        <strong>Email:</strong> ${esc(email)}<br>
        <strong>Phone:</strong> ${esc(phone) || "—"}<br>
+       <strong>Needs:</strong> ${esc(need)}<br>
+       <strong>Current factor:</strong> ${esc(factorStatus)}<br>
        <strong>MC/DOT:</strong> ${esc(authority) || "—"}<br>
        <strong>Fleet:</strong> ${esc(fleet)}<br>
-       <strong>Monthly deposits:</strong> ${esc(revenue)}<br>
-       <strong>Funding needed:</strong> ${esc(amount)}<br>
+       <strong>Monthly revenue:</strong> ${esc(revenue)}<br>
+       <strong>Amount / volume:</strong> ${esc(amount)}<br>
        <strong>Timeline:</strong> ${esc(timeline)}</p>
        ${details ? `<p><strong>Use of funds:</strong><br>${esc(details).replace(/\n/g, "<br>")}</p>` : ""}`;
   } else {
