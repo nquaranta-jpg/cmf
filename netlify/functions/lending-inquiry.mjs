@@ -1,4 +1,5 @@
-// Hard money lending deal inquiries from /lending.
+// Capital desk inquiries: hard money deals from /lending and trucking
+// working-capital (MCA) requests from /lending/trucking (data.desk === "trucking").
 //
 // Notification-only by design: inquiries go to Telegram (primary) and email
 // (Resend, falling back to BACKUP_EMAIL as recipient) — no database table,
@@ -15,10 +16,26 @@ const LOAN_TYPES = {
 };
 
 const TIMELINES = {
+  this_week: "This week",
   under_2_weeks: "Under 2 weeks",
   "2_4_weeks": "2–4 weeks",
   "1_3_months": "1–3 months",
   exploring: "Just lining up capital",
+};
+
+const FLEET_SIZES = {
+  owner_operator: "Owner-operator, 1 truck",
+  "2_5": "2–5 trucks",
+  "6_15": "6–15 trucks",
+  "16_plus": "16+ trucks",
+};
+
+const MONEY_RANGES = {
+  under_10k: "Under $10k",
+  "10k_25k": "$10k–$25k",
+  "25k_50k": "$25k–$50k",
+  "50k_100k": "$50k–$100k",
+  over_100k: "Over $100k",
 };
 
 export async function handler(event) {
@@ -50,32 +67,62 @@ export async function handler(event) {
     return { statusCode: 400, headers: cors(), body: JSON.stringify({ ok: false, reason: "email" }) };
   }
 
-  const lines = [
-    `*New hard money inquiry* 🏗`,
-    ``,
-    `*Name:* ${name}${company ? ` (${company})` : ""}`,
-    `*Email:* ${email}`,
-    `*Phone:* ${phone || "—"}`,
-    `*Loan type:* ${loanType}`,
-    `*Property:* ${location || "—"}`,
-    `*Timeline:* ${timeline}`,
-    details ? `*Deal:* ${details}` : null,
-  ].filter((l) => l !== null);
+  const trucking = data.desk === "trucking";
+  let lines, subject, html;
 
-  await Promise.all([
-    notifyTelegram(lines.join("\n")),
-    notifyEmail(
-      `Hard money inquiry — ${name}${location ? ` (${location})` : ""}`,
-      `<h2>New hard money inquiry</h2>
+  if (trucking) {
+    const authority = clean(data.authority, 40);
+    const fleet = FLEET_SIZES[data.fleet_size] || clean(data.fleet_size, 40) || "—";
+    const revenue = MONEY_RANGES[data.monthly_revenue] || clean(data.monthly_revenue, 40) || "—";
+    const amount = MONEY_RANGES[data.amount] || clean(data.amount, 40) || "—";
+    lines = [
+      `*New trucking capital inquiry* 🚛`,
+      ``,
+      `*Name:* ${name}${company ? ` (${company})` : ""}`,
+      `*Email:* ${email}`,
+      `*Phone:* ${phone || "—"}`,
+      `*MC/DOT:* ${authority || "—"}`,
+      `*Fleet:* ${fleet}`,
+      `*Monthly deposits:* ${revenue}`,
+      `*Funding needed:* ${amount}`,
+      `*Timeline:* ${timeline}`,
+      details ? `*Use of funds:* ${details}` : null,
+    ].filter((l) => l !== null);
+    subject = `Trucking capital inquiry — ${name}${company ? ` (${company})` : ""}`;
+    html = `<h2>New trucking capital inquiry</h2>
+       <p><strong>Name:</strong> ${esc(name)}${company ? ` (${esc(company)})` : ""}<br>
+       <strong>Email:</strong> ${esc(email)}<br>
+       <strong>Phone:</strong> ${esc(phone) || "—"}<br>
+       <strong>MC/DOT:</strong> ${esc(authority) || "—"}<br>
+       <strong>Fleet:</strong> ${esc(fleet)}<br>
+       <strong>Monthly deposits:</strong> ${esc(revenue)}<br>
+       <strong>Funding needed:</strong> ${esc(amount)}<br>
+       <strong>Timeline:</strong> ${esc(timeline)}</p>
+       ${details ? `<p><strong>Use of funds:</strong><br>${esc(details).replace(/\n/g, "<br>")}</p>` : ""}`;
+  } else {
+    lines = [
+      `*New hard money inquiry* 🏗`,
+      ``,
+      `*Name:* ${name}${company ? ` (${company})` : ""}`,
+      `*Email:* ${email}`,
+      `*Phone:* ${phone || "—"}`,
+      `*Loan type:* ${loanType}`,
+      `*Property:* ${location || "—"}`,
+      `*Timeline:* ${timeline}`,
+      details ? `*Deal:* ${details}` : null,
+    ].filter((l) => l !== null);
+    subject = `Hard money inquiry — ${name}${location ? ` (${location})` : ""}`;
+    html = `<h2>New hard money inquiry</h2>
        <p><strong>Name:</strong> ${esc(name)}${company ? ` (${esc(company)})` : ""}<br>
        <strong>Email:</strong> ${esc(email)}<br>
        <strong>Phone:</strong> ${esc(phone) || "—"}<br>
        <strong>Loan type:</strong> ${esc(loanType)}<br>
        <strong>Property:</strong> ${esc(location) || "—"}<br>
        <strong>Timeline:</strong> ${esc(timeline)}</p>
-       ${details ? `<p><strong>Deal:</strong><br>${esc(details).replace(/\n/g, "<br>")}</p>` : ""}`
-    ),
-  ]);
+       ${details ? `<p><strong>Deal:</strong><br>${esc(details).replace(/\n/g, "<br>")}</p>` : ""}`;
+  }
+
+  await Promise.all([notifyTelegram(lines.join("\n")), notifyEmail(subject, html)]);
 
   return { statusCode: 200, headers: cors(), body: JSON.stringify({ ok: true }) };
 }

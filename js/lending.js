@@ -1,4 +1,4 @@
-// Lending deal-inquiry form → /.netlify/functions/lending-inquiry
+// Capital desk inquiry forms (/lending, /lending/trucking) → /.netlify/functions/lending-inquiry
 (function () {
   const form = document.getElementById("hml-form");
   if (!form) return;
@@ -6,6 +6,7 @@
   const submitBtn = document.getElementById("hml-submit");
   const errorBox = document.getElementById("hml-error");
   const confirmBox = document.getElementById("hml-confirm");
+  const submitLabel = submitBtn.textContent;
 
   function showError(msg) {
     errorBox.textContent = msg;
@@ -38,7 +39,7 @@
     } catch (err) {
       console.error("lending inquiry failed:", err);
       submitBtn.disabled = false;
-      submitBtn.textContent = "Send My Deal →";
+      submitBtn.textContent = submitLabel;
       showError("Something went wrong sending your inquiry. Please try again, or call (312) 203-8106.");
     }
   });

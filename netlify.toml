@@ -59,6 +59,11 @@
   to = "/lending/index.html"
   status = 200
 
+[[redirects]]
+  from = "/lending/trucking"
+  to = "/lending/trucking.html"
+  status = 200
+
 # CMF Launch routes
 [[redirects]]
   from = "/launch"
