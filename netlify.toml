@@ -1,6 +1,14 @@
 [build]
   publish = "."
-  command = "echo 'no build needed'"
+  # Static site, no bundling. check-rates fails the deploy only if
+  # RATES_VERIFIED=true while src/mcp/config/rates.json is incomplete.
+  command = "node scripts/check-rates.mjs"
+
+# MCP connector function (netlify/functions/mcp.ts) is TypeScript + ESM and
+# imports the MCP SDK, so it needs esbuild. Scoped to this one function so the
+# existing .mjs functions keep their current bundler.
+[functions."mcp"]
+  node_bundler = "esbuild"
 
 [build.processing]
   skip_processing = false
@@ -49,6 +57,43 @@
 
 [[redirects]]
   from = "/email-campaigns/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+# MCP connector source, Apps Script, tests, directory packets — never serve
+[[redirects]]
+  from = "/src/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/apps-script/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tests/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/directories/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tsconfig.json"
   to = "/index.html"
   status = 404
   force = true
@@ -158,4 +203,15 @@
 [[redirects]]
   from = "/privacy"
   to = "/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+
+# AI agent connector docs (MCP server lives at /mcp, routed by the function's own config.path)
+[[redirects]]
+  from = "/connect/muse"
+  to = "/connect/muse/index.html"
   status = 200

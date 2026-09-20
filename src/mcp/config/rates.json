@@ -1,0 +1,477 @@
+{
+  "_instructions": [
+    "Rates are MONTHLY DOLLARS PER $1,000 OF COVERAGE. Fill from your own quoting tools.",
+    "low = best-class rate, high = standard-class rate, so the range is honest.",
+    "policy_fee_monthly is added once to each estimate (whole dollars).",
+    "Flip verified to true only after every cell is filled. Netlify also needs RATES_VERIFIED=true.",
+    "If verified is false, or any needed cell is null, the connector answers consultation_only instead of a number."
+  ],
+  "verified": false,
+  "policy_fee_monthly": null,
+  "term": {
+    "10": [
+      {
+        "age_min": 18,
+        "age_max": 24,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 25,
+        "age_max": 29,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 30,
+        "age_max": 34,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 35,
+        "age_max": 39,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 40,
+        "age_max": 44,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 45,
+        "age_max": 49,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 50,
+        "age_max": 54,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 55,
+        "age_max": 59,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 60,
+        "age_max": 64,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 65,
+        "age_max": 70,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      }
+    ],
+    "20": [
+      {
+        "age_min": 18,
+        "age_max": 24,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 25,
+        "age_max": 29,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 30,
+        "age_max": 34,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 35,
+        "age_max": 39,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 40,
+        "age_max": 44,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 45,
+        "age_max": 49,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 50,
+        "age_max": 54,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 55,
+        "age_max": 59,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 60,
+        "age_max": 64,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 65,
+        "age_max": 70,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      }
+    ],
+    "30": [
+      {
+        "age_min": 18,
+        "age_max": 24,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 25,
+        "age_max": 29,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 30,
+        "age_max": 34,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 35,
+        "age_max": 39,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 40,
+        "age_max": 44,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 45,
+        "age_max": 49,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 50,
+        "age_max": 54,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 55,
+        "age_max": 59,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 60,
+        "age_max": 64,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "age_min": 65,
+        "age_max": 70,
+        "non_tobacco": {
+          "low": null,
+          "high": null
+        },
+        "tobacco": {
+          "low": null,
+          "high": null
+        }
+      }
+    ]
+  },
+  "final_expense": [
+    {
+      "age_min": 45,
+      "age_max": 49,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 50,
+      "age_max": 54,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 55,
+      "age_max": 59,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 60,
+      "age_max": 64,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 65,
+      "age_max": 69,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 70,
+      "age_max": 74,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 75,
+      "age_max": 79,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "age_min": 80,
+      "age_max": 85,
+      "non_tobacco": {
+        "low": null,
+        "high": null
+      },
+      "tobacco": {
+        "low": null,
+        "high": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "_note": "Confirm against NIPR before launch and update whenever a license is added or lapses. This file is the only gate that keeps the connector from soliciting in a state where CMF is not licensed.",
+  "licensed": ["IL", "GA", "IN", "MN", "MO", "NH", "PA"]
+}

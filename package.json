@@ -4,7 +4,11 @@
   "description": "Crown Merchant Financial - Final Expense Insurance",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "check:rates": "node scripts/check-rates.mjs",
+    "mcp:inspect": "npx @modelcontextprotocol/inspector"
   },
   "keywords": [],
   "author": "Nicholas Quaranta",
@@ -12,9 +16,16 @@
   "type": "commonjs",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@netlify/blobs": "^8.2.0",
     "@supabase/supabase-js": "^2.100.1",
     "netlify-cli": "^24.0.1",
-    "nodemailer": "^9.0.3"
+    "nodemailer": "^9.0.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
   }
 }
