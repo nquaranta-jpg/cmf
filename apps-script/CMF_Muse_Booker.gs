@@ -55,6 +55,7 @@ function doPost(e) {
       return json_({ status: "error", message: "Unauthorized." });
     }
     delete body.secret;
+    if (body.action === "cleanup_test_bookings") return json_(cleanupTestBookings_());
     var result = bookConsultation_(body);
     return json_(result);
   } catch (err) {
@@ -119,6 +120,7 @@ function bookConsultation_(lead) {
 
   var description = [
     "Phone: " + phone,
+    "Email: " + email,
     "",
     "Source: Muse connector",
     "Product interest: " + (product || "not stated"),
@@ -178,19 +180,37 @@ function isBusinessHours_(d) {
   return startMin >= DAY_START_HOUR * 60 && startMin + SLOT_MINUTES <= DAY_END_HOUR * 60;
 }
 
-function isFree_(start, end) {
+/** Busy intervals (ms) on the calendar between from and to, ignoring all-day and declined events. */
+function busyIntervals_(from, to) {
   var cal = CalendarApp.getCalendarById(CALENDAR_ID);
-  var events = cal.getEvents(start, end);
+  var events = cal.getEvents(from, to);
+  var busy = [];
   for (var i = 0; i < events.length; i++) {
     var ev = events[i];
     if (ev.isAllDayEvent()) continue;
     if (ev.getMyStatus && ev.getMyStatus() === CalendarApp.GuestStatus.NO) continue;
-    return false;
+    busy.push([ev.getStartTime().getTime(), ev.getEndTime().getTime()]);
   }
-  return true;
+  return busy;
 }
 
-/** Walk forward from the requested time (or the earliest allowed time) in slot steps. */
+function overlapsBusy_(busy, start, end) {
+  var s = start.getTime(), e = end.getTime();
+  for (var i = 0; i < busy.length; i++) {
+    if (busy[i][0] < e && busy[i][1] > s) return true;
+  }
+  return false;
+}
+
+function isFree_(start, end) {
+  return !overlapsBusy_(busyIntervals_(start, end), start, end);
+}
+
+/**
+ * Walk forward from the requested time (or the earliest allowed time) in slot
+ * steps. Fetches the calendar in 3-day chunks so a search costs one or two
+ * calendar calls instead of one per slot (the connector has an 8-second budget).
+ */
 function nearestOpenSlots_(requested, now, count) {
   var out = [];
   var earliest = new Date(now.getTime() + MIN_LEAD_HOURS * 3600000);
@@ -201,11 +221,18 @@ function nearestOpenSlots_(requested, now, count) {
   var bump = (SLOT_MINUTES - (minute % SLOT_MINUTES)) % SLOT_MINUTES;
   if (bump) cursor = new Date(cursor.getTime() + bump * 60000);
   var limit = new Date(now.getTime() + MAX_DAYS_OUT * 86400000);
+  var CHUNK_MS = 3 * 86400000;
+  var chunkEnd = new Date(0);
+  var busy = [];
   var guard = 0;
   while (out.length < count && cursor <= limit && guard++ < 2000) {
+    if (cursor >= chunkEnd) {
+      chunkEnd = new Date(cursor.getTime() + CHUNK_MS);
+      busy = busyIntervals_(cursor, chunkEnd);
+    }
     if (isBusinessHours_(cursor)) {
       var end = new Date(cursor.getTime() + SLOT_MINUTES * 60000);
-      if (isFree_(cursor, end)) out.push(iso_(cursor));
+      if (!overlapsBusy_(busy, cursor, end)) out.push(iso_(cursor));
     }
     cursor = new Date(cursor.getTime() + SLOT_MINUTES * 60000);
   }
@@ -217,12 +244,39 @@ function findFutureBookingForEmail_(email, now) {
   var horizon = new Date(now.getTime() + (MAX_DAYS_OUT + 1) * 86400000);
   var events = cal.getEvents(now, horizon, { search: "CMF Consultation" });
   for (var i = 0; i < events.length; i++) {
+    var desc = String(events[i].getDescription() || "").toLowerCase();
+    if (desc.indexOf("email: " + email) !== -1) return events[i];
+    // Guest list is empty when the lead is the calendar owner, hence the description check above.
     var guests = events[i].getGuestList();
     for (var g = 0; g < guests.length; g++) {
       if (String(guests[g].getEmail()).toLowerCase() === email) return events[i];
     }
   }
   return null;
+}
+
+/**
+ * Secret-gated admin action: deletes future "(Muse)" consultations booked to the
+ * lead-alert address (i.e. Nick's own test bookings). Sheet rows are left alone.
+ */
+function cleanupTestBookings_() {
+  var cal = CalendarApp.getCalendarById(CALENDAR_ID);
+  var now = new Date();
+  var horizon = new Date(now.getTime() + (MAX_DAYS_OUT + 1) * 86400000);
+  var events = cal.getEvents(now, horizon, { search: "(Muse)" });
+  var me = LEAD_ALERT_TO.toLowerCase();
+  var deleted = [];
+  for (var i = 0; i < events.length; i++) {
+    var ev = events[i];
+    var title = ev.getTitle() || "";
+    if (title.indexOf("CMF Consultation:") !== 0 || title.indexOf("(Muse)") === -1) continue;
+    var desc = String(ev.getDescription() || "").toLowerCase();
+    var mine = desc.indexOf("email: " + me) !== -1 || title.indexOf("Nick Test") !== -1;
+    if (!mine) continue;
+    deleted.push(title + " @ " + iso_(ev.getStartTime()));
+    ev.deleteEvent();
+  }
+  return { status: "ok", deleted: deleted };
 }
 
 // ---- Calendar event with Meet link (Advanced Calendar service) ------------
