@@ -5,6 +5,7 @@ import { DISCLAIMER } from "../src/mcp/config/copy.js";
 import { filledRates, UNVERIFIED_ENV, VERIFIED_ENV } from "./helpers.js";
 
 const deps = { rates: filledRates(), env: VERIFIED_ENV };
+const fewStates = { ...deps, licensedStates: ["IL", "GA"] };
 const term = (over: Record<string, unknown> = {}) => ({ age: 35, state: "IL", tobacco: false, product_type: "term", coverage_amount: 500000, term_years: 20, ...over });
 const fe = (over: Record<string, unknown> = {}) => ({ age: 62, state: "GA", tobacco: false, product_type: "final_expense", coverage_amount: 15000, ...over });
 
@@ -59,13 +60,14 @@ describe("get_quote_estimate: validation", () => {
 
 describe("get_quote_estimate: statuses", () => {
   it("returns not_available with no next_step for an unlicensed state", () => {
-    const r = computeQuote(validateQuoteInput(term({ state: "CA" })).ok ? (validateQuoteInput(term({ state: "CA" })) as { ok: true; data: never }).data : (undefined as never), deps);
+    const v = validateQuoteInput(term({ state: "CA" }));
+    const r = computeQuote((v as { ok: true; data: never }).data, fewStates);
     expect(r.status).toBe("not_available");
     expect((r as { message: string }).message).toMatch(/not currently licensed in CA/);
     expect(r).not.toHaveProperty("next_step");
   });
   it("unlicensed state wins even for iul", () => {
-    const out = getQuoteEstimate({ age: 40, state: "CA", tobacco: false, product_type: "iul" }, deps);
+    const out = getQuoteEstimate({ age: 40, state: "CA", tobacco: false, product_type: "iul" }, fewStates);
     expect((out as { result: { status: string } }).result.status).toBe("not_available");
   });
   it("iul and whole_life are consultation_only with booking next step", () => {
@@ -144,6 +146,15 @@ describe("get_quote_estimate: rate table guards", () => {
     } else {
       expect(r.status).toBe("consultation_only");
     }
+  });
+});
+
+describe("licensing gate", () => {
+  it("the shipped states.json covers every US state code the validator accepts", async () => {
+    const { licensedStates } = await import("../src/mcp/lib/states.js");
+    const { US_STATE_CODES } = await import("../src/mcp/lib/sanitize.js");
+    expect(new Set(licensedStates())).toEqual(US_STATE_CODES);
+    expect((getQuoteEstimate(term({ state: "CA" }), deps) as { result: { status: string } }).result.status).toBe("estimate");
   });
 });
 

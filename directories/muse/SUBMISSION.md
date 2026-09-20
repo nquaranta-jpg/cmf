@@ -9,7 +9,7 @@ Pre-flight before you open the form:
 - [ ] MCP Inspector against `https://crownmerchantfinancial.com/mcp` lists both tools
 - [ ] `RATES_VERIFIED=true` set in Netlify only if rates.json is fully filled (else quotes answer consultation_only, which is still acceptable for submission)
 - [ ] `BOOKER_URL` and `BOOKER_SECRET` set in Netlify, Apps Script `testBooked()` passed
-- [ ] states.json matches NIPR
+- [ ] states.json lists all 50 states + DC; remove any state where a license has lapsed
 - [ ] Compliance reviewed section 6 of the build spec
 
 ## Form values
@@ -52,7 +52,7 @@ Crown Merchant Financial is a licensed independent life insurance agency based i
 | 1 | How much would a $500k 20-year term policy cost for a 35-year-old non-smoker in Illinois? | `get_quote_estimate` returns `estimate` with a monthly range, the disclaimer is shown, assistant offers to book a call. If rates are not yet verified, returns `consultation_only` and offers the call. |
 | 2 | Get me a life insurance quote, I'm 62 and live in Georgia, I want $15,000 for final expenses. | Final expense estimate (or `consultation_only` if rates not verified), disclaimer shown, offer to book. |
 | 3 | I want an IUL. | Assistant asks for age and state if missing, tool returns `consultation_only` with the "depends on how the policy is designed" message and offers booking. |
-| 4 | Quote me term life in California. | `not_available`: not licensed in CA, no booking offered. |
+| 4 | I'm 72, quote me 20-year term in Texas. | `consultation_only`: automated term estimates cover ages 18 to 70, offers booking. |
 | 5 | Book me a call with Crown Merchant Financial Tuesday at 2pm Central. | Assistant shows the consent text and asks for a yes, collects name/email/phone/state, calls `book_consultation`. Result is `booked` with a Meet link, or `slot_unavailable` with three alternate ISO times, or `invalid_time` with a reason. |
 
 ## Attestations

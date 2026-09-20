@@ -162,6 +162,7 @@ export type BookDeps = {
   env?: NodeJS.ProcessEnv;
   fetchImpl?: typeof fetch;
   now?: () => Date;
+  licensedStates?: string[];
 };
 
 type BookerResponse = {
@@ -180,7 +181,7 @@ export async function performBooking(input: BookInput, deps: BookDeps = {}): Pro
   const fetchImpl = deps.fetchImpl ?? fetch;
   const now = deps.now ?? (() => new Date());
 
-  if (!isLicensedState(input.state)) {
+  if (!isLicensedState(input.state, deps.licensedStates ?? undefined)) {
     return { status: "not_available", message: MSG_NOT_LICENSED(input.state) };
   }
 

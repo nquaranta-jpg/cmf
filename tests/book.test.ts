@@ -39,7 +39,7 @@ describe("book_consultation: validation", () => {
   });
   it("rejects an unlicensed state without calling the booker", async () => {
     const { fn, calls } = fakeFetch({ status: "booked" });
-    const out = (await bookConsultation({ ...validBooking(), state: "CA" }, { env, fetchImpl: fn })) as { result: { status: string; message: string } };
+    const out = (await bookConsultation({ ...validBooking(), state: "CA" }, { env, fetchImpl: fn, licensedStates: ["IL"] })) as { result: { status: string; message: string } };
     expect(out.result.status).toBe("not_available");
     expect(out.result.message).toMatch(/not currently licensed in CA/);
     expect(calls.length).toBe(0);

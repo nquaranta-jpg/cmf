@@ -1,4 +1,8 @@
 {
-  "_note": "Confirm against NIPR before launch and update whenever a license is added or lapses. This file is the only gate that keeps the connector from soliciting in a state where CMF is not licensed.",
-  "licensed": ["IL", "GA", "IN", "MN", "MO", "NH", "PA"]
+  "_note": "All 50 states plus DC per Nick (Sept 20, 2026). This file is the only gate that keeps the connector from soliciting in a state where CMF is not licensed. Remove a code here if a license lapses; the connector then answers not_available for that state and offers no booking.",
+  "licensed": [
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME",
+    "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI",
+    "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+  ]
 }

@@ -138,14 +138,14 @@ export function validateQuoteInput(raw: unknown): Validation<QuoteInput> {
   return { ok: true, data };
 }
 
-export type QuoteDeps = { rates?: RatesTable; env?: NodeJS.ProcessEnv };
+export type QuoteDeps = { rates?: RatesTable; env?: NodeJS.ProcessEnv; licensedStates?: string[] };
 
 /** Runs the quote logic on already-validated input. */
 export function computeQuote(input: QuoteInput, deps: QuoteDeps = {}): QuoteResult {
   const table = deps.rates ?? loadRates();
   const env = deps.env ?? process.env;
 
-  if (!isLicensedState(input.state)) {
+  if (!isLicensedState(input.state, deps.licensedStates ?? undefined)) {
     return { status: "not_available", message: MSG_NOT_LICENSED(input.state), inputs_echo: input };
   }
 
