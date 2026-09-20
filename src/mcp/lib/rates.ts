@@ -10,6 +10,9 @@ export type RateBand = {
   age_max: number;
   non_tobacco: RateCell;
   tobacco: RateCell;
+  /** Product is not normally issued at these ages: answer consultation_only with `reason`. Cells may be null. */
+  consultation_only?: boolean;
+  reason?: string;
 };
 export type RatesTable = {
   verified: boolean;
@@ -65,6 +68,25 @@ export function lookupRate(
   return { rate_low: cell.low, rate_high: cell.high, policy_fee: table.policy_fee_monthly };
 }
 
+/** The band covering a request, if any. */
+export function findBand(
+  table: RatesTable,
+  args: { product_type: "term" | "final_expense"; age: number; term_years?: number },
+): RateBand | undefined {
+  const bands = args.product_type === "term" ? table.term?.[String(args.term_years ?? 20)] : table.final_expense;
+  if (!Array.isArray(bands)) return undefined;
+  return bands.find((b) => args.age >= b.age_min && args.age <= b.age_max);
+}
+
+/** Reason text when the band is deliberately marked consultation-only, else null. */
+export function bandReason(
+  table: RatesTable,
+  args: { product_type: "term" | "final_expense"; age: number; term_years?: number },
+): string | null {
+  const band = findBand(table, args);
+  return band?.consultation_only ? band.reason || "" : null;
+}
+
 /** Every cell in the table that must be filled before verified can be true. */
 export function findNullCells(table: RatesTable): string[] {
   const missing: string[] = [];
@@ -75,6 +97,7 @@ export function findNullCells(table: RatesTable): string[] {
       return;
     }
     for (const b of bands) {
+      if (b.consultation_only === true) continue;
       for (const cls of ["non_tobacco", "tobacco"] as const) {
         for (const side of ["low", "high"] as const) {
           if (!isNum(b[cls]?.[side])) missing.push(`${path}[${b.age_min}-${b.age_max}].${cls}.${side}`);

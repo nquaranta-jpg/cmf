@@ -18,6 +18,7 @@ if (!isNum(table.policy_fee_monthly)) problems.push("policy_fee_monthly is null"
 const checkBands = (path, bands, min, max) => {
   if (!Array.isArray(bands)) return problems.push(`${path} missing`);
   for (const b of bands) {
+    if (b.consultation_only === true) continue; // deliberately not priced at these ages
     for (const cls of ["non_tobacco", "tobacco"]) {
       for (const side of ["low", "high"]) {
         if (!isNum(b?.[cls]?.[side])) problems.push(`${path}[${b.age_min}-${b.age_max}].${cls}.${side} is null`);

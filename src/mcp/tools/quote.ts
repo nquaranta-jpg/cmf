@@ -8,7 +8,7 @@ import {
   MSG_CONSULTATION_ONLY_RATES,
   MSG_NOT_LICENSED,
 } from "../config/copy.js";
-import { loadRates, lookupRate, PRODUCT_AGE_BANDS, type RatesTable } from "../lib/rates.js";
+import { bandReason, loadRates, lookupRate, PRODUCT_AGE_BANDS, type RatesTable } from "../lib/rates.js";
 import { isLicensedState } from "../lib/states.js";
 import { normalizeState, US_STATE_CODES } from "../lib/sanitize.js";
 
@@ -177,9 +177,10 @@ export function computeQuote(input: QuoteInput, deps: QuoteDeps = {}): QuoteResu
     env,
   );
   if (!rate) {
+    const reason = bandReason(table, { product_type: input.product_type, age: input.age, term_years: input.term_years });
     return {
       status: "consultation_only",
-      message: MSG_CONSULTATION_ONLY_RATES,
+      message: reason || MSG_CONSULTATION_ONLY_RATES,
       inputs_echo: input,
       disclaimer: DISCLAIMER,
       next_step: "book_consultation",

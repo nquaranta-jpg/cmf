@@ -16,7 +16,7 @@ const BANNED_PHRASES = [/guaranteed/i, /best rates?/i, /lowest price/i, /cash va
 const EM_DASH = /—/;
 
 const files: Record<string, string> = {
-  "copy.ts (all exported strings)": Object.values(copy).filter((v): v is string => typeof v === "string").join("\n"),
+  "copy.ts (all exported strings)": (Object.values(copy).filter((v) => typeof v === "string") as string[]).join("\n"),
   "connect/muse/index.html": readFileSync("connect/muse/index.html", "utf8"),
   "directories/muse/SUBMISSION.md": readFileSync("directories/muse/SUBMISSION.md", "utf8"),
   "apps-script/CMF_Muse_Booker.gs": readFileSync("apps-script/CMF_Muse_Booker.gs", "utf8"),

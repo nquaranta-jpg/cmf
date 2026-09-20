@@ -146,3 +146,27 @@ describe("get_quote_estimate: rate table guards", () => {
     }
   });
 });
+
+describe("get_quote_estimate: consultation-only bands", () => {
+  it("a band flagged consultation_only answers with its reason instead of a number", () => {
+    const rates = filledRates();
+    rates.term["30"][8] = { age_min: 60, age_max: 64, consultation_only: true, reason: "Not issued at this age.", non_tobacco: { low: null, high: null }, tobacco: { low: null, high: null } };
+    const r = (getQuoteEstimate(term({ age: 62, term_years: 30 }), { rates, env: VERIFIED_ENV }) as { result: Record<string, unknown> }).result;
+    expect(r.status).toBe("consultation_only");
+    expect(r.message).toBe("Not issued at this age.");
+    expect(r.next_step).toBe("book_consultation");
+    // Other term lengths at the same age still price.
+    expect((getQuoteEstimate(term({ age: 62, term_years: 20 }), { rates, env: VERIFIED_ENV }) as { result: { status: string } }).result.status).toBe("estimate");
+  });
+  it("the shipped table prices 20-year term at 35 and final expense at 62 once RATES_VERIFIED is on", () => {
+    const shipped = loadRates();
+    if (!shipped.verified) return;
+    const a = (getQuoteEstimate(term(), { rates: shipped, env: VERIFIED_ENV }) as unknown as { result: Record<string, number | string> }).result;
+    expect(a.status).toBe("estimate");
+    expect(a.monthly_low).toBeGreaterThan(10);
+    expect(a.monthly_high).toBeGreaterThan(a.monthly_low as number);
+    const b = (getQuoteEstimate(fe(), { rates: shipped, env: VERIFIED_ENV }) as { result: { status: string } }).result;
+    expect(b.status).toBe("estimate");
+    expect((getQuoteEstimate(term(), { rates: shipped, env: UNVERIFIED_ENV }) as { result: { status: string } }).result.status).toBe("consultation_only");
+  });
+});
