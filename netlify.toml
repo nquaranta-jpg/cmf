@@ -210,6 +210,11 @@
   to = "/terms.html"
   status = 200
 
+[[redirects]]
+  from = "/sms"
+  to = "/sms.html"
+  status = 200
+
 # AI agent connector docs (MCP server lives at /mcp, routed by the function's own config.path)
 [[redirects]]
   from = "/connect/muse"
