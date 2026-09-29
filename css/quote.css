@@ -648,6 +648,20 @@
   cursor: not-allowed;
 }
 
+.qz-sms-consent {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.78rem;
+  color: var(--slate);
+  line-height: 1.5;
+  margin: 0.25rem 0 1rem;
+  cursor: pointer;
+  text-align: left;
+}
+.qz-sms-consent input { margin-top: 0.2rem; flex: none; width: auto; }
+.qz-sms-consent a { color: inherit; text-decoration: underline; }
+
 .qz-consent {
   font-size: 0.72rem;
   color: var(--slate);

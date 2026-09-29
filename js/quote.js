@@ -711,6 +711,7 @@ function submitQuoteLead(form, btn, originalText, data, startedAt) {
       coverageAmount: state.coverage,
       productInterest: state.product,
       timeline: data.get("timeline"),
+      smsConsent: data.get("smsConsent") === "yes",
       utm_source: data.get("utm_source"),
       utm_medium: data.get("utm_medium"),
       utm_campaign: data.get("utm_campaign"),

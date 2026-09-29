@@ -135,6 +135,7 @@ export async function handler(event) {
   const ua = event.headers["user-agent"] || "unknown";
 
   const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, quote } = data;
+  const smsConsent = data.smsConsent === true;
 
   // ── Bot protection: honeypot ──
   // If the hidden bot-field has any value, it was filled by a bot.
@@ -234,7 +235,7 @@ export async function handler(event) {
   const timestamp = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
   const productLabel = PRODUCT_LABELS[productInterest] || "Final Expense";
 
-  console.log("=== NEW CMF LEAD ===", JSON.stringify({ ip, name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, timestamp }));
+  console.log("=== NEW CMF LEAD ===", JSON.stringify({ ip, name, email, phone, ageRange, coverageAmount, timeline, productInterest, smsConsent, utm_source, utm_medium, utm_campaign, timestamp }));
 
   const timelineLabels = { asap: "ASAP", "30days": "Within 30 days", "just-looking": "Just looking" };
   const timelineLabel = timelineLabels[timeline] || timeline || "—";
@@ -315,6 +316,7 @@ export async function handler(event) {
     `👤 *Name:* ${name || "—"}\n` +
     `📧 *Email:* ${email || "—"}\n` +
     `📱 *Phone:* ${phone || "—"}\n` +
+    `💬 *SMS consent:* ${smsConsent ? "Yes (web form checkbox, " + timestamp + ")" : "No"}\n` +
     `🎂 *Age Range:* ${ageRange || "—"}\n` +
     (coverageAmount ? `💰 *Coverage:* $${Number(coverageAmount).toLocaleString()}\n` : "") +
     `⏱️ *Timeline:* ${timelineLabel}\n` +
