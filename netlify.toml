@@ -98,16 +98,19 @@
   status = 404
   force = true
 
-# Lending route
+# Lending pages retired Oct 2026: CMF no longer arranges loans of any kind.
+# Serve a noindex "removed" page with a 404 so search engines drop the URLs.
 [[redirects]]
   from = "/lending"
-  to = "/lending/index.html"
-  status = 200
+  to = "/gone.html"
+  status = 404
+  force = true
 
 [[redirects]]
-  from = "/lending/trucking"
-  to = "/lending/trucking.html"
-  status = 200
+  from = "/lending/*"
+  to = "/gone.html"
+  status = 404
+  force = true
 
 # CMF Launch routes
 [[redirects]]

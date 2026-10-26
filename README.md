@@ -17,19 +17,12 @@ dashboard/                             internal agent dashboard (PIN-gated)
 
 Local dev: `npx netlify dev` (pulls env vars from the linked Netlify site).
 
-## Lending (hard money capital desk)
+## Lending (retired)
 
-Route: `/lending` — CMF-branded hard money brokerage page (fix & flip,
-bridge, new construction), mirroring the affiliated Q Group Brokers pitch
-(qgroupbrokers.com). CMF brokers business-purpose loans on investment real
-estate only; disclosures on the page cover the broker (not lender) role and
-the Q Group affiliation.
-
-Deal inquiries: form on the page → `lending-inquiry.mjs` (notification-only,
-no database) → Telegram (TELEGRAM_BOT_TOKEN + group chat) and email via
-Resend (recipient `LENDING_NOTIFY_EMAIL`, falling back to `BACKUP_EMAIL` —
-all already set in Netlify). Kept separate from `lead.mjs` so deal
-inquiries never enter the insurance-lead escalation flow.
+CMF no longer arranges loans of any kind (Oct 2026). The `/lending` pages,
+their CSS/JS and the `lending-inquiry` function were removed; `/lending` and
+`/lending/*` now return 404 with the noindex `gone.html` page (see
+`netlify.toml`). Do not re-add lending, factoring or capital-desk copy.
 
 ## CMF Launch
 
