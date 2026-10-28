@@ -98,6 +98,13 @@
   status = 404
   force = true
 
+# Local Mac tooling (iMessage triage) — never serve
+[[redirects]]
+  from = "/imessage-watcher/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
 # Lending pages retired Oct 2026: CMF no longer arranges loans of any kind.
 # Serve a noindex "removed" page with a 404 so search engines drop the URLs.
 [[redirects]]

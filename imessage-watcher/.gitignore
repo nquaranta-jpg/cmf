@@ -1,0 +1,4 @@
+# Secrets and analyzed message data (contains PII) never leave this Mac
+.env
+data/
+__pycache__/

@@ -13,6 +13,7 @@ css/, js/                              shared plain CSS/JS (variables.css = bran
 netlify/functions/                     backend (Supabase via service role)
 supabase/                              SQL to create/seed the CMF Launch tables
 dashboard/                             internal agent dashboard (PIN-gated)
+imessage-watcher/                      local Mac tool: Claude triage of incoming texts (not served)
 ```
 
 Local dev: `npx netlify dev` (pulls env vars from the linked Netlify site).
