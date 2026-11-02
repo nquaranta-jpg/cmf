@@ -1435,6 +1435,10 @@
   margin-bottom: 1.25rem;
 }
 
+.team-title + .team-bio {
+  margin-top: 1rem;
+}
+
 @media (max-width: 900px) {
   .about-grid {
     grid-template-columns: 1fr;
