@@ -112,6 +112,12 @@
   status = 404
   force = true
 
+# Nick's contact card. /card/ is the permanent link he sends to clients.
+[[redirects]]
+  from = "/card"
+  to = "/card/"
+  status = 301
+
 # CMF Launch routes
 [[redirects]]
   from = "/launch"
@@ -223,3 +229,10 @@
   from = "/connect/muse"
   to = "/connect/muse/index.html"
   status = 200
+
+# Contact card: phones only offer "Add to Contacts" when the file is served as a vCard.
+[[headers]]
+  for = "/card/nick.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "inline; filename=\"Nicholas Quaranta.vcf\""
