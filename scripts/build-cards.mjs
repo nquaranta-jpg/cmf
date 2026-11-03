@@ -1,6 +1,6 @@
 // Builds each agent's contact card at /card/<slug>/ from Nick's live card (/card/index.html).
 // Add or edit an agent in scripts/card-agents.json, then run: node scripts/build-cards.mjs
-// An agent without a phone number or NPN is skipped so an incomplete card never goes live.
+// An agent without a phone number is skipped. An agent without an NPN gets a card with no NPN line.
 // New agents also need their /card/<slug> redirect and vCard header in netlify.toml.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -29,7 +29,8 @@ function buildPage(a) {
   h = swap(h, 'Founder and Managing Member · Life insurance', `${a.title} · Life insurance`);
   h = swap(h, '(312) 203-8106', a.phoneDisplay);
   h = swap(h, 'nquaranta@crownmerchantfinancial.com', a.email);
-  h = swap(h, 'NPN 22145269', `NPN ${a.npn}`);
+  if (a.npn) h = swap(h, 'NPN 22145269', `NPN ${a.npn}`);
+  else h = swap(h, '          <span class="lic">NPN 22145269</span>\n', '');
   h = swap(h, '<div class="mark" aria-hidden="true">NQ</div>', `<div class="mark" aria-hidden="true">${a.first[0]}${a.last[0]}</div>`);
   h = swap(h, '/card/nick.vcf', `/card/${a.slug}/contact.vcf`);
   h = swap(h, 'Nick Quaranta here', `${a.first} ${a.last} here`);
@@ -48,11 +49,11 @@ function buildVcf(a) {
   return ['BEGIN:VCARD', 'VERSION:3.0', `N:${a.last};${a.first};;;`, `FN:${a.name}`,
     'ORG:Crown Merchant Financial LLC', `TITLE:${a.title}`, `TEL;TYPE=WORK,VOICE:${a.phone}`,
     `EMAIL;TYPE=WORK,INTERNET:${a.email}`, `URL:${SITE}/card/${a.slug}/`,
-    `NOTE:Life insurance. NPN ${a.npn}.`, 'END:VCARD', ''].join('\r\n');
+    a.npn ? `NOTE:Life insurance. NPN ${a.npn}.` : 'NOTE:Life insurance.', 'END:VCARD', ''].join('\r\n');
 }
 
-const ready = agents.filter((a) => a.phone && a.phoneDisplay && a.npn);
-for (const a of agents.filter((x) => !ready.includes(x))) console.log(`Skipped ${a.name}: needs a phone number and NPN.`);
+const ready = agents.filter((a) => a.phone && a.phoneDisplay);
+for (const a of agents.filter((x) => !ready.includes(x))) console.log(`Skipped ${a.name}: needs a phone number.`);
 for (const a of ready) {
   const dir = path.join(ROOT, 'card', a.slug);
   fs.mkdirSync(dir, { recursive: true });

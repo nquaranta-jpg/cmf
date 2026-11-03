@@ -17,9 +17,9 @@
     "last": "Clermont",
     "first": "Denise",
     "title": "Partner",
-    "phone": null,
-    "phoneDisplay": null,
-    "canText": false,
+    "phone": "+16033487421",
+    "phoneDisplay": "(603) 348-7421",
+    "canText": true,
     "email": "dclermont@crownmerchantfinancial.com",
     "npn": null
   }
