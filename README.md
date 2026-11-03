@@ -119,3 +119,11 @@ archived in `launch_submissions` so nothing is lost meanwhile.
 | `LAUNCH_SESSION_SECRET` | optional | dedicated HMAC key for Launch sessions (falls back to `SUPABASE_SERVICE_KEY`) |
 | `LAUNCH_DEMO` | optional | set `false` in production to kill the demo fallback |
 | `META_VERIFY_TOKEN`, `META_APP_SECRET`, `META_PAGE_ACCESS_TOKEN` | todo | Meta Lead Ads webhook |
+
+## Contact cards
+
+`/card/` is Nick's card. Agents' cards live at `/card/<slug>/` and are generated from it:
+edit `scripts/card-agents.json`, then run `node scripts/build-cards.mjs` (needs Playwright for
+the preview images). Agents without a phone number and NPN are skipped. Each new agent also
+needs a `/card/<slug>` redirect and a vCard header in `netlify.toml`. Each agent opens
+`/card/<slug>/#me` once on their phone to show the send buttons.
