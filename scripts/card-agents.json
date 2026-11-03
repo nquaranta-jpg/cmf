@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "conrad",
+    "name": "Conrad Farinola",
+    "last": "Farinola",
+    "first": "Conrad",
+    "title": "Partner",
+    "phone": "+17083328259",
+    "phoneDisplay": "(708) 332-8259",
+    "canText": false,
+    "email": "cfarinola@crownmerchantfinancial.com",
+    "npn": "22293566"
+  },
+  {
+    "slug": "denise",
+    "name": "Denise Clermont",
+    "last": "Clermont",
+    "first": "Denise",
+    "title": "Partner",
+    "phone": "+16033487421",
+    "phoneDisplay": "(603) 348-7421",
+    "canText": true,
+    "email": "dclermont@crownmerchantfinancial.com",
+    "npn": null
+  }
+]

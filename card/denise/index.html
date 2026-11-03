@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Denise Clermont</title>
+<meta name="description" content="Denise Clermont, Crown Merchant Financial. Tap to open my card and save my contact.">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Denise Clermont">
+<meta property="og:description" content="Denise Clermont, Crown Merchant Financial. Tap to open my card and save my contact.">
+<meta property="og:url" content="https://crownmerchantfinancial.com/card/denise/">
+<meta property="og:image" content="https://crownmerchantfinancial.com/card/denise/denise/preview.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="/card/icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: one engraved card as the object, with a short action sheet beside it (below it on a phone). */
+:root {
+  --ink: #16406e;
+  --paper: #f5f6f3;
+  --bg: #e9edf0;
+  --fg: #16181d;
+  --muted: #565c67;
+  --line: #bcc6d1;
+  --accent: #16406e;
+  --on-accent: #fbfbf8;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "Hanken Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1620; --fg: #eef0f2; --muted: #aeb4bd; --line: #33445a;
+    --accent: #b9cde3; --on-accent: #0e1620; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1620; --fg: #eef0f2; --muted: #aeb4bd; --line: #33445a;
+  --accent: #b9cde3; --on-accent: #0e1620; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 16px/1.5 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 40px;
+}
+.wrap {
+  display: grid; gap: 28px 56px; align-items: start; justify-content: center;
+  grid-template-columns: minmax(0, 370px) minmax(0, 400px);
+  max-width: 880px; margin-inline: auto;
+}
+@media (max-width: 760px) { .wrap { grid-template-columns: minmax(0, 370px); } }
+
+.scene { container-type: inline-size; width: 100%; }
+@supports not (container-type: inline-size) {
+  .card { border-radius: 16px; }
+  .co { inset: 22px 22px auto; font-size: 10px; }
+  .mark { font-size: 52px; }
+  .who { inset: auto 22px 20px; gap: 4px; }
+  .who h1 { font-size: 38px; }
+  .role { font-size: 13px; }
+  .reach { margin-top: 8px; padding-top: 9px; gap: 3px; font-size: 12px; }
+  .lic { margin-top: 4px; font-size: 9px; }
+}
+.card {
+  position: relative; width: 100%; aspect-ratio: 5 / 8; overflow: hidden; isolation: isolate;
+  border-radius: 4cqw; background: var(--paper); color: var(--ink);
+  box-shadow: 0 1px 1px rgb(10 12 18 / .18), 0 18px 40px -14px rgb(10 12 18 / .45);
+}
+.card canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.co {
+  position: absolute; inset: 6cqw 6cqw auto; text-align: center;
+  font: 500 2.8cqw/1.2 var(--body); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+}
+.mark {
+  position: absolute; left: 50%; top: 34%; transform: translate(-50%, -50%);
+  font: 400 14cqw/1 var(--display); letter-spacing: -.02em;
+}
+.who { position: absolute; inset: auto 6cqw 5.5cqw; display: grid; gap: 1.2cqw; }
+.who h1 { margin: 0; font: 400 10.4cqw/1.02 var(--display); letter-spacing: -.012em; }
+.role { font: 500 3.5cqw/1.3 var(--body); }
+.reach {
+  margin-top: 2.2cqw; padding-top: 2.4cqw; border-top: 1px solid currentColor;
+  display: grid; gap: .9cqw; font: 400 3.3cqw/1.35 var(--mono); overflow-wrap: anywhere;
+}
+.lic { margin-top: 1.2cqw; font: 400 2.45cqw/1.35 var(--mono); }
+
+.sheet { display: grid; gap: 20px; min-width: 0; }
+.sheet h2 { margin: 0; font: 400 clamp(30px, 6vw, 38px)/1.08 var(--display); letter-spacing: -.01em; text-wrap: balance; }
+.lede { margin: 8px 0 0; color: var(--muted); max-width: 42ch; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; min-height: 46px;
+  padding: 0 18px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--fg);
+  font: 500 15px/1 var(--body); text-decoration: none; cursor: pointer; flex: 1 1 auto;
+}
+.btn:hover { border-color: var(--accent); }
+.btn:focus-visible, .linkbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); flex-basis: 100%; }
+.linkbox { display: block; font: 400 13px/1.4 var(--mono); color: var(--muted); overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+.status { min-height: 20px; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.qr { width: min(220px, 100%); margin-top: 4px; padding: 12px; background: #fff; border-radius: 8px; }
+.qr svg { display: block; width: 100%; height: auto; }
+.block { border-top: 1px solid var(--line); padding-top: 16px; }
+.block h3 { margin: 0 0 8px; font: 600 15px/1.3 var(--body); }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 8px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 6px; font-size: 15px; }
+.steps li::before { content: counter(s); font: 500 13px/1.7 var(--mono); color: var(--muted); }
+.linkbtn { appearance: none; background: none; border: 0; padding: 0; color: var(--fg); font: 500 14px/1.4 var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; justify-self: start; }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
+</style>
+
+<main class="wrap">
+  <section class="scene" aria-label="Business card">
+    <div class="card">
+      <canvas id="art"></canvas>
+      <div class="co">Crown Merchant Financial</div>
+      <div class="mark" aria-hidden="true">DC</div>
+      <div class="who">
+        <h1>Denise Clermont</h1>
+        <div class="role">Partner · Life insurance</div>
+        <div class="reach">
+          <span>(603) 348-7421</span>
+          <span>dclermont@crownmerchantfinancial.com</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="send" hidden>
+    <div>
+      <h2>Send your card</h2>
+      <p class="lede">Same card and same link for everyone.</p>
+    </div>
+    <div class="btns">
+      <a class="btn primary" id="textBtn" href="#">Text this card</a>
+      <button type="button" class="btn" id="copyBtn">Copy link</button>
+      <button type="button" class="btn" id="qrBtn">Show QR</button>
+    </div>
+    <code class="linkbox" id="linkBox"></code>
+    <p class="status" id="status" role="status"></p>
+    <div class="qr" id="qr" hidden></div>
+    <div class="block">
+      <h3>Touch phones (iPhone)</h3>
+      <ol class="steps">
+        <li>Open this page in Safari, with both phones unlocked.</li>
+        <li>Hold the top of your iPhone to the top of theirs until it glows.</li>
+        <li>Tap Share. Their phone receives the link.</li>
+      </ol>
+    </div>
+    <button type="button" class="linkbtn" id="seeBtn">See what they see</button>
+    <p class="note" id="sendNote" hidden>This is a preview. Text, QR and the link go live once the page is on your domain.</p>
+  </section>
+
+  <section class="sheet" id="receive" hidden>
+    <div>
+      <h2>Good to meet you</h2>
+      <p class="lede">Save my details to your phone so you have them when you need them.</p>
+    </div>
+    <div class="btns">
+      <a class="btn primary" href="/card/denise/contact.vcf" id="saveBtn">Save contact</a>
+      <a class="btn" href="tel:+16033487421">Call</a>
+      <a class="btn" href="sms:+16033487421">Text</a>
+      <a class="btn" href="mailto:dclermont@crownmerchantfinancial.com">Email</a>
+    </div>
+    <p class="note" id="receiveNote" hidden>This is a preview. These buttons work once the page is on your domain.</p>
+    <button type="button" class="linkbtn" id="backBtn" hidden>Back to sending</button>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+(function () {
+  var HOSTED = "https://crownmerchantfinancial.com/card/denise/";
+  var framed = window.self !== window.top;
+  var LINK = framed ? HOSTED : location.origin + location.pathname;
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  function ring(g, cx, cy, R0, band, lines, lobes, counter, alpha) {
+    g.strokeStyle = "#16406e"; g.lineWidth = .5; g.globalAlpha = alpha;
+    for (var i = 0; i < lines; i++) {
+      var base = R0 + band * i / (lines - 1), ph = i * .13;
+      g.beginPath();
+      for (var k = 0; k <= 1440; k++) {
+        var a = k / 1440 * Math.PI * 2;
+        var r = base * (1 + .08 * Math.sin(lobes * a + ph) + .044 * Math.sin(lobes * counter * a - ph * 1.7));
+        var x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+        k ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.closePath(); g.stroke();
+    }
+    g.globalAlpha = 1;
+  }
+  function draw() {
+    var c = $("art"), w = c.parentElement.offsetWidth, h = c.parentElement.offsetHeight, s = Math.min(devicePixelRatio || 1, 3);
+    c.width = Math.round(w * s); c.height = Math.round(h * s);
+    var g = c.getContext("2d"); g.setTransform(s, 0, 0, s, 0, 0);
+    g.strokeStyle = "#16406e"; g.lineWidth = .8;
+    var bx = w * .022, by = w * .022, bw = w * .956, bh = h - w * .044, br = w * .028;
+    g.beginPath();
+    if (g.roundRect) g.roundRect(bx, by, bw, bh, br);
+    else {
+      g.moveTo(bx + br, by); g.arcTo(bx + bw, by, bx + bw, by + bh, br); g.arcTo(bx + bw, by + bh, bx, by + bh, br);
+      g.arcTo(bx, by + bh, bx, by, br); g.arcTo(bx, by, bx + bw, by, br); g.closePath();
+    }
+    g.stroke();
+    var cy = h * .34, R = w * .36;
+    ring(g, w / 2, cy, R * .56, R * .42, 26, 12, 3, .85);
+    ring(g, w / 2, cy, R * .3, R * .1, 14, 12, 4, .55);
+  }
+
+  function show(view, preview) {
+    $("send").hidden = view !== "send";
+    $("receive").hidden = view !== "receive";
+    $("backBtn").hidden = !preview;
+  }
+  function say(m) { $("status").textContent = m; }
+
+  $("linkBox").textContent = LINK;
+  var apple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+  $("textBtn").href = "sms:" + (apple ? "&" : "?") + "body=" + encodeURIComponent("Denise Clermont here, good to meet you. Here's my card: " + LINK);
+  $("copyBtn").addEventListener("click", function () {
+    var fail = function () {
+      var r = document.createRange(); r.selectNodeContents($("linkBox"));
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      say("Your browser blocked copying. The link is selected, so copy it from the menu.");
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(LINK).then(function () { say("Link copied."); }, fail); else fail();
+  });
+  $("qrBtn").addEventListener("click", function () {
+    var box = $("qr");
+    if (typeof qrcode === "undefined") { say("The QR code could not load. Check your connection and try again."); return; }
+    box.hidden = !box.hidden;
+    $("qrBtn").textContent = box.hidden ? "Show QR" : "Hide QR";
+    if (box.hidden || box.firstChild) return;
+    var q = qrcode(0, "M"); q.addData(LINK); q.make();
+    var n = q.getModuleCount(), d = "";
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (q.isDark(y, x)) d += "M" + x + " " + y + "h1v1h-1z";
+    box.innerHTML = '<svg viewBox="0 0 ' + n + " " + n + '" role="img" aria-label="QR code for this card" shape-rendering="crispEdges"><path fill="#111" d="' + d + '"/></svg>';
+  });
+  $("seeBtn").addEventListener("click", function () { show("receive", true); scrollTo(0, 0); });
+  $("backBtn").addEventListener("click", function () { show("send", false); });
+
+  // Opening the link with #me once marks this phone as Denise's. The hash is removed
+  // right away, so the link Safari shares by touch is always the plain card link.
+  if (location.hash === "#me") {
+    store.set("card-sender-denise", "1");
+    try { history.replaceState(null, "", location.pathname); } catch (e) {}
+  }
+  $("sendNote").hidden = $("receiveNote").hidden = !framed;
+  show(framed || store.get("card-sender-denise") === "1" ? "send" : "receive", false);
+  draw();
+  var again; addEventListener("resize", function () { clearTimeout(again); again = setTimeout(draw, 120); });
+})();
+</script>
+
+</body></html>

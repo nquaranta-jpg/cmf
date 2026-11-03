@@ -118,6 +118,16 @@
   to = "/card/"
   status = 301
 
+[[redirects]]
+  from = "/card/conrad"
+  to = "/card/conrad/"
+  status = 301
+
+[[redirects]]
+  from = "/card/denise"
+  to = "/card/denise/"
+  status = 301
+
 # CMF Launch routes
 [[redirects]]
   from = "/launch"
@@ -236,3 +246,15 @@
   [headers.values]
     Content-Type = "text/vcard; charset=utf-8"
     Content-Disposition = "inline; filename=\"Nicholas Quaranta.vcf\""
+
+[[headers]]
+  for = "/card/conrad/contact.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "inline; filename=\"Conrad Farinola.vcf\""
+
+[[headers]]
+  for = "/card/denise/contact.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "inline; filename=\"Denise Clermont.vcf\""
