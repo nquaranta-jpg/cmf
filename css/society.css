@@ -903,3 +903,76 @@
     height: 32px;
   }
 }
+
+/* ---------- /clients carrier logins (same page system) ---------- */
+.carrier-logins {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.carrier-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 190px;
+  background: var(--white);
+  border: 1px solid #dfe4ec;
+  border-radius: 4px;
+  padding: 1.75rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.carrier-login:hover,
+.carrier-login:focus-visible {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(8, 34, 90, 0.08);
+}
+
+.carrier-login img {
+  height: 38px;
+  width: auto;
+  align-self: flex-start;
+}
+
+.carrier-login img[src*="lincoln"] {
+  height: 48px;
+}
+
+.carrier-login .carrier-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.carrier-login .carrier-action {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+}
+
+.carrier-login .carrier-note {
+  display: block;
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--slate);
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 960px) {
+  .carrier-logins {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .carrier-logins {
+    grid-template-columns: 1fr;
+  }
+}
