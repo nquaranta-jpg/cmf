@@ -830,3 +830,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Shared with /agents (same page system) ---------- */
+.soc-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.soc-pillar {
+  background: var(--white);
+  border: 1px solid #dfe4ec;
+  border-top: 3px solid var(--blue);
+  border-radius: 4px;
+  padding: 1.75rem 1.5rem;
+}
+
+.soc-pillar h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+  text-wrap: balance;
+}
+
+.soc-pillar p {
+  font-size: 0.95rem;
+  color: var(--slate);
+}
+
+.soc-pillar .fine {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #8a93a0;
+}
+
+.soc-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem 3.5rem;
+}
+
+.soc-logos img {
+  height: 40px;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.8;
+}
+
+.soc-logos img[src*="lincoln"] {
+  height: 50px;
+}
+
+@media (max-width: 1100px) {
+  .soc-pillars {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .soc-pillars {
+    grid-template-columns: 1fr;
+  }
+  .soc-logos {
+    gap: 1.5rem 2.25rem;
+  }
+  .soc-logos img {
+    height: 32px;
+  }
+}
