@@ -457,7 +457,7 @@ nav.masthead .mobile-toggle {
 nav.masthead .nav-links a,
 .mast-trigger,
 .mast-panel a {
-  font-family: "Inter", "Nunito Sans", -apple-system, sans-serif;
+  font-family: "Inter", -apple-system, sans-serif;
   font-weight: 600;
   letter-spacing: 0.005em;
 }
@@ -482,6 +482,6 @@ nav.masthead .nav-links a {
 
 .hero.hero-bleed .btn-primary,
 .hero.hero-bleed .btn-secondary {
-  font-family: "Inter", "Nunito Sans", -apple-system, sans-serif;
+  font-family: "Inter", -apple-system, sans-serif;
   font-weight: 700;
 }
