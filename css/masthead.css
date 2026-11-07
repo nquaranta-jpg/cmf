@@ -241,7 +241,7 @@ nav.masthead .mobile-toggle {
   top: 50%;
   width: max(100cqw, 150cqh);
   aspect-ratio: 3 / 2;
-  transform: translate(-50%, -50%) scale(1.18);
+  transform: translate(-50%, -50%) scale(1.23);
   animation: heroDrift 32s ease-in-out infinite alternate;
 }
 
@@ -267,8 +267,8 @@ nav.masthead .mobile-toggle {
 }
 
 @keyframes heroDrift {
-  from { transform: translate(-50%, -50%) scale(1.18); }
-  to { transform: translate(-50%, -50%) scale(1.24); }
+  from { transform: translate(-50%, -50%) scale(1.23); }
+  to { transform: translate(-50%, -50%) scale(1.29); }
 }
 
 @keyframes dayToNight {
