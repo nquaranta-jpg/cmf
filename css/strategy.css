@@ -182,7 +182,7 @@
 .rethink-body h3 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.7rem, 3vw, 2.3rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   color: var(--white);
   margin-bottom: 1rem;
@@ -233,7 +233,7 @@
 .perspective-lead h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2rem, 4vw, 2.9rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.15;
   color: var(--navy);
   margin-bottom: 1.25rem;
@@ -385,4 +385,18 @@
   .desk-card {
     transition: none;
   }
+}
+
+/* Lincoln's mark is a compact stacked logo; give it the same visual weight */
+.carrier-track img[src*="lincoln"] {
+  height: 50px;
+}
+
+/* Serif card and panel headings: tight leading, balanced wraps */
+.product-card h3,
+.rethink-body h3,
+.desk-card h3,
+.perspective-lead h2 {
+  line-height: 1.2;
+  text-wrap: balance;
 }

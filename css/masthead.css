@@ -228,26 +228,78 @@ nav.masthead .mobile-toggle {
 .hero-media {
   position: absolute;
   inset: 0;
-  background-image: url("/images/hero/hero-night.jpg");
-  background-size: cover;
-  background-position: center 55%;
-  transform-origin: 60% 50%;
-  animation: heroDrift 24s ease-in-out infinite alternate;
+  overflow: hidden;
+  container-type: size;
+  background: var(--navy);
 }
 
-/* Navy duotone: darken the top for the header, the bottom for the copy */
+/* A 3:2 box that covers the hero like background-size: cover, so both
+   photos share one coordinate frame and can be registered on each other. */
+.hero-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100cqw, 150cqh);
+  aspect-ratio: 3 / 2;
+  transform: translate(-50%, -50%) scale(1.23);
+  animation: heroDrift 32s ease-in-out infinite alternate;
+}
+
+.hero-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Day shot dims as the sun goes down */
+.hero-day {
+  animation: duskDim 26s ease-in-out infinite;
+}
+
+/* Night shot, scaled and shifted so the skyline lines up with the day
+   shot (same vantage point, slightly different framing), then dissolves in. */
+.hero-night {
+  opacity: 0;
+  transform: translate(-10.96%, -8.3%) scale(1.053, 1.075);
+  animation: dayToNight 26s ease-in-out infinite;
+}
+
+@keyframes heroDrift {
+  from { transform: translate(-50%, -50%) scale(1.23); }
+  to { transform: translate(-50%, -50%) scale(1.29); }
+}
+
+@keyframes dayToNight {
+  0%, 16% { opacity: 0; }
+  46%, 86% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes duskDim {
+  0%, 16% { filter: brightness(1) saturate(1); }
+  46%, 86% { filter: brightness(0.62) saturate(0.85); }
+  100% { filter: brightness(1) saturate(1); }
+}
+
+/* Darken the top for the header and the bottom for the copy */
 .hero-media::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 12, 32, 0.55) 0%, rgba(4, 12, 32, 0.12) 32%, rgba(4, 12, 32, 0.2) 55%, rgba(4, 12, 32, 0.85) 100%),
-    rgba(8, 34, 90, 0.28);
+    linear-gradient(180deg, rgba(4, 12, 32, 0.6) 0%, rgba(4, 12, 32, 0.1) 30%, rgba(4, 12, 32, 0.15) 50%, rgba(4, 12, 32, 0.88) 100%),
+    linear-gradient(90deg, rgba(4, 12, 32, 0.5) 0%, rgba(4, 12, 32, 0) 60%);
 }
 
-@keyframes heroDrift {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.1); }
+.hero-credit {
+  position: absolute;
+  z-index: 1;
+  right: 1.5rem;
+  bottom: 1rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .hero-bleed-inner {
@@ -384,13 +436,77 @@ nav.masthead .mobile-toggle {
     text-align: center;
     justify-content: center;
   }
-  .hero-scroll {
+  .hero-scroll,
+  .hero-credit {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-media {
+  .hero-stage,
+  .hero-day,
+  .hero-night {
     animation: none;
+  }
+  .hero-night {
+    opacity: 1;
+  }
+}
+
+/* ---------- Stronger header and hero type ---------- */
+nav.masthead .nav-links a,
+.mast-trigger,
+.mast-panel a {
+  font-family: "Inter", -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+nav.masthead .nav-links a {
+  font-size: 0.98rem;
+}
+
+.mast-wordmark span,
+.mast-compact span {
+  font-weight: 600;
+}
+
+.hero.hero-bleed h1 {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.hero.hero-bleed .hero-sub {
+  font-weight: 500;
+}
+
+.hero.hero-bleed .btn-primary,
+.hero.hero-bleed .btn-secondary {
+  font-family: "Inter", -apple-system, sans-serif;
+  font-weight: 700;
+}
+
+/* ---------- Interior pages: clear the taller two-tier header ---------- */
+body:has(nav.masthead) .product-hero {
+  padding-top: 12rem;
+}
+
+body:has(nav.masthead) .connect-hero {
+  padding-top: 10.5rem;
+}
+
+body:has(nav.masthead) .vgli-calc .wrap {
+  padding-top: 168px;
+}
+
+@media (max-width: 960px) {
+  body:has(nav.masthead) .product-hero {
+    padding-top: 7.5rem;
+  }
+  body:has(nav.masthead) .connect-hero {
+    padding-top: 6.5rem;
+  }
+  body:has(nav.masthead) .vgli-calc .wrap {
+    padding-top: 104px;
   }
 }

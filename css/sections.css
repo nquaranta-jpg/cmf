@@ -73,7 +73,7 @@
 .hero h1 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2.5rem, 4.2vw, 3.5rem);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--white);
   line-height: 1.15;
   margin-bottom: 1.5rem;
@@ -174,9 +174,11 @@
 }
 
 .section-title {
+  line-height: 1.15;
+  text-wrap: balance;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--navy);
   margin-bottom: 1rem;
 }
@@ -833,7 +835,7 @@
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--white);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 
@@ -1555,4 +1557,11 @@
     width: 100%;
     text-align: center;
   }
+}
+
+/* Page-title headings: tight leading and balanced wraps */
+.product-hero h1,
+.launch-hero h1 {
+  line-height: 1.15;
+  text-wrap: balance;
 }

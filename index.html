@@ -73,7 +73,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/nav.css" />
     <link rel="stylesheet" href="/css/forms.css" />
@@ -81,7 +81,7 @@
     <link rel="stylesheet" href="/css/footer.css" />
     <link rel="stylesheet" href="/css/strategy.css" />
     <link rel="stylesheet" href="/css/masthead.css" />
-    <link rel="preload" as="image" href="/images/hero/hero-night.jpg" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
   </head>
   <body>
 
@@ -154,7 +154,12 @@
 
     <!-- Hero Section: full-bleed masthead hero -->
     <section class="hero hero-bleed" id="hero">
-      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-media" aria-hidden="true">
+        <div class="hero-stage">
+          <img class="hero-day" src="https://images.unsplash.com/photo-1493134799591-2c9eed26201a?auto=format&amp;fit=crop&amp;q=72&amp;w=1800" srcset="https://images.unsplash.com/photo-1493134799591-2c9eed26201a?auto=format&amp;fit=crop&amp;q=72&amp;w=1200 1200w, https://images.unsplash.com/photo-1493134799591-2c9eed26201a?auto=format&amp;fit=crop&amp;q=72&amp;w=1800 1800w, https://images.unsplash.com/photo-1493134799591-2c9eed26201a?auto=format&amp;fit=crop&amp;q=72&amp;w=2600 2600w" sizes="(max-aspect-ratio: 3/2) 194vh, 129vw" alt="" decoding="async" fetchpriority="high" />
+          <img class="hero-night" src="https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&amp;fit=crop&amp;q=72&amp;w=1800" srcset="https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&amp;fit=crop&amp;q=72&amp;w=1200 1200w, https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&amp;fit=crop&amp;q=72&amp;w=1800 1800w, https://images.unsplash.com/photo-1581373449483-37449f962b6c?auto=format&amp;fit=crop&amp;q=72&amp;w=2600 2600w" sizes="(max-aspect-ratio: 3/2) 194vh, 129vw" alt="" decoding="async" loading="eager" />
+        </div>
+      </div>
       <div class="hero-bleed-inner">
         <h1>What if the coverage you have isn&rsquo;t the coverage you need?</h1>
         <p class="hero-sub">92 million American adults say they need life insurance or more of it. We shop A-rated carriers, put the trade-offs side by side in plain English, and stay on after the policy is issued.</p>
@@ -164,21 +169,8 @@
         </div>
         <p class="hero-source">Source: LIMRA and Life Happens, 2026 Insurance Barometer Study.</p>
       </div>
+      <p class="hero-credit">Photos: Jeff Brown and Max Bender, Unsplash</p>
       <a href="#rethink" class="hero-scroll" aria-label="Scroll to our thesis"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></a>
-    </section>
-
-    <!-- Find Your Path (audience routing) -->
-    <section class="paths" aria-label="Find your path">
-      <div class="paths-inner">
-        <span class="paths-label">Find your path</span>
-        <div class="paths-grid">
-          <a class="path-tile" href="/quote"><strong>Families</strong><span>Income protection if the worst happens</span></a>
-          <a class="path-tile" href="/#rethink-retirement"><strong>Retirement</strong><span>Income you can&rsquo;t outlive</span></a>
-          <a class="path-tile" href="/vgli-calculator"><strong>Veterans</strong><span>Beat the VGLI price steps</span></a>
-          <a class="path-tile" href="/#rethink-business"><strong>Business Owners</strong><span>Protect the operator, protect the business</span></a>
-          <a class="path-tile" href="/onboarding/"><strong>Agents</strong><span>Join a veteran-led team</span></a>
-        </div>
-      </div>
     </section>
 
     <!-- Carrier Banner -->
@@ -186,6 +178,7 @@
       <p class="carrier-banner-label">Working with A-rated carriers and trusted partners</p>
       <div class="carrier-row">
         <div class="carrier-track">
+          <img src="/images/carriers/lincoln-financial.svg" alt="Lincoln Financial" />
           <img src="/images/carriers/americo.png" alt="Americo" />
           <img src="/images/carriers/mutual-of-omaha.svg" alt="Mutual of Omaha" />
           <img src="/images/carriers/foresters.svg" alt="Foresters Financial" />

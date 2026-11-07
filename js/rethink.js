@@ -96,4 +96,10 @@
 
   select(fromHash >= 0 ? fromHash : 0, false);
   if (fromHash < 0) start();
+  // Arriving from another page with /#rethink-*: the panel was hidden when the
+  // browser tried to jump, so scroll to the section once it is visible.
+  else
+    window.addEventListener("load", function () {
+      root.scrollIntoView({ block: "start" });
+    });
 })();
