@@ -228,26 +228,78 @@ nav.masthead .mobile-toggle {
 .hero-media {
   position: absolute;
   inset: 0;
-  background-image: url("/images/hero/hero-night.jpg");
-  background-size: cover;
-  background-position: center 55%;
-  transform-origin: 60% 50%;
-  animation: heroDrift 24s ease-in-out infinite alternate;
+  overflow: hidden;
+  container-type: size;
+  background: var(--navy);
 }
 
-/* Navy duotone: darken the top for the header, the bottom for the copy */
+/* A 3:2 box that covers the hero like background-size: cover, so both
+   photos share one coordinate frame and can be registered on each other. */
+.hero-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100cqw, 150cqh);
+  aspect-ratio: 3 / 2;
+  transform: translate(-50%, -50%) scale(1.14);
+  animation: heroDrift 32s ease-in-out infinite alternate;
+}
+
+.hero-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Day shot dims as the sun goes down */
+.hero-day {
+  animation: duskDim 26s ease-in-out infinite;
+}
+
+/* Night shot, scaled and shifted so the skyline lines up with the day
+   shot (same vantage point, slightly different framing), then dissolves in. */
+.hero-night {
+  opacity: 0;
+  transform: translate(-10.3%, -8.3%) scale(1.075);
+  animation: dayToNight 26s ease-in-out infinite;
+}
+
+@keyframes heroDrift {
+  from { transform: translate(-50%, -50%) scale(1.14); }
+  to { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes dayToNight {
+  0%, 16% { opacity: 0; }
+  46%, 86% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes duskDim {
+  0%, 16% { filter: brightness(1) saturate(1); }
+  46%, 86% { filter: brightness(0.62) saturate(0.85); }
+  100% { filter: brightness(1) saturate(1); }
+}
+
+/* Darken the top for the header and the bottom for the copy */
 .hero-media::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 12, 32, 0.55) 0%, rgba(4, 12, 32, 0.12) 32%, rgba(4, 12, 32, 0.2) 55%, rgba(4, 12, 32, 0.85) 100%),
-    rgba(8, 34, 90, 0.28);
+    linear-gradient(180deg, rgba(4, 12, 32, 0.6) 0%, rgba(4, 12, 32, 0.1) 30%, rgba(4, 12, 32, 0.15) 50%, rgba(4, 12, 32, 0.88) 100%),
+    linear-gradient(90deg, rgba(4, 12, 32, 0.5) 0%, rgba(4, 12, 32, 0) 60%);
 }
 
-@keyframes heroDrift {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.1); }
+.hero-credit {
+  position: absolute;
+  z-index: 1;
+  right: 1.5rem;
+  bottom: 1rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .hero-bleed-inner {
@@ -384,13 +436,19 @@ nav.masthead .mobile-toggle {
     text-align: center;
     justify-content: center;
   }
-  .hero-scroll {
+  .hero-scroll,
+  .hero-credit {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-media {
+  .hero-stage,
+  .hero-day,
+  .hero-night {
     animation: none;
+  }
+  .hero-night {
+    opacity: 1;
   }
 }
