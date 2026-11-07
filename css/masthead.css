@@ -485,3 +485,28 @@ nav.masthead .nav-links a {
   font-family: "Inter", -apple-system, sans-serif;
   font-weight: 700;
 }
+
+/* ---------- Interior pages: clear the taller two-tier header ---------- */
+body:has(nav.masthead) .product-hero {
+  padding-top: 12rem;
+}
+
+body:has(nav.masthead) .connect-hero {
+  padding-top: 10.5rem;
+}
+
+body:has(nav.masthead) .vgli-calc .wrap {
+  padding-top: 168px;
+}
+
+@media (max-width: 960px) {
+  body:has(nav.masthead) .product-hero {
+    padding-top: 7.5rem;
+  }
+  body:has(nav.masthead) .connect-hero {
+    padding-top: 6.5rem;
+  }
+  body:has(nav.masthead) .vgli-calc .wrap {
+    padding-top: 104px;
+  }
+}

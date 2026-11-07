@@ -1558,3 +1558,10 @@
     text-align: center;
   }
 }
+
+/* Page-title headings: tight leading and balanced wraps */
+.product-hero h1,
+.launch-hero h1 {
+  line-height: 1.15;
+  text-wrap: balance;
+}
