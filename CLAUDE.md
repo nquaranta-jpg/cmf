@@ -10,13 +10,18 @@ apollo.com publishes its Insights & News:
 1. If it needs a page, build it in the site's design system (shared masthead and
    footer, `css/society.css` page system or `css/strategy.css`, Cormorant
    Garamond headings, Inter text, navy and blue palette).
-2. Add one entry at the TOP of `items` in `data/insights.json`:
-   `type` (Insight | Guide | Tool | Workshop | News), `category`, `title`,
-   `summary` (one or two plain-English sentences), `url`, `date` (YYYY-MM-DD).
-   Set `featured: true` on at most one item.
-3. That single entry shows it on `/insights` (with type filters) and in the
-   homepage Insights & News section (latest three items that are not guides,
-   since guides have their own homepage section). No other wiring is needed.
+2. Add a row to the Google Sheet "CMF Website: Insights & News", tab
+   "Insights" (https://docs.google.com/spreadsheets/d/1oQ734CY_Grh1pPM08VTEqC0q6J6QCt5wOnBni60PiM0/edit),
+   using the Google Sheets connector: Show (tick), Date (YYYY-MM-DD), Type
+   (Insight | Guide | Tool | Workshop | News), Category, Title, Summary
+   (one or two plain-English sentences), Link (a site path like /products/iul
+   or a full https link), Featured (tick at most one; if several are ticked,
+   the newest wins).
+3. The site reads the sheet through `netlify/functions/insights.mjs` and shows
+   the row on `/insights` (with type filters) and in the homepage Insights &
+   News section (latest three items that are not guides, since guides have
+   their own homepage section) within about 5 minutes. Also add the same item
+   to `data/insights.json`, the fallback snapshot used if the sheet can't be read.
 
 Do NOT add posts from Nick's personal blog (nicholasquaranta.com). The blog stays
 separate from the CMF site.

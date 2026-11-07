@@ -130,7 +130,8 @@ needs a `/card/<slug>` redirect and a vCard header in `netlify.toml`. Each agent
 
 ## Insights & News
 
-`/insights` and the homepage Insights & News section both render
-`data/insights.json` (via `js/insights.js`). To publish new content, add an entry
-at the top of `items`. See `CLAUDE.md` for the full rule. The personal blog
+`/insights` and the homepage Insights & News section render the Google Sheet
+"CMF Website: Insights & News" through `netlify/functions/insights.mjs` (cached
+5 minutes at the edge), falling back to `data/insights.json`. To publish new
+content, add a row to the sheet. See `CLAUDE.md` for the full rule. The personal blog
 (nicholasquaranta.com) is intentionally not included.

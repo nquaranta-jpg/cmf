@@ -1,4 +1,5 @@
-// Insights & News: renders /data/insights.json on /insights (all items, with
+// Insights & News: renders the Google Sheet feed (/.netlify/functions/insights,
+// falling back to /data/insights.json) on /insights (all items, with
 // type filters) and on the homepage (latest few). Static cards already in the
 // page stay as the fallback if the fetch fails.
 (function () {
@@ -36,11 +37,15 @@
     );
   }
 
-  fetch("/data/insights.json", { cache: "no-cache" })
-    .then(function (r) {
+  function getJSON(url) {
+    return fetch(url, { cache: "no-cache" }).then(function (r) {
       if (!r.ok) throw new Error(r.status);
       return r.json();
-    })
+    });
+  }
+  // Live feed from the Google Sheet; static snapshot if the sheet is unreachable
+  getJSON("/.netlify/functions/insights")
+    .catch(function () { return getJSON("/data/insights.json"); })
     .then(function (data) {
       var items = (data.items || []).filter(function (it) {
         return it && it.title && it.url;

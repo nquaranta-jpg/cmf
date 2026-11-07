@@ -1,5 +1,5 @@
 {
-  "_readme": "Single source for /insights and the homepage Insights & News section. Newest first. To publish new content, add an entry at the TOP of items. type: Insight | Guide | Tool | Workshop | News. date: YYYY-MM-DD (optional for evergreen tools). url: a page on this site or an external link. featured: true shows it large on /insights (keep one). Do not add posts from nicholasquaranta.com; the blog stays separate.",
+  "_readme": "Fallback snapshot only. The live source is the Google Sheet 'CMF Website: Insights & News' (https://docs.google.com/spreadsheets/d/1oQ734CY_Grh1pPM08VTEqC0q6J6QCt5wOnBni60PiM0/edit), read by netlify/functions/insights.mjs. This file is shown only if the sheet can't be read. Keep it roughly in sync. Do not add posts from nicholasquaranta.com; the blog stays separate.",
   "items": [
     {
       "type": "Guide",
