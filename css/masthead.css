@@ -241,7 +241,7 @@ nav.masthead .mobile-toggle {
   top: 50%;
   width: max(100cqw, 150cqh);
   aspect-ratio: 3 / 2;
-  transform: translate(-50%, -50%) scale(1.14);
+  transform: translate(-50%, -50%) scale(1.18);
   animation: heroDrift 32s ease-in-out infinite alternate;
 }
 
@@ -262,13 +262,13 @@ nav.masthead .mobile-toggle {
    shot (same vantage point, slightly different framing), then dissolves in. */
 .hero-night {
   opacity: 0;
-  transform: translate(-10.3%, -8.3%) scale(1.075);
+  transform: translate(-10.96%, -8.3%) scale(1.053, 1.075);
   animation: dayToNight 26s ease-in-out infinite;
 }
 
 @keyframes heroDrift {
-  from { transform: translate(-50%, -50%) scale(1.14); }
-  to { transform: translate(-50%, -50%) scale(1.2); }
+  from { transform: translate(-50%, -50%) scale(1.18); }
+  to { transform: translate(-50%, -50%) scale(1.24); }
 }
 
 @keyframes dayToNight {
