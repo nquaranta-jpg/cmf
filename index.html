@@ -79,90 +79,94 @@
     <link rel="stylesheet" href="/css/sections.css" />
     <link rel="stylesheet" href="/css/footer.css" />
     <link rel="stylesheet" href="/css/strategy.css" />
+    <link rel="stylesheet" href="/css/masthead.css" />
+    <link rel="preload" as="image" href="/images/hero/hero-night.jpg" />
   </head>
   <body>
 
-    <!-- Navigation -->
-    <nav>
-      <a href="/" class="logo">
-        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg></div>
-        <span class="logo-text">Crown Merchant Financial</span>
-      </a>
-      <ul class="nav-links">
-        <li class="nav-dropdown">
-          <a href="#products">Products</a>
-          <div class="nav-dropdown-menu">
-            <a href="/products/final-expense">Final Expense</a>
-            <a href="/products/term-life">Term Life</a>
-            <a href="/products/annuity">Annuity</a>
-            <a href="/products/iul">Indexed Universal Life</a>
+    <!-- Navigation: two-tier masthead (homepage) -->
+    <nav class="masthead" aria-label="Primary">
+      <div class="mast-top">
+        <div class="mast-menu mast-left">
+          <button class="mast-trigger" aria-haspopup="true" aria-expanded="false">I&rsquo;m looking for <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="mast-panel">
+            <a href="/quote">Protection for my family</a>
+            <a href="/#rethink-retirement">Retirement income</a>
+            <a href="/vgli-calculator">Coverage after the military</a>
+            <a href="/#rethink-business">Coverage for my business</a>
+            <a href="/onboarding/">A career as an agent</a>
           </div>
-        </li>
-        <li><a href="#about">About</a></li>
-        <li><a href="/onboarding/">Agents</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a href="tel:+13122038106" class="nav-cta">Call (312) 203-8106</a>
-      <button class="mobile-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        </div>
+        <a href="/" class="mast-wordmark" aria-label="Crown Merchant Financial home">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg>
+          <span>Crown Merchant</span>
+        </a>
+        <div class="mast-menu mast-right">
+          <button class="mast-trigger" aria-haspopup="true" aria-expanded="false">Log In <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="mast-panel mast-panel-right">
+            <a href="/launch/login">CMF Launch clients</a>
+            <a href="/onboarding/">Agent onboarding</a>
+          </div>
+        </div>
+        <button class="mobile-toggle" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div class="mast-bottom">
+        <a href="/" class="mast-compact" aria-label="Crown Merchant Financial home">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17 L3 7 L8.5 11.5 L12 5 L15.5 11.5 L21 7 L21 17 Z"/><rect x="3" y="18.5" width="18" height="3" rx="1"/></svg>
+          <span>Crown Merchant</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#perspective">About CMF</a></li>
+          <li class="nav-dropdown">
+            <a href="#products">Products</a>
+            <div class="nav-dropdown-menu">
+              <a href="/products/iul">Indexed Universal Life</a>
+              <a href="/products/annuity">Annuity</a>
+              <a href="/products/term-life">Term Life</a>
+              <a href="/products/final-expense">Final Expense</a>
+            </div>
+          </li>
+          <li><a href="#desk">Insights &amp; Tools</a></li>
+          <li><a href="/society">Society</a></li>
+          <li><a href="/onboarding/">Agents</a></li>
+        </ul>
+        <a href="tel:+13122038106" class="mast-phone" aria-label="Call (312) 203-8106">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </a>
+      </div>
     </nav>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu">
       <ul>
+        <li><a href="#perspective">About CMF</a></li>
         <li><a href="#products">Products</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a href="#desk">Insights &amp; Tools</a></li>
+        <li><a href="/society">Society</a></li>
         <li><a href="/onboarding/">Agents</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <a href="tel:+13122038106" class="mobile-menu-cta">Call (312) 203-8106</a>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="badge">Veteran Owned &middot; Independent &middot; Chicago</div>
-          <h1>What if the coverage you have isn&rsquo;t <span class="accent">the coverage you need?</span></h1>
-          <p class="hero-sub">92 million American adults say they need life insurance or more of it. Crown Merchant Financial is a veteran-owned, independent broker. We shop A-rated carriers, put the trade-offs side by side in plain English, and stay on after the policy is issued.</p>
-          <div class="hero-buttons">
-            <a href="/quote" class="btn-primary">Pick Your Policy &rarr;</a>
-            <a href="tel:+13122038106" class="btn-secondary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-              (312) 203-8106
-            </a>
-          </div>
-          <div class="hero-trust">
-            <span class="hero-trust-label">A veteran-owned agency working with</span>
-            <div class="hero-trust-logos">
-              <span class="hero-trust-chip"><img src="/images/carriers/sba.svg" alt="U.S. Small Business Administration" /></span>
-              <span class="hero-trust-chip"><img src="/images/carriers/va.png" alt="U.S. Department of Veterans Affairs" /></span>
-              <span class="hero-trust-chip"><img src="/images/carriers/fmcsa.svg" alt="Federal Motor Carrier Safety Administration" /></span>
-            </div>
-          </div>
-          <p class="hero-source">Source: LIMRA and Life Happens, 2026 Insurance Barometer Study.</p>
+    <!-- Hero Section: full-bleed masthead hero -->
+    <section class="hero hero-bleed" id="hero">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-bleed-inner">
+        <p class="hero-eyebrow">Veteran Owned &middot; Independent &middot; Chicago</p>
+        <h1>What if the coverage you have isn&rsquo;t the coverage you need?</h1>
+        <p class="hero-sub">92 million American adults say they need life insurance or more of it. We shop A-rated carriers, put the trade-offs side by side in plain English, and stay on after the policy is issued.</p>
+        <div class="hero-buttons">
+          <a href="/quote" class="btn-primary">Pick Your Policy &rarr;</a>
+          <a href="#rethink" class="btn-secondary">Our Thesis</a>
         </div>
-        <div class="hero-card" id="quote">
-          <div class="hero-card-header">
-            <h3>Pick Your Policy</h3>
-            <p>Answer a few questions to see which product fits and an estimated monthly rate. No obligation.</p>
-          </div>
-          <div class="hero-tool-steps">
-            <div class="hero-tool-step"><span>1</span>Tell us your goal: final expenses, family income, or savings</div>
-            <div class="hero-tool-step"><span>2</span>Answer a few questions about your age, health, and budget</div>
-            <div class="hero-tool-step"><span>3</span>Review your match and estimated monthly premium</div>
-          </div>
-          <a href="/quote" class="btn-primary hero-tool-cta">Get Your Estimate &rarr;</a>
-          <div class="hero-stats-row">
-            <div class="hero-stat-mini"><strong>A-Rated</strong>Carriers</div>
-            <div class="hero-stat-mini"><strong>Veteran</strong>Owned &amp; Operated</div>
-            <div class="hero-stat-mini"><strong>Nationwide</strong>Licensed</div>
-          </div>
-        </div>
+        <p class="hero-source">Source: LIMRA and Life Happens, 2026 Insurance Barometer Study.</p>
       </div>
+      <a href="#rethink" class="hero-scroll" aria-label="Scroll to our thesis"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></a>
     </section>
 
     <!-- Find Your Path (audience routing) -->
@@ -675,5 +679,6 @@
     <script src="/js/nav.js"></script>
     <script src="/js/animations.js"></script>
     <script src="/js/rethink.js"></script>
+    <script src="/js/masthead.js"></script>
   </body>
 </html>
