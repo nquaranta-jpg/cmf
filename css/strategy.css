@@ -1,0 +1,388 @@
+/* ============================================
+   Homepage strategy sections (Nov 2026)
+   Audience routing, Rethink thesis panels,
+   Our Perspective, From the Desk.
+   Modeled on how apollo.com sells a worldview first.
+   ============================================ */
+
+/* ---------- Find your path (audience routing) ---------- */
+.paths {
+  background: var(--white);
+  border-bottom: 1px solid #e3e7ee;
+  padding: 2.25rem 2rem;
+}
+
+.paths-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.paths-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+  white-space: nowrap;
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.path-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #dfe4ec;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--navy);
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.path-tile strong {
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.path-tile span {
+  font-size: 0.82rem;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
+.path-tile:hover,
+.path-tile:focus-visible {
+  border-color: var(--blue);
+  background: rgba(var(--accent-rgb), 0.04);
+  transform: translateY(-2px);
+}
+
+/* ---------- Rethink thesis panels ---------- */
+.rethink {
+  background: linear-gradient(165deg, var(--navy) 0%, #0b2a6a 100%);
+  color: #dfe6f5;
+  padding: 5.5rem 2rem;
+}
+
+.rethink .section-label {
+  color: var(--blue-light);
+}
+
+.rethink .section-title {
+  color: var(--white);
+}
+
+.rethink .section-subtitle {
+  color: #b9c6e2;
+}
+
+.rethink-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+
+.rethink-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.rethink-tab {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9c6e2;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  padding: 0.65rem 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.rethink-tab em {
+  font-style: normal;
+  color: var(--white);
+}
+
+.rethink-tab:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.rethink-tab[aria-selected="true"] {
+  background: var(--blue-light);
+  border-color: var(--blue-light);
+  color: var(--navy);
+}
+
+.rethink-tab[aria-selected="true"] em {
+  color: var(--navy);
+}
+
+.rethink-tab:focus-visible {
+  outline: 2px solid var(--blue-light);
+  outline-offset: 3px;
+}
+
+.rethink-panel {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 3.5rem;
+  align-items: center;
+  animation: rethinkIn 0.45s ease both;
+}
+
+.rethink-panel[hidden] {
+  display: none;
+}
+
+@keyframes rethinkIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rethink-stat {
+  border-left: 3px solid var(--blue-light);
+  padding-left: 1.75rem;
+}
+
+.rethink-stat-number {
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(4rem, 9vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--white);
+}
+
+.rethink-stat-caption {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #b9c6e2;
+}
+
+.rethink-body h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.rethink-body p {
+  color: #d3dcef;
+  margin-bottom: 1.5rem;
+}
+
+.rethink-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.rethink-links .text-link {
+  color: var(--blue-light);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rethink-links .text-link:hover {
+  text-decoration: underline;
+}
+
+.rethink-sources {
+  max-width: 1100px;
+  margin: 3rem auto 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #8fa0c4;
+}
+
+/* ---------- Our Perspective ---------- */
+.perspective-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.perspective-lead .section-label {
+  display: block;
+}
+
+.perspective-lead h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: 1.25rem;
+}
+
+.perspective-lead p {
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.perspective-pillars {
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.perspective-pillars li {
+  border-top: 1px solid #dfe4ec;
+  padding-top: 1.25rem;
+}
+
+.perspective-pillars strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin-bottom: 0.3rem;
+}
+
+.perspective-pillars span {
+  color: var(--slate);
+  font-size: 0.97rem;
+}
+
+/* ---------- From the Desk ---------- */
+.desk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.desk-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid #dfe4ec;
+  border-radius: 4px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.desk-card:hover,
+.desk-card:focus-visible {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(8, 34, 90, 0.08);
+}
+
+.desk-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+}
+
+.desk-card h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.desk-card p {
+  font-size: 0.95rem;
+  color: var(--slate);
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.desk-cta {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+}
+
+/* ---------- Hero source line ---------- */
+.hero-source {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .paths-inner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .paths-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .desk-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .paths {
+    padding: 1.75rem 1rem;
+  }
+  .paths-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rethink {
+    padding: 4rem 1rem;
+  }
+  .rethink-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .rethink-tab {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 0.65rem 0.5rem;
+  }
+  .rethink-panel {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .perspective-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .desk-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rethink-panel {
+    animation: none;
+  }
+  .path-tile,
+  .desk-card {
+    transition: none;
+  }
+}
