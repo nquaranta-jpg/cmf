@@ -22,7 +22,9 @@
     var trigger = menu.querySelector(".mast-trigger");
     trigger.addEventListener("click", function (e) {
       e.stopPropagation();
-      var open = !menu.classList.contains("open");
+      // With a mouse, hover has already opened it: a click keeps it open
+      // rather than toggling it shut. On touch, tap toggles.
+      var open = canHover ? true : !menu.classList.contains("open");
       closeAll(menu);
       setOpen(menu, open);
     });
