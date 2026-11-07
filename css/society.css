@@ -976,3 +976,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+.soc-form textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid #cdd5e1;
+  border-radius: 3px;
+  padding: 0.8rem 0.9rem;
+  resize: vertical;
+}
+
+.soc-form textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(20, 74, 165, 0.15);
+}
