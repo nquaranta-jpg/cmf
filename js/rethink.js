@@ -62,6 +62,35 @@
     return t.getAttribute("aria-controls") === hash;
   });
 
+  // Links to a panel from elsewhere on the page (Find Your Path tiles,
+  // "I'm looking for" menu). The panel is hidden until selected, so the
+  // browser can't jump to it on its own: open it, then scroll the section.
+  function openFromLink(id) {
+    var n = tabs.findIndex(function (t) {
+      return t.getAttribute("aria-controls") === id;
+    });
+    if (n < 0) return false;
+    stop();
+    select(n, false);
+    root.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    return true;
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href*='#rethink-']");
+    if (!a) return;
+    var url = new URL(a.href, window.location.href);
+    if (url.pathname !== window.location.pathname) return;
+    if (openFromLink(url.hash.slice(1))) {
+      e.preventDefault();
+      if (history.replaceState) history.replaceState(null, "", url.hash);
+    }
+  });
+
+  window.addEventListener("hashchange", function () {
+    openFromLink(window.location.hash.slice(1));
+  });
+
   root.addEventListener("mouseenter", stop);
   root.addEventListener("focusin", stop);
 
