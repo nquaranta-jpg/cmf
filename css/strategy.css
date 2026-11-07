@@ -400,3 +400,182 @@
   line-height: 1.2;
   text-wrap: balance;
 }
+
+/* ---------- Guides (content-led replacement for the product grid) ---------- */
+.guides-head {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+
+.guides-head .section-title {
+  margin-bottom: 0;
+  max-width: 18ch;
+}
+
+.guides-head p {
+  color: var(--slate);
+  font-size: 1.05rem;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.25rem;
+}
+
+.guide {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.9rem;
+  background: var(--white);
+  border: 1px solid #dfe4ec;
+  border-radius: 4px;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.guide:hover,
+.guide:focus-visible {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(8, 34, 90, 0.08);
+}
+
+.guide-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 1rem;
+}
+
+.guide h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--navy);
+  text-wrap: balance;
+  margin-bottom: 0.8rem;
+}
+
+.guide p {
+  font-size: 0.95rem;
+  color: var(--slate);
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.guide-cta {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+}
+
+/* Featured guide spans both rows on the left, dark panel */
+.guide-feature {
+  grid-row: 1 / span 2;
+  background: linear-gradient(160deg, var(--navy) 0%, #12357f 100%);
+  border-color: transparent;
+  color: #d3dcef;
+  padding: 2.75rem 2.5rem;
+  justify-content: flex-end;
+  min-height: 460px;
+}
+
+.guide-feature .guide-tag {
+  color: var(--blue-light);
+}
+
+.guide-feature h3 {
+  font-size: clamp(2rem, 3.2vw, 2.7rem);
+  color: var(--white);
+  max-width: 14ch;
+}
+
+.guide-feature p {
+  flex: 0;
+  color: #c5d0e8;
+  font-size: 1rem;
+  max-width: 44ch;
+}
+
+.guide-feature .guide-cta {
+  color: var(--blue-light);
+}
+
+.guide-feature:hover,
+.guide-feature:focus-visible {
+  border-color: transparent;
+  box-shadow: 0 16px 36px rgba(8, 34, 90, 0.25);
+}
+
+.guide-points {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.guide-points li {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+}
+
+/* Three standard guides fill the right side: two on top, one wide below */
+.guides-grid .guide:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.guides-more {
+  margin-top: 2rem;
+  color: var(--slate);
+}
+
+.guides-more a {
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guides-more a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .guides-head {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .guides-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .guide-feature {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+  .guides-grid .guide:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .guides-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-feature {
+    padding: 2rem 1.5rem;
+  }
+}
