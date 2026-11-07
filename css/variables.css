@@ -50,7 +50,8 @@ footer,
 .launch-hero,
 .launch-proof,
 .service-card.launch-flagship,
-.launch-login-wrap {
+.launch-login-wrap,
+.rethink {
   --gold: var(--blue-light);
   --gold-light: #a9c8ff;
   --gold-dark: var(--blue-light);
