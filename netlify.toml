@@ -93,6 +93,12 @@
   force = true
 
 [[redirects]]
+  from = "/CLAUDE.md"
+  to = "/index.html"
+  status = 404
+  force = true
+
+[[redirects]]
   from = "/tsconfig.json"
   to = "/index.html"
   status = 404
@@ -202,6 +208,11 @@
 [[redirects]]
   from = "/community"
   to = "/community.html"
+  status = 200
+
+[[redirects]]
+  from = "/insights"
+  to = "/insights/index.html"
   status = 200
 
 [[redirects]]

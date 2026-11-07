@@ -127,3 +127,11 @@ edit `scripts/card-agents.json`, then run `node scripts/build-cards.mjs` (needs 
 the preview images). Agents without a phone number are skipped, and an agent without an NPN gets no NPN line. Each new agent also
 needs a `/card/<slug>` redirect and a vCard header in `netlify.toml`. Each agent opens
 `/card/<slug>/#me` once on their phone to show the send buttons.
+
+## Insights & News
+
+`/insights` and the homepage Insights & News section render the Google Sheet
+"CMF Website: Insights & News" through `netlify/functions/insights.mjs` (cached
+5 minutes at the edge), falling back to `data/insights.json`. To publish new
+content, add a row to the sheet. See `CLAUDE.md` for the full rule. The personal blog
+(nicholasquaranta.com) is intentionally not included.

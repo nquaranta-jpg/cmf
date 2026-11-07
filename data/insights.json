@@ -1,0 +1,59 @@
+{
+  "_readme": "Fallback snapshot only. The live source is the Google Sheet 'CMF Website: Insights & News' (https://docs.google.com/spreadsheets/d/1oQ734CY_Grh1pPM08VTEqC0q6J6QCt5wOnBni60PiM0/edit), read by netlify/functions/insights.mjs. This file is shown only if the sheet can't be read. Keep it roughly in sync. Do not add posts from nicholasquaranta.com; the blog stays separate.",
+  "items": [
+    {
+      "type": "Guide",
+      "category": "Indexed Universal Life",
+      "title": "Life insurance you can use while you're alive.",
+      "summary": "How indexed universal life builds cash value tied to a market index, why a 0% floor protects it in down years, and when living benefits and flexible premiums make it the right fit.",
+      "url": "/products/iul",
+      "date": "2026-11-07",
+      "featured": true
+    },
+    {
+      "type": "Guide",
+      "category": "Fixed Annuities",
+      "title": "Growth you can count on, with your principal protected.",
+      "summary": "How a fixed annuity grows tax-deferred at a guaranteed rate, and what to know about the surrender period.",
+      "url": "/products/annuity",
+      "date": "2026-11-07"
+    },
+    {
+      "type": "Guide",
+      "category": "Term Life",
+      "title": "The most coverage for the least money, for the years it matters most.",
+      "summary": "Choosing a 10, 15, 20 or 30 year term, and how much coverage your family actually needs.",
+      "url": "/products/term-life",
+      "date": "2026-11-07"
+    },
+    {
+      "type": "Guide",
+      "category": "Final Expense",
+      "title": "So a funeral never becomes your family's debt.",
+      "summary": "What final expense coverage pays for, why rates never increase, and how to qualify without a medical exam.",
+      "url": "/products/final-expense",
+      "date": "2026-11-07"
+    },
+    {
+      "type": "Workshop",
+      "category": "CMF Society",
+      "title": "What Funerals Actually Cost, and How Families Prepare",
+      "summary": "A plain-language Society workshop on what a funeral really costs today and the simple steps families take ahead of time. Fall 2026, Chicago. Free and open to all.",
+      "url": "/society/workshops"
+    },
+    {
+      "type": "Tool",
+      "category": "Veterans",
+      "title": "VGLI Cost Calculator",
+      "summary": "See what VGLI will cost at every age step and how a level private term rate compares.",
+      "url": "/vgli-calculator"
+    },
+    {
+      "type": "Tool",
+      "category": "Coverage",
+      "title": "Pick Your Policy",
+      "summary": "Answer a few questions and get a matched product with an estimated monthly rate.",
+      "url": "/quote"
+    }
+  ]
+}
