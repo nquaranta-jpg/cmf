@@ -47,12 +47,6 @@ nav.masthead.scrolled {
   text-decoration: none;
 }
 
-.mast-wordmark svg {
-  width: 22px;
-  height: 22px;
-  margin-top: -3px;
-}
-
 .mast-wordmark span {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.85rem;
@@ -195,11 +189,6 @@ nav.masthead .nav-links a:hover {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
-}
-
-.mast-compact svg {
-  width: 18px;
-  height: 18px;
 }
 
 .mast-compact span {
@@ -361,10 +350,6 @@ nav.masthead .mobile-toggle {
   .mast-wordmark span {
     font-size: 1.3rem;
     letter-spacing: 0.16em;
-  }
-  .mast-wordmark svg {
-    width: 18px;
-    height: 18px;
   }
   nav.masthead .mobile-toggle {
     display: block;
