@@ -386,3 +386,8 @@
     transition: none;
   }
 }
+
+/* Lincoln's mark is a compact stacked logo; give it the same visual weight */
+.carrier-track img[src*="lincoln"] {
+  height: 50px;
+}
