@@ -252,3 +252,16 @@ footer {
     text-align: center;
   }
 }
+
+/* Links that had no color set rendered browser-default blue on navy */
+.footer-social a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-social a:hover {
+  color: var(--white);
+}
+
+.footer-legal a {
+  color: var(--blue-light);
+}
