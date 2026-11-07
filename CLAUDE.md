@@ -15,7 +15,8 @@ apollo.com publishes its Insights & News:
    `summary` (one or two plain-English sentences), `url`, `date` (YYYY-MM-DD).
    Set `featured: true` on at most one item.
 3. That single entry shows it on `/insights` (with type filters) and in the
-   homepage Insights & News section (latest four). No other wiring is needed.
+   homepage Insights & News section (latest three items that are not guides,
+   since guides have their own homepage section). No other wiring is needed.
 
 Do NOT add posts from Nick's personal blog (nicholasquaranta.com). The blog stays
 separate from the CMF site.
