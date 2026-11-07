@@ -9,8 +9,55 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_IN_NAME_RE = /https?:\/\/|www\.|\.(com|net|org|biz|info|ru|cn|io|xyz)\b/i;
 
+// Telegram's legacy Markdown treats _ * ` [ as formatting; strip them from user input
+const md = (v) => String(v == null ? "" : v).replace(/[_*`\[\]]/g, " ").trim();
+
+async function sendTelegram(text) {
+  if (!TELEGRAM_CHAT_ID || !TELEGRAM_BOT_TOKEN) {
+    console.error("Telegram not configured. Submission received but not forwarded:", text);
+    return;
+  }
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "Markdown" }),
+    });
+    const result = await res.json();
+    if (!result.ok) console.error("Telegram API error:", result);
+  } catch (err) {
+    console.error("Failed to send Telegram notification:", err);
+  }
+}
+
+// Investor portal access requests (/investors). Kept separate from insurance
+// leads so they are never labeled or validated as a policy inquiry.
+async function handleInvestorAccess(data) {
+  if (data["bot-field"] && String(data["bot-field"]).trim() !== "") {
+    console.log("BOT BLOCKED (investor honeypot)");
+    return { statusCode: 200, body: "OK (honeypot)" };
+  }
+  if (!data.name || !/[a-zA-Z]{2,}/.test(data.name) || URL_IN_NAME_RE.test(data.name) || !EMAIL_RE.test(data.email || "")) {
+    console.log("VALIDATION FAILED (investor):", JSON.stringify({ name: data.name, email: data.email }));
+    return { statusCode: 200, body: "OK (validation failed)" };
+  }
+  const message =
+    `💼 *Investor Portal Access Request*\n` +
+    `━━━━━━━━━━━━━━━━━━\n` +
+    `👤 *Name:* ${md(data.name)}\n` +
+    `📧 *Email:* ${md(data.email)}\n` +
+    `📱 *Phone:* ${md(data.phone) || "—"}\n` +
+    `🏷 *Relationship:* ${md(data.relationship) || "—"}\n` +
+    (data.message ? `💬 *Note:* ${md(data.message).slice(0, 600)}\n` : "") +
+    `━━━━━━━━━━━━━━━━━━\n` +
+    `⏰ *Time:* ${new Date().toLocaleString("en-US", { timeZone: "America/Chicago" })}`;
+  await sendTelegram(message);
+  return { statusCode: 200, body: "OK" };
+}
+
 export async function handler(event) {
   const { payload } = JSON.parse(event.body);
+  if (payload.form_name === "investor-access") return handleInvestorAccess(payload.data || {});
   const { name, email, phone, ageRange, coverageAmount, productInterest } = payload.data;
 
   // ── Bot protection: honeypot (defense in depth) ──

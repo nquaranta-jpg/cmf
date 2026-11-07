@@ -107,7 +107,7 @@
     <h1>Investor portal.</h1>
     <p class="sub">The Crown Merchant Financial investor portal is in development. Access is by invitation. If you are an existing investor or have been invited to review materials, request access below.</p>
     <div class="soc-hero-actions">
-      <a class="soc-btn" href="mailto:nquaranta@crownmerchantfinancial.com?subject=Investor%20portal%20access">Request Access</a>
+      <a class="soc-btn" href="#request-access">Request Access</a>
     </div>
   </div>
   <p class="hero-credit">Photo: Max Bender, Unsplash</p>
@@ -120,7 +120,7 @@
       <span class="soc-label">Coming Soon</span>
       <h2 class="soc-h2">One place for investor materials.</h2>
       <p class="lede">Once live, approved investors will sign in here to find their documents and updates in one secure place.</p>
-      <p class="lede">Until then, materials are shared directly. Email us and we will get back to you.</p>
+      <p class="lede">Until then, materials are shared directly. Request access below and we will get back to you.</p>
     </div>
     <ol class="soc-topics" aria-label="Planned portal sections">
       <li><span class="num">01</span><div><strong>Updates</strong><span>Periodic updates from the founder.</span></div></li>
@@ -130,15 +130,61 @@
   </div>
 </section>
 
+<!-- Request access -->
+<section class="soc-section alt" id="request-access">
+  <div class="soc-wrap soc-join-grid">
+    <div id="investor-intro">
+      <span class="soc-label">Request Access</span>
+      <h2 class="soc-h2">Request portal access.</h2>
+      <p>Existing investors and invited guests can request access here. We review every request personally and reply by email.</p>
+      <p class="form-note" style="margin-top:1rem">Prefer to talk? Call <a href="tel:+13122038106">(312) 203-8106</a>.</p>
+    </div>
+    <div>
+      <form class="soc-form" id="investorAccessForm" name="investor-access" method="POST" action="/investors/?sent=1" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="investor-access" />
+        <p style="position:absolute;left:-9999px;opacity:0" aria-hidden="true"><label>Leave blank <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+        <div class="grid">
+          <label class="field full"><span class="lbl">Full Name</span>
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label class="field"><span class="lbl">Email</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label class="field"><span class="lbl">Phone (optional)</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+          <label class="field full"><span class="lbl">I am</span>
+            <select name="relationship">
+              <option value="An existing investor">An existing investor</option>
+              <option value="Invited to review materials">Invited to review materials</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label class="field full"><span class="lbl">Note (optional)</span>
+            <textarea name="message" rows="3"></textarea>
+          </label>
+          <div class="submit-row full">
+            <button type="submit" class="soc-btn">Request Access</button>
+          </div>
+        </div>
+      </form>
+      <div class="member-card" id="investorThanks" style="display:none">
+        <span class="soc-label">Request Received</span>
+        <h3>Thank you.</h3>
+        <p class="card-note">Your request is in. We review every request personally and will reply by email.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Notice -->
-<section class="soc-section alt">
+<section class="soc-section">
   <div class="soc-wrap">
     <div class="soc-head">
       <span class="soc-label">Important Notice</span>
       <h2 class="soc-h2">Not an offer of securities.</h2>
       <p>This page is for informational purposes only. It is not an offer to sell, or a solicitation of an offer to buy, any security. Any such offer would be made only through definitive offering documents to qualified investors.</p>
     </div>
-    <a class="soc-btn ghost" href="mailto:nquaranta@crownmerchantfinancial.com?subject=Investor%20inquiry">Investor Inquiries</a>
   </div>
 </section>
 
@@ -206,6 +252,46 @@
       </div>
     </footer>
 
+<script>
+// Investor access form: submit to Netlify Forms without leaving the page.
+(function () {
+  var form = document.getElementById("investorAccessForm");
+  var thanks = document.getElementById("investorThanks");
+  if (!form || !thanks) return;
+  function done() {
+    form.style.display = "none";
+    thanks.style.display = "block";
+  }
+  if (new URLSearchParams(location.search).get("sent") === "1") done();
+  form.addEventListener("submit", function (e) {
+    if (!form.checkValidity()) return;
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+    var err = form.querySelector(".form-error");
+    if (err) err.remove();
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString(),
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        done();
+        thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = "Request Access";
+        var div = document.createElement("div");
+        div.className = "form-error";
+        div.textContent = "Something went wrong. Please try again, or call (312) 203-8106.";
+        form.appendChild(div);
+      });
+  });
+})();
+</script>
 <script src="/js/tracking.js"></script>
 <script src="/js/nav.js"></script>
 <script src="/js/masthead.js"></script>
