@@ -81,6 +81,7 @@
     <link rel="stylesheet" href="/css/footer.css" />
     <link rel="stylesheet" href="/css/strategy.css" />
     <link rel="stylesheet" href="/css/masthead.css" />
+    <link rel="stylesheet" href="/css/insights.css" />
     <link rel="preconnect" href="https://images.unsplash.com" />
   </head>
   <body>
@@ -130,7 +131,7 @@
               <a href="/products/final-expense">Final Expense</a>
             </div>
           </li>
-          <li><a href="#desk">Insights &amp; Tools</a></li>
+          <li><a href="/insights">Insights</a></li>
           <li><a href="/society">Society</a></li>
           <li><a href="/agents">Agents</a></li>
         </ul>
@@ -145,7 +146,7 @@
       <ul>
         <li><a href="#perspective">About CMF</a></li>
         <li><a href="#products">Products</a></li>
-        <li><a href="#desk">Insights &amp; Tools</a></li>
+        <li><a href="/insights">Insights</a></li>
         <li><a href="/society">Society</a></li>
         <li><a href="/agents">Agents</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -365,40 +366,35 @@
       </div>
     </section>
 
-    <!-- From the Desk -->
+    <!-- Insights & News (rendered from /data/insights.json; static cards are the fallback) -->
     <section class="section alt" id="desk">
       <div class="container">
         <div class="section-header">
-          <span class="section-label">From the Desk</span>
-          <h2 class="section-title">Tools, Workshops, and Notes</h2>
-          <p class="section-subtitle">Free resources from our team. No login, no sales call required.</p>
+          <span class="section-label">Insights &amp; News</span>
+          <h2 class="section-title">The latest from Crown Merchant Financial.</h2>
+          <p class="section-subtitle">Tools, workshops, and news from our team.</p>
         </div>
-        <div class="desk-grid">
-          <a class="desk-card" href="/vgli-calculator">
-            <span class="desk-tag">Tool &middot; Veterans</span>
+        <div class="desk-grid" id="deskGrid" data-count="3" data-exclude="Guide">
+          <a class="desk-card ins-card" href="/vgli-calculator">
+            <span class="ins-meta"><span class="ins-tag">Tool &middot; Veterans</span></span>
             <h3>VGLI Cost Calculator</h3>
-            <p>See what VGLI will cost you at every age step and how a level private term rate compares.</p>
-            <span class="desk-cta">Run the numbers &rarr;</span>
+            <p>See what VGLI will cost at every age step and how a level private term rate compares.</p>
+            <span class="ins-cta">Open the tool &rarr;</span>
           </a>
-          <a class="desk-card" href="/quote">
-            <span class="desk-tag">Tool &middot; Coverage</span>
+          <a class="desk-card ins-card" href="/quote">
+            <span class="ins-meta"><span class="ins-tag">Tool &middot; Coverage</span></span>
             <h3>Pick Your Policy</h3>
             <p>Answer a few questions and get a matched product with an estimated monthly rate.</p>
-            <span class="desk-cta">Get an estimate &rarr;</span>
+            <span class="ins-cta">Open the tool &rarr;</span>
           </a>
-          <a class="desk-card" href="/society/workshops">
-            <span class="desk-tag">Workshop &middot; Society</span>
-            <h3>Free Monthly Workshops</h3>
-            <p>Plain-English sessions on protection, retirement income, and estate basics, open to the community.</p>
-            <span class="desk-cta">See the schedule &rarr;</span>
-          </a>
-          <a class="desk-card" href="https://nicholasquaranta.com/" target="_blank" rel="noopener noreferrer">
-            <span class="desk-tag">Essays &middot; Founder</span>
-            <h3>Notes from Nick</h3>
-            <p>Our founder&rsquo;s notes on money, risk, and the people who carry it.</p>
-            <span class="desk-cta">Read the blog &rarr;</span>
+          <a class="desk-card ins-card" href="/society/workshops">
+            <span class="ins-meta"><span class="ins-tag">Workshop &middot; CMF Society</span></span>
+            <h3>What Funerals Actually Cost, and How Families Prepare</h3>
+            <p>A free Society workshop on funeral costs and how families prepare. Fall 2026, Chicago.</p>
+            <span class="ins-cta">See the workshop &rarr;</span>
           </a>
         </div>
+        <p class="desk-more"><a href="/insights">View all insights and news &rarr;</a></p>
       </div>
     </section>
 
@@ -573,5 +569,6 @@
     <script src="/js/animations.js"></script>
     <script src="/js/rethink.js"></script>
     <script src="/js/masthead.js"></script>
+    <script src="/js/insights.js"></script>
   </body>
 </html>

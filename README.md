@@ -127,3 +127,10 @@ edit `scripts/card-agents.json`, then run `node scripts/build-cards.mjs` (needs 
 the preview images). Agents without a phone number are skipped, and an agent without an NPN gets no NPN line. Each new agent also
 needs a `/card/<slug>` redirect and a vCard header in `netlify.toml`. Each agent opens
 `/card/<slug>/#me` once on their phone to show the send buttons.
+
+## Insights & News
+
+`/insights` and the homepage Insights & News section both render
+`data/insights.json` (via `js/insights.js`). To publish new content, add an entry
+at the top of `items`. See `CLAUDE.md` for the full rule. The personal blog
+(nicholasquaranta.com) is intentionally not included.
