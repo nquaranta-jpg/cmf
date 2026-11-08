@@ -16,6 +16,9 @@ const MIN_FORM_ELAPSED_MS = 1500; // client enforces 2000; allow skew
 
 const INTERESTS = new Set([
   "Workshops",
+  "Licensed agent",
+  "Getting licensed",
+  "Exploring a career",
   "Veterans Chapter",
   "Society Plus Updates",
   "I am a current client",

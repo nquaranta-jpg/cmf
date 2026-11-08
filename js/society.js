@@ -28,7 +28,7 @@
 
   function eventCard(ev, opts) {
     var isPast = ev.status === "past";
-    var label = opts.label || (isPast ? "Past Workshop" : "Upcoming Workshop");
+    var label = isPast ? "Past Workshop" : (opts.label === "Next Workshop" && ev.label ? "Next: " + ev.label : opts.label || (ev.label ? "Upcoming " + ev.label : "Upcoming Workshop"));
     var html =
       '<article class="event-card' + (isPast ? " past" : "") + '">' +
       '<span class="soc-label">' + esc(label) + "</span>" +
@@ -41,7 +41,7 @@
     if (!isPast) {
       html +=
         '<div class="event-cta">' +
-        '<a class="soc-btn gold" data-event-rsvp="' + esc(ev.id) + '" href="' + esc(opts.rsvpHref(ev)) + '">Reserve Your Seat</a>' +
+        '<a class="soc-btn gold" data-event-rsvp="' + esc(ev.id) + '" href="' + esc(ev.url || opts.rsvpHref(ev)) + '">Reserve Your Seat</a>' +
         "</div>";
     }
     html += "</article>";

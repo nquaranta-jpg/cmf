@@ -36,10 +36,11 @@
     },
     {
       "type": "Workshop",
-      "category": "CMF Society",
-      "title": "What Funerals Actually Cost, and How Families Prepare",
-      "summary": "A plain-language Society workshop on what a funeral really costs today and the simple steps families take ahead of time. Fall 2026, Chicago. Free and open to all.",
-      "url": "/society/workshops"
+      "category": "Careers",
+      "title": "New Fortunes Are Built in Insurance",
+      "summary": "A free CMF Society career evening on why the world's biggest investors are buying insurance companies, and where independent agents fit. Tuesday, December 1, 2026, 6:30 PM, Hyde Park.",
+      "url": "/society/new-fortunes",
+      "date": "2026-11-08"
     },
     {
       "type": "Tool",
