@@ -1,0 +1,17 @@
+/* Long-form Insights articles (/insights/<slug>). Uses the society.css hero and the main palette. */
+.ins-meta { color: var(--blue-light); font-size: 0.95rem; letter-spacing: 0.02em; margin-top: 1.2rem; }
+.ins-article { padding: 5rem 2rem 6rem; }
+.ins-body { max-width: 690px; margin: 0 auto; color: var(--text); font-size: 1.12rem; line-height: 1.75; }
+.ins-body p { margin: 0 0 1.35rem; }
+.ins-body h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  font-weight: 600; line-height: 1.15; color: var(--navy);
+  margin: 3rem 0 1.2rem; text-wrap: balance;
+}
+.ins-body strong { color: var(--navy); }
+.ins-back { max-width: 690px; margin: 3rem auto 0; padding-top: 1.5rem; border-top: 1px solid var(--blue-pale); display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
+.ins-back a { color: var(--blue); font-weight: 600; text-decoration: none; }
+.ins-back a:hover { text-decoration: underline; }
+.ins-fine { max-width: 690px; margin: 1.5rem auto 0; color: var(--slate); font-size: 0.85rem; line-height: 1.6; }
+@media (max-width: 640px) { .ins-article { padding: 3.5rem 1.25rem 4.5rem; } .ins-body { font-size: 1.05rem; } }

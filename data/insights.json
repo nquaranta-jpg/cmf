@@ -2,6 +2,14 @@
   "_readme": "Fallback snapshot only. The live source is the Google Sheet 'CMF Website: Insights & News' (https://docs.google.com/spreadsheets/d/1oQ734CY_Grh1pPM08VTEqC0q6J6QCt5wOnBni60PiM0/edit), read by netlify/functions/insights.mjs. This file is shown only if the sheet can't be read. Keep it roughly in sync. Do not add posts from nicholasquaranta.com; the blog stays separate.",
   "items": [
     {
+      "type": "Insight",
+      "category": "Industry",
+      "title": "Insurance Is the Last Moat",
+      "summary": "How life insurance, private credit and asset management fused into one business, why the people who sell it still matter, and where the industry goes next.",
+      "url": "/insights/insurance-is-the-last-moat",
+      "date": "2026-11-08"
+    },
+    {
       "type": "Guide",
       "category": "Indexed Universal Life",
       "title": "Life insurance you can use while you're alive.",
