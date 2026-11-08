@@ -994,3 +994,32 @@
   border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(20, 74, 165, 0.15);
 }
+
+/* ---------- Event page (/society/new-fortunes) ---------- */
+.event-page .soc-hero p.sub {
+  margin-bottom: 1.1rem;
+}
+
+.evt-when {
+  max-width: 640px;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.9);
+  border-left: 2px solid var(--blue-light);
+  padding-left: 0.9rem;
+  margin-bottom: 2.2rem;
+}
+
+.evt-when strong {
+  color: var(--white);
+}
+
+.event-page .soc-topics li {
+  grid-template-columns: 3.4rem 1fr;
+}
+
+.evt-fine {
+  margin-top: 2rem;
+  max-width: 720px;
+  font-size: 0.85rem;
+  color: var(--slate);
+}

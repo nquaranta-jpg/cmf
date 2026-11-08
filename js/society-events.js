@@ -4,15 +4,19 @@
 // /society/workshops. To add an event, copy an entry and place
 // it at the TOP of the list. Set status to "upcoming" or "past".
 // The soonest "upcoming" entry is featured on /society.
+// Optional: label (e.g. "Career Evening") and url (where Reserve
+// Your Seat goes; defaults to the Society signup form).
 // ============================================================
 window.SOCIETY_EVENTS = [
   {
-    id: "funeral-costs",
+    id: "new-fortunes",
     status: "upcoming",
-    title: "What Funerals Actually Cost, and How Families Prepare",
-    date: "Date to be announced, Fall 2026",
-    venue: "Venue to be announced, Chicago",
+    label: "Career Evening",
+    title: "New Fortunes Are Built in Insurance",
+    date: "Tuesday, December 1, 2026, 6:30 to 8:00 PM",
+    venue: "5113 S. Harper Ave., Hyde Park, Chicago",
     description:
-      "A plain-language look at what a funeral really costs today, the choices that drive the price, and the simple steps families take ahead of time so no one is left guessing. Educational only, nothing is sold in the room, and refreshments are on us.",
+      "Why the world's biggest investors are buying insurance companies, and where independent agents fit. A free evening for licensed agents, people getting licensed, and anyone curious about the business, with a live look at the tools CMF agents use every day. Pizza is on us.",
+    url: "/society/new-fortunes#rsvp",
   },
 ];
