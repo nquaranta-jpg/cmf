@@ -216,6 +216,11 @@
   status = 200
 
 [[redirects]]
+  from = "/insights/insurance-is-the-last-moat"
+  to = "/insights/insurance-is-the-last-moat.html"
+  status = 200
+
+[[redirects]]
   from = "/investors"
   to = "/investors/index.html"
   status = 200
