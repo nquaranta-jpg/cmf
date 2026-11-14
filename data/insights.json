@@ -3,6 +3,14 @@
   "items": [
     {
       "type": "Insight",
+      "category": "Retirement",
+      "title": "Bermuda Triangles",
+      "summary": "Pensions are moving to life insurers and the promises are moving to Bermuda. Why the new system works, what the fair criticism gets right, and where retirement capital is headed.",
+      "url": "/insights/bermuda-triangles",
+      "date": "2026-11-14"
+    },
+    {
+      "type": "Insight",
       "category": "Industry",
       "title": "Insurance Is the Last Moat",
       "summary": "How life insurance, private credit and asset management fused into one business, why the people who sell it still matter, and where the industry goes next.",
