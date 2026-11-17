@@ -294,3 +294,9 @@
   [headers.values]
     Content-Type = "text/vcard; charset=utf-8"
     Content-Disposition = "inline; filename=\"Denise Clermont.vcf\""
+
+# Muse Connector Platform server check: the challenge file must come back as plain text, HTTP 200, no redirects.
+[[headers]]
+  for = "/.well-known/muse-challenge/*"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
