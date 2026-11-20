@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "crown-merchant-financial": {
+      "type": "streamable-http",
+      "url": "https://crownmerchantfinancial.com/mcp"
+    }
+  }
+}

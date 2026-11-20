@@ -27,3 +27,4 @@ deno.lock
 
 # clasp link to the Apps Script project (not needed in the public repo)
 .clasp.json
+crown-merchant-financial-chatgpt.zip
