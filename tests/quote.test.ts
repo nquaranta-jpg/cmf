@@ -66,6 +66,12 @@ describe("get_quote_estimate: statuses", () => {
     expect((r as { message: string }).message).toMatch(/not currently licensed in CA/);
     expect(r).not.toHaveProperty("next_step");
   });
+  it("New York is never quoted or booked from the real state list (Nick, Nov 20 2026)", () => {
+    const out = getQuoteEstimate(term({ state: "NY" }), { env: deps.env, rates: deps.rates }) as { result: { status: string } };
+    expect(out.result.status).toBe("not_available");
+    const ok = getQuoteEstimate(term({ state: "IL" }), { env: deps.env, rates: deps.rates }) as { result: { status: string } };
+    expect(ok.result.status).not.toBe("not_available");
+  });
   it("unlicensed state wins even for iul", () => {
     const out = getQuoteEstimate({ age: 40, state: "CA", tobacco: false, product_type: "iul" }, fewStates);
     expect((out as { result: { status: string } }).result.status).toBe("not_available");
@@ -150,10 +156,10 @@ describe("get_quote_estimate: rate table guards", () => {
 });
 
 describe("licensing gate", () => {
-  it("the shipped states.json covers every US state code the validator accepts", async () => {
+  it("the shipped states.json covers every US state code the validator accepts except New York", async () => {
     const { licensedStates } = await import("../src/mcp/lib/states.js");
     const { US_STATE_CODES } = await import("../src/mcp/lib/sanitize.js");
-    expect(new Set(licensedStates())).toEqual(US_STATE_CODES);
+    expect(new Set(licensedStates())).toEqual(new Set([...US_STATE_CODES].filter((s) => s !== "NY")));
     expect((getQuoteEstimate(term({ state: "CA" }), deps) as { result: { status: string } }).result.status).toBe("estimate");
   });
 });
