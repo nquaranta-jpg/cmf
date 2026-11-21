@@ -41,18 +41,20 @@ describe("MCP protocol", () => {
     expect(quote.description).toBe(QUOTE_TOOL_DESCRIPTION);
     expect(quote.annotations).toEqual({ readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false });
     expect(quote.inputSchema.properties).toHaveProperty("age");
-    expect(quote.inputSchema.required).toEqual(expect.arrayContaining(["age", "state", "tobacco", "product_type"]));
+    expect(quote.inputSchema.required).toEqual(expect.arrayContaining(["age", "state", "product_type"]));
+    expect(quote.inputSchema.properties).not.toHaveProperty("tobacco");
     const book = tools.find((t) => t.name === "book_consultation")!;
     expect(book.title).toBe("Book a Life Insurance Consultation");
     expect(book.description).toBe(BOOK_TOOL_DESCRIPTION);
     expect(book.annotations).toEqual({ readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true });
+    expect(JSON.stringify(book.inputSchema)).not.toMatch(/tobacco/);
     expect(book.inputSchema.required).toEqual(expect.arrayContaining(["first_name", "last_name", "email", "phone", "state", "preferred_start", "consent_to_contact"]));
   });
 
   it("tools/call get_quote_estimate returns structured content and logs only safe fields", async () => {
     const logs: Record<string, unknown>[] = [];
     const { client } = await connected(logs);
-    const res = await client.callTool({ name: "get_quote_estimate", arguments: { age: 35, state: "IL", tobacco: false, product_type: "term", coverage_amount: 500000, term_years: 20 } });
+    const res = await client.callTool({ name: "get_quote_estimate", arguments: { age: 35, state: "IL", product_type: "term", coverage_amount: 500000, term_years: 20 } });
     expect(res.isError).toBeFalsy();
     expect((res.structuredContent as { status: string }).status).toBe("estimate");
     expect(logs[0]).toEqual({ tool: "get_quote_estimate", status: "estimate", state: "IL", ms: expect.any(Number) });
@@ -60,7 +62,7 @@ describe("MCP protocol", () => {
 
   it("tools/call returns a tool error (not a protocol error) for a bad range", async () => {
     const { client } = await connected();
-    const res = await client.callTool({ name: "get_quote_estimate", arguments: { age: 17, state: "IL", tobacco: false, product_type: "term", coverage_amount: 500000 } });
+    const res = await client.callTool({ name: "get_quote_estimate", arguments: { age: 17, state: "IL", product_type: "term", coverage_amount: 500000 } });
     expect(res.isError).toBe(true);
     expect((res.content as { text: string }[])[0].text).toMatch(/age/);
   });

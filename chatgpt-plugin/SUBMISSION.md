@@ -16,18 +16,18 @@ identity. The server is the same public MCP server Muse uses: https://crownmerch
 ## Review details
 - Authentication: none. Reviewers don't need test credentials. (If the form insists, write "No login required".)
 - Release notes: First release. Two tools: get_quote_estimate (read-only monthly price range for term life and final
-  expense; whole life and IUL return a consultation offer) and book_consultation (books a free 20-minute call with a
+  expense from age, state, product and coverage only, at standard and tobacco rates, so it never asks about health; whole life and IUL return a consultation offer) and book_consultation (books a 20-minute call with a
   licensed agent, only after the user agrees to the consent text).
 - Note for reviewers: book_consultation creates a real calendar booking and confirmation email. Please book with an
   @example.com address; we will cancel those.
 
 ## Test cases: should work (5)
-1. "What would a $500,000 20-year term life policy cost for a 35-year-old non-smoker in Illinois?"
-   Expected: get_quote_estimate returns a monthly range (about $27 to $46) and the disclaimer is shown.
-2. "I'm 68 in Georgia and don't smoke. How much is $15,000 of final expense insurance?"
-   Expected: a monthly range (about $89 to $126) with the disclaimer.
-3. "Quote me $250k of 30-year term. I'm 30, I smoke, and I live in Texas."
-   Expected: a higher monthly range for a tobacco user, with the disclaimer.
+1. "What would a $500,000 20-year term life policy cost for a 35-year-old in Illinois?"
+   Expected: get_quote_estimate returns a standard monthly range and a range at tobacco rates, and the disclaimer is shown.
+2. "I'm 68 in Georgia. How much is $15,000 of final expense insurance?"
+   Expected: a standard and a tobacco-rate monthly range with the disclaimer.
+3. "Quote me $250k of 30-year term. I'm 30 and I live in Texas."
+   Expected: both ranges with the disclaimer. The assistant does not ask about health or tobacco use.
 4. "How much is an IUL for a 45-year-old in Texas?"
    Expected: consultation_only, explaining that IUL pricing depends on policy design, and an offer to book a call.
 5. "Book me a call with an agent next Tuesday at 10am Central. I'm Test Reviewer, reviewer@example.com, 312-555-0100, Illinois."

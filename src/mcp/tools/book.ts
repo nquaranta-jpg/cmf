@@ -37,7 +37,6 @@ export const bookInputShape = {
       coverage_amount: z.number().optional(),
       term_years: z.number().optional(),
       age: z.number().optional(),
-      tobacco: z.boolean().optional(),
       monthly_low: z.number().optional(),
       monthly_high: z.number().optional(),
     })
@@ -52,7 +51,6 @@ export type QuoteContext = {
   coverage_amount?: number;
   term_years?: number;
   age?: number;
-  tobacco?: boolean;
   monthly_low?: number;
   monthly_high?: number;
 };
@@ -123,7 +121,6 @@ const StrictBookSchema = z.object({
       coverage_amount: optInt("quote_context.coverage_amount"),
       term_years: optInt("quote_context.term_years"),
       age: optInt("quote_context.age"),
-      tobacco: z.boolean().optional(),
       monthly_low: optInt("quote_context.monthly_low"),
       monthly_high: optInt("quote_context.monthly_high"),
     })

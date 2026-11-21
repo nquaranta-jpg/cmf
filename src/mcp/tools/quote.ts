@@ -29,7 +29,6 @@ export const COVERAGE_LIMITS = {
 export const quoteInputShape = {
   age: z.number().describe("Age in whole years, 18 to 85."),
   state: z.string().describe("Two-letter US state code where the person lives, for example IL."),
-  tobacco: z.boolean().describe("True if the person used any nicotine or tobacco in the last 12 months."),
   product_type: z.enum(PRODUCT_TYPES).describe("term, final_expense, whole_life, or iul."),
   coverage_amount: z
     .number()
@@ -44,7 +43,6 @@ export const quoteInputShape = {
 export type QuoteInput = {
   age: number;
   state: string;
-  tobacco: boolean;
   product_type: ProductType;
   coverage_amount?: number;
   term_years?: 10 | 20 | 30;
@@ -55,6 +53,10 @@ export type QuoteResult =
       status: "estimate";
       monthly_low: number;
       monthly_high: number;
+      /** The same coverage at tobacco rates, or null when that cell is missing. Both are always returned so the
+       * connector never asks anyone about tobacco or health (OpenAI's app review flags health questions). */
+      tobacco_monthly_low: number | null;
+      tobacco_monthly_high: number | null;
       inputs_echo: QuoteInput;
       disclaimer: string;
       next_step: "book_consultation";
@@ -81,7 +83,6 @@ const StrictQuoteSchema = z
       .string({ message: "state must be a two-letter US state code, for example IL." })
       .transform(normalizeState)
       .refine((s) => US_STATE_CODES.has(s), "state must be a two-letter US state code, for example IL."),
-    tobacco: z.boolean({ message: "tobacco must be true or false (nicotine use in the last 12 months)." }),
     product_type: z.enum(PRODUCT_TYPES, {
       message: "product_type must be one of: term, final_expense, whole_life, iul.",
     }),
@@ -126,7 +127,6 @@ export function validateQuoteInput(raw: unknown): Validation<QuoteInput> {
   const data: QuoteInput = {
     age: d.age,
     state: d.state,
-    tobacco: d.tobacco,
     product_type: d.product_type,
   };
   if (d.product_type === "term") {
@@ -171,13 +171,10 @@ export function computeQuote(input: QuoteInput, deps: QuoteDeps = {}): QuoteResu
     };
   }
 
-  const rate = lookupRate(
-    table,
-    { product_type: input.product_type, age: input.age, tobacco: input.tobacco, term_years: input.term_years },
-    env,
-  );
+  const ask = { product_type: input.product_type, age: input.age, term_years: input.term_years };
+  const rate = lookupRate(table, { ...ask, tobacco: false }, env);
   if (!rate) {
-    const reason = bandReason(table, { product_type: input.product_type, age: input.age, term_years: input.term_years });
+    const reason = bandReason(table, ask);
     return {
       status: "consultation_only",
       message: reason || MSG_CONSULTATION_ONLY_RATES,
@@ -188,12 +185,20 @@ export function computeQuote(input: QuoteInput, deps: QuoteDeps = {}): QuoteResu
   }
 
   const units = (input.coverage_amount as number) / 1000;
-  const low = Math.round(units * rate.rate_low + rate.policy_fee);
-  const high = Math.round(units * rate.rate_high + rate.policy_fee);
+  const range = (r: { rate_low: number; rate_high: number; policy_fee: number }) => {
+    const low = Math.round(units * r.rate_low + r.policy_fee);
+    const high = Math.round(units * r.rate_high + r.policy_fee);
+    return [Math.min(low, high), Math.max(low, high)] as const;
+  };
+  const [low, high] = range(rate);
+  const t = lookupRate(table, { ...ask, tobacco: true }, env);
+  const [tLow, tHigh] = t ? range(t) : [null, null];
   return {
     status: "estimate",
-    monthly_low: Math.min(low, high),
-    monthly_high: Math.max(low, high),
+    monthly_low: low,
+    monthly_high: high,
+    tobacco_monthly_low: tLow,
+    tobacco_monthly_high: tHigh,
     inputs_echo: input,
     disclaimer: DISCLAIMER,
     next_step: "book_consultation",

@@ -6,8 +6,8 @@ import { filledRates, UNVERIFIED_ENV, VERIFIED_ENV } from "./helpers.js";
 
 const deps = { rates: filledRates(), env: VERIFIED_ENV };
 const fewStates = { ...deps, licensedStates: ["IL", "GA"] };
-const term = (over: Record<string, unknown> = {}) => ({ age: 35, state: "IL", tobacco: false, product_type: "term", coverage_amount: 500000, term_years: 20, ...over });
-const fe = (over: Record<string, unknown> = {}) => ({ age: 62, state: "GA", tobacco: false, product_type: "final_expense", coverage_amount: 15000, ...over });
+const term = (over: Record<string, unknown> = {}) => ({ age: 35, state: "IL", product_type: "term", coverage_amount: 500000, term_years: 20, ...over });
+const fe = (over: Record<string, unknown> = {}) => ({ age: 62, state: "GA", product_type: "final_expense", coverage_amount: 15000, ...over });
 
 describe("get_quote_estimate: validation", () => {
   it("names the field and range for a bad age", () => {
@@ -45,9 +45,9 @@ describe("get_quote_estimate: validation", () => {
   });
   it("requires coverage for term and final expense, ignores it for iul/whole_life", () => {
     expect(getQuoteEstimate(term({ coverage_amount: undefined }), deps)).toHaveProperty("error");
-    const iul = getQuoteEstimate({ age: 40, state: "IL", tobacco: false, product_type: "iul" }, deps);
+    const iul = getQuoteEstimate({ age: 40, state: "IL", product_type: "iul" }, deps);
     expect(iul).toHaveProperty("result");
-    const wl = getQuoteEstimate({ age: 40, state: "IL", tobacco: false, product_type: "whole_life", coverage_amount: 1 }, deps);
+    const wl = getQuoteEstimate({ age: 40, state: "IL", product_type: "whole_life", coverage_amount: 1 }, deps);
     expect(wl).toHaveProperty("result");
     expect((wl as { result: { inputs_echo: Record<string, unknown> } }).result.inputs_echo).not.toHaveProperty("coverage_amount");
   });
@@ -73,12 +73,12 @@ describe("get_quote_estimate: statuses", () => {
     expect(ok.result.status).not.toBe("not_available");
   });
   it("unlicensed state wins even for iul", () => {
-    const out = getQuoteEstimate({ age: 40, state: "CA", tobacco: false, product_type: "iul" }, fewStates);
+    const out = getQuoteEstimate({ age: 40, state: "CA", product_type: "iul" }, fewStates);
     expect((out as { result: { status: string } }).result.status).toBe("not_available");
   });
   it("iul and whole_life are consultation_only with booking next step", () => {
     for (const product_type of ["iul", "whole_life"]) {
-      const out = getQuoteEstimate({ age: 40, state: "IL", tobacco: true, product_type }, deps) as { result: Record<string, unknown> };
+      const out = getQuoteEstimate({ age: 40, state: "IL", product_type }, deps) as { result: Record<string, unknown> };
       expect(out.result.status).toBe("consultation_only");
       expect(out.result.next_step).toBe("book_consultation");
       expect(out.result.message).toMatch(/how the policy is designed/);
@@ -107,12 +107,23 @@ describe("get_quote_estimate: statuses", () => {
     expect(r.monthly_high).toBe(Math.round(500 * 0.55 + 5));
     expect(r.disclaimer).toBe(DISCLAIMER);
     expect(r.next_step).toBe("book_consultation");
-    expect(r.inputs_echo).toEqual({ age: 35, state: "IL", tobacco: false, product_type: "term", coverage_amount: 500000, term_years: 20 });
+    expect(r.inputs_echo).toEqual({ age: 35, state: "IL", product_type: "term", coverage_amount: 500000, term_years: 20 });
   });
-  it("tobacco uses the tobacco cell", () => {
-    const nt = (getQuoteEstimate(term(), deps) as { result: { monthly_low: number } }).result.monthly_low;
-    const t = (getQuoteEstimate(term({ tobacco: true }), deps) as { result: { monthly_low: number } }).result.monthly_low;
-    expect(t).toBeGreaterThan(nt);
+  it("returns the tobacco range beside the standard one and never asks about tobacco", () => {
+    const r = (getQuoteEstimate(term(), deps) as unknown as { result: Record<string, number> }).result;
+    expect(r.tobacco_monthly_low).toBe(Math.round(500 * 0.9 + 5));
+    expect(r.tobacco_monthly_high).toBeGreaterThan(r.monthly_high);
+    // Older clients (Muse) that still send tobacco get the same answer; the field is ignored.
+    const old = (getQuoteEstimate(term({ tobacco: true }), deps) as { result: Record<string, unknown> }).result;
+    expect(old.monthly_low).toBe(r.monthly_low);
+    expect(old.inputs_echo).not.toHaveProperty("tobacco");
+  });
+  it("a missing tobacco cell leaves the tobacco range null, not the estimate", () => {
+    const rates = filledRates();
+    rates.term["20"][3].tobacco = { low: null, high: null };
+    const r = (getQuoteEstimate(term(), { rates, env: VERIFIED_ENV }) as { result: Record<string, unknown> }).result;
+    expect(r.status).toBe("estimate");
+    expect(r.tobacco_monthly_low).toBeNull();
   });
   it("term_years selects the matching table", () => {
     const rates = filledRates();
