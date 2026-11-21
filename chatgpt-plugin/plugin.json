@@ -2,25 +2,48 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "crown-merchant-financial",
   "version": "1.0.0",
-  "description": "Life insurance estimates and free consultations with a licensed agent at Crown Merchant Financial.",
-  "author": { "name": "Crown Merchant Financial LLC", "url": "https://crownmerchantfinancial.com" },
+  "description": "Life insurance estimates and consultations with a licensed agent at Crown Merchant Financial.",
+  "author": {
+    "name": "Crown Merchant Financial LLC",
+    "url": "https://crownmerchantfinancial.com",
+    "email": "nquaranta@crownmerchantfinancial.com"
+  },
   "homepage": "https://crownmerchantfinancial.com",
-  "keywords": ["life insurance", "term life", "final expense", "insurance quote", "IUL"],
+  "keywords": [
+    "life insurance",
+    "term life",
+    "final expense",
+    "insurance quote",
+    "IUL"
+  ],
   "extensions": {
-    "com.openai.interface": {
-      "displayName": "Crown Merchant Financial",
-      "shortDescription": "Life insurance estimates",
-      "longDescription": "Get a quick estimate of what life insurance could cost, then book a free 20-minute video call with a licensed agent at Crown Merchant Financial, an independent life insurance agency.\n\nAsk things like \"What would a $500,000 20-year term policy cost for a 35-year-old non-smoker in Illinois?\" or \"How much is final expense coverage for a 68-year-old in Georgia?\" You'll get a monthly price range for term life and final expense coverage. Whole life and indexed universal life (IUL) depend on how the policy is designed, so for those the plugin offers a free consultation instead of a number.\n\nEstimates use only your age, state, nicotine use (yes or no), the coverage amount and the term length. No health history, date of birth, Social Security number or payment information is ever asked for. Estimates are not an offer of coverage; your actual premium depends on underwriting and approval by the insurance company.\n\nIf you want exact pricing or want to apply, the plugin can book a free consultation at a time that suits you, after you agree to be contacted. There is no obligation.",
-      "developerName": "Crown Merchant Financial LLC",
-      "category": "Finance",
-      "websiteURL": "https://crownmerchantfinancial.com",
-      "supportURL": "https://crownmerchantfinancial.com/connect",
-      "privacyPolicyURL": "https://crownmerchantfinancial.com/privacy",
-      "termsOfServiceURL": "https://crownmerchantfinancial.com/terms",
-      "composerIcon": "./assets/icon.png",
-      "composerIconDark": "./assets/icon-dark.png",
-      "logo": "./assets/logo.png",
-      "logoDark": "./assets/logo-dark.png"
+    "com.openai": {
+      "interface": {
+        "displayName": "Crown Merchant Financial",
+        "shortDescription": "Life insurance estimates",
+        "longDescription": "Get a quick estimate of what life insurance could cost, then book a 20-minute video call with a licensed agent at Crown Merchant Financial, an independent life insurance agency.\n\nAsk things like \"What would a $500,000 20-year term policy cost for a 35-year-old non-smoker in Illinois?\" or \"How much is final expense coverage for a 68-year-old in Georgia?\" You'll get a monthly price range for term life and final expense coverage. Whole life and indexed universal life (IUL) depend on how the policy is designed, so for those the plugin offers a consultation instead of a number.\n\nEstimates use only your age, state, nicotine use (yes or no), the coverage amount and the term length. No health history, date of birth, Social Security number or payment information is ever asked for. Estimates are not an offer of coverage; your actual premium depends on underwriting and approval by the insurance company.\n\nIf you want exact pricing or want to apply, the plugin can book a consultation at a time that suits you, after you agree to be contacted. There is no obligation.",
+        "developerName": "Crown Merchant Financial LLC",
+        "category": "Finance",
+        "capabilities": [
+          "Life insurance price estimates",
+          "Consultation booking with a licensed agent"
+        ],
+        "websiteURL": "https://crownmerchantfinancial.com",
+        "supportURL": "https://crownmerchantfinancial.com/connect",
+        "privacyPolicyURL": "https://crownmerchantfinancial.com/privacy",
+        "termsOfServiceURL": "https://crownmerchantfinancial.com/terms",
+        "defaultPrompt": [
+          "What would a $500,000 20-year term policy cost for a 35-year-old non-smoker in Illinois?",
+          "How much is $15,000 of final expense coverage for a 68-year-old in Georgia?",
+          "Book a call with a licensed agent to talk about life insurance"
+        ],
+        "brandColor": "#144AA5",
+        "brandColorDark": "#2F6FD6",
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      }
     }
   }
 }
