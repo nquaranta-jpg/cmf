@@ -295,8 +295,20 @@
     Content-Type = "text/vcard; charset=utf-8"
     Content-Disposition = "inline; filename=\"Denise Clermont.vcf\""
 
+# ChatGPT plugin domain check (OpenAI): the token file must come back as plain text, HTTP 200, no redirects.
+[[headers]]
+  for = "/.well-known/openai-apps-challenge"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
 # Muse Connector Platform server check: the challenge file must come back as plain text, HTTP 200, no redirects.
 [[headers]]
   for = "/.well-known/muse-challenge/*"
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
+
+# Support page for the AI assistant listings (ChatGPT, Muse): /connect shows the connector page.
+[[redirects]]
+  from = "/connect"
+  to = "/connect/muse/index.html"
+  status = 200

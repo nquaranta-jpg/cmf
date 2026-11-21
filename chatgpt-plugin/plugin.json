@@ -1,0 +1,106 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "crown-merchant-financial",
+  "version": "1.0.0",
+  "description": "Life insurance estimates and consultations with a licensed agent at Crown Merchant Financial.",
+  "author": {
+    "name": "Crown Merchant Financial LLC",
+    "url": "https://crownmerchantfinancial.com",
+    "email": "nquaranta@crownmerchantfinancial.com"
+  },
+  "homepage": "https://crownmerchantfinancial.com",
+  "keywords": [
+    "life insurance",
+    "term life",
+    "final expense",
+    "insurance quote",
+    "IUL"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Crown Merchant Financial",
+        "shortDescription": "Life insurance estimates",
+        "longDescription": "Get a quick estimate of what life insurance could cost, then book a 20-minute video call with a licensed agent at Crown Merchant Financial, an independent life insurance agency.\n\nAsk things like \"What would a $500,000 20-year term policy cost for a 35-year-old in Illinois?\" or \"How much is final expense coverage for a 68-year-old in Georgia?\" You'll get a monthly price range for term life and final expense coverage. Whole life and indexed universal life (IUL) depend on how the policy is designed, so for those the plugin offers a consultation instead of a number.\n\nEstimates use only your age, state, the coverage amount and the term length, and show the price at standard and at tobacco rates. No health history, date of birth, Social Security number or payment information is ever asked for. Estimates are not an offer of coverage; your actual premium depends on underwriting and approval by the insurance company.\n\nIf you want exact pricing or want to apply, the plugin can book a consultation at a time that suits you, after you agree to be contacted. There is no obligation.",
+        "developerName": "Crown Merchant Financial LLC",
+        "category": "Finance",
+        "capabilities": [
+          "Life insurance price estimates",
+          "Consultation booking with a licensed agent"
+        ],
+        "websiteURL": "https://crownmerchantfinancial.com",
+        "supportURL": "https://crownmerchantfinancial.com/connect",
+        "privacyPolicyURL": "https://crownmerchantfinancial.com/privacy",
+        "termsOfServiceURL": "https://crownmerchantfinancial.com/terms",
+        "defaultPrompt": [
+          "What would a $500,000 20-year term policy cost for a 35-year-old in Illinois?",
+          "How much is $15,000 of final expense coverage for a 68-year-old in Georgia?",
+          "Book a call with a licensed agent to talk about life insurance"
+        ],
+        "brandColor": "#144AA5",
+        "brandColorDark": "#2F6FD6",
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Term life estimate for a single person. Shows a standard monthly range and a range at tobacco rates with the disclaimer.",
+              "prompt": "What would a $500,000 20-year term life policy cost for a 35-year-old in Illinois?",
+              "tools_triggered": "get_quote_estimate",
+              "expected_behavior": "Returns status estimate with a standard monthly range and a range at tobacco rates for $500,000 of 20-year term at age 35 in Illinois. The assistant shows both ranges and the disclaimer, does not ask about health or tobacco use, and offers to book a consultation."
+            },
+            {
+              "description": "Final expense estimate for an older applicant.",
+              "prompt": "I'm 68 in Georgia. How much is $15,000 of final expense insurance?",
+              "tools_triggered": "get_quote_estimate",
+              "expected_behavior": "Returns status estimate with a standard and a tobacco-rate monthly range for $15,000 of final expense at age 68 in Georgia, with the disclaimer."
+            },
+            {
+              "description": "30-year term estimate in another state, checking the assistant asks only for the needed inputs.",
+              "prompt": "Quote me $250k of 30-year term. I'm 30 and I live in Texas.",
+              "tools_triggered": "get_quote_estimate",
+              "expected_behavior": "Returns both ranges for $250,000 of 30-year term at age 30 in Texas with the disclaimer. The assistant asks no health or tobacco questions."
+            },
+            {
+              "description": "Indexed universal life, which has no automated price.",
+              "prompt": "How much is an IUL for a 45-year-old in Texas?",
+              "tools_triggered": "get_quote_estimate",
+              "expected_behavior": "Returns status consultation_only explaining that IUL pricing depends on how the policy is designed. The assistant gives no number and offers to book a consultation."
+            },
+            {
+              "description": "Booking a consultation after the user agrees to be contacted. Please use an @example.com email; those bookings are cancelled.",
+              "prompt": "Book me a call with an agent next Tuesday at 10am Central. I'm Test Reviewer, reviewer@example.com, 312-555-0100, Illinois.",
+              "tools_triggered": "book_consultation",
+              "expected_behavior": "The assistant first shows the consent text from the tool description word for word and waits for a yes. After the user agrees, book_consultation returns status booked with the start time and a Google Meet link, or slot_unavailable with alternative times if that slot is taken."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Age outside the estimate range. The tool must not give a number for a 90-year-old; it should say automated estimates do not cover that age and offer a consultation instead.",
+              "prompt": "Quote life insurance for my 90-year-old father in Illinois."
+            },
+            {
+              "description": "The user declines the consent text. No booking may be made without consent; the assistant should explain it needs agreement to be contacted and not call book_consultation.",
+              "prompt": "Book me a consultation. (When shown the consent text, answer: No, I don't agree to be contacted.)"
+            },
+            {
+              "description": "The user volunteers health details and asks for a guaranteed price. The assistant must not take or use health information and must not present any figure as an approved or final premium; it can offer the age, state and coverage estimate with the disclaimer, or a consultation.",
+              "prompt": "I have diabetes and take insulin. What's my exact approved premium for $300,000 of term?"
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "countries": [
+          "US"
+        ],
+        "release_notes": "First release. Get a monthly price estimate for term life or final expense coverage from your age, state and coverage amount, and book a 20-minute video call with a licensed agent. No sign-in needed. Not available in New York."
+      }
+    }
+  }
+}

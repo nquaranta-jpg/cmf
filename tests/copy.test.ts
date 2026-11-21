@@ -40,7 +40,7 @@ describe("compliance copy", () => {
   }
   it("tool descriptions match the spec verbatim", () => {
     expect(copy.QUOTE_TOOL_DESCRIPTION).toBe(
-      "Returns an estimated monthly premium range for life insurance from Crown Merchant Financial, a licensed independent life insurance agency. Estimates only, not an offer of coverage. Always show the user the disclaimer returned with the result. If the user wants exact pricing or wants to apply, offer to book a free consultation with the book_consultation tool.",
+      "Returns an estimated monthly premium range for life insurance from Crown Merchant Financial, a licensed independent life insurance agency, from age, state, product and coverage only. Estimates only, not an offer of coverage. The result has a standard range and a second range at tobacco rates; show both and let the user read the one that fits. Never ask the user about their health or tobacco use. Always show the user the disclaimer returned with the result. If the user wants exact pricing or wants to apply, offer to book a free consultation with the book_consultation tool.",
     );
     expect(copy.BOOK_TOOL_DESCRIPTION.startsWith("Books a free 20-minute video consultation with a licensed agent at Crown Merchant Financial.")).toBe(true);
     expect(copy.BOOK_TOOL_DESCRIPTION).toContain(copy.CONSENT_TEXT);

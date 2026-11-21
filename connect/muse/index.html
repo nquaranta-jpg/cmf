@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connect Your AI Assistant | Crown Merchant Financial</title>
-    <meta name="description" content="Crown Merchant Financial offers a hosted MCP connector so AI assistants like Meta Muse can get a life insurance estimate and book a free consultation with a licensed agent." />
+    <meta name="description" content="Crown Merchant Financial offers a hosted MCP connector so AI assistants like ChatGPT and Meta Muse can get a life insurance estimate and book a free consultation with a licensed agent." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://crownmerchantfinancial.com/connect/muse" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
@@ -131,13 +131,13 @@
 
     <main class="connect-wrap">
       <h2>What this is</h2>
-      <p>Crown Merchant Financial runs a hosted connector built on the open <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">Model Context Protocol</a> (MCP). Any assistant that supports MCP can use it, starting with Meta Muse. There is no app to install and no account to create.</p>
+      <p>Crown Merchant Financial runs a hosted connector built on the open <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">Model Context Protocol</a> (MCP). Any assistant that supports MCP can use it, including ChatGPT and Meta Muse. There is no app to install and no account to create.</p>
 
       <h2>How to connect today</h2>
       <ol class="steps">
-        <li>Open your assistant (for Muse, the Muse app or website).</li>
+        <li>Open your assistant. In ChatGPT, find Crown Merchant Financial in the plugin directory once it is listed; for Muse, use the Muse app or website.</li>
         <li>Say: <strong>"Connect to https://crownmerchantfinancial.com/mcp"</strong> or add it as a custom connector in settings.</li>
-        <li>Ask for a quote, for example: "How much would a $500k 20-year term policy cost for a 35-year-old non-smoker in Illinois?"</li>
+        <li>Ask for a quote, for example: "How much would a $500k 20-year term policy cost for a 35-year-old in Illinois?"</li>
       </ol>
       <div class="endpoint">
         <span class="label">MCP endpoint</span>
@@ -150,12 +150,11 @@
         <div class="tool-card">
           <h3>Life Insurance Quote Estimate</h3>
           <code>get_quote_estimate</code>
-          <p>Returns an estimated monthly premium range for term life or final expense coverage. For indexed universal life and whole life it explains that pricing depends on policy design and offers a call instead.</p>
+          <p>Returns an estimated monthly premium range for term life or final expense coverage. For indexed universal life and whole life it explains that pricing depends on policy design and offers a call instead. It shows a standard range and a range at tobacco rates, so it never asks about your health or tobacco use.</p>
           <strong>Collects</strong>
           <ul>
             <li>Age</li>
             <li>State</li>
-            <li>Tobacco or nicotine use in the last 12 months (yes or no)</li>
             <li>Product type and coverage amount</li>
             <li>Term length (10, 20, or 30 years)</li>
           </ul>

@@ -18,7 +18,7 @@ export const CONSENT_TEXT =
 
 export const QUOTE_TOOL_TITLE = "Life Insurance Quote Estimate";
 export const QUOTE_TOOL_DESCRIPTION =
-  "Returns an estimated monthly premium range for life insurance from Crown Merchant Financial, a licensed independent life insurance agency. Estimates only, not an offer of coverage. Always show the user the disclaimer returned with the result. If the user wants exact pricing or wants to apply, offer to book a free consultation with the book_consultation tool.";
+  "Returns an estimated monthly premium range for life insurance from Crown Merchant Financial, a licensed independent life insurance agency, from age, state, product and coverage only. Estimates only, not an offer of coverage. The result has a standard range and a second range at tobacco rates; show both and let the user read the one that fits. Never ask the user about their health or tobacco use. Always show the user the disclaimer returned with the result. If the user wants exact pricing or wants to apply, offer to book a free consultation with the book_consultation tool.";
 
 export const BOOK_TOOL_TITLE = "Book a Life Insurance Consultation";
 export const BOOK_TOOL_DESCRIPTION =
