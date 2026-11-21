@@ -24,6 +24,56 @@ their CSS/JS and the `lending-inquiry` function were removed; `/lending` and
 `/lending/*` now return 404 with the noindex `gone.html` page (see
 `netlify.toml`). Do not re-add lending, factoring or capital-desk copy.
 
+## Site visitors (tagged email links)
+
+First-party tracking of people we email. A link like
+`https://crownmerchantfinancial.com/launch?v=<token>` identifies the person it
+was sent to: `js/visit.js` moves the token into a first-party `cmf_v` cookie,
+strips it from the address bar, and reports page views and time on page to
+`/api/visit` (which re-sets the cookie server-side, because Safari expires
+script-set cookies after 7 days). It must stay the first, non-deferred script
+in `<head>` so the token is gone before `js/tracking.js` or any ad pixel reads
+the URL. Links can only point at pages in `TRACKED_PAGES`
+(`lib/visits.mjs`); a test checks that list against the HTML. Add a new page
+there and to its `<head>` together. Visitors who never clicked a tagged
+link are not tracked. No third party, no database: everything lives in the
+`visits` Netlify Blobs store (layout in `netlify/functions/lib/visits.mjs`).
+
+- **Make links:** `/dashboard/visitors.html` (dashboard PIN) → "Make tagged
+  links". One email always gets the same token. Bulk: paste a CSV
+  (`email`, optional `name`, `lead_id`, `url`) and download it back with a
+  `link` column for mail merge.
+- **See who's visiting:** same page, "Who's visiting". Hot = 2+ visits in a
+  week or 2+ minutes on site. Click a row for the full history and a delete
+  button for privacy requests.
+- **Alerts:** a new visit (after 30 quiet minutes) posts to Telegram, at most
+  once per person per 6 hours. Chat: `VISIT_TELEGRAM_CHAT_ID`, else
+  `TELEGRAM_CHAT_ID`.
+- **CMF agent app (primer emails):** the app mints each primer's token with
+  the lead's ID (`CMF_SITE_KEY` in both Netlify sites). Every event for those
+  people is posted to the app's `/api/site-visits` (`CMF_APP_URL`, default
+  https://app.crownmerchantfinancial.com), which moves the lead up the dial
+  queue and tasks the agent working it. Telegram then fires only for the
+  owner's own leads (the app answers `alerted: "owner"`) or when the app
+  can't be reached. Details: the app repo's CLAUDE.md, "Website visits from
+  the primer".
+- **Scripts/other apps:** `POST /api/visit-admin?action=mint` with header
+  `X-Track-Key: $CMF_SITE_KEY` (set that env var first; the key can only
+  mint, never read or delete) and
+  `{ "email", "name", "source", "lead_id", "url" }` or `{ "rows": [...] }`
+  (200 max). Returns `link`.
+- **Guards:** a view only counts after a scroll/tap/click/keypress (email
+  security scanners open links too); bot user agents, Global Privacy Control
+  and the opt-out button on `/privacy` are honored; 200 events per token per
+  hour and 5,000 stored events per person (Blobs 8 has no conditional writes,
+  so simultaneous beacons can slip past the hourly cap; the 5,000 ceiling
+  bounds storage).
+- **Compliance:** visiting the site is not consent to call or text; the
+  agent app's calling rules (consent, DNC, hours) are unchanged. Deleting a
+  person on the dashboard also clears the agent app's copy of their visits.
+  The `/privacy` section "Links in our emails" describes it (draft for
+  counsel).
+
 ## CMF Launch
 
 Routes: `/launch` (funnel), `/launch/leads`, `/launch/ads`, `/launch/training`,

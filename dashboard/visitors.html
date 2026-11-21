@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CMF Site Visitors</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a1628; color: #e2e8f0; min-height: 100vh; }
+    a { color: #c5a44e; }
+    .pin-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .pin-box { background: #1a2744; padding: 40px; border-radius: 16px; text-align: center; width: 320px; }
+    .pin-box h2 { color: #c5a44e; margin-bottom: 8px; }
+    .pin-box p { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
+    .pin-box input { width: 100%; padding: 14px; border: 2px solid #2d3f5e; border-radius: 8px; background: #0a1628; color: #fff; font-size: 18px; text-align: center; letter-spacing: 8px; }
+    .pin-box button { width: 100%; margin-top: 16px; padding: 14px; background: #c5a44e; color: #0a1628; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .error { color: #ef4444; font-size: 13px; margin-top: 8px; min-height: 1em; }
+
+    .app { display: none; }
+    .app.active { display: block; }
+    header { background: #1a2744; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2d3f5e; gap: 12px; flex-wrap: wrap; }
+    header h1 { font-size: 20px; color: #c5a44e; }
+    header nav { display: flex; gap: 12px; align-items: center; font-size: 14px; }
+    .tabs { display: flex; gap: 4px; padding: 16px 24px 0; }
+    .tab { padding: 10px 20px; background: #1a2744; border: none; color: #94a3b8; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 14px; font-weight: 600; }
+    .tab.active { background: #2d3f5e; color: #c5a44e; }
+    .content { padding: 16px 24px 48px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .btn { padding: 8px 16px; background: #2d3f5e; border: none; color: #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .btn.gold { background: #c5a44e; color: #0a1628; font-weight: 700; }
+    .btn.danger { background: #7f1d1d; }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    select, input[type=text], input[type=email], textarea { padding: 9px 12px; background: #0a1628; color: #e2e8f0; border: 1px solid #2d3f5e; border-radius: 6px; font: inherit; font-size: 14px; }
+    textarea { width: 100%; min-height: 140px; font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+    label { display: block; font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin: 14px 0 6px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+    .row > div { flex: 1; min-width: 200px; }
+    .row input, .row select { width: 100%; }
+    .card { background: #1a2744; border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; max-width: 980px; }
+    .card h2 { font-size: 16px; color: #c5a44e; margin-bottom: 4px; }
+    .card p.help { color: #94a3b8; font-size: 13px; line-height: 1.5; }
+    .out { margin-top: 14px; padding: 12px; background: #0a1628; border-radius: 8px; font-family: ui-monospace, Menlo, monospace; font-size: 13px; word-break: break-all; display: none; }
+    .out.show { display: block; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+    .stat-card { background: #1a2744; padding: 18px; border-radius: 12px; text-align: center; }
+    .stat-card .number { font-size: 30px; font-weight: 800; color: #c5a44e; }
+    .stat-card .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 10px 12px; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2d3f5e; }
+    td { padding: 10px 12px; border-bottom: 1px solid #1a2744; font-size: 14px; vertical-align: top; }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: #1a2744; }
+    .muted { color: #64748b; font-size: 12px; }
+    .hot { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #ef444433; color: #f87171; margin-left: 6px; }
+    .empty { color: #64748b; padding: 32px 0; text-align: center; }
+    .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+
+    .drawer-bg { position: fixed; inset: 0; background: #0008; display: none; }
+    .drawer-bg.show { display: block; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100%); background: #111d33; border-left: 1px solid #2d3f5e; padding: 24px; overflow-y: auto; transform: translateX(100%); transition: transform .2s; }
+    .drawer.show { transform: none; }
+    .drawer h2 { color: #c5a44e; font-size: 18px; margin-bottom: 2px; }
+    .ev { padding: 8px 0; border-bottom: 1px solid #1a2744; font-size: 13px; display: flex; gap: 10px; }
+    .ev .when { color: #64748b; width: 150px; flex: none; }
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .hide-sm { display: none; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pin-screen" id="pinScreen">
+    <div class="pin-box">
+      <h2>Site Visitors</h2>
+      <p>Enter the dashboard PIN</p>
+      <input type="password" id="pinInput" maxlength="20" placeholder="PIN" autocomplete="current-password">
+      <button id="pinBtn">Enter</button>
+      <div class="error" id="pinError"></div>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+    <header>
+      <h1>Site Visitors</h1>
+      <nav><a href="/dashboard">Lead dashboard</a><button class="btn" id="refreshBtn">Refresh</button></nav>
+    </header>
+    <div class="tabs">
+      <button class="tab active" data-tab="activity">Who's visiting</button>
+      <button class="tab" data-tab="links">Make tagged links</button>
+    </div>
+
+    <div class="content">
+      <section class="panel active" id="panel-activity">
+        <div class="stats-row">
+          <div class="stat-card"><div class="number" id="sPeople">–</div><div class="label">People seen</div></div>
+          <div class="stat-card"><div class="number" id="sToday">–</div><div class="label">Seen today</div></div>
+          <div class="stat-card"><div class="number" id="sHot">–</div><div class="label">Hot</div></div>
+          <div class="stat-card"><div class="number" id="sViews">–</div><div class="label">Page views</div></div>
+        </div>
+        <div class="toolbar">
+          <select id="days">
+            <option value="7">Last 7 days</option>
+            <option value="30" selected>Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="365">Last year</option>
+          </select>
+          <label style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:#e2e8f0;"><input type="checkbox" id="hotOnly"> Hot only</label>
+          <input type="text" id="filter" placeholder="Filter by name, email or source">
+        </div>
+        <table>
+          <thead><tr><th>Person</th><th>Last seen</th><th>Visits</th><th class="hide-sm">Time on site</th><th class="hide-sm">Top pages</th><th class="hide-sm">Link from</th></tr></thead>
+          <tbody id="people"></tbody>
+        </table>
+        <p class="muted" id="truncMsg" style="display:none;margin-top:10px"></p>
+        <div class="empty" id="emptyMsg" style="display:none">Nobody yet. People show up here after they click a tagged link and scroll or tap on the page.</div>
+        <p class="muted" style="margin-top:14px">Hot = two or more visits in the last week, or two minutes or more on the site. Only people who clicked a tagged link appear here; everyone else stays anonymous.</p>
+      </section>
+
+      <section class="panel" id="panel-links">
+        <div class="card">
+          <h2>One link</h2>
+          <p class="help">Makes a link that recognizes this person when they open it. The same email always gets the same code, so their history stays together across emails.</p>
+          <div class="row">
+            <div><label>Email</label><input type="email" id="oneEmail" placeholder="jane@example.com"></div>
+            <div><label>Name</label><input type="text" id="oneName" placeholder="Jane Doe"></div>
+          </div>
+          <div class="row">
+            <div><label>Page</label><input type="text" id="oneUrl" list="pages" value="/"></div>
+            <div><label>Link from (campaign)</label><input type="text" id="oneSource" list="sources" placeholder="dec1-career-evening"></div>
+          </div>
+          <div style="margin-top:16px"><button class="btn gold" id="oneBtn">Make link</button> <span class="error" id="oneErr"></span></div>
+          <div class="out" id="oneOut"></div>
+        </div>
+
+        <div class="card">
+          <h2>A list (mail merge)</h2>
+          <p class="help">Paste CSV with a header row: <code>email</code> is required, <code>name</code>, <code>lead_id</code> and <code>url</code> are optional. You get the same rows back with a <code>link</code> column to merge into your email.</p>
+          <label>CSV</label>
+          <textarea id="csvIn" placeholder="email,name&#10;jane@example.com,Jane Doe&#10;sam@example.com,Sam Lee"></textarea>
+          <div class="row">
+            <div><label>Page (when a row has no url)</label><input type="text" id="bulkUrl" list="pages" value="/"></div>
+            <div><label>Link from (campaign)</label><input type="text" id="bulkSource" list="sources" placeholder="dec1-career-evening"></div>
+          </div>
+          <div style="margin-top:16px"><button class="btn gold" id="bulkBtn">Make links</button> <button class="btn" id="bulkDl" disabled>Download CSV</button> <span class="error" id="bulkErr"></span></div>
+          <div class="out" id="bulkOut"></div>
+        </div>
+
+        <datalist id="pages">
+          <option value="/">Home</option>
+          <option value="/agents">Agents (careers)</option>
+          <option value="/society/new-fortunes">Dec 1 career evening</option>
+          <option value="/society">Society</option>
+          <option value="/society/workshops">Workshops</option>
+          <option value="/launch">CMF Launch</option>
+          <option value="/onboarding/">Agent onboarding</option>
+          <option value="/card">Nick's card</option>
+          <option value="/insights">Insights</option>
+          <option value="/clients">Clients</option>
+          <option value="/investors">Investors</option>
+          <option value="/community">Community</option>
+          <option value="/quote">Quote</option>
+          <option value="/products/term-life">Term life</option>
+          <option value="/products/iul">IUL</option>
+          <option value="/products/final-expense">Final expense</option>
+          <option value="/products/annuity">Annuity</option>
+          <option value="/vgli-calculator">VGLI calculator</option>
+        </datalist>
+        <datalist id="sources">
+          <option value="agent-recruiting"></option>
+          <option value="dec1-career-evening"></option>
+          <option value="fmcsa-primer"></option>
+          <option value="launch"></option>
+          <option value="partners"></option>
+        </datalist>
+      </section>
+    </div>
+  </div>
+
+  <div class="drawer-bg" id="drawerBg"></div>
+  <aside class="drawer" id="drawer"></aside>
+
+  <script>
+  (function () {
+    "use strict";
+    var PIN = "";
+    var API = "/api/visit-admin";
+    var people = [];
+    var totals = null;
+    var truncated = false;
+    var serverNow = Date.now();
+    var bulkRows = null;
+
+    function $(id) { return document.getElementById(id); }
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function api(action, params, body) {
+      var qs = new URLSearchParams(Object.assign({ action: action }, params || {})).toString();
+      var opts = { method: body ? "POST" : "GET", headers: { "X-Dashboard-Pin": PIN } };
+      if (body) { opts.headers["Content-Type"] = "application/json"; opts.body = JSON.stringify(body); }
+      return fetch(API + "?" + qs, opts).then(function (r) {
+        return r.json().catch(function () { return { error: "HTTP " + r.status }; }).then(function (d) {
+          if (!r.ok && !d.error) d.error = "HTTP " + r.status;
+          d._status = r.status;
+          return d;
+        });
+      });
+    }
+    function ago(ms) {
+      var s = Math.max(0, Math.round((serverNow - ms) / 1000));
+      if (s < 60) return "just now";
+      var m = Math.round(s / 60); if (m < 60) return m + " min ago";
+      var h = Math.round(m / 60); if (h < 24) return h + " h ago";
+      var d = Math.round(h / 24); return d + (d === 1 ? " day ago" : " days ago");
+    }
+    function stamp(ms) {
+      return new Date(ms).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+    }
+    function dur(secs) {
+      secs = Math.round(secs || 0);
+      if (secs < 60) return secs + "s";
+      var m = Math.floor(secs / 60); if (m < 60) return m + "m " + (secs % 60) + "s";
+      return Math.floor(m / 60) + "h " + (m % 60) + "m";
+    }
+
+    // ── Sign in ──
+    function tryPin(pin, silent) {
+      PIN = pin;
+      return api("activity", { days: 1 }).then(function (d) {
+        if (d.error) {
+          if (!silent) $("pinError").textContent = d._status === 401 ? "Wrong PIN" : d.error;
+          return false;
+        }
+        try { localStorage.setItem("cmf_pin", PIN); } catch (e) {}
+        $("pinScreen").style.display = "none";
+        $("app").classList.add("active");
+        load();
+        var m = location.hash.match(/t=([A-Za-z0-9_-]{16})/);
+        if (m) openPerson(m[1]);
+        return true;
+      }).catch(function () { if (!silent) $("pinError").textContent = "Connection error"; });
+    }
+    $("pinBtn").onclick = function () { tryPin($("pinInput").value, false); };
+    $("pinInput").addEventListener("keydown", function (e) { if (e.key === "Enter") tryPin($("pinInput").value, false); });
+    try { var saved = localStorage.getItem("cmf_pin"); if (saved) tryPin(saved, true); } catch (e) {}
+
+    // ── Tabs ──
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+      t.onclick = function () {
+        document.querySelectorAll(".tab").forEach(function (x) { x.classList.toggle("active", x === t); });
+        document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("active", p.id === "panel-" + t.dataset.tab); });
+      };
+    });
+
+    // ── Activity ──
+    function load() {
+      return api("activity", { days: $("days").value }).then(function (d) {
+        if (d.error) { $("people").innerHTML = '<tr><td colspan="6" class="error">' + esc(d.error) + "</td></tr>"; return; }
+        serverNow = d.now;
+        people = d.people || [];
+        totals = d.totals || null;
+        truncated = !!d.truncated;
+        render();
+      });
+    }
+    function render() {
+      var q = $("filter").value.trim().toLowerCase();
+      var hotOnly = $("hotOnly").checked;
+      var list = people.filter(function (p) {
+        if (hotOnly && !p.hot) return false;
+        if (!q) return true;
+        return (p.name + " " + p.email + " " + p.source + " " + p.lead_id).toLowerCase().indexOf(q) >= 0;
+      });
+      var startOfDay = new Date(serverNow); startOfDay.setHours(0, 0, 0, 0);
+      $("sPeople").textContent = totals ? totals.people : people.length;
+      $("sToday").textContent = people.filter(function (p) { return p.last >= startOfDay.getTime(); }).length;
+      $("sHot").textContent = totals ? totals.hot : people.filter(function (p) { return p.hot; }).length;
+      $("sViews").textContent = totals ? totals.views : people.reduce(function (n, p) { return n + (p.views || 0); }, 0);
+      $("emptyMsg").style.display = list.length ? "none" : "block";
+      $("truncMsg").style.display = truncated ? "block" : "none";
+      $("truncMsg").textContent = truncated ? "Showing the " + people.length + " most recent of " + totals.people + " people. Narrow the date range to see older ones." : "";
+      $("people").innerHTML = list.map(function (p) {
+        var pages = (p.topPages || []).map(function (x) { return esc(x.path) + (x.n > 1 ? " ×" + x.n : ""); }).join("<br>");
+        return '<tr data-t="' + esc(p.token) + '">' +
+          "<td><strong>" + esc(p.name || p.email) + "</strong>" + (p.hot ? '<span class="hot">HOT</span>' : "") +
+          (p.name ? '<div class="muted">' + esc(p.email) + "</div>" : "") + "</td>" +
+          "<td>" + esc(ago(p.last)) + '<div class="muted">' + esc(p.lastPath) + (p.device ? " · " + esc(p.device) : "") + "</div></td>" +
+          "<td>" + p.sessions + (p.sessionsThisWeek ? '<div class="muted">' + p.sessionsThisWeek + " this week</div>" : "") + "</td>" +
+          '<td class="hide-sm">' + dur(p.secs) + '<div class="muted">' + p.views + " views</div></td>" +
+          '<td class="hide-sm">' + pages + "</td>" +
+          '<td class="hide-sm">' + esc(p.source) + "</td></tr>";
+      }).join("");
+    }
+    $("people").addEventListener("click", function (e) {
+      var tr = e.target.closest("tr[data-t]");
+      if (tr) openPerson(tr.dataset.t);
+    });
+    $("days").onchange = load;
+    $("hotOnly").onchange = render;
+    $("filter").oninput = render;
+    $("refreshBtn").onclick = load;
+    setInterval(function () { if (document.visibilityState === "visible" && PIN) load(); }, 30000);
+
+    // ── One person ──
+    function closeDrawer() {
+      $("drawer").classList.remove("show");
+      $("drawerBg").classList.remove("show");
+      if (location.hash) history.replaceState(null, "", location.pathname);
+    }
+    $("drawerBg").onclick = closeDrawer;
+    function openPerson(token) {
+      $("drawer").innerHTML = '<p class="muted">Loading…</p>';
+      $("drawer").classList.add("show");
+      $("drawerBg").classList.add("show");
+      api("lead", { t: token }).then(function (d) {
+        if (d.error) { $("drawer").innerHTML = '<p class="error">' + esc(d.error) + '</p><button class="btn" id="dClose">Close</button>'; $("dClose").onclick = closeDrawer; return; }
+        serverNow = d.now;
+        var r = d.record, s = d.summary;
+        var evs = (d.events || []).map(function (ev) {
+          var what = ev.type === "view"
+            ? "Viewed " + esc(ev.path) + (ev.ref ? ' <span class="muted">from ' + esc(ev.ref) + "</span>" : "")
+            : '<span class="muted">' + dur(ev.secs) + " on " + esc(ev.path) + "</span>";
+          return '<div class="ev"><div class="when">' + esc(stamp(ev.ts)) + "</div><div>" + what + "</div></div>";
+        }).join("");
+        $("drawer").innerHTML =
+          '<div style="display:flex;justify-content:space-between;align-items:start;gap:12px"><div>' +
+          "<h2>" + esc(r.name || r.email) + "</h2>" +
+          '<div class="muted">' + esc(r.email) + (r.lead_id ? " · lead " + esc(r.lead_id) : "") + "</div>" +
+          '<div class="muted">Link from ' + esc(r.source || "—") + " · tagged " + esc(stamp(r.created)) + "</div></div>" +
+          '<button class="btn" id="dClose">Close</button></div>' +
+          '<div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin:18px 0">' +
+          '<div class="stat-card"><div class="number">' + (s.sessions || 0) + '</div><div class="label">Visits</div></div>' +
+          '<div class="stat-card"><div class="number">' + (s.views || 0) + '</div><div class="label">Page views</div></div>' +
+          '<div class="stat-card"><div class="number">' + dur(s.secs) + '</div><div class="label">On site</div></div></div>' +
+          (s.first ? '<p class="muted">First seen ' + esc(stamp(s.first)) + " · last seen " + esc(ago(s.last)) + "</p>" : '<p class="muted">Link made, not clicked yet.</p>') +
+          '<div style="margin-top:14px">' + (evs || '<p class="muted">No activity yet.</p>') + "</div>" +
+          '<div style="margin-top:28px;border-top:1px solid #2d3f5e;padding-top:16px">' +
+          '<p class="muted" style="margin-bottom:10px">Privacy request? This deletes their code and all activity. Links already sent to them stop working.</p>' +
+          '<button class="btn danger" id="dForget">Delete everything about this person</button></div>';
+        $("dClose").onclick = closeDrawer;
+        $("dForget").onclick = function () {
+          if (!confirm("Delete " + (r.email) + " and all of their site activity? This can't be undone.")) return;
+          api("forget", null, { token: token }).then(function (res) {
+            if (res.error) { alert(res.error); return; }
+            if (res.app === "failed") alert("Deleted here, but the agent app's copy couldn't be cleared. Try again later, or clear the lead's site visits in the app.");
+            closeDrawer();
+            load();
+          });
+        };
+      });
+    }
+
+    // ── Links ──
+    function copyBtn(text) {
+      var b = document.createElement("button");
+      b.className = "btn"; b.textContent = "Copy"; b.style.marginLeft = "8px";
+      b.onclick = function () { navigator.clipboard.writeText(text).then(function () { b.textContent = "Copied"; }); };
+      return b;
+    }
+    $("oneBtn").onclick = function () {
+      $("oneErr").textContent = "";
+      $("oneOut").classList.remove("show");
+      $("oneBtn").disabled = true;
+      api("mint", null, { email: $("oneEmail").value, name: $("oneName").value, source: $("oneSource").value, url: $("oneUrl").value })
+        .finally(function () { $("oneBtn").disabled = false; })
+        .then(function (d) {
+          if (d.error) { $("oneErr").textContent = d.error; return; }
+          var out = $("oneOut");
+          out.innerHTML = "";
+          var span = document.createElement("span"); span.textContent = d.link;
+          out.appendChild(span); out.appendChild(copyBtn(d.link));
+          if (!d.created) {
+            var note = document.createElement("div");
+            note.className = "muted"; note.style.marginTop = "8px";
+            note.textContent = "This email already had a code, so the link reuses it.";
+            out.appendChild(note);
+          }
+          out.classList.add("show");
+        });
+    };
+
+    // Small CSV parser: quoted fields, commas and newlines inside quotes. A
+    // quote opens a quoted field only at the start of the field; elsewhere it
+    // is a plain character. Returns null when a quote is never closed.
+    function parseCsv(text) {
+      var rows = [], row = [], f = "", q = false, quotedField = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (q) {
+          if (c === '"' && text[i + 1] === '"') { f += '"'; i++; }
+          else if (c === '"') q = false;
+          else f += c;
+        } else if (c === '"' && f === "" && !quotedField) { q = true; quotedField = true; }
+        else if (c === ",") { row.push(f); f = ""; quotedField = false; }
+        else if (c === "\n" || c === "\r") {
+          if (c === "\r" && text[i + 1] === "\n") i++;
+          row.push(f); f = ""; quotedField = false; rows.push(row); row = [];
+        } else f += c;
+      }
+      if (q) return null;
+      if (f !== "" || row.length) { row.push(f); rows.push(row); }
+      return rows.filter(function (r) { return r.some(function (x) { return x.trim() !== ""; }); });
+    }
+    function csvCell(v) {
+      v = String(v == null ? "" : v);
+      // Neutralize spreadsheet formulas in cells that came from pasted data.
+      if (/^[=+\-@\t\r]/.test(v)) v = "'" + v;
+      return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+    }
+
+    $("bulkBtn").onclick = function () {
+      $("bulkErr").textContent = "";
+      $("bulkOut").classList.remove("show");
+      $("bulkDl").disabled = true;
+      var rows = parseCsv($("csvIn").value);
+      if (!rows) { $("bulkErr").textContent = "A quote in the CSV is never closed. Check fields that contain commas."; return; }
+      if (rows.length < 2) { $("bulkErr").textContent = "Paste a header row and at least one person."; return; }
+      var head = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+      var ei = head.indexOf("email");
+      if (ei < 0) { $("bulkErr").textContent = "The header row needs an email column."; return; }
+      var col = function (name) { return head.indexOf(name); };
+      var data = rows.slice(1).map(function (r) {
+        return {
+          email: r.length > head.length ? "" : (r[ei] || "").trim(), // misaligned rows are skipped, not guessed
+          name: col("name") >= 0 ? (r[col("name")] || "").trim() : "",
+          lead_id: col("lead_id") >= 0 ? (r[col("lead_id")] || "").trim() : "",
+          url: col("url") >= 0 ? (r[col("url")] || "").trim() : "",
+        };
+      });
+      if (data.length > 2000) { $("bulkErr").textContent = "Up to 2,000 rows at a time."; return; }
+      var source = $("bulkSource").value, url = $("bulkUrl").value;
+      var results = [], i = 0, CHUNK = 100;
+      $("bulkBtn").disabled = true;
+      function next() {
+        if (i >= data.length) return Promise.resolve();
+        var chunk = data.slice(i, i + CHUNK).map(function (r) { var o = { email: r.email, name: r.name, lead_id: r.lead_id }; if (r.url) o.url = r.url; return o; });
+        $("bulkErr").textContent = "Working… " + i + " of " + data.length;
+        return api("mint", null, { rows: chunk, source: source, url: url }).then(function (d) {
+          if (d.error) throw new Error(d.error);
+          results = results.concat(d.results);
+          i += CHUNK;
+          return next();
+        });
+      }
+      next().then(function () {
+        $("bulkErr").textContent = "";
+        var outHead = rows[0].concat(["link"]);
+        var out = [outHead].concat(rows.slice(1).map(function (r, idx) {
+          var res = results[idx] || {};
+          var width = rows[0].length;
+          var padded = r.slice(0, width); while (padded.length < width) padded.push("");
+          if (r.length > width) return padded.concat(["ERROR: row has more columns than the header (put quotes around fields that contain commas)"]);
+          return padded.concat([res.link || ("ERROR: " + (res.error || "unknown"))]);
+        }));
+        bulkRows = out;
+        var ok = results.filter(function (x) { return x.link; }).length;
+        var bad = results.length - ok;
+        var fresh = results.filter(function (x) { return x.created; }).length;
+        $("bulkOut").textContent = ok + " links ready (" + fresh + " new people, " + (ok - fresh) + " already had a code)" + (bad ? ", " + bad + " rows skipped (bad email or extra columns; see the link column)" : "") + ". Download the CSV and merge the link column into your email.";
+        $("bulkOut").classList.add("show");
+        $("bulkDl").disabled = false;
+      }).catch(function (e) {
+        $("bulkErr").textContent = e.message + " (stopped after " + i + " rows)";
+      }).then(function () { $("bulkBtn").disabled = false; });
+    };
+    $("bulkDl").onclick = function () {
+      if (!bulkRows) return;
+      var csv = bulkRows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n");
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+      a.download = "tagged-links-" + ($("bulkSource").value || "list").replace(/[^a-z0-9-]+/gi, "-") + ".csv";
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    };
+  })();
+  </script>
+</body>
+</html>

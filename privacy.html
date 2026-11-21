@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script src="/js/visit.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy | Crown Merchant Financial</title>
     <meta name="description" content="How Crown Merchant Financial collects, uses, and protects your information." />
@@ -24,6 +25,9 @@
       ul { padding-left: 1.4rem; margin-bottom: 0.75rem; }
       a { color: #144aa5; }
       .back { display: inline-block; margin-bottom: 2rem; text-decoration: none; font-weight: 600; }
+      .optout-btn { font: inherit; font-weight: 600; color: #08225a; background: #fff; border: 1px solid #08225a; border-radius: 6px; padding: 0.45rem 1rem; cursor: pointer; }
+      .optout-btn:hover { background: #f1f5f9; }
+      .optout-msg { color: #15803d; font-size: 0.9rem; margin-left: 0.5rem; }
       .footer-note { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #64748b; }
     </style>
   </head>
@@ -31,7 +35,7 @@
     <div class="wrap">
       <a class="back" href="/">&larr; Crown Merchant Financial</a>
       <h1>Privacy Policy</h1>
-      <p class="updated">Effective date: July 2, 2026. Updated September 20, 2026 to cover the AI assistant connector.</p>
+      <p class="updated">Effective date: July 2, 2026. Updated September 20, 2026 to cover the AI assistant connector, and November 21, 2026 to cover links in our emails.</p>
 
       <p>Crown Merchant Financial LLC (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;Crown Merchant Financial&rdquo;) operates crownmerchantfinancial.com. This policy explains what information we collect, how we use it, and the choices you have.</p>
 
@@ -39,6 +43,7 @@
       <ul>
         <li><strong>Information you give us:</strong> when you request a quote, download a guide, or book a call, we collect details you provide such as your name, phone number, email address, age range, desired coverage amount, and product interest.</li>
         <li><strong>Information collected automatically:</strong> like most websites, we use cookies and similar technologies (including advertising pixels from Meta, Google, Microsoft, TikTok, and OpenAI) that collect device information, pages visited, and how you arrived at our site (for example, which ad you clicked).</li>
+        <li><strong>Links in our emails:</strong> links in emails we send you may carry a code that tells us the email was yours. See &ldquo;Links in our emails&rdquo; below.</li>
       </ul>
 
       <h2>How we use your information</h2>
@@ -59,6 +64,29 @@
 
       <h2>Cookies and advertising</h2>
       <p>Our advertising pixels help us understand which ads lead to quote requests. Some (such as Meta&rsquo;s) receive limited contact information in hashed form to match conversions. You can limit ad tracking through your browser settings and the ad-preference tools offered by each platform.</p>
+
+      <h2 id="email-links">Links in our emails</h2>
+      <!-- DRAFT FOR NICK'S REVIEW (added November 21, 2026 with tagged-link tracking, js/visit.js). Have counsel review. -->
+      <p>Some links in the emails we send carry a short code that identifies the person we sent the email to. If you open one of those links:</p>
+      <ul>
+        <li><strong>What we record:</strong> we store the code in a cookie named <code>cmf_v</code> on your browser for up to 12 months, so our site recognizes your browser on later visits. While it is set, we record which pages of crownmerchantfinancial.com you view, how long you spend on them, the website that referred you, and whether you are on a phone or a computer, linked to the email address we sent the link to.</li>
+        <li><strong>What we don&rsquo;t record:</strong> anything you type into our forms (that is covered by your form submission) or your activity on other websites, and we don&rsquo;t store your IP address with this activity. Visitors who did not arrive through one of these links are not identified this way.</li>
+        <li><strong>Why:</strong> to know which information interests you, so our follow-up is relevant and well timed. If you are already working with one of our agents, they see that you visited and which pages you read, and may follow up by email, or by phone where you have given us your number to contact you.</li>
+        <li><strong>Who sees it:</strong> our own team only. It is stored with our website host (Netlify), and it is shown to the agent working with you in our internal agent software, and our team is notified of visits through a messaging service (Telegram); these providers act on our behalf. The code is removed from the page address before any advertising pixel loads, this activity is not shared with advertisers, and we do not sell it.</li>
+        <li><strong>Retention:</strong> we keep it while we are in contact with you, and delete it when you ask.</li>
+        <li><strong>Your choices:</strong> this tracking stays off if your browser sends a Global Privacy Control signal. You can also turn it off for this browser with the button below, or by clearing your cookies for our site. To have the activity we hold deleted, email <a href="mailto:nquaranta@crownmerchantfinancial.com">nquaranta@crownmerchantfinancial.com</a>.</li>
+      </ul>
+      <p><button type="button" id="visitOptOut" class="optout-btn">Stop recognizing this browser</button> <span id="visitOptOutMsg" class="optout-msg" role="status"></span></p>
+      <script>
+        document.getElementById("visitOptOut").addEventListener("click", function () {
+          if (window.cmfVisitOptOut) window.cmfVisitOptOut();
+          else {
+            document.cookie = "cmf_v=; Max-Age=0; Path=/; SameSite=Lax";
+            try { localStorage.setItem("cmf_v_off", "1"); } catch (e) {}
+          }
+          document.getElementById("visitOptOutMsg").textContent = "Done. This browser will no longer be recognized from our email links.";
+        });
+      </script>
 
       <h2>AI assistant connector</h2>
       <!-- DRAFT FOR NICK'S REVIEW (added September 20, 2026 with the Muse connector). -->
