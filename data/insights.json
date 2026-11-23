@@ -3,6 +3,14 @@
   "items": [
     {
       "type": "Insight",
+      "category": "Industry",
+      "title": "Sold, Not Bought",
+      "summary": "AI agents will matter most in consumer finance, and it will be the last category they reach. Why financial products suit agents, what slows them down, and who it favors.",
+      "url": "/insights/sold-not-bought",
+      "date": "2026-11-22"
+    },
+    {
+      "type": "Insight",
       "category": "Retirement",
       "title": "Bermuda Triangles",
       "summary": "Pensions are moving to life insurers and the promises are moving to Bermuda. Why the new system works, what the fair criticism gets right, and where retirement capital is headed.",
