@@ -221,6 +221,11 @@
   status = 200
 
 [[redirects]]
+  from = "/insights/sold-not-bought"
+  to = "/insights/sold-not-bought.html"
+  status = 200
+
+[[redirects]]
   from = "/insights/bermuda-triangles"
   to = "/insights/bermuda-triangles.html"
   status = 200
