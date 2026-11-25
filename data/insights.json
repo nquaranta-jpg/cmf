@@ -2,6 +2,14 @@
   "_readme": "Fallback snapshot only. The live source is the Google Sheet 'CMF Website: Insights & News' (https://docs.google.com/spreadsheets/d/1oQ734CY_Grh1pPM08VTEqC0q6J6QCt5wOnBni60PiM0/edit), read by netlify/functions/insights.mjs. This file is shown only if the sheet can't be read. Keep it roughly in sync. Do not add posts from nicholasquaranta.com; the blog stays separate.",
   "items": [
     {
+      "type": "News",
+      "category": "Company",
+      "title": "Get a Life Insurance Estimate in ChatGPT",
+      "summary": "Crown Merchant Financial is now an app in ChatGPT. Ask for a term life or final expense estimate in plain English and get a real monthly range in seconds.",
+      "url": "/insights/cmf-in-chatgpt",
+      "date": "2026-11-25"
+    },
+    {
       "type": "Insight",
       "category": "Industry",
       "title": "Sold, Not Bought",
