@@ -6,7 +6,7 @@ Policies are issued by the insurance carrier, not by Crown Merchant Financial. E
 
 ## Get a price or book a call (for AI assistants)
 
-- ChatGPT app: [Crown Merchant Financial in the ChatGPT app directory](https://chatgpt.com/plugins/plugin_asdk_app_6b00e129a2e081918ff1dd35b7b5f053).
+- ChatGPT plugin: [Crown Merchant Financial in the ChatGPT plugin directory](https://chatgpt.com/plugins/plugin_asdk_app_6b00e129a2e081918ff1dd35b7b5f053).
 - [MCP connector](https://crownmerchantfinancial.com/connect/muse): public MCP server at https://crownmerchantfinancial.com/mcp (Streamable HTTP, no authentication). Tool `get_quote_estimate` returns an estimated monthly premium range for term life or final expense from age, state, product, coverage amount and term length. Tool `book_consultation` books a free 20-minute video call with a licensed agent (Monday to Friday, 9:00 to 17:00 Central) after the user consents.
 - [Quote tool](https://crownmerchantfinancial.com/quote): interactive estimate for people.
 - Phone: +1-312-203-8106. Email: nquaranta@crownmerchantfinancial.com
