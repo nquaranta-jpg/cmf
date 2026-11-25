@@ -1023,3 +1023,7 @@
   font-size: 0.85rem;
   color: var(--slate);
 }
+
+/* "Prefer to ask an AI?" line under a hero's buttons (audience pages) */
+.soc-hero .soc-ai { margin-top: 1.25rem; font-size: 0.95rem; opacity: .85; }
+.soc-hero .soc-ai a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }

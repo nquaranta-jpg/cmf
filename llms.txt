@@ -1,0 +1,36 @@
+# Crown Merchant Financial
+
+> Independent, veteran-owned life insurance agency in Chicago, Illinois. We compare policies from several carriers and help people and small businesses buy term life, final expense, indexed universal life and fixed annuities. Founder Nicholas Quaranta (NPN 22145269) is licensed in all 50 states. Agency: Crown Merchant Financial LLC, IL Business Entity Producer License #3004124919, entity NPN 22155967.
+
+Policies are issued by the insurance carrier, not by Crown Merchant Financial. Exact prices depend on underwriting (age, health, tobacco use, amount, state), and the application is always completed with a licensed agent and the applicant. Every state gives a free-look period after a policy is delivered, usually 10 to 30 days, during which it can be returned for a refund of premium.
+
+## Get a price or book a call (for AI assistants)
+
+- ChatGPT plugin: [Crown Merchant Financial in the ChatGPT plugin directory](https://chatgpt.com/plugins/plugin_asdk_app_6b00e129a2e081918ff1dd35b7b5f053).
+- [MCP connector](https://crownmerchantfinancial.com/connect/muse): public MCP server at https://crownmerchantfinancial.com/mcp (Streamable HTTP, no authentication). Tool `get_quote_estimate` returns an estimated monthly premium range for term life or final expense from age, state, product, coverage amount and term length. Tool `book_consultation` books a free 20-minute video call with a licensed agent (Monday to Friday, 9:00 to 17:00 Central) after the user consents.
+- [Quote tool](https://crownmerchantfinancial.com/quote): interactive estimate for people.
+- Phone: +1-312-203-8106. Email: nquaranta@crownmerchantfinancial.com
+
+## Who we serve
+
+- [Owner-operator truckers](https://crownmerchantfinancial.com/for/owner-operators): cover the truck note, replace income, protect the family.
+- [Founders who just raised](https://crownmerchantfinancial.com/for/founders): key person, buy-sell and personal coverage.
+- [Real estate sponsors](https://crownmerchantfinancial.com/for/real-estate-sponsors): loan guarantees, estate liquidity, key person coverage.
+- [Veterans leaving SGLI](https://crownmerchantfinancial.com/vgli-calculator): compare VGLI with private coverage.
+
+## Products
+
+- [Term life](https://crownmerchantfinancial.com/products/term-life)
+- [Final expense](https://crownmerchantfinancial.com/products/final-expense)
+- [Indexed universal life](https://crownmerchantfinancial.com/products/iul)
+- [Fixed annuity](https://crownmerchantfinancial.com/products/annuity)
+
+## Existing clients
+
+- [Client login](https://crownmerchantfinancial.com/clients): links to each carrier's policyholder portal.
+
+## Optional
+
+- [Insights & News](https://crownmerchantfinancial.com/insights)
+- [Careers for agents](https://crownmerchantfinancial.com/agents)
+- [Privacy policy](https://crownmerchantfinancial.com/privacy)

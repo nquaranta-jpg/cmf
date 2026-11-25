@@ -210,6 +210,16 @@
   text-decoration: underline;
 }
 
+.rethink-body p.rethink-for {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+}
+
+.rethink-for a {
+  color: var(--blue-light);
+  font-weight: 600;
+}
+
 .rethink-sources {
   max-width: 1100px;
   margin: 3rem auto 0;
