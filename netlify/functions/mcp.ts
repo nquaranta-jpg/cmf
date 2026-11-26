@@ -11,6 +11,7 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { createMcpServer, SERVER_VERSION } from "../../src/mcp/server.js";
 import { checkRateLimit, type LimitName } from "../../src/mcp/lib/rateLimit.js";
+import { takeBookingSlot } from "../../src/mcp/lib/bookingCap.js";
 import { MSG_RATE_LIMITED } from "../../src/mcp/config/copy.js";
 
 const MAX_BODY_BYTES = 64 * 1024;
@@ -49,7 +50,6 @@ function clientIp(req: Request, context: NetlifyContext): string {
   return (
     context?.ip ||
     req.headers.get("x-nf-client-connection-ip") ||
-    (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() ||
     "unknown"
   );
 }
@@ -100,11 +100,23 @@ export default async function handler(req: Request, context: NetlifyContext): Pr
     return rpcError(400, -32700, "Parse error: body must be JSON.");
   }
 
+  // One JSON-RPC message per request. Batches would let a single request
+  // (one rate-limit hit) carry many tool calls, and current MCP clients
+  // don't send them.
+  if (Array.isArray(parsed)) {
+    return rpcError(400, -32600, "Batch requests are not supported. Send one JSON-RPC message per request.");
+  }
+
   const ip = clientIp(req, context);
-  const limit = checkRateLimit(ip, limitFor(parsed));
+  const bucket = limitFor(parsed);
+  const limit = checkRateLimit(ip, bucket);
   if (!limit.allowed) {
     const id = (parsed as { id?: unknown })?.id ?? null;
     return rpcError(429, -32000, MSG_RATE_LIMITED, id, { "Retry-After": String(limit.retryAfterSec) });
+  }
+  if (bucket === "book" && !(await takeBookingSlot(ip))) {
+    const id = (parsed as { id?: unknown })?.id ?? null;
+    return rpcError(429, -32000, MSG_RATE_LIMITED, id, { "Retry-After": "3600" });
   }
 
   // We always answer with JSON, so accept clients that only advertise JSON.

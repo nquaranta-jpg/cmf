@@ -77,11 +77,17 @@ export type BookResult =
   | { status: "not_available"; message: string }
   | { status: "unavailable"; message: string };
 
+// Names go into the confirmation email, the calendar event and the lead
+// alert, so only allow characters real names use: no links, markup or
+// instructions riding along.
+const NAME_RE = /^[\p{L}\p{M}' .-]+$/u;
+
 const nameField = (label: string) =>
   z
     .string({ message: `${label} is required (1 to 60 characters).` })
     .transform((s) => cleanString(s, 60))
-    .refine((s) => s.length >= 1, `${label} is required (1 to 60 characters).`);
+    .refine((s) => s.length >= 1, `${label} is required (1 to 60 characters).`)
+    .refine((s) => NAME_RE.test(s) && !/\.\p{L}/u.test(s), `${label} may only contain letters, spaces, apostrophes, hyphens and periods.`);
 
 const optInt = (label: string) =>
   z
@@ -249,10 +255,12 @@ export async function performBooking(input: BookInput, deps: BookDeps = {}): Pro
       };
     }
     case "already_booked":
+      // Don't echo the existing booking's time: anyone can call this tool
+      // with any email, so that would reveal when someone else is meeting us.
       return {
         status: "already_booked",
-        message: str(body.message) || "There is already an upcoming consultation booked for this email.",
-        start: str(body.start),
+        message: "There is already an upcoming consultation booked for this email. The confirmation email has the details.",
+        start: "",
       };
     case "invalid_time":
       return { status: "invalid_time", message: str(body.message) || "That time is outside the bookable window." };

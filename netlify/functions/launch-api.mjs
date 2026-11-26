@@ -2,7 +2,7 @@
 //   POST ?action=login        {email, password}            -> {token, client}
 //   GET  ?action=bootstrap    Authorization: Bearer <tok>  -> {client, leads, spend}
 //   POST ?action=update-lead  Authorization: Bearer <tok>  {id, status, notes}
-//   GET  ?action=export&type=leads|submissions             -> CSV (admin: X-Dashboard-Pin header or ?pin=)
+//   GET  ?action=export&type=leads|submissions             -> CSV (admin: X-Dashboard-Pin header)
 //
 // Auth: email/password against launch_clients (scrypt hashes), sessions
 // are HMAC-signed tokens — no client-side Supabase SDK, no anon key
@@ -17,6 +17,7 @@
 // Set LAUNCH_DEMO=false in production to disable the fallback.
 import crypto from "node:crypto";
 import { getSupabase } from "./lib/supabase.mjs";
+import { checkPin } from "./lib/pin.mjs";
 
 const SESSION_SECRET = process.env.LAUNCH_SESSION_SECRET
   || process.env.SUPABASE_SERVICE_KEY
@@ -276,12 +277,11 @@ async function updateLead(event) {
 }
 
 // Admin CSV export, gated by the same DASHBOARD_PIN the internal
-// dashboard uses. Header X-Dashboard-Pin, or ?pin= for direct
-// browser downloads.
+// dashboard uses. Header X-Dashboard-Pin only: a ?pin= query string would
+// land in server logs and browser history.
 async function exportCsv(event) {
-  const pin = event.headers["x-dashboard-pin"] || (event.queryStringParameters || {}).pin;
-  if (!process.env.DASHBOARD_PIN) return json(503, { error: "Set the DASHBOARD_PIN environment variable to enable exports." });
-  if (pin !== process.env.DASHBOARD_PIN) return json(401, { error: "Invalid PIN" });
+  const pinCheck = await checkPin(event.headers["x-dashboard-pin"], event.headers);
+  if (!pinCheck.ok) return json(pinCheck.status, { error: pinCheck.error });
 
   const type = (event.queryStringParameters || {}).type || "submissions";
   let rows, columns, filename;

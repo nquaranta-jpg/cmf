@@ -21,7 +21,20 @@ const PRODUCT_LABELS = {
 
 // Bot protection thresholds + format checks
 const MIN_FORM_ELAPSED_MS = 1500; // client enforces 2000; allow some skew
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_RE = /^[^\s@<>"'`\\]+@[^\s@<>"'`\\]+\.[^\s@<>"'`\\]+$/;
+
+// Lead fields end up in the /dashboard page and the Telegram alert. Strip
+// markup characters and cap length before anything uses them, so a crafted
+// submission can't plant script in the dashboard (stored XSS).
+function cleanText(v, max) {
+  if (v == null || v === "") return v;
+  const s = String(v).replace(/[<>"`\\]/g, "").replace(/\s+/g, " ").trim().slice(0, max);
+  return s || null;
+}
+function cleanPhone(v) {
+  if (v == null) return v;
+  return String(v).replace(/[^0-9+().\- x]/gi, "").trim().slice(0, 25);
+}
 const URL_IN_NAME_RE = /https?:\/\/|www\.|\.(com|net|org|biz|info|ru|cn|io|xyz)\b/i;
 
 // Per-IP rate limit
@@ -133,6 +146,18 @@ export async function handler(event) {
     || event.headers["client-ip"]
     || "unknown";
   const ua = event.headers["user-agent"] || "unknown";
+
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return { statusCode: 400, body: "Invalid JSON" };
+  }
+  data.name = cleanText(data.name, 120);
+  data.phone = cleanPhone(data.phone);
+  data.ageRange = cleanText(data.ageRange, 40);
+  data.timeline = cleanText(data.timeline, 40);
+  data.productInterest = cleanText(data.productInterest, 60);
+  for (const k of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid"]) {
+    data[k] = cleanText(data[k], 200);
+  }
 
   const { name, email, phone, ageRange, coverageAmount, timeline, productInterest, utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, quote } = data;
   const smsConsent = data.smsConsent === true;

@@ -82,7 +82,7 @@
     <div class="pin-box">
       <h2>CMF Dashboard</h2>
       <p>Enter your agent PIN to continue</p>
-      <input type="password" id="pinInput" maxlength="10" placeholder="PIN">
+      <input type="password" id="pinInput" maxlength="128" placeholder="PIN" autocomplete="current-password">
       <button onclick="submitPin()">Enter</button>
       <div class="error" id="pinError"></div>
     </div>
@@ -151,6 +151,12 @@
 
   <script>
     let PIN = "";
+
+    // Every value from the API is untrusted (it comes from public form
+    // submissions), so escape it before it goes into innerHTML.
+    function esc(v) {
+      return String(v ?? "").replace(/[&<>"'`]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;", "`": "&#96;" }[c]));
+    }
     let agents = [];
     let currentAgentId = "";
 
@@ -172,7 +178,7 @@
           document.getElementById("pinError").textContent = "Wrong PIN";
           return;
         }
-        localStorage.setItem("cmf_pin", PIN);
+        sessionStorage.setItem("cmf_pin", PIN);
         agents = data;
         showDashboard();
       } catch {
@@ -187,7 +193,7 @@
       const select = document.getElementById("agentSelect");
       select.innerHTML = '<option value="">All Agents</option>';
       agents.forEach(a => {
-        select.innerHTML += `<option value="${a.id}">${a.name}${a.is_owner ? " (Owner)" : ""}</option>`;
+        select.innerHTML += `<option value="${esc(a.id)}">${esc(a.name)}${a.is_owner ? " (Owner)" : ""}</option>`;
       });
 
       loadLeads();
@@ -229,23 +235,23 @@
         const responseTime = l.response_time_seconds != null
           ? (l.response_time_seconds > 60 ? `${Math.floor(l.response_time_seconds / 60)}m ${l.response_time_seconds % 60}s` : `${l.response_time_seconds}s`)
           : "";
-        const statusLabel = l.status === "claimed" ? `${claimedBy} (${responseTime})`
-          : l.status === "escalated" ? `Auto → ${claimedBy}`
+        const statusLabel = l.status === "claimed" ? `${esc(claimedBy)} (${responseTime})`
+          : l.status === "escalated" ? `Auto → ${esc(claimedBy)}`
           : "Waiting...";
 
         const actionBtn = l.status === "unclaimed"
-          ? `<button class="claim-btn" onclick="claimLead('${l.id}')">CLAIM</button>`
+          ? `<button class="claim-btn" data-lead="${esc(l.id)}" onclick="claimLead(this.dataset.lead)">CLAIM</button>`
           : "";
 
         const timelineLabels = { asap: "ASAP", "30days": "30 days", "just-looking": "Looking" };
 
         return `<tr>
           <td>${time}</td>
-          <td><strong>${l.name || "—"}</strong></td>
-          <td><a href="tel:${l.phone}" style="color:#c5a44e;">${l.phone || "—"}</a></td>
-          <td>${l.age_range || "—"} / $${l.coverage_amount ? l.coverage_amount.toLocaleString() : "—"}</td>
-          <td>${timelineLabels[l.timeline] || l.timeline || "—"}</td>
-          <td><span class="status-badge ${l.status}">${statusLabel}</span></td>
+          <td><strong>${esc(l.name || "—")}</strong></td>
+          <td><a href="tel:${esc(String(l.phone || "").replace(/[^0-9+]/g, ""))}" style="color:#c5a44e;">${esc(l.phone || "—")}</a></td>
+          <td>${esc(l.age_range || "—")} / $${l.coverage_amount ? esc(Number(l.coverage_amount).toLocaleString()) : "—"}</td>
+          <td>${esc(timelineLabels[l.timeline] || l.timeline || "—")}</td>
+          <td><span class="status-badge ${esc(l.status)}">${statusLabel}</span></td>
           <td>${actionBtn}</td>
         </tr>`;
       }).join("");
@@ -287,9 +293,9 @@
 
         return `<div class="leader-row">
           <div class="leader-rank">#${i + 1}</div>
-          <div class="leader-name">${a.name}${a.is_owner ? " 👑" : ""}</div>
+          <div class="leader-name">${esc(a.name)}${a.is_owner ? " 👑" : ""}</div>
           <div class="leader-stat">
-            <div class="count">${a.total_claims}</div>
+            <div class="count">${esc(a.total_claims)}</div>
             <div class="sub">${avgTime}</div>
           </div>
         </div>`;
@@ -307,7 +313,10 @@
 
     // Auto-login if PIN saved
     window.addEventListener("DOMContentLoaded", async () => {
-      const saved = localStorage.getItem("cmf_pin");
+      // The PIN used to persist in localStorage; clear any old copy and keep
+      // it only for this tab's session.
+      try { localStorage.removeItem("cmf_pin"); } catch {}
+      const saved = sessionStorage.getItem("cmf_pin");
       if (saved) {
         PIN = saved;
         try {
