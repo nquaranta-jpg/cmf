@@ -11,5 +11,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src/mcp/**/*.ts", "netlify/functions/mcp.ts", "tests/**/*.ts"]
+  "include": ["src/mcp/**/*.ts", "src/tasks/**/*.ts", "netlify/functions/mcp.ts", "netlify/functions/tasks-mcp.ts", "netlify/functions/tasks-cron.ts", "tests/**/*.ts"]
 }

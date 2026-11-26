@@ -10,6 +10,14 @@
 [functions."mcp"]
   node_bundler = "esbuild"
 
+# Task Board MCP server and its every-2-minutes automation (verification,
+# Stripe payouts): TypeScript importing the MCP and Anthropic SDKs.
+[functions."tasks-mcp"]
+  node_bundler = "esbuild"
+
+[functions."tasks-cron"]
+  node_bundler = "esbuild"
+
 [build.processing]
   skip_processing = false
 

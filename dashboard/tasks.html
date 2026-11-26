@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CMF Task Board Admin</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a1628; color: #e2e8f0; min-height: 100vh; }
+    a { color: #c5a44e; }
+    .pin-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .pin-box { background: #1a2744; padding: 40px; border-radius: 16px; text-align: center; width: 320px; }
+    .pin-box h2 { color: #c5a44e; margin-bottom: 8px; }
+    .pin-box p { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
+    .pin-box input { width: 100%; padding: 14px; border: 2px solid #2d3f5e; border-radius: 8px; background: #0a1628; color: #fff; font-size: 18px; text-align: center; letter-spacing: 8px; }
+    .pin-box button, .btn { padding: 10px 14px; background: #c5a44e; color: #0a1628; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .pin-box button { width: 100%; margin-top: 16px; padding: 14px; font-size: 16px; }
+    .btn.ghost { background: transparent; color: #cbd5e1; border: 1px solid #2d3f5e; }
+    .btn.good { background: #22c55e; color: #052e14; }
+    .btn.bad { background: #ef4444; color: #fff; }
+    .btn.small { padding: 6px 10px; font-size: 12.5px; }
+    .error { color: #ef4444; font-size: 13px; margin-top: 8px; }
+    .app { display: none; max-width: 1200px; margin: 0 auto; padding: 24px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+    header h1 { font-size: 22px; color: #c5a44e; }
+    header nav a { margin-left: 14px; font-size: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat { background: #1a2744; border-radius: 12px; padding: 14px 16px; }
+    .stat b { display: block; font-size: 22px; color: #fff; }
+    .stat span { font-size: 12.5px; color: #94a3b8; }
+    section { background: #111f3a; border-radius: 14px; padding: 20px; margin-bottom: 22px; }
+    section h2 { font-size: 16px; margin-bottom: 14px; color: #fff; }
+    .muted { color: #94a3b8; font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #1f2f50; vertical-align: top; }
+    th { color: #94a3b8; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: #2d3f5e; }
+    .pill.open { background: #1e3a8a; } .pill.claimed { background: #6d28d9; } .pill.submitted { background: #b45309; }
+    .pill.verified { background: #15803d; } .pill.closed, .pill.cancelled { background: #374151; }
+    .pill.paused { background: #991b1b; } .pill.owed { background: #b45309; } .pill.paid, .pill.ready { background: #15803d; } .pill.forfeited { background: #991b1b; } .pill.cancelled { background: #374151; }
+    .review { border: 1px solid #2d3f5e; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .review h3 { font-size: 15px; margin-bottom: 4px; }
+    .review dl { display: grid; grid-template-columns: 160px 1fr; gap: 4px 12px; margin: 12px 0; font-size: 13.5px; }
+    .review dt { color: #94a3b8; }
+    .review dd { word-break: break-word; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    form.post { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    form.post label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: #94a3b8; }
+    form.post input, form.post select, form.post textarea { padding: 9px 10px; border-radius: 8px; border: 1px solid #2d3f5e; background: #0a1628; color: #fff; font-size: 14px; font-family: inherit; }
+    form.post .wide { grid-column: 1 / -1; }
+    .msg { font-size: 13px; margin-top: 10px; }
+    code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="pin-screen" id="pinScreen">
+    <div class="pin-box">
+      <h2>Task Board</h2>
+      <p>Enter the dashboard PIN</p>
+      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off">
+      <button id="pinBtn">Unlock</button>
+      <div class="error" id="pinError"></div>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+    <header>
+      <h1>CMF Task Board</h1>
+      <nav><a href="/tasks" target="_blank">Public page</a><a href="/dashboard/">Leads</a><a href="#" id="refresh">Refresh</a></nav>
+    </header>
+    <div class="stats" id="stats"></div>
+
+    <section>
+      <h2>Needs attention</h2>
+      <p class="muted" style="margin:-8px 0 12px">Verification and payouts run automatically every 2 minutes. Only what automation can't settle shows here: the verifier was unavailable, or a deal intro is waiting to fund.</p>
+      <div id="queue"></div>
+    </section>
+
+    <section>
+      <h2>Post a task</h2>
+      <form class="post" id="postForm">
+        <label>Type<select name="type" id="typeSel"></select></label>
+        <label class="wide">Title<input name="title" maxlength="160" required></label>
+        <div class="wide" id="inputFields" style="display:contents"></div>
+        <label>Payout ($)<input name="payout" type="number" min="0.01" step="0.01" required></label>
+        <label>Bond required ($)<input name="bond" type="number" min="0" step="0.01" value="0"></label>
+        <label>Max attempts<input name="max_attempts" type="number" min="1" max="10" value="3"></label>
+        <label>Open until (optional)<input name="expires_at" type="date"></label>
+        <label class="wide">Instructions (optional; defaults to the type's summary)<textarea name="instructions" rows="3" maxlength="3000"></textarea></label>
+        <div class="wide"><button class="btn" type="submit">Post task</button><div class="msg" id="postMsg"></div></div>
+      </form>
+    </section>
+
+    <section>
+      <h2>Tasks</h2>
+      <div id="tasks"></div>
+    </section>
+
+    <section>
+      <h2>Workers</h2>
+      <div id="workers"></div>
+    </section>
+
+    <section>
+      <h2>Ledger</h2>
+      <div id="ledger"></div>
+    </section>
+  </div>
+
+<script>
+(function () {
+  var PIN = "";
+  var DATA = null;
+  var FIELD_LABELS = {
+    dot: "USDOT number", carrier_name: "Carrier name", state: "State (2 letters)", known_phones: "Numbers CMF already has (comma separated)",
+    business_name: "Business name", city: "City", desk: "Desk", criteria: "What fits (criteria)"
+  };
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function usd(c) { var n = (Number(c) || 0) / 100; return n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: n % 1 ? 2 : 0 }); }
+  function when(ts) { return ts ? new Date(ts).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : ""; }
+  function pill(s) { return '<span class="pill ' + esc(s) + '">' + esc(s) + "</span>"; }
+  function val(v) {
+    if (Array.isArray(v)) return v.map(val).join("<br>");
+    var s = String(v == null ? "" : v);
+    return /^https?:\/\//.test(s) ? '<a href="' + esc(s) + '" target="_blank" rel="noopener noreferrer">' + esc(s) + "</a>" : esc(s);
+  }
+
+  async function api(method, action, body) {
+    var res = await fetch("/api/tasks-admin?action=" + action, {
+      method: method,
+      headers: { "X-Dashboard-Pin": PIN, "Content-Type": "application/json" },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    var data = await res.json().catch(function () { return {}; });
+    if (!res.ok) throw new Error(data.error || "Request failed (" + res.status + ")");
+    return data;
+  }
+
+  async function tryPin(pin, silent) {
+    PIN = pin;
+    try {
+      DATA = await api("GET", "overview");
+      try { sessionStorage.setItem("cmf_pin", PIN); } catch (e) {}
+      $("pinScreen").style.display = "none";
+      $("app").style.display = "block";
+      setupForm();
+      render();
+    } catch (e) {
+      if (!silent) $("pinError").textContent = e.message;
+    }
+  }
+
+  async function reload() { DATA = await api("GET", "overview"); render(); }
+
+  async function act(action, body, confirmText) {
+    if (confirmText && !confirm(confirmText)) return;
+    try { await api("POST", action, body); await reload(); } catch (e) { alert(e.message); }
+  }
+
+  function workerName(id) {
+    var w = DATA.workers.find(function (x) { return x.id === id; });
+    return w ? esc(w.agent_name) + ' <span class="muted">(' + esc(w.owner_name) + ")</span>" : esc(id);
+  }
+
+  function bondOf(w) {
+    var b = w.bond || {}, dep = 0;
+    (b.deposits || []).forEach(function (d) { dep += d.cents - d.refunded_cents - d.forfeited_cents; });
+    var sur = b.surety ? b.surety.cents - (b.surety.forfeited_cents || 0) : 0;
+    return { total: dep + sur, deposit: dep, surety: sur, ref: b.surety ? b.surety.ref : "" };
+  }
+
+  function render() {
+    var s = DATA.stats;
+    $("stats").innerHTML = [
+      [s.tasks.open, "open"], [s.tasks.claimed, "claimed"], [s.tasks.submitted, "to review"], [s.tasks.verified, "verified"],
+      [s.workers, "workers"], [usd(s.owed_cents), "owed"], [usd(s.paid_cents), "paid"], [usd(s.forfeited_cents || 0), "forfeited"]
+    ].map(function (x) { return '<div class="stat"><b>' + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
+
+    var queue = DATA.tasks.filter(function (t) { return t.status === "submitted" && t.auto && t.auto.state !== "pending"; });
+    $("queue").innerHTML = queue.length ? queue.map(function (t) {
+      var sub = t.submissions[t.submissions.length - 1];
+      var rows = Object.keys(t.input).map(function (k) { return "<dt>" + esc(FIELD_LABELS[k] || k) + "</dt><dd>" + val(t.input[k]) + "</dd>"; }).join("");
+      rows += Object.keys(sub.result).filter(function (k) { return sub.result[k] !== ""; }).map(function (k) { return "<dt><b>" + esc(k) + "</b></dt><dd><b>" + val(sub.result[k]) + "</b></dd>"; }).join("");
+      return '<div class="review"><h3>' + esc(t.title) + "</h3>" +
+        '<div class="muted">' + esc(t.type) + " · payout " + usd(t.payout_cents) + (t.bond_cents ? " · bond " + usd(t.bond_cents) : "") +
+        " · from " + workerName(sub.worker_id) + " · " + when(sub.at) + "</div>" +
+        '<div class="muted" style="margin-top:6px">' + (t.auto.state === "waiting_event" ? "Waiting for the funding event" : "Automatic verification unavailable") + ": " + esc(t.auto.note) + "</div><dl>" + rows + "</dl>" +
+        '<div class="actions">' +
+        '<button class="btn good small" data-decide="verify" data-id="' + t.id + '">' + (t.auto.state === "waiting_event" ? "Deal funded: pay " : "Verify and pay ") + usd(t.payout_cents) + "</button>" +
+        '<button class="btn ghost small" data-decide="reject" data-id="' + t.id + '">Reject (honest miss)</button>' +
+        '<button class="btn bad small" data-decide="fraud" data-id="' + t.id + '">Fraud: forfeit bond</button></div></div>';
+    }).join("") : '<p class="muted">Nothing waiting for review.</p>';
+
+    $("tasks").innerHTML = DATA.tasks.length ? "<table><tr><th>Task</th><th>Type</th><th>Status</th><th>Payout</th><th>Bond</th><th>Attempts</th><th>Holder</th><th></th></tr>" +
+      DATA.tasks.map(function (t) {
+        var holder = t.claim ? workerName(t.claim.worker_id) + (t.status === "claimed" ? '<br><span class="muted">until ' + when(t.claim.expires_at) + "</span>" : "") : "";
+        var cancel = (t.status === "open" || t.status === "claimed") ? '<button class="btn ghost small" data-cancel="' + t.id + '">Cancel</button>' : "";
+        return "<tr><td>" + esc(t.title) + "<br><code>" + t.id + "</code></td><td>" + esc(t.type) + "</td><td>" + pill(t.status) + "</td><td>" + usd(t.payout_cents) +
+          "</td><td>" + (t.bond_cents ? usd(t.bond_cents) : "") + "</td><td>" + (t.status === "submitted" && t.auto ? '<span class="muted">' + esc(t.auto.state) + "</span><br>" : "") + t.attempts + "/" + t.max_attempts + "</td><td>" + holder + "</td><td>" + cancel + "</td></tr>";
+      }).join("") + "</table>" : '<p class="muted">No tasks yet. Post one above.</p>';
+
+    $("workers").innerHTML = DATA.workers.length ? "<table><tr><th>Agent</th><th>Owner</th><th>Status</th><th>Payouts</th><th>Bond</th><th>Verified / rejected / fraud</th><th></th></tr>" +
+      DATA.workers.map(function (w) {
+        var b = bondOf(w);
+        var bond = b.total ? usd(b.total) + '<br><span class="muted">' + (b.deposit ? usd(b.deposit) + " deposit" : "") + (b.deposit && b.surety ? " + " : "") + (b.surety ? usd(b.surety) + " surety (" + esc(b.ref) + ")" : "") + "</span>" : '<span class="muted">none</span>';
+        var pay = w.payout && w.payout.ready ? pill("ready") : (w.payout && w.payout.account ? '<span class="pill owed">onboarding</span>' : '<span class="muted">not set up</span>');
+        return "<tr><td>" + esc(w.agent_name) + "<br><code>" + w.id + "</code></td><td>" + esc(w.owner_name) + "<br>" + esc(w.owner_email) + "</td><td>" + pill(w.status) +
+          "</td><td>" + pay + "</td><td>" + bond + "</td><td>" + w.counts.verified + " / " + w.counts.rejected + " / " + w.counts.fraud + '</td><td class="actions">' +
+          '<button class="btn ghost small" data-bond="' + w.id + '">Record surety</button>' +
+          '<button class="btn ghost small" data-status="' + (w.status === "active" ? "paused" : "active") + '" data-id="' + w.id + '">' + (w.status === "active" ? "Pause" : "Activate") + "</button></td></tr>";
+      }).join("") + "</table>" : '<p class="muted">No agents registered yet.</p>';
+
+    $("ledger").innerHTML = DATA.ledger.length ? "<table><tr><th>When</th><th>Kind</th><th>Worker</th><th>Task</th><th>Amount</th><th>Status</th><th></th></tr>" +
+      DATA.ledger.map(function (l) {
+        var t = DATA.tasks.find(function (x) { return x.id === l.task_id; });
+        var detail = l.transfer_id ? esc(l.transfer_id) : l.paid_ref ? esc(l.paid_ref) : l.waiting === "payout_setup" ? "waiting for the owner's Stripe setup" : l.error ? "retrying: " + esc(l.error) : (l.note ? esc(l.note) : "");
+        var pay = '<span class="muted">' + detail + "</span>" + (l.kind === "payout" && l.status === "owed" ? ' <button class="btn ghost small" data-paid="' + l.id + '">Paid outside Stripe</button>' : "");
+        return "<tr><td>" + when(l.created_at) + "</td><td>" + esc(l.kind) + "</td><td>" + workerName(l.worker_id) + "</td><td>" + esc(t ? t.title : l.task_id) +
+          "</td><td>" + usd(l.cents) + "</td><td>" + pill(l.status) + "</td><td>" + pay + "</td></tr>";
+      }).join("") + "</table>" : '<p class="muted">No payouts or forfeits yet.</p>';
+  }
+
+  function setupForm() {
+    var sel = $("typeSel");
+    if (sel.options.length) return;
+    Object.keys(DATA.task_types).forEach(function (k) {
+      var o = document.createElement("option"); o.value = k; o.textContent = DATA.task_types[k].label; sel.appendChild(o);
+    });
+    function fields() {
+      var spec = DATA.task_types[sel.value];
+      $("inputFields").innerHTML = spec.input.map(function (k) {
+        if (k === "desk") return '<label>Desk<select data-in="desk"><option value="trucking">Trucking capital</option><option value="hard_money">Hard money</option></select></label>';
+        return "<label>" + esc(FIELD_LABELS[k] || k) + '<input data-in="' + k + '"></label>';
+      }).join("");
+    }
+    sel.addEventListener("change", fields);
+    fields();
+
+    $("postForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var f = e.target, msg = $("postMsg");
+      var input = {};
+      document.querySelectorAll("[data-in]").forEach(function (el) {
+        var k = el.getAttribute("data-in");
+        input[k] = k === "known_phones" ? el.value.split(",").map(function (x) { return x.trim(); }).filter(Boolean) : el.value;
+      });
+      var spec = {
+        type: sel.value, title: f.title.value, instructions: f.instructions.value, input: input,
+        payout_cents: Math.round(Number(f.payout.value) * 100), bond_cents: Math.round(Number(f.bond.value || 0) * 100),
+        max_attempts: Number(f.max_attempts.value) || 3
+      };
+      if (f.expires_at.value) spec.expires_at = f.expires_at.value + "T23:59:59-06:00";
+      try {
+        await api("POST", "post", spec);
+        msg.style.color = "#22c55e"; msg.textContent = "Posted.";
+        f.title.value = ""; f.instructions.value = ""; fields();
+        await reload();
+      } catch (err) { msg.style.color = "#ef4444"; msg.textContent = err.message; }
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    if (b.dataset.decide) {
+      var d = b.dataset.decide;
+      var note = prompt(d === "verify" ? "Note (optional): how you confirmed it. The payout goes out on the next automatic run." : d === "fraud" ? "What was fabricated? (forfeits the bond and pauses the worker)" : "Why it missed (optional)");
+      if (note === null) return;
+      act("decide", { task_id: b.dataset.id, decision: d, note: note });
+    } else if (b.dataset.cancel) {
+      act("cancel", { task_id: b.dataset.cancel }, "Cancel this task?");
+    } else if (b.dataset.bond) {
+      var amt = prompt("Surety bond amount in dollars (0 clears it). Cash deposits come in through Stripe by themselves."); if (amt === null) return;
+      var ref = Number(amt) ? prompt("Bond number and surety company:") : ""; if (ref === null) return;
+      act("surety", { worker_id: b.dataset.bond, cents: Math.round(Number(amt) * 100), ref: ref });
+    } else if (b.dataset.status) {
+      act("worker", { worker_id: b.dataset.id, status: b.dataset.status });
+    } else if (b.dataset.paid) {
+      var r = prompt("Only if you paid this outside Stripe: how and when?"); if (r === null) return;
+      act("paid", { ledger_id: b.dataset.paid, ref: r });
+    }
+  });
+
+  $("refresh").addEventListener("click", function (e) { e.preventDefault(); reload().catch(function (err) { alert(err.message); }); });
+  $("pinBtn").addEventListener("click", function () { tryPin($("pinInput").value); });
+  $("pinInput").addEventListener("keydown", function (e) { if (e.key === "Enter") tryPin($("pinInput").value); });
+  try { localStorage.removeItem("cmf_pin"); } catch (e) {}
+  try { var saved = sessionStorage.getItem("cmf_pin"); if (saved) tryPin(saved, true); } catch (e) {}
+})();
+</script>
+</body>
+</html>
