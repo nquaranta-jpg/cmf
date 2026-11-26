@@ -14,6 +14,7 @@
 
 import { timingSafeEqual } from "node:crypto";
 import { getStore } from "@netlify/blobs";
+import { checkPin } from "./lib/pin.mjs";
 import { listActivity, history, mint, mintMany, tagUrl, forget, findToken, EMAIL_RE, normEmail } from "./lib/visits.mjs";
 
 export const config = { path: "/api/visit-admin" };
@@ -53,23 +54,25 @@ function same(a, b) {
   return x.length === y.length && timingSafeEqual(x, y);
 }
 
-/** "pin" (full access), "key" (mint only) or null. */
-function role(req) {
-  const pin = process.env.DASHBOARD_PIN;
+/** "pin" (full access), "key" (mint only), or { status, error }. */
+async function role(req) {
   const key = process.env.CMF_SITE_KEY;
   const sentPin = req.headers.get("x-dashboard-pin");
   const sentKey = req.headers.get("x-track-key");
-  if (pin && sentPin && same(sentPin, pin)) return "pin";
   if (key && sentKey && same(sentKey, key)) return "key";
-  return null;
+  if (sentPin && process.env.DASHBOARD_PIN) {
+    const r = await checkPin(sentPin, req.headers);
+    return r.ok ? "pin" : { status: r.status, error: r.error };
+  }
+  return { status: 401, error: "Invalid PIN" };
 }
 
 export default async (req) => {
   if (!process.env.DASHBOARD_PIN && !process.env.CMF_SITE_KEY) {
     return json(503, { error: "Not configured: set DASHBOARD_PIN in Netlify." });
   }
-  const who = role(req);
-  if (!who) return json(401, { error: "Invalid PIN" });
+  const who = await role(req);
+  if (typeof who !== "string") return json(who.status, { error: who.error });
 
   const url = new URL(req.url);
   const action = url.searchParams.get("action");

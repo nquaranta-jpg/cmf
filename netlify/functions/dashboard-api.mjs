@@ -1,4 +1,5 @@
 import { getSupabase } from "./lib/supabase.mjs";
+import { checkPin } from "./lib/pin.mjs";
 
 // Fail closed: the dashboard is disabled until DASHBOARD_PIN is set in
 // Netlify env vars. A hardcoded fallback here would be readable by anyone
@@ -13,11 +14,6 @@ function corsHeaders() {
   };
 }
 
-function verifyPin(event) {
-  if (!DASHBOARD_PIN) return false;
-  const pin = event.headers["x-dashboard-pin"];
-  return pin === DASHBOARD_PIN;
-}
 
 export async function handler(event) {
   if (event.httpMethod === "OPTIONS") {
@@ -34,8 +30,9 @@ export async function handler(event) {
     };
   }
 
-  if (!verifyPin(event)) {
-    return { statusCode: 401, headers: corsHeaders(), body: JSON.stringify({ error: "Invalid PIN" }) };
+  const pinCheck = await checkPin(event.headers["x-dashboard-pin"], event.headers);
+  if (!pinCheck.ok) {
+    return { statusCode: pinCheck.status, headers: corsHeaders(), body: JSON.stringify({ error: pinCheck.error }) };
   }
 
   const params = event.queryStringParameters || {};

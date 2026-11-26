@@ -111,6 +111,13 @@ describe("Netlify handler", () => {
     const res = await handler(new Request("https://crownmerchantfinancial.com/mcp", { method: "POST", body: "{nope" }), ctx);
     expect(res.status).toBe(400);
   });
+  it("rejects JSON-RPC batches so one request can't carry many bookings", async () => {
+    resetRateLimits();
+    const one = { jsonrpc: "2.0", method: "tools/call", params: { name: "book_consultation", arguments: validBooking() } };
+    const res = await post([{ ...one, id: 1 }, { ...one, id: 2 }, { ...one, id: 3 }]);
+    expect(res.status).toBe(400);
+    expect((await res.json()).error.code).toBe(-32600);
+  });
   it("rate limits booking calls at 5 per 10 minutes per IP", async () => {
     resetRateLimits();
     const call = () => post({ jsonrpc: "2.0", id: 9, method: "tools/call", params: { name: "book_consultation", arguments: { ...validBooking(), consent_to_contact: false } } });

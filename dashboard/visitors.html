@@ -78,7 +78,7 @@
     <div class="pin-box">
       <h2>Site Visitors</h2>
       <p>Enter the dashboard PIN</p>
-      <input type="password" id="pinInput" maxlength="20" placeholder="PIN" autocomplete="current-password">
+      <input type="password" id="pinInput" maxlength="128" placeholder="PIN" autocomplete="current-password">
       <button id="pinBtn">Enter</button>
       <div class="error" id="pinError"></div>
     </div>
@@ -238,7 +238,7 @@
           if (!silent) $("pinError").textContent = d._status === 401 ? "Wrong PIN" : d.error;
           return false;
         }
-        try { localStorage.setItem("cmf_pin", PIN); } catch (e) {}
+        try { sessionStorage.setItem("cmf_pin", PIN); } catch (e) {}
         $("pinScreen").style.display = "none";
         $("app").classList.add("active");
         load();
@@ -249,7 +249,8 @@
     }
     $("pinBtn").onclick = function () { tryPin($("pinInput").value, false); };
     $("pinInput").addEventListener("keydown", function (e) { if (e.key === "Enter") tryPin($("pinInput").value, false); });
-    try { var saved = localStorage.getItem("cmf_pin"); if (saved) tryPin(saved, true); } catch (e) {}
+    try { localStorage.removeItem("cmf_pin"); } catch (e) {}
+    try { var saved = sessionStorage.getItem("cmf_pin"); if (saved) tryPin(saved, true); } catch (e) {}
 
     // ── Tabs ──
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
