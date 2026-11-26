@@ -216,7 +216,7 @@
     $("ledger").innerHTML = DATA.ledger.length ? "<table><tr><th>When</th><th>Kind</th><th>Worker</th><th>Task</th><th>Amount</th><th>Status</th><th></th></tr>" +
       DATA.ledger.map(function (l) {
         var t = DATA.tasks.find(function (x) { return x.id === l.task_id; });
-        var detail = l.transfer_id ? esc(l.transfer_id) : l.paid_ref ? esc(l.paid_ref) : l.waiting === "payout_setup" ? "waiting for the owner's Stripe setup" : l.error ? "retrying: " + esc(l.error) : (l.note ? esc(l.note) : "");
+        var detail = l.transfer_id ? esc(l.transfer_id) : l.paid_ref ? esc(l.paid_ref) : l.waiting === "payout_setup" ? "waiting for the owner's Stripe setup" : l.error ? "retrying" + (l.next_try_at ? " at " + when(l.next_try_at) : "") + ": " + esc(l.error) : (l.note ? esc(l.note) : "");
         var pay = '<span class="muted">' + detail + "</span>" + (l.kind === "payout" && l.status === "owed" ? ' <button class="btn ghost small" data-paid="' + l.id + '">Paid outside Stripe</button>' : "");
         return "<tr><td>" + when(l.created_at) + "</td><td>" + esc(l.kind) + "</td><td>" + workerName(l.worker_id) + "</td><td>" + esc(t ? t.title : l.task_id) +
           "</td><td>" + usd(l.cents) + "</td><td>" + pill(l.status) + "</td><td>" + pay + "</td></tr>";

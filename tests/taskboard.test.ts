@@ -22,6 +22,9 @@ import {
   markPaid,
   CLAWBACK_MS,
   DEAL_WINDOW_MS,
+  PAYOUT_RETRY_FUNDS_MS,
+  PAYOUT_RETRY_MAX_MS,
+  nextPayoutTry,
   getTask,
   getWorker,
   listTasks,
@@ -347,11 +350,23 @@ describe("payouts", () => {
     expect(await processPayouts(store, stripe, accountReady, T0 + 11 * 60 * 1000)).toMatchObject({ paid: 1 });
   });
 
-  it("a failed transfer stays owed and is retried", async () => {
+  it("a payout refused for low balance waits an hour, then goes out", async () => {
     const r = await readyWorker();
     await verifiedFor(r);
     expect(await processPayouts(store, fakeStripe({ failTransfer: true }), accountReady, T0)).toMatchObject({ failed: 1 });
-    expect(await processPayouts(store, fakeStripe(), accountReady, T0)).toMatchObject({ paid: 1 });
+    // Every 2-minute run inside the hour leaves it alone: no call to Stripe.
+    const quiet = fakeStripe();
+    expect(await processPayouts(store, quiet, accountReady, T0 + 2 * 60 * 1000)).toMatchObject({ backing_off: 1, paid: 0 });
+    expect(quiet.calls.filter((c) => c.op === "transfer")).toHaveLength(0);
+    expect(await processPayouts(store, fakeStripe(), accountReady, T0 + PAYOUT_RETRY_FUNDS_MS)).toMatchObject({ paid: 1 });
+  });
+
+  it("other failures back off 2, 4, 8 minutes, capped at 6 hours", () => {
+    const err = new Error("Stripe error 500");
+    expect(nextPayoutTry(err, 1, 0)).toBe(2 * 60 * 1000);
+    expect(nextPayoutTry(err, 3, 0)).toBe(8 * 60 * 1000);
+    expect(nextPayoutTry(err, 20, 0)).toBe(PAYOUT_RETRY_MAX_MS);
+    expect(nextPayoutTry(Object.assign(new Error("x"), { code: "balance_insufficient" }), 5, 0)).toBe(PAYOUT_RETRY_FUNDS_MS);
   });
 
   it("the payout token finds its worker", async () => {

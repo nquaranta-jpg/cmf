@@ -79,6 +79,7 @@ export interface LedgerEntry {
   waiting?: string;
   error?: string;
   transfer_id?: string;
+  next_try_at?: number;
   paid_at?: number;
   paid_ref?: string;
   note?: string;
@@ -105,6 +106,8 @@ export const MAX_LIST: number;
 export const CLAWBACK_MS: number;
 export const DEAL_WINDOW_MS: number;
 export const MAX_AUTO_TRIES: number;
+export const PAYOUT_RETRY_FUNDS_MS: number;
+export const PAYOUT_RETRY_MAX_MS: number;
 export const MIN_BOND_CENTS: number;
 export const MAX_BOND_CENTS: number;
 export const KEY_PREFIX: string;
@@ -186,6 +189,7 @@ export function reportWrongNumber(
 ): Promise<{ clawed_back: { task_id: string; worker_id: string; cancelled_payouts: number; forfeited_cents: number }[] } | Err>;
 
 export function listLedger(store: TaskStore): Promise<LedgerEntry[]>;
+export function nextPayoutTry(err: unknown, tries: number, now: number): number;
 export function processPayouts(store: TaskStore, stripe: any, accountReady: (a: any) => boolean, now?: number): Promise<Record<string, unknown>>;
 export function markPaid(store: TaskStore, ledgerId: string, ref?: string, now?: number): Promise<{ entry: LedgerEntry } | Err>;
 
