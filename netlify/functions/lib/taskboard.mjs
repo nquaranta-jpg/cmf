@@ -38,6 +38,11 @@ export const MAX_LIST = 300;
 export const CLAWBACK_MS = 30 * 24 * 60 * 60 * 1000;
 export const DEAL_WINDOW_MS = 90 * 24 * 60 * 60 * 1000;
 export const MAX_AUTO_TRIES = 3;
+// A payout Stripe refuses for lack of balance waits an hour before the next
+// try (a top-up takes days to clear); other failures back off 2, 4, 8 ...
+// minutes, capped at 6 hours.
+export const PAYOUT_RETRY_FUNDS_MS = 60 * 60 * 1000;
+export const PAYOUT_RETRY_MAX_MS = 6 * 60 * 60 * 1000;
 export const MIN_BOND_CENTS = 500;
 export const MAX_BOND_CENTS = 500_000;
 export const KEY_PREFIX = "cmfw_";
@@ -822,15 +827,23 @@ export async function listLedger(store) {
   return (await loadAll(store, "ledger/")).sort((a, b) => b.created_at - a.created_at);
 }
 
+/** When a failed payout may be tried again. */
+export function nextPayoutTry(err, tries, now) {
+  const msg = String(err?.message || err);
+  const funds = err?.code === "balance_insufficient" || /insufficient funds/i.test(msg);
+  return now + (funds ? PAYOUT_RETRY_FUNDS_MS : Math.min(PAYOUT_RETRY_MAX_MS, 2 ** tries * 60 * 1000));
+}
+
 /**
  * Sends every owed payout whose owner can take transfers. Checks owners who
- * aren't ready yet with Stripe (at most every 10 minutes). Safe to rerun: the
- * ledger id is the transfer's idempotency key.
+ * aren't ready yet with Stripe (at most every 10 minutes), and leaves a payout
+ * that failed alone until its next_try_at. Safe to rerun: the ledger id is the
+ * transfer's idempotency key.
  */
 export async function processPayouts(store, stripe, accountReady, now = Date.now()) {
   if (!stripe) return { skipped: "no Stripe key" };
   const owed = (await listLedger(store)).filter((l) => l.kind === "payout" && l.status === "owed");
-  const result = { paid: 0, waiting_setup: 0, failed: 0 };
+  const result = { paid: 0, waiting_setup: 0, failed: 0, backing_off: 0 };
   const workers = new Map();
   for (const l of owed) {
     let w = workers.get(l.worker_id) || (await getWorker(store, l.worker_id));
@@ -847,17 +860,23 @@ export async function processPayouts(store, stripe, accountReady, now = Date.now
       result.waiting_setup += 1;
       continue;
     }
+    if (l.next_try_at && l.next_try_at > now) {
+      result.backing_off += 1;
+      continue;
+    }
+    delete l.waiting; // the owner is set up now
     try {
       const tr = await stripe.transfer({ amount: l.cents, destination: w.payout.account, taskId: l.task_id, ledgerId: l.id });
       l.status = "paid";
       l.paid_at = now;
       l.transfer_id = tr.id;
-      delete l.waiting;
       delete l.error;
+      delete l.next_try_at;
       result.paid += 1;
     } catch (err) {
       l.tries = (l.tries || 0) + 1;
       l.error = String(err?.message || err).slice(0, 300);
+      l.next_try_at = nextPayoutTry(err, l.tries, now);
       result.failed += 1;
     }
     await store.setJSON(`ledger/${l.id}`, l);
