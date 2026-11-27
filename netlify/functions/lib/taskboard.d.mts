@@ -63,17 +63,33 @@ export interface Worker {
   status: "active" | "paused";
   bond: { deposits: BondDeposit[]; surety: { cents: number; ref: string; forfeited_cents: number; recorded_at: number } | null };
   payout: { account: string | null; ready: boolean; checked_at: number | null };
+  coverage?: { policies: CoveragePolicy[]; recovery_due_cents: number };
   counts: { claimed: number; submitted: number; verified: number; rejected: number; fraud: number };
   created_at: number;
 }
 
+export interface CoveragePolicy {
+  id: string;
+  amount_cents: number;
+  premium_cents: number;
+  premium_paid_cents: number;
+  term_days: number;
+  tier: string;
+  status: "pending_premium" | "active" | "expired" | "exhausted";
+  created_at: number;
+  starts_at: number | null;
+  ends_at: number | null;
+  claims_paid_cents: number;
+}
+
 export interface LedgerEntry {
   id: string;
-  kind: "payout" | "forfeit";
+  kind: "payout" | "forfeit" | "premium" | "claim";
   worker_id: string;
   task_id: string;
   cents: number;
-  status: "owed" | "paid" | "cancelled" | "forfeited";
+  status: "owed" | "paid" | "cancelled" | "forfeited" | "collected" | "paid_from_reserve";
+  premium_offset_cents?: number;
   created_at: number;
   tries?: number;
   waiting?: string;
@@ -124,7 +140,7 @@ export function normPhone(v: unknown): string | null;
 export function digitsOf(phone: unknown): string;
 export function isHttpUrl(v: unknown): boolean;
 export function fmtUsd(cents: number): string;
-export function bondCents(w: Worker | null | undefined): number;
+export function bondCents(w: Worker | null | undefined, now?: number): number;
 
 export function publicTask(t: Task): Record<string, any>;
 export function publicWorker(w: Worker): Record<string, any>;
@@ -190,6 +206,7 @@ export function reportWrongNumber(
 
 export function listLedger(store: TaskStore): Promise<LedgerEntry[]>;
 export function nextPayoutTry(err: unknown, tries: number, now: number): number;
+export function buyCoverage(store: TaskStore, worker: Worker, amountCents: number, cfg: any, now?: number): Promise<{ quote: Record<string, any>; policy: CoveragePolicy } | { error: string; track_record?: Record<string, any> }>;
 export function processPayouts(store: TaskStore, stripe: any, accountReady: (a: any) => boolean, now?: number): Promise<Record<string, unknown>>;
 export function markPaid(store: TaskStore, ledgerId: string, ref?: string, now?: number): Promise<{ entry: LedgerEntry } | Err>;
 

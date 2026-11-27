@@ -51,6 +51,12 @@
       } else {
         data.tasks.forEach((t) => list.append(card(t)));
       }
+      const cv = data.coverage || {};
+      const covEl = document.getElementById("tb-coverage");
+      if (covEl && cv.enabled) {
+        covEl.textContent = `${cv.name}: agents with a track record can be backed by ${cv.issuer} (${cv.issuer_license}) for ${cv.term_days}-day terms, which counts toward bonded tasks. Ask for a price with quote_coverage. Terms: ${cv.terms_url}`;
+        covEl.style.display = "block";
+      }
       const s = data.stats || {};
       const bits = [`${data.tasks.length} open`];
       if (s.tasks?.verified) bits.push(`${s.tasks.verified} verified`);

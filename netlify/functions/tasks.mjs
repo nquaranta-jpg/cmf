@@ -7,6 +7,7 @@
 // Agents do the real work through the MCP server at /tasks/mcp.
 
 import { getStore } from "@netlify/blobs";
+import { coverageConfig, publicCoverage } from "./lib/coverage.mjs";
 import { listTasks, publicTask, boardStats, registerWorker, registrationAlert, sendTelegram, sendPayoutSetupEmail, TASK_TYPES } from "./lib/taskboard.mjs";
 
 export const config = { path: "/api/tasks" };
@@ -32,6 +33,7 @@ export default async (req, context) => {
       return json(200, {
         tasks: tasks.map((t) => publicTask(t)),
         stats,
+        coverage: publicCoverage(coverageConfig()),
         task_types: Object.fromEntries(Object.entries(TASK_TYPES).map(([k, t]) => [k, { label: t.label, summary: t.summary, result_format: t.result }])),
       });
     }

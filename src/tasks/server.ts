@@ -31,9 +31,11 @@ import {
   withdrawBond,
   MIN_BOND_CENTS,
   MAX_BOND_CENTS,
+  buyCoverage,
   type TaskStore,
   type Worker,
 } from "../../netlify/functions/lib/taskboard.mjs";
+import { quoteCoverage, publicCoverage, type CoverageConfig } from "../../netlify/functions/lib/coverage.mjs";
 
 export const TASKS_SERVER_NAME = "cmf-task-board";
 export const TASKS_SERVER_VERSION = "0.1.0";
@@ -46,6 +48,8 @@ export type TaskServerDeps = {
   notify?: (text: string) => Promise<void> | void;
   /** Stripe client from lib/stripe.mjs (null = money features off). */
   stripe?: any | null;
+  /** Coverage settings from lib/coverage.mjs (null = not offered; its tools aren't listed). */
+  coverage?: CoverageConfig | null;
   /** Emails the owner their payout-setup link. */
   emailPayoutLink?: (worker: Worker, url: string) => Promise<void> | void;
   now?: () => number;
@@ -96,6 +100,7 @@ export function createTaskServer(deps: TaskServerDeps): McpServer {
   const notify = deps.notify ?? (() => undefined);
   const emailPayoutLink = deps.emailPayoutLink ?? (() => undefined);
   const stripe = deps.stripe ?? null;
+  const coverage = deps.coverage ?? null;
 
   const server = new McpServer(
     { name: TASKS_SERVER_NAME, title: "CMF Task Board", version: TASKS_SERVER_VERSION },
@@ -291,6 +296,49 @@ export function createTaskServer(deps: TaskServerDeps): McpServer {
       return "error" in out ? fail(out.error as string) : ok(out);
     },
   );
+
+  if (coverage) {
+    const label = coverage.name;
+    server.registerTool(
+      "quote_coverage",
+      {
+        title: `Quote ${label}`,
+        description: `${label}: ${coverage.issuer} stands behind your agent for ${coverage.term_days} days, and active coverage counts toward bonded tasks. Eligibility and price depend on your track record. If your agent is caught fabricating, the issuer pays CMF and your owner then owes the issuer. Returns the price and terms; nothing is bought.`,
+        inputSchema: { amount_cents: z.number().int().describe("Coverage amount, in cents"), worker_key: workerKeyArg },
+        annotations: { readOnlyHint: true, openWorldHint: false },
+      },
+      async ({ amount_cents, worker_key }) => {
+        const w = await who(worker_key);
+        if (!isWorker(w)) return w;
+        const q = quoteCoverage(w, amount_cents, coverage, now());
+        return q.error ? fail(q.error, q.track_record ? { track_record: q.track_record } : undefined) : ok(q);
+      },
+    );
+
+    server.registerTool(
+      "buy_coverage",
+      {
+        title: `Buy ${label}`,
+        description: `Buy ${label} at a quoted amount. The fee comes out of your next payouts, and coverage starts once it's paid in full. Requires accept_terms: true, meaning your owner accepts the issuer's terms at terms_url.`,
+        inputSchema: {
+          amount_cents: z.number().int().describe("Coverage amount, in cents"),
+          accept_terms: z.boolean().describe("true: your owner accepts the issuer's terms (see quote_coverage terms_url)"),
+          worker_key: workerKeyArg,
+        },
+        annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+      },
+      async ({ amount_cents, accept_terms, worker_key }) => {
+        const w = await who(worker_key);
+        if (!isWorker(w)) return w;
+        if (accept_terms !== true) return fail(`Your owner has to accept the issuer's terms first: ${coverage.terms_url}`);
+        const out = await buyCoverage(store, w, amount_cents, coverage, now());
+        if ("error" in out) return fail(out.error);
+        log({ tool: "buy_coverage", status: "pending_premium" });
+        await notify(`🛡️ Task Board: ${label} bought (fee pending)\n${w.agent_name} (${w.owner_name}): ${out.quote.amount_cents / 100} dollars of coverage, fee ${out.quote.premium_cents / 100} dollars from payouts`);
+        return ok({ ...out, coverage: publicCoverage(coverage) });
+      },
+    );
+  }
 
   return server;
 }

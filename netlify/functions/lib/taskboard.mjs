@@ -30,6 +30,7 @@
 // idempotency key, so nothing is paid twice.
 
 import { createHash, randomBytes } from "node:crypto";
+import { coverageCapacity, claimCoverage, applyPremium, premiumDue, trackRecord, quoteCoverage, startPolicy } from "./coverage.mjs";
 
 export const CLAIM_MS = 2 * 60 * 60 * 1000;
 export const MAX_ACTIVE_CLAIMS = 3;
@@ -128,18 +129,22 @@ function emptyBond() {
   return { deposits: [], surety: null };
 }
 
-/** Bond money still standing behind a worker: unrefunded, unforfeited deposits plus any surety. */
-export function bondCents(w) {
+/** What stands behind a worker: unrefunded, unforfeited deposits, active coverage, and any surety on record. */
+export function bondCents(w, now = Date.now()) {
   const b = w?.bond;
-  if (!b) return 0;
-  const dep = (b.deposits || []).reduce((s, d) => s + d.cents - d.refunded_cents - d.forfeited_cents, 0);
-  const sur = b.surety ? b.surety.cents - (b.surety.forfeited_cents || 0) : 0;
-  return Math.max(0, dep + sur);
+  const dep = (b?.deposits || []).reduce((s, d) => s + d.cents - d.refunded_cents - d.forfeited_cents, 0);
+  const sur = b?.surety ? b.surety.cents - (b.surety.forfeited_cents || 0) : 0;
+  return Math.max(0, dep + sur + coverageCapacity(w, now));
 }
 
-/** Takes up to `amount` out of the bond, deposits first (that money is CMF's to keep). Returns what was taken. */
-function forfeitBond(w, amount) {
-  if (!w.bond || amount <= 0) return { deposit: 0, surety: 0 };
+/**
+ * Takes up to `amount` to cover a loss: the owner's deposits first (that money
+ * is CMF's to keep), then active coverage (paid from the issuer's reserve; the
+ * owner then owes the issuer), then a surety bond on record (claimed by hand).
+ */
+function forfeitBond(w, amount, now = Date.now()) {
+  if (amount <= 0) return { deposit: 0, coverage: 0, surety: 0, coverage_policies: [] };
+  w.bond = w.bond || emptyBond();
   let left = amount, fromDeposit = 0, fromSurety = 0;
   for (const d of [...w.bond.deposits].reverse()) {
     const avail = d.cents - d.refunded_cents - d.forfeited_cents;
@@ -147,13 +152,15 @@ function forfeitBond(w, amount) {
     if (take > 0) { d.forfeited_cents += take; left -= take; fromDeposit += take; }
     if (!left) break;
   }
+  const cov = left ? claimCoverage(w, left, now) : { paid: 0, policies: [] };
+  left -= cov.paid;
   if (left && w.bond.surety) {
     const avail = w.bond.surety.cents - (w.bond.surety.forfeited_cents || 0);
     const take = Math.min(avail, left);
     w.bond.surety.forfeited_cents = (w.bond.surety.forfeited_cents || 0) + take;
     fromSurety = take;
   }
-  return { deposit: fromDeposit, surety: fromSurety };
+  return { deposit: fromDeposit, coverage: cov.paid, surety: fromSurety, coverage_policies: cov.policies };
 }
 
 /** Bond a worker must keep in place: open work plus verified tasks still inside the clawback window. */
@@ -392,6 +399,7 @@ export function publicWorker(w) {
     owner_name: w.owner_name,
     status: w.status,
     bond_cents: bondCents(w),
+    tier: trackRecord(w).tier,
     payouts_ready: Boolean(w.payout?.ready),
     counts: w.counts,
     created_at: w.created_at,
@@ -687,11 +695,19 @@ export async function workerAccount(store, worker, now = Date.now()) {
     worker: publicWorker(worker),
     holding: held.map(workerTask),
     payouts: { ready: Boolean(worker.payout?.ready), connected: Boolean(worker.payout?.account) },
-    bond: { on_file_cents: bondCents(worker), locked_cents: locked, free_cents: Math.max(0, bondCents(worker) - locked) },
+    bond: { on_file_cents: bondCents(worker, now), locked_cents: locked, free_cents: Math.max(0, bondCents(worker, now) - locked) },
+    track_record: trackRecord(worker, now),
+    coverage: {
+      active_cents: coverageCapacity(worker, now),
+      fee_due_cents: premiumDue(worker),
+      owed_to_issuer_cents: worker.coverage?.recovery_due_cents || 0,
+      policies: (worker.coverage?.policies || []).slice(-5),
+    },
     earnings: {
       owed_cents: sum((l) => l.kind === "payout" && l.status === "owed"),
       paid_cents: sum((l) => l.kind === "payout" && l.status === "paid"),
       forfeited_cents: sum((l) => l.kind === "forfeit"),
+      coverage_fees_cents: sum((l) => l.kind === "premium"),
     },
     ledger: ledger.sort((a, b) => b.created_at - a.created_at).slice(0, 50),
   };
@@ -737,18 +753,46 @@ export async function decide(store, taskId, decision, note, now = Date.now(), by
   return out;
 }
 
-/** Forfeits the task's bond and pauses the worker. Caller saves the worker. */
+/**
+ * Covers the task's bond from what stands behind the worker and pauses it.
+ * Deposit and surety become a "forfeit" entry; coverage becomes a "claim"
+ * paid from the issuer's reserve. Caller saves the worker.
+ */
 async function penalize(store, w, t, note, now) {
-  const take = forfeitBond(w, t.bond_cents || 0);
+  const take = forfeitBond(w, t.bond_cents || 0, now);
   w.status = "paused";
-  const total = take.deposit + take.surety;
-  if (!total) return [];
-  const entry = {
-    id: newId("l"), kind: "forfeit", worker_id: w.id, task_id: t.id, cents: total,
-    from_deposit_cents: take.deposit, from_surety_cents: take.surety, status: "forfeited", note, created_at: now,
-  };
-  await store.setJSON(`ledger/${entry.id}`, entry);
-  return [entry];
+  const out = [];
+  if (take.deposit + take.surety) {
+    const entry = {
+      id: newId("l"), kind: "forfeit", worker_id: w.id, task_id: t.id, cents: take.deposit + take.surety,
+      from_deposit_cents: take.deposit, from_surety_cents: take.surety, status: "forfeited", note, created_at: now,
+    };
+    await store.setJSON(`ledger/${entry.id}`, entry);
+    out.push(entry);
+  }
+  if (take.coverage) {
+    const entry = {
+      id: newId("l"), kind: "claim", worker_id: w.id, task_id: t.id, cents: take.coverage,
+      policies: take.coverage_policies, status: "paid_from_reserve", note, created_at: now,
+    };
+    await store.setJSON(`ledger/${entry.id}`, entry);
+    out.push(entry);
+  }
+  return out;
+}
+
+// ---------- coverage (see lib/coverage.mjs) ----------
+
+/** Starts coverage for a worker at a quoted amount; the fee comes out of its payouts. */
+export async function buyCoverage(store, worker, amountCents, cfg, now = Date.now()) {
+  const w = await getWorker(store, worker.id);
+  if (!w || w.status !== "active") return { error: "This worker is paused. Contact CMF." };
+  const quote = quoteCoverage(w, amountCents, cfg, now);
+  if (quote.error) return quote;
+  const started = startPolicy(w, quote, newId("cv"), now);
+  if (started.error) return started;
+  await store.setJSON(`worker/${w.id}`, w);
+  return { quote, policy: started.policy };
 }
 
 /** Puts the automatic verifier's progress on a submitted task. */
@@ -848,6 +892,24 @@ export async function processPayouts(store, stripe, accountReady, now = Date.now
   for (const l of owed) {
     let w = workers.get(l.worker_id) || (await getWorker(store, l.worker_id));
     if (!w) continue;
+    // A pending coverage fee is taken out of this payout once, before any transfer.
+    if (l.premium_offset_cents === undefined && premiumDue(w) > 0) {
+      const { deducted, activated, policy } = applyPremium(w, l.cents, now);
+      l.premium_offset_cents = deducted;
+      await store.setJSON(`worker/${w.id}`, w);
+      const fee = { id: newId("l"), kind: "premium", worker_id: w.id, task_id: l.task_id, cents: deducted, policy_id: policy.id, from_payout: l.id, status: "collected", created_at: now };
+      await store.setJSON(`ledger/${fee.id}`, fee);
+      if (activated) result.coverage_activated = (result.coverage_activated || 0) + 1;
+      if (l.cents - deducted <= 0) {
+        l.status = "paid";
+        l.paid_at = now;
+        l.paid_ref = "Applied to coverage fee";
+        await store.setJSON(`ledger/${l.id}`, l);
+        result.paid += 1;
+        continue;
+      }
+      await store.setJSON(`ledger/${l.id}`, l);
+    }
     if (w.payout?.account && !w.payout.ready && now - (w.payout.checked_at || 0) > 10 * 60 * 1000) {
       w = await refreshPayoutStatus(store, w, stripe, accountReady, now);
     }
@@ -866,7 +928,10 @@ export async function processPayouts(store, stripe, accountReady, now = Date.now
     }
     delete l.waiting; // the owner is set up now
     try {
-      const tr = await stripe.transfer({ amount: l.cents, destination: w.payout.account, taskId: l.task_id, ledgerId: l.id });
+      // Stripe replays a key's result (even a failure) for 24 hours, so each attempt
+      // gets its own key; a retry first checks whether an earlier attempt went through.
+      const earlier = l.tries ? await stripe.findTransfer({ taskId: l.task_id, ledgerId: l.id }) : null;
+      const tr = earlier || (await stripe.transfer({ amount: l.cents - (l.premium_offset_cents || 0), destination: w.payout.account, taskId: l.task_id, ledgerId: l.id, attempt: l.tries || 0 }));
       l.status = "paid";
       l.paid_at = now;
       l.transfer_id = tr.id;
