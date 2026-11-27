@@ -244,6 +244,11 @@
   status = 200
 
 [[redirects]]
+  from = "/insights/gunboats-and-gpus"
+  to = "/insights/gunboats-and-gpus.html"
+  status = 200
+
+[[redirects]]
   from = "/insights/sold-not-bought"
   to = "/insights/sold-not-bought.html"
   status = 200
