@@ -11,7 +11,8 @@ export interface TaskBoardStripe {
   createExpressAccount(a: { email: string; workerId: string }): Promise<{ id: string }>;
   accountLink(a: { account: string; refreshUrl: string; returnUrl: string }): Promise<{ url: string }>;
   getAccount(id: string): Promise<any>;
-  transfer(a: { amount: number; destination: string; taskId: string; ledgerId: string }): Promise<{ id: string }>;
+  transfer(a: { amount: number; destination: string; taskId: string; ledgerId: string; attempt?: number }): Promise<{ id: string }>;
+  findTransfer(a: { taskId: string; ledgerId: string }): Promise<{ id: string } | null>;
   bondCheckout(a: { workerId: string; cents: number; email: string; successUrl: string; cancelUrl: string }): Promise<{ id: string; url: string }>;
   recentCheckoutSessions(sinceSec: number): Promise<{ data: any[] }>;
   refund(a: { paymentIntent: string; amount: number; idempotencyKey?: string }): Promise<{ id: string }>;

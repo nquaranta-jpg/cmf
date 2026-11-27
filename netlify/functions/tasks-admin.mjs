@@ -13,6 +13,7 @@
 
 import { getStore } from "@netlify/blobs";
 import { checkPin } from "./lib/pin.mjs";
+import { coverageConfig, coverageBook } from "./lib/coverage.mjs";
 import {
   listTasks,
   listWorkers,
@@ -47,7 +48,9 @@ export default async (req) => {
     if (req.method === "GET" && action === "overview") {
       const [tasks, workers, ledger, stats] = await Promise.all([listTasks(store, {}, now), listWorkers(store), listLedger(store), boardStats(store, now)]);
       const types = Object.fromEntries(Object.entries(TASK_TYPES).map(([k, t]) => [k, { label: t.label, input: t.input, result_format: t.result }]));
-      return json(200, { now, tasks, workers, ledger, stats, task_types: types });
+      const cfg = coverageConfig();
+      const coverage = { config: cfg, book: coverageBook(ledger, workers, cfg) };
+      return json(200, { now, tasks, workers, ledger, stats, task_types: types, coverage });
     }
 
     if (req.method !== "POST") return json(400, { error: "Unknown action" });

@@ -106,6 +106,11 @@
       <h2>Ledger</h2>
       <div id="ledger"></div>
     </section>
+
+    <section>
+      <h2>Coverage</h2>
+      <div id="coverage"></div>
+    </section>
   </div>
 
 <script>
@@ -172,7 +177,30 @@
     return { total: dep + sur, deposit: dep, surety: sur, ref: b.surety ? b.surety.ref : "" };
   }
 
+  function tierOf(w) {
+    var c = w.counts || {}, v = c.verified || 0, r = c.rejected || 0, f = c.fraud || 0, d = v + r + f, rate = d ? (r + f) / d : 0;
+    if (f > 0 || w.status === "paused") return "ineligible";
+    if (v >= 50 && rate <= 0.15) return "trusted";
+    if (v >= 10 && rate <= 0.3) return "established";
+    return "new";
+  }
+
+  function renderCoverage() {
+    var cv = DATA.coverage || {}, cfg = cv.config, b = cv.book || {};
+    if (!cfg) {
+      $("coverage").innerHTML = '<p class="muted">Off. To offer it, set COVERAGE_ENABLED=true, COVERAGE_ISSUER, COVERAGE_ISSUER_LICENSE, COVERAGE_TERMS_URL (https), COVERAGE_TERM_DAYS and COVERAGE_TIERS in Netlify, then redeploy. Optional: COVERAGE_NAME, COVERAGE_PAY_URL, COVERAGE_CAPITAL_CENTS.</p>';
+      return;
+    }
+    var tiers = Object.keys(cfg.tiers).map(function (k) { return esc(k) + ": up to " + usd(cfg.tiers[k].max_cents) + " at " + (cfg.tiers[k].rate_bps / 100) + "% per term"; }).join(" · ");
+    $("coverage").innerHTML = '<p class="muted">' + esc(cfg.name) + " by " + esc(cfg.issuer) + " (" + esc(cfg.license) + "), " + cfg.term_days + "-day terms. " + tiers + "</p>" +
+      '<div class="stats" style="margin-top:12px">' + [
+        [usd(b.reserve_cents || 0), "reserve"], [usd(b.premiums_collected_cents || 0), "fees collected"], [usd(b.claims_paid_cents || 0), "claims paid"],
+        [usd(b.recovery_due_cents || 0), "owed by owners"], [b.active_policies || 0, "active"], [b.pending_policies || 0, "awaiting fee"]
+      ].map(function (x) { return '<div class="stat"><b>' + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("") + "</div>";
+  }
+
   function render() {
+    renderCoverage();
     var s = DATA.stats;
     $("stats").innerHTML = [
       [s.tasks.open, "open"], [s.tasks.claimed, "claimed"], [s.tasks.submitted, "to review"], [s.tasks.verified, "verified"],
@@ -202,12 +230,13 @@
           "</td><td>" + (t.bond_cents ? usd(t.bond_cents) : "") + "</td><td>" + (t.status === "submitted" && t.auto ? '<span class="muted">' + esc(t.auto.state) + "</span><br>" : "") + t.attempts + "/" + t.max_attempts + "</td><td>" + holder + "</td><td>" + cancel + "</td></tr>";
       }).join("") + "</table>" : '<p class="muted">No tasks yet. Post one above.</p>';
 
-    $("workers").innerHTML = DATA.workers.length ? "<table><tr><th>Agent</th><th>Owner</th><th>Status</th><th>Payouts</th><th>Bond</th><th>Verified / rejected / fraud</th><th></th></tr>" +
+    $("workers").innerHTML = DATA.workers.length ? "<table><tr><th>Agent</th><th>Owner</th><th>Status</th><th>Tier</th><th>Payouts</th><th>Bond</th><th>Verified / rejected / fraud</th><th></th></tr>" +
       DATA.workers.map(function (w) {
         var b = bondOf(w);
         var bond = b.total ? usd(b.total) + '<br><span class="muted">' + (b.deposit ? usd(b.deposit) + " deposit" : "") + (b.deposit && b.surety ? " + " : "") + (b.surety ? usd(b.surety) + " surety (" + esc(b.ref) + ")" : "") + "</span>" : '<span class="muted">none</span>';
         var pay = w.payout && w.payout.ready ? pill("ready") : (w.payout && w.payout.account ? '<span class="pill owed">onboarding</span>' : '<span class="muted">not set up</span>');
         return "<tr><td>" + esc(w.agent_name) + "<br><code>" + w.id + "</code></td><td>" + esc(w.owner_name) + "<br>" + esc(w.owner_email) + "</td><td>" + pill(w.status) +
+          "</td><td>" + esc(tierOf(w)) + (w.coverage && w.coverage.recovery_due_cents ? '<br><span class="muted">owes issuer ' + usd(w.coverage.recovery_due_cents) + "</span>" : "") +
           "</td><td>" + pay + "</td><td>" + bond + "</td><td>" + w.counts.verified + " / " + w.counts.rejected + " / " + w.counts.fraud + '</td><td class="actions">' +
           '<button class="btn ghost small" data-bond="' + w.id + '">Record surety</button>' +
           '<button class="btn ghost small" data-status="' + (w.status === "active" ? "paused" : "active") + '" data-id="' + w.id + '">' + (w.status === "active" ? "Pause" : "Activate") + "</button></td></tr>";

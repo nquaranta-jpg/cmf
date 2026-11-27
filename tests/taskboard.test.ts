@@ -142,7 +142,7 @@ describe("claim, submit, verify, pay", () => {
     expect("ledger" in d && d.ledger).toEqual([expect.objectContaining({ kind: "payout", cents: 500, status: "owed" })]);
 
     const acct = await workerAccount(store, await fresh(w.id), T0 + HOUR);
-    expect(acct.earnings).toEqual({ owed_cents: 500, paid_cents: 0, forfeited_cents: 0 });
+    expect(acct.earnings).toEqual({ owed_cents: 500, paid_cents: 0, forfeited_cents: 0, coverage_fees_cents: 0 });
 
     const ledgerId = ("ledger" in d && d.ledger[0].id) as string;
     expect(await markPaid(store, ledgerId, "Zelle 11/27", T0 + 2 * HOUR)).toMatchObject({ entry: { status: "paid" } });
@@ -225,6 +225,8 @@ function fakeStripe(opts: { ready?: boolean; failTransfer?: boolean } = {}) {
     async accountLink(args: any) { calls.push({ op: "link", args }); return { url: "https://connect.stripe.com/setup/x" }; },
     async getAccount(id: string) { calls.push({ op: "get", args: id }); return { id, payouts_enabled: true, capabilities: { transfers: opts.ready === false ? "inactive" : "active" } }; },
     async transfer(args: any) { calls.push({ op: "transfer", args }); if (opts.failTransfer) throw new Error("Insufficient funds"); return { id: "tr_" + args.ledgerId }; },
+    madeTransfers: [] as any[],
+    async findTransfer(args: any) { calls.push({ op: "find", args }); return this.madeTransfers.find((t: any) => t.metadata.ledger_id === args.ledgerId) || null; },
     async bondCheckout(args: any) { calls.push({ op: "checkout", args }); return { id: "cs_1", url: "https://checkout.stripe.com/c/x" }; },
     async refund(args: any) { calls.push({ op: "refund", args }); return { id: "re_1" }; },
     sessions: [] as any[],
@@ -359,6 +361,29 @@ describe("payouts", () => {
     expect(await processPayouts(store, quiet, accountReady, T0 + 2 * 60 * 1000)).toMatchObject({ backing_off: 1, paid: 0 });
     expect(quiet.calls.filter((c) => c.op === "transfer")).toHaveLength(0);
     expect(await processPayouts(store, fakeStripe(), accountReady, T0 + PAYOUT_RETRY_FUNDS_MS)).toMatchObject({ paid: 1 });
+  });
+
+  it("each retry uses a fresh Stripe key and never pays twice", async () => {
+    const r = await readyWorker();
+    await verifiedFor(r);
+    expect(await processPayouts(store, fakeStripe({ failTransfer: true }), accountReady, T0)).toMatchObject({ failed: 1 });
+    // The first retry finds that an earlier attempt actually went through: no new transfer.
+    const stripe = fakeStripe();
+    const ledgerId = (await workerAccount(store, await fresh(r.w.id), T0)).ledger[0].id;
+    stripe.madeTransfers.push({ id: "tr_earlier", metadata: { ledger_id: ledgerId } });
+    expect(await processPayouts(store, stripe, accountReady, T0 + PAYOUT_RETRY_FUNDS_MS)).toMatchObject({ paid: 1 });
+    expect(stripe.calls.filter((c) => c.op === "transfer")).toHaveLength(0);
+    const l = (await workerAccount(store, await fresh(r.w.id), T0)).ledger[0];
+    expect(l).toMatchObject({ status: "paid", transfer_id: "tr_earlier" });
+  });
+
+  it("a retry that finds nothing sends a transfer with the next attempt number", async () => {
+    const r = await readyWorker();
+    await verifiedFor(r);
+    await processPayouts(store, fakeStripe({ failTransfer: true }), accountReady, T0);
+    const stripe = fakeStripe();
+    await processPayouts(store, stripe, accountReady, T0 + PAYOUT_RETRY_FUNDS_MS);
+    expect(stripe.calls.find((c) => c.op === "transfer")!.args.attempt).toBe(1);
   });
 
   it("other failures back off 2, 4, 8 minutes, capped at 6 hours", () => {

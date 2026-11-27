@@ -74,7 +74,7 @@ export function makeStripe({ key = process.env.STRIPE_SECRET_KEY, fetchImpl = fe
 
     getAccount: (id) => call("GET", `/accounts/${encodeURIComponent(id)}`),
 
-    transfer: ({ amount, destination, taskId, ledgerId }) =>
+    transfer: ({ amount, destination, taskId, ledgerId, attempt = 0 }) =>
       call("POST", "/transfers", {
         amount,
         currency: "usd",
@@ -82,7 +82,13 @@ export function makeStripe({ key = process.env.STRIPE_SECRET_KEY, fetchImpl = fe
         transfer_group: taskId,
         description: `CMF Task Board payout ${taskId}`,
         metadata: { task_id: taskId, ledger_id: ledgerId, source: "cmf_taskboard" },
-      }, `payout-${ledgerId}`),
+      }, `payout-${ledgerId}-${attempt}`),
+
+    /** A transfer already made for this ledger entry, or null. */
+    findTransfer: async ({ taskId, ledgerId }) => {
+      const list = await call("GET", "/transfers", { transfer_group: taskId, limit: 20 });
+      return (list.data || []).find((t) => t.metadata?.ledger_id === ledgerId && !t.reversed) || null;
+    },
 
     bondCheckout: ({ workerId, cents, email, successUrl, cancelUrl }) =>
       call("POST", "/checkout/sessions", {

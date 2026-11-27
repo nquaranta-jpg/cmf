@@ -12,6 +12,7 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { createTaskServer, TASKS_SERVER_VERSION } from "../../src/tasks/server.js";
 import { sendTelegram, sendPayoutSetupEmail } from "./lib/taskboard.mjs";
 import { makeStripe } from "./lib/stripe.mjs";
+import { coverageConfig } from "./lib/coverage.mjs";
 
 const MAX_BODY_BYTES = 32 * 1024;
 const WINDOW_MS = 60_000;
@@ -94,6 +95,7 @@ export default async function handler(req: Request, context: { ip?: string }): P
     bearer,
     notify: sendTelegram,
     stripe: makeStripe(),
+    coverage: coverageConfig(),
     emailPayoutLink: sendPayoutSetupEmail,
   });
   const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
